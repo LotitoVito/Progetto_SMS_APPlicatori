@@ -3,4 +3,5 @@
     <string name="buttonUser">Sign in/Sign up</string>
     <string name="buttonGuest">Sign in as guest</string>
     <string name="orLabel">- You don\'t need to sign up? -</string>
+    <string name="loginEmail">e-mail...</string>
 </resources>

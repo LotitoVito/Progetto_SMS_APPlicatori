@@ -12,41 +12,53 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:width="250dp"
+        android:layout_marginBottom="80dp"
+        android:width="280dp"
         android:text="@string/buttonGuest"
+        android:textColor="#FFF3E0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck,TextContrastCheck" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
-        android:width="250dp"
+        android:width="280dp"
         android:text="@string/buttonUser"
+        android:textColor="#FFF3E0"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck,TextContrastCheck" />
 
     <EditText
         android:id="@+id/editTextTextEmailAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
-        android:width="250dp"
+        android:width="280dp"
+        android:autofillHints="emailAddress"
         android:background="@android:color/white"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
-        android:hint="@string/app_name"
+        android:hint="@string/loginEmail"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
+        android:textAlignment="textStart"
+        android:textColorHint="#757575"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
         android:id="@+id/textView2"
@@ -54,16 +66,17 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:text="@string/orLabel"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textColor="@color/white"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="407dp"
+        android:layout_width="420dp"
         android:layout_height="491dp"
         android:layout_marginBottom="30dp"
+        android:contentDescription="@string/app_name"
         app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -4,4 +4,5 @@
     <string name="buttonUser">Login/Registrati</string>
     <string name="buttonGuest">Accedi come ospite</string>
     <string name="orLabel">- Oppure -</string>
+    <string name="loginEmail">e-mail...</string>
 </resources>
