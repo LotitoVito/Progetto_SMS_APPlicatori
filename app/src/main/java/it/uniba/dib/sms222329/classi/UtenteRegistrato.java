@@ -7,10 +7,10 @@ import it.uniba.dib.sms222329.database.Database;
 
 public abstract class UtenteRegistrato extends Utente {
 
-    private String nome;
-    private String cognome;
-    private String email;
-    private String password;
+    String nome;
+    String cognome;
+    String email;
+    String password;
 
     public UtenteRegistrato() {
     }
@@ -47,38 +47,12 @@ public abstract class UtenteRegistrato extends Utente {
         this.password = password;
     }
 
-    //Registrazione Tesista
-    public void registrazione(Database db, String matricola, float media, String esamiSvolti) throws SQLException {
-        String insert = "INSERT INTO tesista VALUES (?,?,?,?,?,?,?)";
-        PreparedStatement preparedStatement = db.getConnection().prepareStatement(insert);
+    public void registrazione(Database db) throws SQLException {
 
-        preparedStatement.setString(1, matricola);
-        preparedStatement.setString(2, this.nome);
-        preparedStatement.setString(3, this.cognome);
-        preparedStatement.setString(4, this.email);
-        preparedStatement.setString(5, this.password);
-        preparedStatement.setFloat(6, media);
-        preparedStatement.setString(7, esamiSvolti);
-
-        preparedStatement.executeUpdate();
-    }
-
-    //Registrazione Relatore
-    public void registrazione(Database db, String matricola) throws SQLException {
-        String insert = "INSERT INTO relatore VALUES (?,?,?,?,?)";
-        PreparedStatement preparedStatement = db.getConnection().prepareStatement(insert);
-
-        preparedStatement.setString(1, matricola);
-        preparedStatement.setString(2, this.nome);
-        preparedStatement.setString(3, this.cognome);
-        preparedStatement.setString(4, this.email);
-        preparedStatement.setString(5, this.password);
-
-        preparedStatement.executeUpdate();
     }
 
     //Registrazione CoRelatore
-    public void registrazione(Database db) throws SQLException {
+    /*public void registrazione(Database db) throws SQLException {
         String insert = "INSERT INTO corelatore VALUES (?,?,?,?,?)";
         PreparedStatement preparedStatement = db.getConnection().prepareStatement(insert);
 
@@ -88,5 +62,5 @@ public abstract class UtenteRegistrato extends Utente {
         preparedStatement.setString(5, this.password);
 
         preparedStatement.executeUpdate();
-    }
+    }*/
 }
