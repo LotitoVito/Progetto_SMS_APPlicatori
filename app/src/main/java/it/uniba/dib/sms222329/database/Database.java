@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222329;
+package it.uniba.dib.sms222329.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

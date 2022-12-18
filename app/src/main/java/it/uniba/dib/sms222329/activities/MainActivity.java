@@ -1,10 +1,13 @@
-package it.uniba.dib.sms222329;
+package it.uniba.dib.sms222329.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.activities.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
 

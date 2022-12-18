@@ -1,9 +1,11 @@
-package it.uniba.dib.sms222329;
+package it.uniba.dib.sms222329.classi;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class UtenteRegistrato extends Utente{
+import it.uniba.dib.sms222329.database.Database;
+
+public abstract class UtenteRegistrato extends Utente {
 
     private String nome;
     private String cognome;
