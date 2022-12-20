@@ -8,5 +8,20 @@
     <string name="signInButton">Accedi</string>
     <string name="insertPassword">Inserire la password</string>
     <string name="recoverPassword">Password dimenticata</string>
+    <string name="matricola">Matricola</string>
+    <string name="Cognome">Cognome</string>
+    <string name="nome">Nome</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="signup">Signup</string>
+    <string name="cognome">Cognome</string>
+    <string name="Nome">Nome</string>
+    <string name="media_esami">Media esami</string>
+    <string name="numero_esami_svolti">Numero esami svolti</string>
+    <string name="e_mail">E-mail</string>
+    <string name="Password">password</string>
+    <string name="Signup">Signup</string>
+    <string name="atMricola">Matricola</string>
+    <string name="Matricola">matricola</string>
 
 </resources>
