@@ -7,28 +7,5 @@
     <string name="signInButton">Sign In</string>
     <string name="insertPassword">Insert Password</string>
     <string name="recoverPassword">Recover Password</string>
-    <string name="matricola">Matricola</string>
-    <string name="Cognome" >Cognome</string>
-    <string name="nome">Nome</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="signup">Signup</string>
-    <string name="cognome">Cognome</string>
-    <string name="Nome">Nome</string>
-    <string name="media_esami">Media esami</string>
-    <string name="numero_esami_svolti">Numero esami svolti</string>
-    <string name="e_mail">E-mail</string>
-    <string name="Password">password</string>
-    <string name="Signup">Signup</string>
-    <string name="atMricola">Matricola</string>
-    <string name="Matricola">matricola</string>
-    <string name="studente" translatable="false">Studente</string>
-    <string name="relatore" translatable="false">Relatore</string>
-    <string name="co_relatore" translatable="false">Co-relatore</string>
-    <string name="Cognome_corelatore" translatable="false">Cognome</string>
-    <string name="nome_corelatore" translatable="false">Nome</string>
-    <string name="email_corelatore" translatable="false">Email</string>
-    <string name="password_corelatore" translatable="false">Password</string>
-    <string name="signup_corelatore" translatable="false">Signup</string>
 
 </resources>
