@@ -55,7 +55,7 @@ public class Database extends SQLiteOpenHelper {
         //Utente
         createTable =   "CREATE TABLE IF NOT EXISTS Utenti(" +
                         "Email CHAR(255) PRIMARY KEY," +
-                        "Passowrd CHAR(255) NOT NULL," +
+                        "Password CHAR(255) NOT NULL," +
                         "TipoUtente INTEGER(1)NOT NULL );";
         //Tesi
         createTable =   "CREATE TABLE IF NOT EXISTS Tesi(" +

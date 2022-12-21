@@ -31,18 +31,26 @@ public class CoRelatore extends Supervisore {
     @Override
     public boolean registrazione(Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
-        ContentValues cv = new ContentValues();
+        ContentValues cvCoRelatore = new ContentValues();
 
-        cv.put("Nome", this.nome);
-        cv.put("Cognome", this.cognome);
-        cv.put("Email", this.email);
-        cv.put("Password", this.password);
+        cvCoRelatore.put("Nome", this.nome);
+        cvCoRelatore.put("Cognome", this.cognome);
+        cvCoRelatore.put("Email", this.email);
+        cvCoRelatore.put("Password", this.password);
 
-        long insert = db.insert("CoRelatore", null, cv);
-        if(insert != -1){
-            return true;
-        } else{
-            return false;
+        long insertCoRelatore = db.insert("CoRelatore", null, cvCoRelatore);
+        if(insertCoRelatore != -1){
+            ContentValues cvUtente = new ContentValues();
+
+            cvUtente.put("Email", this.email);
+            cvUtente.put("Password", this.password);
+            cvUtente.put("TipoUtente", 2);
+
+            long insertUtente = db.insert("Utenti", null, cvUtente);
+            if(insertUtente != -1) {
+                return true;
+            }
         }
+        return false;
     }
 }

@@ -53,21 +53,29 @@ public class Tesista extends UtenteRegistrato {
     @Override
     public boolean registrazione(Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
-        ContentValues cv = new ContentValues();
+        ContentValues cvTesista = new ContentValues();
 
-        cv.put("Matricola", this.matricola);
-        cv.put("Nome", this.nome);
-        cv.put("Cognome", this.cognome);
-        cv.put("Email", this.email);
-        cv.put("Password", this.password);
-        cv.put("MediaVoti", this.media);
-        cv.put("EsamiSvolti", this.numeroEsamiSvolti);
+        cvTesista.put("Matricola", this.matricola);
+        cvTesista.put("Nome", this.nome);
+        cvTesista.put("Cognome", this.cognome);
+        cvTesista.put("Email", this.email);
+        cvTesista.put("Password", this.password);
+        cvTesista.put("MediaVoti", this.media);
+        cvTesista.put("EsamiSvolti", this.numeroEsamiSvolti);
 
-        long insert = db.insert("Tesista", null, cv);
-        if(insert != -1){
-            return true;
-        } else{
-            return false;
+        long insertTesista = db.insert("Tesista", null, cvTesista);
+        if(insertTesista != -1){
+            ContentValues cvUtente = new ContentValues();
+
+            cvUtente.put("Email", this.email);
+            cvUtente.put("Password", this.password);
+            cvUtente.put("TipoUtente", 0);
+
+            long insertUtente = db.insert("Utenti", null, cvUtente);
+            if(insertUtente != -1){
+                return true;
+            }
         }
+        return false;
     }
 }
