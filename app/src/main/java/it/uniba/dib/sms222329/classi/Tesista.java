@@ -1,5 +1,8 @@
 package it.uniba.dib.sms222329.classi;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -48,31 +51,23 @@ public class Tesista extends UtenteRegistrato {
 
     //Registrazione account su database
     @Override
-    public void registrazione(Database db) throws SQLException {
-        //Inserimento dati in tabella Tesista
-        String insertTesista = "INSERT INTO Tesista VALUES (?,?,?,?,?,?,?)";
-        PreparedStatement preparedStatementTesista = db.getConnection().prepareStatement(insertTesista);
+    public boolean registrazione(Database dbClass) {
+        SQLiteDatabase db = dbClass.getWritableDatabase();
+        ContentValues cv = new ContentValues();
 
-        preparedStatementTesista.setString(1, this.matricola);
-        preparedStatementTesista.setString(2, this.nome);
-        preparedStatementTesista.setString(3, this.cognome);
-        preparedStatementTesista.setString(4, this.email);
-        preparedStatementTesista.setString(5, this.password);
-        preparedStatementTesista.setFloat(6, this.media);
-        preparedStatementTesista.setInt(7, this.numeroEsamiSvolti);
+        cv.put("Matricola", this.matricola);
+        cv.put("Nome", this.nome);
+        cv.put("Cognome", this.cognome);
+        cv.put("Email", this.email);
+        cv.put("Password", this.password);
+        cv.put("MediaVoti", this.media);
+        cv.put("EsamiSvolti", this.numeroEsamiSvolti);
 
-        preparedStatementTesista.executeUpdate();
-
-        //Inserimento dati in tabella Utente
-        String insertUtente = "INSERT INTO Utenti VALUES (?,?,?,?,?)";
-        PreparedStatement preparedStatementUtente = db.getConnection().prepareStatement(insertUtente);
-
-        preparedStatementUtente.setString(1, this.email);
-        preparedStatementUtente.setString(2, this.nome);
-        preparedStatementUtente.setString(3, this.cognome);
-        preparedStatementUtente.setString(4, this.password);
-        preparedStatementUtente.setInt(5, 0);
-
-        preparedStatementUtente.executeUpdate();
+        long insert = db.insert("Tesista", null, cv);
+        if(insert != -1){
+            return true;
+        } else{
+            return false;
+        }
     }
 }

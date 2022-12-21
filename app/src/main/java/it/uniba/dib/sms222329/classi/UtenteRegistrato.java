@@ -12,8 +12,7 @@ public abstract class UtenteRegistrato extends Utente {
     String email;
     String password;
 
-    public UtenteRegistrato() {
-    }
+    public UtenteRegistrato() {}
 
     public String getNome() {
         return nome;
@@ -47,20 +46,5 @@ public abstract class UtenteRegistrato extends Utente {
         this.password = password;
     }
 
-    public void registrazione(Database db) throws SQLException {
-
-    }
-
-    //Registrazione CoRelatore
-    /*public void registrazione(Database db) throws SQLException {
-        String insert = "INSERT INTO corelatore VALUES (?,?,?,?,?)";
-        PreparedStatement preparedStatement = db.getConnection().prepareStatement(insert);
-
-        preparedStatement.setString(2, this.nome);
-        preparedStatement.setString(3, this.cognome);
-        preparedStatement.setString(4, this.email);
-        preparedStatement.setString(5, this.password);
-
-        preparedStatement.executeUpdate();
-    }*/
+    abstract public boolean registrazione(Database dbClass);
 }

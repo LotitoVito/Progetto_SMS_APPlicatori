@@ -1,5 +1,8 @@
 package it.uniba.dib.sms222329.classi;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -27,29 +30,21 @@ public class Relatore extends Supervisore {
 
     //Registrazione account su database
     @Override
-    public void registrazione(Database db) throws SQLException {
-        //Inserimento dati in tabella Relatore
-        String insertRelatore = "INSERT INTO Relatore VALUES (?,?,?,?,?)";
-        PreparedStatement preparedStatementRelatore = db.getConnection().prepareStatement(insertRelatore);
+    public boolean registrazione(Database dbClass) {
+        SQLiteDatabase db = dbClass.getWritableDatabase();
+        ContentValues cv = new ContentValues();
 
-        preparedStatementRelatore.setString(1, this.matricola);
-        preparedStatementRelatore.setString(2, this.nome);
-        preparedStatementRelatore.setString(3, this.cognome);
-        preparedStatementRelatore.setString(4, this.email);
-        preparedStatementRelatore.setString(5, this.password);
+        cv.put("Matricola", this.matricola);
+        cv.put("Nome", this.nome);
+        cv.put("Cognome", this.cognome);
+        cv.put("Email", this.email);
+        cv.put("Password", this.password);
 
-        preparedStatementRelatore.executeUpdate();
-
-        //Inserimento dati in tabella Utente
-        String insertUtente = "INSERT INTO Utenti VALUES (?,?,?,?,?)";
-        PreparedStatement preparedStatementUtente = db.getConnection().prepareStatement(insertUtente);
-
-        preparedStatementUtente.setString(1, this.email);
-        preparedStatementUtente.setString(2, this.nome);
-        preparedStatementUtente.setString(3, this.cognome);
-        preparedStatementUtente.setString(4, this.password);
-        preparedStatementUtente.setInt(5, 1);
-
-        preparedStatementUtente.executeUpdate();
+        long insert = db.insert("Relatore", null, cv);
+        if(insert != -1){
+            return true;
+        } else{
+            return false;
+        }
     }
 }

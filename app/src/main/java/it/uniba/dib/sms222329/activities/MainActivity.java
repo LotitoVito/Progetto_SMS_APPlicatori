@@ -4,13 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.activities.LoginActivity;
+import it.uniba.dib.sms222329.classi.CoRelatore;
+import it.uniba.dib.sms222329.classi.Relatore;
+import it.uniba.dib.sms222329.classi.Tesista;
+import it.uniba.dib.sms222329.database.Database;
 
 public class MainActivity extends AppCompatActivity {
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
