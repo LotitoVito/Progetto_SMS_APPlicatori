@@ -28,11 +28,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        View addButton = findViewById(R.id.signButton);
-        addButton.setOnClickListener(view -> {
-            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(i);
+        View signInButton = findViewById(R.id.signInButton);
+        signInButton.setOnClickListener(view -> {
+            Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(login);
         });
+
+        View signUpButton = findViewById(R.id.signUpButton);
+        signUpButton.setOnClickListener(view -> {
+            Intent signUp = new Intent(getApplicationContext(), SignUpActivity.class);
+            startActivity(signUp);
+        });
+
         super.onResume();
     }
 }

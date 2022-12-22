@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">LaureApp</string>
-    <string name="buttonUser">Sign in/Sign up</string>
     <string name="buttonGuest">Sign in as guest</string>
     <string name="orLabel">- You don\'t need to sign up? -</string>
     <string name="loginEmail">e-mail…</string>
     <string name="signInButton">Sign In</string>
-    <string name="insertPassword">Insert Password</string>
+    <string name="signUpButton">Sign Up</string>
+    <string name="signInTitle">Sign In…</string>
+    <string name="insertEmail">Email…</string>
+    <string name="insertPassword">Password…</string>
     <string name="recoverPassword">Recover Password</string>
     <string name="matricola">Matricola</string>
     <string name="Cognome" >Cognome</string>

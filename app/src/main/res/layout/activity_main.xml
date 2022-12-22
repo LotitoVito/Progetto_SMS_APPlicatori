@@ -23,42 +23,31 @@
         tools:ignore="TextContrastCheck,TextContrastCheck" />
 
     <Button
-        android:id="@+id/signButton"
+        android:id="@+id/signUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:width="280dp"
-        android:text="@string/buttonUser"
+        android:text="@string/signUpButton"
         android:textColor="#FFF3E0"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="TextContrastCheck,TextContrastCheck" />
 
-    <EditText
-        android:id="@+id/emailText"
+    <Button
+        android:id="@+id/signInButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:width="280dp"
-        android:autofillHints="emailAddress"
-        android:background="@android:color/white"
-        android:backgroundTint="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/loginEmail"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp"
-        android:textAlignment="textStart"
-        android:textColorHint="#757575"
-        app:boxCornerRadiusBottomEnd="8dp"
-        app:boxCornerRadiusBottomStart="8dp"
-        app:boxCornerRadiusTopEnd="8dp"
-        app:boxCornerRadiusTopStart="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/signButton"
+        android:text="@string/signInButton"
+        android:textColor="#FFF3E0"
+        app:layout_constraintBottom_toTopOf="@+id/signUpButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="DuplicateSpeakableTextCheck" />
+        tools:ignore="TextContrastCheck,TextContrastCheck" />
 
     <TextView
         android:id="@+id/textView2"
@@ -73,14 +62,16 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="420dp"
-        android:layout_height="491dp"
+        android:layout_width="246dp"
+        android:layout_height="302dp"
         android:layout_marginBottom="30dp"
         android:contentDescription="@string/app_name"
-        app:layout_constraintBottom_toTopOf="@+id/emailText"
+        app:layout_constraintBottom_toTopOf="@+id/signInButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ic_baseline_school_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

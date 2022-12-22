@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">LaureApp</string>
-    <string name="buttonUser">Login/Registrati</string>
     <string name="buttonGuest">Accedi come ospite</string>
     <string name="orLabel">- Oppure -</string>
     <string name="loginEmail">e-mail…</string>
     <string name="signInButton">Accedi</string>
-    <string name="insertPassword">Inserire la password</string>
+    <string name="signUpButton">Iscriviti</string>
+    <string name="signInTitle">Accedi…</string>
+    <string name="insertEmail">Email…</string>
+    <string name="insertPassword">Password…</string>
     <string name="recoverPassword">Password dimenticata</string>
     <string name="matricola">Matricola</string>
     <string name="Cognome">Cognome</string>
