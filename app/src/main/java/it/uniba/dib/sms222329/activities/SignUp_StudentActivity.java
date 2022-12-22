@@ -2,10 +2,12 @@ package it.uniba.dib.sms222329.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.classi.Tesista;
@@ -38,7 +40,12 @@ public class SignUp_StudentActivity extends AppCompatActivity {
             Tesista account = new Tesista(matricola.getText().toString(), nome.getText().toString(),
                     cognome.getText().toString(), email.getText().toString(), password.getText().toString(),
                     Integer.parseInt(media.getText().toString()), Integer.parseInt(numeroEsamiSvolti.getText().toString()));
-            account.registrazione(db);
+            if(account.registrazione(db)){
+                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(mainActivity);
+            } else{
+                Toast.makeText(this, "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

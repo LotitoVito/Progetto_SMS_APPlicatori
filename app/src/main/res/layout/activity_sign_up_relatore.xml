@@ -7,7 +7,7 @@
     tools:context=".activities.SignUp_RelatoreActivity">
 
     <EditText
-        android:id="@+id/editTextNumber4"
+        android:id="@+id/matricola"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="68dp"
@@ -23,7 +23,7 @@
         tools:ignore="LabelFor" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/cognome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="152dp"
@@ -39,7 +39,7 @@
         tools:ignore="LabelFor,SpeakableTextPresentCheck" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="236dp"
@@ -55,7 +55,7 @@
         tools:ignore="LabelFor" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress2"
+        android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="316dp"
@@ -71,7 +71,7 @@
         tools:ignore="LabelFor" />
 
     <EditText
-        android:id="@+id/editTextTextPassword3"
+        android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="408dp"
@@ -87,7 +87,7 @@
         tools:ignore="LabelFor" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/Signupbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="556dp"

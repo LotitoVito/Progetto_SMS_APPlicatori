@@ -46,7 +46,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(createTable);
         //CoRelatore
         createTable =   "CREATE TABLE IF NOT EXISTS CoRelatore(" +
-                        "ID INTEGER(10) PRIMARY KEY, AUTO_INCREMENT," +
+                        "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "Nome CHAR(255) NOT NULL," +
                         "Cognome CHAR(255) NOT NULL," +
                         "Email CHAR(255) NOT NULL REFERENCES Utenti(Email)," +
@@ -57,6 +57,7 @@ public class Database extends SQLiteOpenHelper {
                         "Email CHAR(255) PRIMARY KEY," +
                         "Password CHAR(255) NOT NULL," +
                         "TipoUtente INTEGER(1)NOT NULL );";
+        db.execSQL(createTable);
         //Tesi
         createTable =   "CREATE TABLE IF NOT EXISTS Tesi(" +
                         "IDTesi INTEGER(10) PRIMARY KEY," +
