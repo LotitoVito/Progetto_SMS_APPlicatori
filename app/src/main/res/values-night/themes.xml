@@ -1,8 +1,8 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.LaureApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/darkPrimaryColor</item>
+        <item name="colorPrimary">@color/darkSecondaryColorDark</item>
         <item name="colorPrimaryVariant">@color/darkPrimaryColorDark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
