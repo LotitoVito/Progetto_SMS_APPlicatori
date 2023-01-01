@@ -19,6 +19,10 @@ public class CoRelatore extends Supervisore {
         this.password = password;
     }
 
+    public CoRelatore(){
+
+    }
+
     public String getId() {
         return id;
     }
@@ -28,7 +32,7 @@ public class CoRelatore extends Supervisore {
     }
 
     //Registrazione account su database
-    @Override
+
     public boolean registrazione(Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvCoRelatore = new ContentValues();

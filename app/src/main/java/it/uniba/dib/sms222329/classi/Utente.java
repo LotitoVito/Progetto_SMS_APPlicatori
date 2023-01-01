@@ -1,4 +1,6 @@
 package it.uniba.dib.sms222329.classi;
 
-public class Utente {
+import java.io.Serializable;
+
+public class Utente implements Serializable {
 }

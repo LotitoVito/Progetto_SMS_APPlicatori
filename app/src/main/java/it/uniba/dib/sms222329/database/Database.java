@@ -33,7 +33,7 @@ public class Database extends SQLiteOpenHelper {
                         "Email CHAR(255) NOT NULL REFERENCES Utenti(Email)," +
                         "Password CHAR(255) NOT NULL," +
                         "MediaVoti INTEGER(10) NOT NULL," +
-                        "EsamiSvolti CHAR(255) NOT NULL," +
+                        "EsamiSvolti INTEGER(10) NOT NULL," +
                         "IdTesiScelta INTEGER(10) REFERENCES TesiScelta(TesiIDTesi));";
         db.execSQL(createTable);
         //Relatore

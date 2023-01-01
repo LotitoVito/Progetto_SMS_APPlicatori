@@ -12,7 +12,7 @@ import it.uniba.dib.sms222329.database.Database;
 public class Tesista extends UtenteRegistrato {
 
     private String matricola;
-    //private Tesi tesiScelta;
+    private int tesiScelta;
     private float media;
     private int numeroEsamiSvolti;
 
@@ -25,7 +25,9 @@ public class Tesista extends UtenteRegistrato {
         this.media = media;
         this.numeroEsamiSvolti = numeroEsamiSvolti;
     }
+    public Tesista(){
 
+    }
     public String getMatricola() {
         return matricola;
     }
@@ -50,8 +52,14 @@ public class Tesista extends UtenteRegistrato {
         this.numeroEsamiSvolti = esamiSvolti;
     }
 
+    public void setTesiScelta(int tesiScelta) {
+        this.tesiScelta = tesiScelta;
+    }
+    public int getTesiScelta(){
+        return tesiScelta;
+    }
+
     //Registrazione account su database
-    @Override
     public boolean registrazione(Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvTesista = new ContentValues();
@@ -79,4 +87,6 @@ public class Tesista extends UtenteRegistrato {
         }
         return false;
     }
+
+
 }

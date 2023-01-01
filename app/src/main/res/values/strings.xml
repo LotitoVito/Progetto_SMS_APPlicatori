@@ -8,9 +8,9 @@
     <string name="signInTitle">Sign In…</string>
     <string name="insertEmail">Email…</string>
     <string name="insertPassword">Password…</string>
-    <string name="recoverPassword">Recover Password</string>
+    <string name="recoverPassword">Forgot Password</string>
     <string name="matricola">Matricola</string>
-    <string name="Cognome" >Cognome</string>
+    <string name="Cognome">Cognome</string>
     <string name="nome">Nome</string>
     <string name="email">Email</string>
     <string name="password">Password</string>

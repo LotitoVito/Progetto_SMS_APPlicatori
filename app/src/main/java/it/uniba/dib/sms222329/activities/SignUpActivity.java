@@ -26,12 +26,9 @@ public class SignUpActivity extends AppCompatActivity {
         Button relatoreButton = findViewById(R.id.Relatorebutton);
         Button corelatoreButton = findViewById(R.id.Corelatorebutton);
 
-        studentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent signupStudente = new Intent(getApplicationContext(), SignUp_StudentActivity.class);
-                startActivity(signupStudente);
-            }
+        studentButton.setOnClickListener(view -> {
+            Intent signupStudente = new Intent(getApplicationContext(), SignUp_StudentActivity.class);
+            startActivity(signupStudente);
         });
 
         relatoreButton.setOnClickListener(new View.OnClickListener() {

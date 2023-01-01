@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         View signInButton = findViewById(R.id.signInButton);
         signInButton.setOnClickListener(view -> {
-            Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+            Intent login = new Intent(getApplicationContext(), LoginActivity.class); //il primo arg sempre così, la seconda è l'activity a cui vuoi andare
             startActivity(login);
         });
 

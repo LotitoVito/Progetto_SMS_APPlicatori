@@ -20,6 +20,10 @@ public class Relatore extends Supervisore {
         this.password = password;
     }
 
+    public Relatore(){
+
+    }
+
     public String getMatricola() {
         return matricola;
     }
@@ -29,10 +33,10 @@ public class Relatore extends Supervisore {
     }
 
     //Registrazione account su database
-    @Override
-    public boolean registrazione(Database dbClass) {
-        SQLiteDatabase db = dbClass.getWritableDatabase();
-        ContentValues cvRelatore = new ContentValues();
+
+    public boolean registrazione(Database dbClass) { //passo il db creato nell'activity, è una variabile
+        SQLiteDatabase db = dbClass.getWritableDatabase();  //contiene i metodi per accedere al db scrivibile in questo caso
+        ContentValues cvRelatore = new ContentValues(); //classe di sqllitedb, per scrivere, è un contenitore di valori
 
         cvRelatore.put("Matricola", this.matricola);
         cvRelatore.put("Nome", this.nome);
@@ -40,10 +44,12 @@ public class Relatore extends Supervisore {
         cvRelatore.put("Email", this.email);
         cvRelatore.put("Password", this.password);
 
-        long insertRelatore = db.insert("Relatore", null, cvRelatore);
-        if(insertRelatore != -1){
-            ContentValues cvUtente = new ContentValues();
-
+        long insertRelatore = db.insert("Relatore", null, cvRelatore);// scriv il nome della tabella -> db.insert è un metodo mentre cv relatore contiene le variabili da scrivere nel db
+        if(insertRelatore != -1){//se va bene l inserimento
+            ContentValues cvUtente = new ContentValues(); /* ricreo un nuovo contenitore di valori perchè
+            la tabella dove devo reinserire i dati ha in questo caso meno colonne (e diverse) rispetto alla precedente
+            (possono essere omesse delle colonne in cui non si vogliono omettere dei valori)
+            se inserisco il nome colonna errato mi da ovviamente un errore*/
             cvUtente.put("Email", this.email);
             cvUtente.put("Password", this.password);
             cvUtente.put("TipoUtente", 1);

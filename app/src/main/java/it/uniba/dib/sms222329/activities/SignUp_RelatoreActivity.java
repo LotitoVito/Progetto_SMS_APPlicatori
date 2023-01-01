@@ -28,7 +28,7 @@ public class SignUp_RelatoreActivity extends AppCompatActivity {
         super.onResume();
 
         View registerButton = findViewById(R.id.Signupbutton);
-        EditText matricola = findViewById(R.id.matricola);
+        EditText matricola = findViewById(R.id.matricola); //prendono al casella dell'app dalla quale tramite il gettext prenderò il valore inserito
         EditText nome = findViewById(R.id.nome);
         EditText cognome = findViewById(R.id.cognome);
         EditText email = findViewById(R.id.email);
@@ -37,11 +37,11 @@ public class SignUp_RelatoreActivity extends AppCompatActivity {
         registerButton.setOnClickListener(view -> {
             Relatore account = new Relatore(matricola.getText().toString(), nome.getText().toString(),
                     cognome.getText().toString(), email.getText().toString(), password.getText().toString());
-            if(account.registrazione(db)){
+            if(account.registrazione(db)){ //in base al risultato dell boolean sceglie il ramo if
                 Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(mainActivity);
             } else{
-                Toast.makeText(this, "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Registrazione non riuscita", Toast.LENGTH_SHORT).show(); //metodo android
             }
         });
     }

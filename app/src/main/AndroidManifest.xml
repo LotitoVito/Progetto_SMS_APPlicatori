@@ -13,6 +13,13 @@
         android:theme="@style/Theme.LaureApp"
         tools:targetApi="31">
         <activity
+            android:name=".activities.UtenteLoggato"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activities.SignUp_RelatoreActivity"
             android:exported="false">
             <meta-data
@@ -42,7 +49,8 @@
         </activity>
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="false">
+            android:exported="false"
+            android:label="@string/signInTitle">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
