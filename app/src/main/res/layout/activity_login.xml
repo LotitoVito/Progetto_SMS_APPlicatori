@@ -42,7 +42,7 @@
             android:autofillHints="emailAddress"
             android:ems="10"
             android:hint="@string/insertEmail"
-            android:inputType="textPassword"
+            android:inputType="textAutoComplete"
             android:minHeight="48dp"
             app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
             app:layout_constraintEnd_toEndOf="parent"
