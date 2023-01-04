@@ -34,7 +34,19 @@ public class Database extends SQLiteOpenHelper {
                         "Password CHAR(255) NOT NULL," +
                         "MediaVoti INTEGER(10) NOT NULL," +
                         "EsamiSvolti INTEGER(10) NOT NULL," +
-                        "IdTesiScelta INTEGER(10) REFERENCES TesiScelta(TesiIDTesi));";
+                        "IdTesiScelta INTEGER(10) REFERENCES TesiScelta(TesiIDTesi)," +
+                        "IdCorsoStudi INTEGER(10) REFERENCES CorsiStudio(ID)," +
+                        "IdUniversita INTEGER(10) REFERENCES Universita(ID));";
+        db.execSQL(createTable);
+        //Università
+        createTable =   "CREATE TABLE IF NOT EXISTS Universita(" +
+                        "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "Nome CHAR(255) NOT NULL)";
+        db.execSQL(createTable);
+        //CorsoStudi
+        createTable =   "CREATE TABLE IF NOT EXISTS CorsiStudio(" +
+                        "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "Nome CHAR(255) NOT NULL)";
         db.execSQL(createTable);
         //Relatore
         createTable =   "CREATE TABLE IF NOT EXISTS Relatore(" +
@@ -42,7 +54,8 @@ public class Database extends SQLiteOpenHelper {
                         "Nome CHAR(255) NOT NULL," +
                         "Cognome CHAR(255) NOT NULL," +
                         "Email CHAR(255) NOT NULL REFERENCES Utenti(Email)," +
-                        "Password CHAR(255) NOT NULL);";
+                        "Password CHAR(255) NOT NULL," +
+                        "MateriaInsegnata CHAR(255) NOT NULL);";
         db.execSQL(createTable);
         //CoRelatore
         createTable =   "CREATE TABLE IF NOT EXISTS CoRelatore(" +

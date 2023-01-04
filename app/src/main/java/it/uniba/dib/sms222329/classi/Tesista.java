@@ -15,6 +15,8 @@ public class Tesista extends UtenteRegistrato {
     private int tesiScelta;
     private float media;
     private int numeroEsamiSvolti;
+    private String IDCorsoStudi;
+    private String IDUniversita;
 
     public Tesista(String matricola, String nome, String cognome, String email, String password, float media, int numeroEsamiSvolti) {
         this.matricola = matricola;
@@ -25,9 +27,8 @@ public class Tesista extends UtenteRegistrato {
         this.media = media;
         this.numeroEsamiSvolti = numeroEsamiSvolti;
     }
-    public Tesista(){
+    public Tesista(){}
 
-    }
     public String getMatricola() {
         return matricola;
     }
@@ -52,12 +53,21 @@ public class Tesista extends UtenteRegistrato {
         this.numeroEsamiSvolti = esamiSvolti;
     }
 
-    public void setTesiScelta(int tesiScelta) {
-        this.tesiScelta = tesiScelta;
-    }
     public int getTesiScelta(){
         return tesiScelta;
     }
+
+    public void setTesiScelta(int tesiScelta) {
+        this.tesiScelta = tesiScelta;
+    }
+
+    public String getIDCorsoStudi() {return IDCorsoStudi;}
+
+    public void setIDCorsoStudi(String IDCorsoStudi) {this.IDCorsoStudi = IDCorsoStudi;}
+
+    public String getIDUniversita() {return IDUniversita;}
+
+    public void setIDUniversita(String IDUniversita) {this.IDUniversita = IDUniversita;}
 
     //Registrazione account su database
     public boolean registrazione(Database dbClass) {
@@ -87,6 +97,4 @@ public class Tesista extends UtenteRegistrato {
         }
         return false;
     }
-
-
 }

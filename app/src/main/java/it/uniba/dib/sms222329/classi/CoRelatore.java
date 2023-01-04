@@ -19,9 +19,7 @@ public class CoRelatore extends Supervisore {
         this.password = password;
     }
 
-    public CoRelatore(){
-
-    }
+    public CoRelatore() {}
 
     public String getId() {
         return id;
