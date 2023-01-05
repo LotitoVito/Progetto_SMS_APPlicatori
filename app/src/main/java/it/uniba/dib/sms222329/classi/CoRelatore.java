@@ -12,6 +12,15 @@ public class CoRelatore extends Supervisore {
 
     private String id;
 
+    public CoRelatore(String id, String nome, String cognome, String email, String password) {
+        this.id = id;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+        this.password = password;
+    }
+
+    //Costruttore per registrazione
     public CoRelatore(String nome, String cognome, String email, String password) {
         this.nome = nome;
         this.cognome = cognome;

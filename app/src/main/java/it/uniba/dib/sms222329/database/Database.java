@@ -79,9 +79,13 @@ public class Database extends SQLiteOpenHelper {
                         "StatoDisponibilita NUMBER(1) NOT NULL," +
                         "NumeroVisualizzazioni INTEGER(10) NOT NULL," +
                         "MatricolaRelatore INTEGER(10) NOT NULL REFERENCES Relatore(Matricola)," +
-                        "IDCorelatore INTEGER(10) REFERENCES CoRelatore (ID)," +
                         "LinkMateriale CHAR(255) NOT NULL," +   //Da rivedere
                         "QRCode INTEGER(10) NOT NULL);";
+        db.execSQL(createTable);
+        //CorelatoriTesi
+        createTable =   "CREATE TABLE IF NOT EXISTS CorelatoriTesi(" +
+                        "IDTesi INTEGER(10) PRIMARY KEY," +
+                        "IDCorelatore CHAR(255) PRIMARY KEY);";
         db.execSQL(createTable);
         //Vincoli
         createTable =   "CREATE TABLE IF NOT EXISTS Vincoli(" +

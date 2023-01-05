@@ -1,6 +1,13 @@
 package it.uniba.dib.sms222329.classi;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
+
 import java.sql.Date;
+
+import it.uniba.dib.sms222329.database.Database;
 
 public class Tesi {
 
@@ -26,6 +33,16 @@ public class Tesi {
         this.linkMateriale = linkMateriale;
         this.vincoli = vincoli;
         this.QRCode = QRCode;
+    }
+
+    public Tesi(String argomenti, Date dataPubblicazione, boolean statoDisponibilita, int numeroVisualizzazioni, String idRelatore, String[] idCorelatore, Vincoli vincoli) {
+        this.argomenti = argomenti;
+        this.dataPubblicazione = new java.sql.Date(System.currentTimeMillis());
+        this.statoDisponibilita = true;
+        this.numeroVisualizzazioni = 0;
+        this.idRelatore = idRelatore;
+        this.idCorelatore = idCorelatore;
+        this.vincoli = vincoli;
     }
 
     public String getId() {
@@ -106,5 +123,70 @@ public class Tesi {
 
     public void setQRCode(String QRCode) {
         this.QRCode = QRCode;
+    }
+
+    public boolean VerificaRelatore(Database dbClass){
+        SQLiteDatabase db = dbClass.getReadableDatabase();
+        String query = "SELECT Matricola FROM Relatore WHERE Matricola = '" + this.idRelatore + "';";
+        Cursor cursore = db.rawQuery(query, null);
+
+        if (cursore.getCount() != 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean VerificaCorelatori(Database dbClass){
+        SQLiteDatabase db = dbClass.getReadableDatabase();
+        String query = "SELECT Matricola FROM Relatore WHERE Matricola = '" + this.idRelatore + "';";
+        Cursor cursore = db.rawQuery(query, null);
+
+        if (cursore.getCount() != 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean RegistrazioneTesi(Database dbClass) {
+        SQLiteDatabase db = dbClass.getWritableDatabase();
+        ContentValues cvTesi = new ContentValues();
+
+        cvTesi.put("IDTesi", this.id);
+        cvTesi.put("Argomenti", this.argomenti);
+        cvTesi.put("DataPubblicazione", String.valueOf(this.dataPubblicazione));
+        cvTesi.put("StatoDisponibilita", this.statoDisponibilita);
+        cvTesi.put("NumeroVisualizzazioni", this.numeroVisualizzazioni);
+        cvTesi.put("MatricolaRelatore", this.idRelatore);
+        cvTesi.put("LinkMateriale", this.linkMateriale);
+        cvTesi.put("QRCode", this.QRCode);
+
+        long insertTesi = db.insert("Tesi", null, cvTesi);
+        if(insertTesi != -1){
+            ContentValues cvCorelatoriTesi = new ContentValues();
+
+            for(int i=0; i<idCorelatore.length; i++){
+                cvCorelatoriTesi.put("IDTesi", this.id);
+                cvCorelatoriTesi.put("IDCorelatore", this.idCorelatore[i]);
+
+                long insertCorelatoriTesi = db.insert("CorelatoriTesi", null, cvCorelatoriTesi);
+                if(insertTesi == -1){
+                    return false;
+                }
+            }
+
+            ContentValues cvVincoli = new ContentValues();
+
+            cvVincoli.put("IDTesi", this.id);
+            cvVincoli.put("Tempistiche", this.vincoli.getTempistiche());
+            cvVincoli.put("MediaVotiMinima", this.vincoli.getMediaVotiMinima());
+            cvVincoli.put("EsamiNecessari", this.vincoli.getEsamiNecessari());
+            cvVincoli.put("SkillRichieste", this.vincoli.getCapacitaRichieste());
+
+            long insertVincoli = db.insert("Vincoli", null, cvVincoli);
+            if(insertVincoli != -1){
+                return true;
+            }
+        }
+        return false;
     }
 }

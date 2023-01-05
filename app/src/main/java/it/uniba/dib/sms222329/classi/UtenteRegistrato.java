@@ -60,9 +60,6 @@ public class UtenteRegistrato extends Utente {
         return TipoUtente;
     }
 
-
-
-
     public boolean LoginStatus(Database dbClass) {
         String query = "SELECT TipoUtente FROM Utenti WHERE Email = '" + email + "' AND Password = '" + password + "';";
         SQLiteDatabase db = dbClass.getReadableDatabase();
