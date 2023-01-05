@@ -73,19 +73,15 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(createTable);
         //Tesi
         createTable =   "CREATE TABLE IF NOT EXISTS Tesi(" +
-                        "IDTesi INTEGER(10) PRIMARY KEY," +
+                        "IDTesi INTEGER(10) PRIMARY KEY AUTOINCREMENT," +
                         "Argomenti CHAR(255) NOT NULL," +
                         "DataPubblicazione TIME(6) NOT NULL," +
+                        "StatoDisponibilita NUMBER(1) NOT NULL," +
+                        "NumeroVisualizzazioni INTEGER(10) NOT NULL," +
                         "MatricolaRelatore INTEGER(10) NOT NULL REFERENCES Relatore(Matricola)," +
                         "IDCorelatore INTEGER(10) REFERENCES CoRelatore (ID)," +
-                        "QRCode INTEGER(10)," +
-                        "UtenteIDUtente INTEGER(10)," +
-                        "UtenteIDUtente2 INTEGER(10));";
-        db.execSQL(createTable);
-        //Materiale
-        createTable =   "CREATE TABLE IF NOT EXISTS Materiale(" +
-                        "IDTesi INTEGER (10)PRIMARY KEY REFERENCES Tesi(IDTesi)," +
-                        "LinkMateriale CHAR(255));";
+                        "LinkMateriale CHAR(255) NOT NULL," +   //Da rivedere
+                        "QRCode INTEGER(10) NOT NULL);";
         db.execSQL(createTable);
         //Vincoli
         createTable =   "CREATE TABLE IF NOT EXISTS Vincoli(" +
