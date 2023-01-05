@@ -23,7 +23,7 @@
     <string name="Password">password</string>
     <string name="Signup">Signup</string>
     <string name="atMricola">Matricola</string>
-    <string name="Matricola">matricola</string>
+    <string name="Matricola">Matricola</string>
     <string name="studente" translatable="false">Studente</string>
     <string name="relatore" translatable="false">Relatore</string>
     <string name="co_relatore" translatable="false">Co-relatore</string>
@@ -31,6 +31,7 @@
     <string name="nome_corelatore" translatable="false">Nome</string>
     <string name="email_corelatore" translatable="false">Email</string>
     <string name="password_corelatore" translatable="false">Password</string>
-    <string name="signup_corelatore" translatable="false">Signup</string>
+    <string name="signup_corelatore">Signup</string>
+
 
 </resources>
