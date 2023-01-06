@@ -39,11 +39,22 @@ public class SignUp_StudentActivity extends AppCompatActivity {
             Tesista account = new Tesista(matricola.getText().toString(), nome.getText().toString(),
                     cognome.getText().toString(), email.getText().toString(), password.getText().toString(),
                     Integer.parseInt(media.getText().toString()), Integer.parseInt(numeroEsamiSvolti.getText().toString()));
-            if(account.registrazione(db)){
-                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(mainActivity);
+
+            if (!db.VerificaDatoEsistente("Matricola", "Tesista", account.getMatricola())){
+                if(!db.VerificaDatoEsistente("Email", "Utenti", account.getEmail())){
+
+                    if(account.registrazione(db)){
+                        Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(mainActivity);
+                    } else{
+                        Toast.makeText(this, "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else{
+                    Toast.makeText(this, "Email già esistente", Toast.LENGTH_SHORT).show();
+                }
             } else{
-                Toast.makeText(this, "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Matricola già esistente", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -36,11 +36,22 @@ public class SignUp_RelatoreActivity extends AppCompatActivity {
         registerButton.setOnClickListener(view -> {
             Relatore account = new Relatore(matricola.getText().toString(), nome.getText().toString(),
                     cognome.getText().toString(), email.getText().toString(), password.getText().toString());
-            if(account.registrazione(db)){
-                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(mainActivity);
-            } else{
-                Toast.makeText(this, "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
+
+            if(!db.VerificaDatoEsistente("Matricola", "Relatore", account.getMatricola())){
+                if(!db.VerificaDatoEsistente("Email", "Utenti", account.getEmail())){
+
+                    if(account.registrazione(db)){
+                        Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(mainActivity);
+                    } else{
+                        Toast.makeText(this, "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else{
+                    Toast.makeText(this, "Email già esistente", Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                Toast.makeText(this, "Matricola già esistente", Toast.LENGTH_SHORT).show();
             }
         });
     }

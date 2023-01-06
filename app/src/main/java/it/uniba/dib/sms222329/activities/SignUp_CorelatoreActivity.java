@@ -35,11 +35,18 @@ public class SignUp_CorelatoreActivity extends AppCompatActivity {
         registerButton.setOnClickListener(view -> {
             CoRelatore account = new CoRelatore(nome.getText().toString(), cognome.getText().toString(),
                     email.getText().toString(), password.getText().toString());
-            if(account.registrazione(db)){
-                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(mainActivity);
+
+            if(!db.VerificaDatoEsistente("Email", "Utenti", account.getEmail())){
+
+                if(account.registrazione(db)){
+                    Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(mainActivity);
+                } else{
+                    Toast.makeText(this, "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
+                }
+
             } else{
-                Toast.makeText(this, "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Email già esistente", Toast.LENGTH_SHORT).show();
             }
         });
     }

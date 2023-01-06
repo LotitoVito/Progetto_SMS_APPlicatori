@@ -55,7 +55,7 @@ public class Database extends SQLiteOpenHelper {
                         "Cognome CHAR(255) NOT NULL," +
                         "Email CHAR(255) NOT NULL REFERENCES Utenti(Email)," +
                         "Password CHAR(255) NOT NULL," +
-                        "MateriaInsegnata CHAR(255) NOT NULL);";
+                        "MateriaInsegnata CHAR(255));";
         db.execSQL(createTable);
         //CoRelatore
         createTable =   "CREATE TABLE IF NOT EXISTS CoRelatore(" +
@@ -73,23 +73,15 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(createTable);
         //Tesi
         createTable =   "CREATE TABLE IF NOT EXISTS Tesi(" +
-                        "IDTesi INTEGER(10) PRIMARY KEY AUTOINCREMENT," +
+                        "IDTesi INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "Argomenti CHAR(255) NOT NULL," +
                         "DataPubblicazione TIME(6) NOT NULL," +
                         "StatoDisponibilita NUMBER(1) NOT NULL," +
                         "NumeroVisualizzazioni INTEGER(10) NOT NULL," +
                         "MatricolaRelatore INTEGER(10) NOT NULL REFERENCES Relatore(Matricola)," +
-                        "LinkMateriale CHAR(255) NOT NULL," +   //Da rivedere
-                        "QRCode INTEGER(10) NOT NULL);";
-        db.execSQL(createTable);
-        //CorelatoriTesi
-        createTable =   "CREATE TABLE IF NOT EXISTS CorelatoriTesi(" +
-                        "IDTesi INTEGER(10) PRIMARY KEY," +
-                        "IDCorelatore CHAR(255) PRIMARY KEY);";
-        db.execSQL(createTable);
-        //Vincoli
-        createTable =   "CREATE TABLE IF NOT EXISTS Vincoli(" +
-                        "IDTesi INTEGER(10) PRIMARY KEY REFERENCES Tesi(IDTesi)," +
+                        "IDCorelatore INTEGER(10) REFERENCES CoRelatore (ID)," +
+                        "LinkMateriale CHAR(255)," +   //Da rivedere
+                        "QRCode INTEGER(10)," +
                         "Tempistiche INTEGER(10) NOT NULL," +
                         "MediaVotiMinima INTEGER(10) NOT NULL," +
                         "EsamiNecessari CHAR(255) NOT NULL," +
@@ -130,4 +122,15 @@ public class Database extends SQLiteOpenHelper {
     //Viene chiamato nel caso di aggiornamento della versione del database
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1){}
+
+    public boolean VerificaDatoEsistente(String campo, String tabella, String dato){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + campo + " FROM " + tabella + " WHERE " + campo + " = '" + dato + "';";
+        Cursor cursore = db.rawQuery(query, null);
+
+        if (cursore.getCount() != 0) {
+            return true;
+        }
+        return false;
+    }
 }
