@@ -13,10 +13,11 @@ public class Relatore extends Supervisore {
     private String matricola;
     private String materiaInsegnata;
 
-    public Relatore(String matricola, String nome, String cognome, String email, String password) {
+    public Relatore(String matricola, String nome, String cognome, String materiaInsegnata, String email, String password) {
         this.matricola = matricola;
         this.nome = nome;
         this.cognome = cognome;
+        this.materiaInsegnata = materiaInsegnata;
         this.email = email;
         this.password = password;
     }
@@ -43,6 +44,7 @@ public class Relatore extends Supervisore {
         cvRelatore.put("Matricola", this.matricola);
         cvRelatore.put("Nome", this.nome);
         cvRelatore.put("Cognome", this.cognome);
+        cvRelatore.put("MateriaInsegnata", this.materiaInsegnata);
         cvRelatore.put("Email", this.email);
         cvRelatore.put("Password", this.password);
 

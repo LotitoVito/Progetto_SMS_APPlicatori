@@ -28,14 +28,16 @@ public class SignUp_RelatoreActivity extends AppCompatActivity {
 
         View registerButton = findViewById(R.id.Signupbutton);
         EditText matricola = findViewById(R.id.matricola);
-        EditText nome = findViewById(R.id.nome);
         EditText cognome = findViewById(R.id.cognome);
+        EditText nome = findViewById(R.id.nome);
+        EditText materia = findViewById(R.id.materia);
         EditText email = findViewById(R.id.email);
         EditText password = findViewById(R.id.password);
 
         registerButton.setOnClickListener(view -> {
             Relatore account = new Relatore(matricola.getText().toString(), nome.getText().toString(),
-                    cognome.getText().toString(), email.getText().toString(), password.getText().toString());
+                    cognome.getText().toString(), materia.getText().toString(), email.getText().toString(),
+                    password.getText().toString());
 
             if(!db.VerificaDatoEsistente("Matricola", "Relatore", account.getMatricola())){
                 if(!db.VerificaDatoEsistente("Email", "Utenti", account.getEmail())){

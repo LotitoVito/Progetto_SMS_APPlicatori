@@ -33,12 +33,12 @@ public class SignUp_StudentActivity extends AppCompatActivity {
         EditText email = findViewById(R.id.email);
         EditText password = findViewById(R.id.password);
         EditText media = findViewById(R.id.media);
-        EditText numeroEsamiSvolti = findViewById(R.id.numeroEsamiSvolti);
+        EditText numeroEsamiMancanti = findViewById(R.id.numeroEsamiMancanti);
 
         registerButton.setOnClickListener(view -> {
             Tesista account = new Tesista(matricola.getText().toString(), nome.getText().toString(),
                     cognome.getText().toString(), email.getText().toString(), password.getText().toString(),
-                    Integer.parseInt(media.getText().toString()), Integer.parseInt(numeroEsamiSvolti.getText().toString()));
+                    Integer.parseInt(media.getText().toString()), Integer.parseInt(numeroEsamiMancanti.getText().toString()));
 
             if (!db.VerificaDatoEsistente("Matricola", "Tesista", account.getMatricola())){
                 if(!db.VerificaDatoEsistente("Email", "Utenti", account.getEmail())){

@@ -24,13 +24,13 @@ public class Tesi {
     private String QRCode;
     private String tempistiche;
     private int mediaVotiMinima;
-    private int esamiNecessari;
+    private int esamiMancantiNecessari;
     private String capacitaRichieste;
 
 
     public Tesi(String id, String argomenti, Date dataPubblicazione, boolean statoDisponibilita, int numeroVisualizzazioni,
                 String idRelatore, String idCorelatore, String linkMateriale, String QRCode,
-                String tempistiche, int mediaVotiMinima, int esamiNecessari, String capacitaRichieste) {
+                String tempistiche, int mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste) {
         this.id = id;
         this.argomenti = argomenti;
         this.dataPubblicazione = dataPubblicazione;
@@ -42,13 +42,13 @@ public class Tesi {
         this.QRCode = QRCode;
         this.tempistiche = tempistiche;
         this.mediaVotiMinima = mediaVotiMinima;
-        this.esamiNecessari = esamiNecessari;
+        this.esamiMancantiNecessari = esamiMancantiNecessari;
         this.capacitaRichieste = capacitaRichieste;
     }
 
     //Usato per al registrazione
     public Tesi(String argomenti, String idRelatore, String idCorelatore, String tempistiche,
-                int mediaVotiMinima, int esamiNecessari, String capacitaRichieste) {
+                int mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste) {
         this.argomenti = argomenti;
         this.dataPubblicazione = new java.sql.Date(System.currentTimeMillis());
         this.statoDisponibilita = true;
@@ -57,7 +57,7 @@ public class Tesi {
         this.idCorelatore = idCorelatore;
         this.tempistiche = tempistiche;
         this.mediaVotiMinima = mediaVotiMinima;
-        this.esamiNecessari = esamiNecessari;
+        this.esamiMancantiNecessari = esamiMancantiNecessari;
         this.capacitaRichieste = capacitaRichieste;
     }
 
@@ -131,9 +131,9 @@ public class Tesi {
 
     public void setMediaVotiMinima(int mediaVotiMinima) {this.mediaVotiMinima = mediaVotiMinima;}
 
-    public int getEsamiNecessari() {return esamiNecessari;}
+    public int getEsamiMancantiNecessari() {return esamiMancantiNecessari;}
 
-    public void setEsamiNecessari(int esamiNecessari) {this.esamiNecessari = esamiNecessari;}
+    public void setesamiMancantiNecessari(int esamiMancantiNecessari) {this.esamiMancantiNecessari = esamiMancantiNecessari;}
 
     public String getCapacitaRichieste() {return capacitaRichieste;}
 
@@ -156,7 +156,7 @@ public class Tesi {
             cvTesi.put("QRCode", this.QRCode);
             cvTesi.put("Tempistiche", this.tempistiche);
             cvTesi.put("MediaVotiMinima", this.mediaVotiMinima);
-            cvTesi.put("EsamiNecessari", this.esamiNecessari);
+            cvTesi.put("EsamiMancantiNecessari", this.esamiMancantiNecessari);
             cvTesi.put("SkillRichieste", this.capacitaRichieste);
 
             long insertTesi = db.insert("Tesi", null, cvTesi);

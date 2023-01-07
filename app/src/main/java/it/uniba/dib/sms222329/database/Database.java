@@ -33,14 +33,27 @@ public class Database extends SQLiteOpenHelper {
                 "Email CHAR(255) NOT NULL REFERENCES Utenti(Email)," +
                 "Password CHAR(255) NOT NULL," +
                 "MediaVoti INTEGER(10) NOT NULL," +
-                "EsamiSvolti INTEGER(10) NOT NULL," +
-                "IdTesiScelta INTEGER(10) REFERENCES TesiScelta(TesiIDTesi));";
+                "NumeroEsamiMancanti INTEGER(10) NOT NULL," +
+                "IdTesiScelta INTEGER(10) REFERENCES TesiScelta(TesiIDTesi)," +
+                "IdCorsoStudi INTEGER(10) REFERENCES CorsiStudio(ID)," +
+                "IdUniversita INTEGER(10) REFERENCES Universita(ID));";
+        db.execSQL(createTable);
+        //Università
+        createTable =   "CREATE TABLE IF NOT EXISTS Universita(" +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Nome CHAR(255) NOT NULL)";
+        db.execSQL(createTable);
+        //CorsoStudi
+        createTable =   "CREATE TABLE IF NOT EXISTS CorsiStudio(" +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Nome CHAR(255) NOT NULL)";
         db.execSQL(createTable);
         //Relatore
         createTable =   "CREATE TABLE IF NOT EXISTS Relatore(" +
                 "Matricola INTEGER(10) PRIMARY KEY," +
                 "Nome CHAR(255) NOT NULL," +
                 "Cognome CHAR(255) NOT NULL," +
+                "MateriaInsegnata CHAR(255) NOT NULL," +
                 "Email CHAR(255) NOT NULL REFERENCES Utenti(Email)," +
                 "Password CHAR(255) NOT NULL);";
         db.execSQL(createTable);
@@ -60,26 +73,18 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(createTable);
         //Tesi
         createTable =   "CREATE TABLE IF NOT EXISTS Tesi(" +
-                "IDTesi INTEGER(10) PRIMARY KEY," +
+                "IDTesi INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "Argomenti CHAR(255) NOT NULL," +
                 "DataPubblicazione TIME(6) NOT NULL," +
+                "StatoDisponibilita NUMBER(1) NOT NULL," +
+                "NumeroVisualizzazioni INTEGER(10) NOT NULL," +
                 "MatricolaRelatore INTEGER(10) NOT NULL REFERENCES Relatore(Matricola)," +
                 "IDCorelatore INTEGER(10) REFERENCES CoRelatore (ID)," +
+                "LinkMateriale CHAR(255)," +   //Da rivedere
                 "QRCode INTEGER(10)," +
-                "UtenteIDUtente INTEGER(10)," +
-                "UtenteIDUtente2 INTEGER(10));";
-        db.execSQL(createTable);
-        //Materiale
-        createTable =   "CREATE TABLE IF NOT EXISTS Materiale(" +
-                "IDTesi INTEGER (10)PRIMARY KEY REFERENCES Tesi(IDTesi)," +
-                "LinkMateriale CHAR(255));";
-        db.execSQL(createTable);
-        //Vincoli
-        createTable =   "CREATE TABLE IF NOT EXISTS Vincoli(" +
-                "IDTesi INTEGER(10) PRIMARY KEY REFERENCES Tesi(IDTesi)," +
                 "Tempistiche INTEGER(10) NOT NULL," +
                 "MediaVotiMinima INTEGER(10) NOT NULL," +
-                "EsamiNecessari CHAR(255) NOT NULL," +
+                "EsamiMancantiNecessari CHAR(255) NOT NULL," +
                 "SkillRichieste CHAR(255) NOT NULL);";
         db.execSQL(createTable);
         //TesiScelta

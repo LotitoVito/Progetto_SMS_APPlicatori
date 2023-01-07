@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import it.uniba.dib.sms222329.R;
@@ -33,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText emailIns = findViewById(R.id.email);   //assegno la casella email alla variabile
         EditText editTextTextPassword = findViewById(R.id.editTextTextPassword);
 
-        Button forgotPasswordButton = findViewById(R.id.textView3);
+        TextView forgotPasswordButton = findViewById(R.id.textView3);
 
         signInButton.setOnClickListener(view -> {
 
@@ -45,7 +46,6 @@ public class LoginActivity extends AppCompatActivity {
                 Intent UtenteLoggato = new Intent(getApplicationContext(), UtenteLoggato.class);
                 UtenteLoggato.putExtra("utentePassato", Utente);
                 startActivity(UtenteLoggato);
-
             } else {
                 Toast.makeText(this, "Accesso non riuscito", Toast.LENGTH_SHORT).show();
             };

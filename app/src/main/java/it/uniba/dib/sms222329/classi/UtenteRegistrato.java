@@ -24,15 +24,11 @@ public class UtenteRegistrato extends Utente {
         TipoUtente = "-1";
     }
 
-    ;
-
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
-
-    }
+    public void setNome(String nome) {}
 
     public String getCognome() {
         return cognome;
@@ -62,65 +58,20 @@ public class UtenteRegistrato extends Utente {
         return TipoUtente;
     }
 
-
-
-
     public boolean LoginStatus(Database dbClass) {
         String query = "SELECT TipoUtente FROM Utenti WHERE Email = '" + email + "' AND Password = '" + password + "';";
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
 
-
         if (cursore.getCount() == 0) {
             //INSERISCI MESSAGGIO DI ERRORE GESTITO TRAMITE LoginActivity.java
             return false;
-
         } else {
             cursore.moveToNext();
             TipoUtente = cursore.getString(0); //nel select puoi farti restituire piu valori, mettendo 0 restituisce solom il primo valore della prima colonna, è come un array
-
-
-            if(TipoUtente.compareTo("0") == 0){ //tesista
-                query = "SELECT Nome FROM Utenti WHERE Email = '" + email + "';";
-                cursore = db.rawQuery(query, null);
-                cursore.moveToNext();
-                nome =  cursore.getString(0);
-                cursore.moveToNext();
-                cognome =  cursore.getString(0);
-            }
-
-            if (TipoUtente.compareTo("1") == 0){ //relatore
-                query = "SELECT Nome FROM Relatore WHERE Email = '" + email + "';";
-                cursore = db.rawQuery(query, null);
-                cursore.moveToNext();
-                nome =  cursore.getString(0);
-                query = "SELECT Cognome FROM Relatore WHERE Email = '" + email + "';";
-                cursore = db.rawQuery(query, null);
-                cursore.moveToNext();
-                cognome =  cursore.getString(0);
-
-                Log.d("Provastampa nome:", nome);
-                Log.d("Provastampa cognome: ", cognome);
-
-            }
-
-            if (TipoUtente.compareTo("2") == 0) { //corelatore
-                query = "SELECT Nome, Cognome FROM Corelatore WHERE Email = '" + email + "';";
-                cursore = db.rawQuery(query, null);
-                cursore.moveToNext();
-                nome =  cursore.getString(0);
-                // cursore.moveToNext(); sposta al rigo successivo
-                cognome =  cursore.getString(1);
-
-                Log.d("Provastampa nome:", nome);
-                Log.d("Provastampa cognome: ", cognome);
-            }
-
             return true;
         }
-
-    } // fine loginstatus
-
+    }
 
     public Tesista IstanziaTesista(String email, String password, Database dbClass){
         Tesista TesistaLog = new Tesista();
@@ -136,13 +87,10 @@ public class UtenteRegistrato extends Utente {
         TesistaLog.setNome(cursore.getString(1));
         TesistaLog.setCognome(cursore.getString(2));
         TesistaLog.setMedia(cursore.getInt(5));
-        TesistaLog.setEsamiSvolti(cursore.getInt(6));
+        TesistaLog.setNumeroEsamiMancanti(cursore.getInt(6));
         TesistaLog.setTesiScelta(cursore.getInt(7));
 
-
-
         return TesistaLog;
-
     }
 
 
@@ -159,9 +107,11 @@ public class UtenteRegistrato extends Utente {
         relatoreLog.setMatricola(cursore.getString(0));
         relatoreLog.setNome(cursore.getString(1));
         relatoreLog.setCognome(cursore.getString(2));
+        relatoreLog.setMateriaInsegnata(cursore.getString(3));
+        relatoreLog.setEmail(cursore.getString(4));
+        relatoreLog.setPassword(cursore.getString(5));
 
         return relatoreLog;
-
     }
 
 
@@ -178,8 +128,9 @@ public class UtenteRegistrato extends Utente {
         CorelatoreLog.setId(cursore.getString(0));
         CorelatoreLog.setNome(cursore.getString(1));
         CorelatoreLog.setCognome(cursore.getString(2));
+        CorelatoreLog.setEmail(cursore.getString(3));
+        CorelatoreLog.setPassword(cursore.getString(4));
 
         return CorelatoreLog;
-
     }
 }

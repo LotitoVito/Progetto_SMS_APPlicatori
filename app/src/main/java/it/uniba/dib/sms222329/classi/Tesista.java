@@ -14,18 +14,18 @@ public class Tesista extends UtenteRegistrato {
     private String matricola;
     private int tesiScelta;
     private float media;
-    private int numeroEsamiSvolti;
+    private int numeroEsamiMancanti;
     private String IDCorsoStudi;
     private String IDUniversita;
 
-    public Tesista(String matricola, String nome, String cognome, String email, String password, float media, int numeroEsamiSvolti) {
+    public Tesista(String matricola, String nome, String cognome, String email, String password, float media, int numeroEsamiMancanti) {
         this.matricola = matricola;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.password = password;
         this.media = media;
-        this.numeroEsamiSvolti = numeroEsamiSvolti;
+        this.numeroEsamiMancanti = numeroEsamiMancanti;
     }
     public Tesista(){}
 
@@ -45,13 +45,11 @@ public class Tesista extends UtenteRegistrato {
         this.media = media;
     }
 
-    public int getEsamiSvolti() {
-        return numeroEsamiSvolti;
+    public int getNumeroEsamiMancanti() {
+        return numeroEsamiMancanti;
     }
 
-    public void setEsamiSvolti(int esamiSvolti) {
-        this.numeroEsamiSvolti = esamiSvolti;
-    }
+    public void setNumeroEsamiMancanti(int numeroEsamiMancanti) {this.numeroEsamiMancanti = numeroEsamiMancanti;}
 
     public int getTesiScelta(){
         return tesiScelta;
@@ -80,7 +78,7 @@ public class Tesista extends UtenteRegistrato {
         cvTesista.put("Email", this.email);
         cvTesista.put("Password", this.password);
         cvTesista.put("MediaVoti", this.media);
-        cvTesista.put("EsamiSvolti", this.numeroEsamiSvolti);
+        cvTesista.put("NumeroEsamiMancanti", this.numeroEsamiMancanti);
 
         long insertTesista = db.insert("Tesista", null, cvTesista);
         if(insertTesista != -1){
