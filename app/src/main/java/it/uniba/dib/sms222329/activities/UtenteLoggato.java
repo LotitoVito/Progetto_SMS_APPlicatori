@@ -34,5 +34,9 @@ public class UtenteLoggato extends AppCompatActivity {
         else if (Utente.getTipoUtente().compareTo("2") == 0){ //corelatore
             CoRelatore CoRelatoreLoggato = Utente.IstanziaCoRelatore(Utente.getEmail(), Utente.getPassword(), db);
         }
+
+
+
+
     }
 }
