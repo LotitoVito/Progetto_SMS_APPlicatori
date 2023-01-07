@@ -50,8 +50,9 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(createTable);
         //Universita-Tesi
         createTable =   "CREATE TABLE IF NOT EXISTS UniversitaCorsistudio(" +
-                        "IDUniversita INTEGER PRIMARY KEY REFERENCES Universita(ID)," +
-                        "IDCorsoStudio INTEGER PRIMARY KEY REFERENCES CorsiStudio(ID))";
+                        "IDUniversita INTEGER REFERENCES Universita(ID)," +
+                        "IDCorsoStudio INTEGER REFERENCES CorsiStudio(ID)," +
+                        "PRIMARY KEY(IDUniversita, IDCorsoStudio))";
         db.execSQL(createTable);
         //Relatore
         createTable =   "CREATE TABLE IF NOT EXISTS Relatore(" +
@@ -137,7 +138,7 @@ public class Database extends SQLiteOpenHelper {
             db.insert("CorsiStudio", null, cvCorsiStudio);
         }
         //Popolamento tabella Universita-CorsiStudio
-        PopolamentoUniCorsi();
+        PopolamentoUniCorsi(db);
     }
 
     //Viene chiamato nel caso di aggiornamento della versione del database
@@ -165,8 +166,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
     //Metodo usato per i dati di mock della tabella Universita-CorsiStudio
-    private void PopolamentoUniCorsi(){
-        SQLiteDatabase db = this.getWritableDatabase();
+    private void PopolamentoUniCorsi(SQLiteDatabase db){
         ContentValues cv = new ContentValues();
 
         cv.put("IDUniversita", 1);
