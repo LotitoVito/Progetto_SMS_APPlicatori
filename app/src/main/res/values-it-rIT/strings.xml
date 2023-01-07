@@ -26,6 +26,8 @@
     <string name="atMricola">Matricola</string>
     <string name="Matricola">matricola</string>
     <string name="signup_corelatore">Signup</string>
+    <string name="confermaEmail">Conferma mail...</string>
+    <string name="confermaPassword">Conferma mail...</string>
 
 
 </resources>
