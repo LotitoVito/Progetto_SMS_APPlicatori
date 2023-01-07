@@ -24,12 +24,14 @@ public class UtenteRegistrato extends Utente {
         TipoUtente = "-1";
     }
 
+    ;
+
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+
     }
 
     public String getCognome() {
@@ -60,17 +62,23 @@ public class UtenteRegistrato extends Utente {
         return TipoUtente;
     }
 
+
+
+
     public boolean LoginStatus(Database dbClass) {
         String query = "SELECT TipoUtente FROM Utenti WHERE Email = '" + email + "' AND Password = '" + password + "';";
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
 
+
         if (cursore.getCount() == 0) {
+            //INSERISCI MESSAGGIO DI ERRORE GESTITO TRAMITE LoginActivity.java
             return false;
+
         } else {
             cursore.moveToNext();
-            TipoUtente = cursore.getString(0);
-            Log.d("Provacursore", TipoUtente);
+            TipoUtente = cursore.getString(0); //nel select puoi farti restituire piu valori, mettendo 0 restituisce solom il primo valore della prima colonna, è come un array
+
 
             if(TipoUtente.compareTo("0") == 0){ //tesista
                 query = "SELECT Nome FROM Utenti WHERE Email = '" + email + "';";
@@ -79,7 +87,7 @@ public class UtenteRegistrato extends Utente {
                 nome =  cursore.getString(0);
                 cursore.moveToNext();
                 cognome =  cursore.getString(0);
-                }
+            }
 
             if (TipoUtente.compareTo("1") == 0){ //relatore
                 query = "SELECT Nome FROM Relatore WHERE Email = '" + email + "';";
@@ -101,15 +109,18 @@ public class UtenteRegistrato extends Utente {
                 cursore = db.rawQuery(query, null);
                 cursore.moveToNext();
                 nome =  cursore.getString(0);
+                // cursore.moveToNext(); sposta al rigo successivo
                 cognome =  cursore.getString(1);
 
                 Log.d("Provastampa nome:", nome);
                 Log.d("Provastampa cognome: ", cognome);
             }
+
             return true;
         }
 
-    }
+    } // fine loginstatus
+
 
     public Tesista IstanziaTesista(String email, String password, Database dbClass){
         Tesista TesistaLog = new Tesista();
@@ -128,7 +139,10 @@ public class UtenteRegistrato extends Utente {
         TesistaLog.setEsamiSvolti(cursore.getInt(6));
         TesistaLog.setTesiScelta(cursore.getInt(7));
 
+
+
         return TesistaLog;
+
     }
 
 
@@ -147,6 +161,7 @@ public class UtenteRegistrato extends Utente {
         relatoreLog.setCognome(cursore.getString(2));
 
         return relatoreLog;
+
     }
 
 
@@ -165,5 +180,6 @@ public class UtenteRegistrato extends Utente {
         CorelatoreLog.setCognome(cursore.getString(2));
 
         return CorelatoreLog;
+
     }
 }
