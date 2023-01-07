@@ -32,6 +32,7 @@
     <string name="email_corelatore" translatable="false">Email</string>
     <string name="password_corelatore" translatable="false">Password</string>
     <string name="signup_corelatore">Signup</string>
-
+    <string name="confermaEmail">Confirm your email...</string>
+    <string name="confermaPassword">Confirm your password...</string>
 
 </resources>
