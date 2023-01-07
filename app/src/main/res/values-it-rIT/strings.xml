@@ -19,15 +19,22 @@
     <string name="cognome">Cognome</string>
     <string name="Nome">Nome</string>
     <string name="media_esami">Media esami</string>
-    <string name="numero_esami_svolti">Numero esami svolti</string>
+    <string name="numero_esami_mancanti">Numero esami mancanti</string>
     <string name="e_mail">E-mail</string>
     <string name="Password">password</string>
     <string name="Signup">Signup</string>
     <string name="atMricola">Matricola</string>
     <string name="Matricola">matricola</string>
     <string name="signup_corelatore">Signup</string>
-    <string name="confermaEmail">Conferma mail...</string>
-    <string name="confermaPassword">Conferma mail...</string>
-
+    <string name="confermaEmail">Conferma mail…</string>
+    <string name="confermaPassword">Conferma mail…</string>
+    <string name="title_home">Home</string>
+    <string name="title_settings">Impostazioni</string>
+    <string name="title_profile">Profilo</string>
+    <string name="title_thesis">Tesi</string>
+    <string name="title_messages">Messaggi</string>
+    <string name="universita">Università</string>
+    <string name="corsoDiStudi">Corso di studi</string>
+    <string name="materia">Materia</string>
 
 </resources>

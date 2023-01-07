@@ -9,9 +9,10 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="darkPrimaryColorLight">#484848</color>
-    <color name="darkPrimaryColor">#933D3D</color>
+    <color name="darkPrimaryColor">#5a6abf</color>
+    <color name="red">#933D3D</color>
     <color name="darkPrimaryColorDark">#000000</color>
     <color name="darkSecondaryColorLight">#8d98f2</color>
-    <color name="darkSecondaryColorDark">#23408e</color>
+    <color name="darkSecondaryColorDark">#5a6abf</color>
 
 </resources>

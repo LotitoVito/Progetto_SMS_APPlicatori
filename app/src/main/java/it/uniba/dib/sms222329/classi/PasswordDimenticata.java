@@ -21,7 +21,7 @@ public class PasswordDimenticata {
                 return false;
             }
         }
-
+        return false;
     } // fine controllomail
 
     public boolean ResetPassword(String password1, String password2, Database dbClass){
@@ -29,10 +29,11 @@ public class PasswordDimenticata {
         if(password1 == password2){
             //String aggiornaPassword = "Cerca nei documenti";
             SQLiteDatabase db = dbClass.getWritableDatabase();
-            db.execSQL(aggiornaPassword);
+            //db.execSQL(aggiornaPassword);
 
             return true; // se true messaggio modifica effettuata di rit
         }
+        return false;
     }
 
 

@@ -117,4 +117,15 @@ public class Database extends SQLiteOpenHelper {
     //Viene chiamato nel caso di aggiornamento della versione del database
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1){}
+
+    public boolean VerificaDatoEsistente(String campo, String tabella, String dato){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + campo + " FROM " + tabella + " WHERE " + campo + " = '" + dato + "';";
+        Cursor cursore = db.rawQuery(query, null);
+
+        if (cursore.getCount() != 0) {
+            return true;
+        }
+        return false;
+    }
 }
