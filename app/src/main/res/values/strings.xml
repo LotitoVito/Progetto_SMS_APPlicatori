@@ -44,5 +44,8 @@
     <string name="materia">Materia</string>
     <string name="aggiungi">add</string>
     <string name="modifica">Edit</string>
+    <string name="argomenti">Arguments</string>
+    <string name="tempistiche">Tempistiche</string>
+    <string name="media">Media</string>
 
 </resources>
