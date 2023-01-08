@@ -3,12 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.relatore.TesiFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.relatore.TesiFragment"
+    >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardElevation="0dp"
+        app:contentPadding="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,7 +49,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/modifica"
                 android:layout_gravity="end"
-                android:clickable="true"/>
+                android:clickable="true"
+                android:paddingBottom="8dp"/>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -57,7 +63,9 @@
         android:clickable="true"
         android:src="@android:drawable/ic_input_add"
         android:layout_gravity="end|bottom"
-        android:contentDescription="@string/title_thesis"/>
+        android:contentDescription="@string/title_thesis"
+
+        />
 
 
 </FrameLayout>
