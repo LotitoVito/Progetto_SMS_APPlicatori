@@ -47,11 +47,11 @@ public class Tesi {
     }
 
     //Usato per al registrazione
-    public Tesi(String argomenti, String idRelatore, String idCorelatore, String tempistiche,
-                int mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste) {
+    public Tesi(String argomenti, boolean statoDisponibilita, String idRelatore, String idCorelatore,
+                String tempistiche, int mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste) {
         this.argomenti = argomenti;
         this.dataPubblicazione = new java.sql.Date(System.currentTimeMillis());
-        this.statoDisponibilita = true;
+        this.statoDisponibilita = statoDisponibilita;
         this.numeroVisualizzazioni = 0;
         this.idRelatore = idRelatore;
         this.idCorelatore = idCorelatore;
@@ -165,6 +165,37 @@ public class Tesi {
             }
         }
         //inserire Toast errore
+        return false;
+    }
+
+    public boolean ModificaTesi(Database dbClass, String argomenti, boolean statoDisponibilita, String idCorelatore,
+                                String linkMateriale, String tempistiche, int mediaVotiMinima, int esamiMancantiNecessari,
+                                String capacitaRichieste){
+        this.argomenti = argomenti;
+        this.statoDisponibilita = statoDisponibilita;
+        this.idCorelatore = idCorelatore;
+        this.linkMateriale = linkMateriale;
+        this.tempistiche = tempistiche;
+        this.mediaVotiMinima = mediaVotiMinima;
+        this.esamiMancantiNecessari = esamiMancantiNecessari;
+        this.capacitaRichieste = capacitaRichieste;
+
+        SQLiteDatabase db = dbClass.getWritableDatabase();
+        ContentValues cvTesi = new ContentValues();
+
+        cvTesi.put("Argomenti", this.argomenti);
+        cvTesi.put("StatoDisponibilita", this.statoDisponibilita);
+        cvTesi.put("IDCorelatore", this.idCorelatore);
+        cvTesi.put("LinkMateriale", this.linkMateriale);
+        cvTesi.put("Tempistiche", this.tempistiche);
+        cvTesi.put("MediaVotiMinima", this.mediaVotiMinima);
+        cvTesi.put("EsamiMancantiNecessari", this.esamiMancantiNecessari);
+        cvTesi.put("SkillRichieste", this.capacitaRichieste);
+
+        long updateTesi = db.update("Tesi", cvTesi, "IDTesi = " + this.id, null);
+        if(updateTesi != -1){
+            return true;
+        }
         return false;
     }
 }
