@@ -18,7 +18,7 @@ public class Tesista extends UtenteRegistrato {
     private String IDCorsoStudi;
     private String IDUniversita;
 
-    public Tesista(String matricola, String nome, String cognome, String email, String password, float media, int numeroEsamiMancanti) {
+    public Tesista(String matricola, String nome, String cognome, String email, String password, float media, int numeroEsamiMancanti, String IDUniversita, String IDCorsoStudi) {
         this.matricola = matricola;
         this.nome = nome;
         this.cognome = cognome;
@@ -26,6 +26,8 @@ public class Tesista extends UtenteRegistrato {
         this.password = password;
         this.media = media;
         this.numeroEsamiMancanti = numeroEsamiMancanti;
+        this.IDCorsoStudi = IDCorsoStudi;
+        this.IDUniversita = IDUniversita;
     }
     public Tesista(){}
 
@@ -79,6 +81,8 @@ public class Tesista extends UtenteRegistrato {
         cvTesista.put("Password", this.password);
         cvTesista.put("MediaVoti", this.media);
         cvTesista.put("NumeroEsamiMancanti", this.numeroEsamiMancanti);
+        cvTesista.put("IdCorsoStudi", this.IDCorsoStudi);
+        cvTesista.put("IdUniversita", this.IDUniversita);
 
         long insertTesista = db.insert("Tesista", null, cvTesista);
         if(insertTesista != -1){

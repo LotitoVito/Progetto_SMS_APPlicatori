@@ -35,8 +35,8 @@ public class Database extends SQLiteOpenHelper {
                         "MediaVoti INTEGER(10) NOT NULL," +
                         "NumeroEsamiMancanti INTEGER(10) NOT NULL," +
                         "IdTesiScelta INTEGER(10) REFERENCES TesiScelta(TesiIDTesi)," +
-                        "IdCorsoStudi INTEGER(10) REFERENCES CorsiStudio(ID)," +
-                        "IdUniversita INTEGER(10) REFERENCES Universita(ID));";
+                        "IdCorsoStudi INTEGER(10) NOT NULL REFERENCES CorsiStudio(ID)," +
+                        "IdUniversita INTEGER(10) NOT NULL REFERENCES Universita(ID));";
         db.execSQL(createTable);
         //Università
         createTable =   "CREATE TABLE IF NOT EXISTS Universita(" +
@@ -158,9 +158,9 @@ public class Database extends SQLiteOpenHelper {
     }
 
     //Restituisce i risultati della ricerca di un dato
-    public Cursor RicercaDato(String campoRisultato, String campoRicercato, String tabella, String dato){
+    public Cursor RicercaDato(String campoSelect, String tabella, String campoWhere, String datoWhere){
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT " + campoRisultato + " FROM " + tabella + " WHERE " + campoRicercato + " = '" + dato + "';";
+        String query = "SELECT " + campoSelect + " FROM " + tabella + " WHERE " + campoWhere + " = '" + datoWhere + "';";
         Cursor cursore = db.rawQuery(query, null);
         return cursore;
     }
