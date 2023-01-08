@@ -42,5 +42,7 @@
     <string name="universita">Università</string>
     <string name="corsoDiStudi">Corso di studi</string>
     <string name="materia">Materia</string>
+    <string name="aggiungi">add</string>
+    <string name="modifica">Edit</string>
 
 </resources>
