@@ -3,11 +3,18 @@ package it.uniba.dib.sms222329.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.classi.Tesista;
@@ -20,6 +27,50 @@ public class SignUp_StudentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_student);
+        spinnerCreate(R.id.universita, "Nome", "Universita");
+        spinnerCreate(R.id.corsoDiStudi, "Nome", "CorsiStudio");
+
+
+
+    }
+
+    private void spinnerCreate(int idSpinner, String nomeColonna, String nomeTabella){
+        Spinner spinner = findViewById(idSpinner);
+
+        // Query the database for the data
+        Cursor cursor = db.getItem(nomeColonna,nomeTabella);
+
+        // Create an array of strings using the data from the Cursor
+        List<String> items = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            int index = cursor.getColumnIndex(nomeColonna);
+            String item = cursor.getString(index);
+            items.add(item);
+        }
+        cursor.close();
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Handle the selection
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
+            }
+        });
+
     }
 
     @Override

@@ -197,4 +197,13 @@ public class Database extends SQLiteOpenHelper {
         cv.put("IDCorsoStudio", 3);
         db.insert("UniversitaCorsistudio", null, cv);
     }
+
+    //Restituisce i risultati della ricerca di un dato
+    public Cursor getItem(String campoRisultato, String tabella){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + campoRisultato + " FROM " + tabella +";";
+        Cursor cursore = db.rawQuery(query, null);
+        return cursore;
+    }
+
 }
