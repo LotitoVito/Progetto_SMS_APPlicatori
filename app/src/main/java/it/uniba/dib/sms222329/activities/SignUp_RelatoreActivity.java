@@ -95,7 +95,7 @@ public class SignUp_RelatoreActivity extends AppCompatActivity {
 
     private String RecuperaIdSpinner(Spinner spinner, String tabella){
         Cursor idCursor;
-        idCursor = db.RicercaDato("SELECT ID FROM "+ tabella +"WHERE Nome = '"+ spinner.getSelectedItem().toString() +"';");
+        idCursor = db.RicercaDato("SELECT ID FROM "+ tabella +" WHERE Nome = '"+ spinner.getSelectedItem().toString() +"';");
         idCursor.moveToNext();
         return idCursor.getString(0);
     }

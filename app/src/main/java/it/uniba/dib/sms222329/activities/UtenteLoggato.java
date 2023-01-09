@@ -95,4 +95,16 @@ public class UtenteLoggato extends AppCompatActivity {
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();
     }
+
+    public Tesista GetTesista(Tesista account){
+        return account;
+    }
+
+    public Relatore GetRelatore(Relatore account){
+        return account;
+    }
+
+    public CoRelatore GetCoRelatore(CoRelatore account){
+        return account;
+    }
 }

@@ -14,6 +14,7 @@ import it.uniba.dib.sms222329.database.Database;
 public class Tesi {
 
     private String id;
+    private String titolo;
     private String argomenti;
     private Date dataPubblicazione;
     private boolean statoDisponibilita;
@@ -28,10 +29,11 @@ public class Tesi {
     private String capacitaRichieste;
 
 
-    public Tesi(String id, String argomenti, Date dataPubblicazione, boolean statoDisponibilita, int numeroVisualizzazioni,
+    public Tesi(String id, String titolo, String argomenti, Date dataPubblicazione, boolean statoDisponibilita, int numeroVisualizzazioni,
                 String idRelatore, String idCorelatore, String linkMateriale, String QRCode,
                 String tempistiche, int mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste) {
         this.id = id;
+        this.titolo = titolo;
         this.argomenti = argomenti;
         this.dataPubblicazione = dataPubblicazione;
         this.statoDisponibilita = statoDisponibilita;
@@ -47,8 +49,9 @@ public class Tesi {
     }
 
     //Usato per al registrazione
-    public Tesi(String argomenti, boolean statoDisponibilita, String idRelatore, String idCorelatore,
+    public Tesi(String titolo, String argomenti, boolean statoDisponibilita, String idRelatore, String idCorelatore,
                 String tempistiche, int mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste) {
+        this.titolo = titolo;
         this.argomenti = argomenti;
         this.dataPubblicazione = new java.sql.Date(System.currentTimeMillis());
         this.statoDisponibilita = statoDisponibilita;
@@ -68,6 +71,10 @@ public class Tesi {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getTitolo() {return titolo;}
+
+    public void setTitolo(String titolo) {this.titolo = titolo;}
 
     public String getArgomenti() {
         return argomenti;
@@ -133,38 +140,34 @@ public class Tesi {
 
     public int getEsamiMancantiNecessari() {return esamiMancantiNecessari;}
 
-    public void setesamiMancantiNecessari(int esamiMancantiNecessari) {this.esamiMancantiNecessari = esamiMancantiNecessari;}
+    public void setEsamiMancantiNecessari(int esamiMancantiNecessari) {this.esamiMancantiNecessari = esamiMancantiNecessari;}
 
     public String getCapacitaRichieste() {return capacitaRichieste;}
 
     public void setCapacitaRichieste(String capacitaRichieste) {this.capacitaRichieste = capacitaRichieste;}
 
     public boolean RegistrazioneTesi(Database dbClass) {
-        if(dbClass.VerificaDatoEsistente("SELECT Matricola FROM Relatore WHERE Matricola = '"+ this.idRelatore +"';") &&
-        dbClass.VerificaDatoEsistente("SELECT ID FROM CoRelatore WHERE ID = '"+ this.idCorelatore +"';")){
+        SQLiteDatabase db = dbClass.getWritableDatabase();
+        ContentValues cvTesi = new ContentValues();
 
-            SQLiteDatabase db = dbClass.getWritableDatabase();
-            ContentValues cvTesi = new ContentValues();
+        cvTesi.put("Titolo", this.titolo);
+        cvTesi.put("Argomenti", this.argomenti);
+        cvTesi.put("DataPubblicazione", String.valueOf(this.dataPubblicazione));
+        cvTesi.put("StatoDisponibilita", this.statoDisponibilita);
+        cvTesi.put("NumeroVisualizzazioni", this.numeroVisualizzazioni);
+        cvTesi.put("MatricolaRelatore", this.idRelatore);
+        cvTesi.put("IDCorelatore", this.idCorelatore);
+        cvTesi.put("LinkMateriale", this.linkMateriale);
+        cvTesi.put("QRCode", this.QRCode);
+        cvTesi.put("Tempistiche", this.tempistiche);
+        cvTesi.put("MediaVotiMinima", this.mediaVotiMinima);
+        cvTesi.put("EsamiMancantiNecessari", this.esamiMancantiNecessari);
+        cvTesi.put("SkillRichieste", this.capacitaRichieste);
 
-            cvTesi.put("Argomenti", this.argomenti);
-            cvTesi.put("DataPubblicazione", String.valueOf(this.dataPubblicazione));
-            cvTesi.put("StatoDisponibilita", this.statoDisponibilita);
-            cvTesi.put("NumeroVisualizzazioni", this.numeroVisualizzazioni);
-            cvTesi.put("MatricolaRelatore", this.idRelatore);
-            cvTesi.put("IDCorelatore", this.idCorelatore);
-            cvTesi.put("LinkMateriale", this.linkMateriale);
-            cvTesi.put("QRCode", this.QRCode);
-            cvTesi.put("Tempistiche", this.tempistiche);
-            cvTesi.put("MediaVotiMinima", this.mediaVotiMinima);
-            cvTesi.put("EsamiMancantiNecessari", this.esamiMancantiNecessari);
-            cvTesi.put("SkillRichieste", this.capacitaRichieste);
-
-            long insertTesi = db.insert("Tesi", null, cvTesi);
-            if(insertTesi != -1){
-                return true;
-            }
+        long insertTesi = db.insert("Tesi", null, cvTesi);
+        if(insertTesi != -1){
+            return true;
         }
-        //inserire Toast errore
         return false;
     }
 
@@ -183,6 +186,7 @@ public class Tesi {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvTesi = new ContentValues();
 
+        cvTesi.put("Titolo", this.titolo);
         cvTesi.put("Argomenti", this.argomenti);
         cvTesi.put("StatoDisponibilita", this.statoDisponibilita);
         cvTesi.put("IDCorelatore", this.idCorelatore);

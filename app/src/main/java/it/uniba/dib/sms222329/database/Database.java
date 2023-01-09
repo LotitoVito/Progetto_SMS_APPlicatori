@@ -81,6 +81,7 @@ public class Database extends SQLiteOpenHelper {
         //Tesi
         createTable =   "CREATE TABLE IF NOT EXISTS Tesi(" +
                         "IDTesi INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "Titolo CHAR(255) NOT NULL," +
                         "Argomenti CHAR(255) NOT NULL," +
                         "DataPubblicazione TIME(6) NOT NULL," +
                         "StatoDisponibilita NUMBER(1) NOT NULL," +

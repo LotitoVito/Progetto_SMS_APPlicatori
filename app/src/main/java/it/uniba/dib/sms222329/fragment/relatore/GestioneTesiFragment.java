@@ -1,6 +1,9 @@
 package it.uniba.dib.sms222329.fragment.relatore;
 
 import android.app.ActionBar;
+import android.app.Activity;
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,8 +14,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.textfield.TextInputEditText;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.classi.Tesi;
+import it.uniba.dib.sms222329.database.Database;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,8 +70,6 @@ public class GestioneTesiFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         setHasOptionsMenu(true);
-
-
     }
 
     @Override
@@ -76,4 +84,42 @@ public class GestioneTesiFragment extends Fragment {
         inflater.inflate(R.menu.menu_tesi_telatore, menu);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Context context = getActivity().getApplicationContext();
+        Database db = new Database(context);
+        TextInputEditText titolo = getView().findViewById(R.id.titoloTesi);
+        TextInputEditText argomenti = getView().findViewById(R.id.argomenti_edit_text);
+        TextInputEditText corelatore = getView().findViewById(R.id.corelatore_edit_text);
+        TextInputEditText tempistiche = getView().findViewById(R.id.tempistiche_edit_text);
+        TextInputEditText esamiMancanti = getView().findViewById(R.id.esamiMancanti);
+        TextInputEditText capacitaRichiesta = getView().findViewById(R.id.capacitaRichiesta);
+        TextInputEditText media = getView().findViewById(R.id.media_edit_text);
+        SwitchMaterial statoDisponibilita = getView().findViewById(R.id.disponibilita);
+        Button registra = getView().findViewById(R.id.add);
+
+        registra.setOnClickListener(view -> {
+            if(db.VerificaDatoEsistente("SELECT * FROM CoRelatore WHERE Email = '" + corelatore.getText().toString() + "';")){
+            Cursor idCorelatore = db.RicercaDato("SELECT ID FROM CoRelatore WHERE Email = '" + corelatore.getText().toString() + "';");
+            idCorelatore.moveToNext();
+            Tesi tesi = new Tesi(titolo.getText().toString(), argomenti.getText().toString(),
+                    statoDisponibilita.isChecked(), "1", idCorelatore.getString(0), tempistiche.getText().toString(),
+                    Integer.parseInt(media.getText().toString()), Integer.parseInt(esamiMancanti.getText().toString()),
+                    capacitaRichiesta.getText().toString()); //Fixare idRelatore dall'activity
+                if(db.VerificaDatoEsistente("SELECT Matricola FROM Relatore WHERE Matricola = '"+ 1 +"';")){
+                    if(tesi.RegistrazioneTesi(db)){
+                        Toast.makeText(context, "Successo", Toast.LENGTH_SHORT).show();
+                    } else{
+                        Toast.makeText(context, "Registrazione fallita", Toast.LENGTH_SHORT).show();
+                    }
+                } else{
+                    Toast.makeText(context, "Relatore non esistente", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(context, "Corelatore non esistente", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 }
