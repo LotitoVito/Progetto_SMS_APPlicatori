@@ -87,12 +87,12 @@ public class TesiFragment extends Fragment {
         });
 
         editButton.setOnClickListener(view1 -> {
-            Fragment fragment = new GestioneTesiFragment();
+            Fragment fragment = new GestioneTesiFragment(); //TODO Passare oggetto con tesi selezionata
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container, fragment);
             fragmentTransaction.commit();
-        });;
+        });
 
         // Return the view hierarchy
         return view;

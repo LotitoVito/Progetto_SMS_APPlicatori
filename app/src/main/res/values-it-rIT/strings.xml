@@ -43,5 +43,9 @@
     <string name="media">Media</string>
     <string name="salva">Salva</string>
     <string name="indietro">Indietro</string>
+    <string name="titolo">Titolo</string>
+    <string name="email_co_relatore">Inserire email Co-relatore</string>
+    <string name="capacitaRichiesta">Capacità richieste</string>
+    <string name="disponibilita">Disponibilità</string>
 
 </resources>
