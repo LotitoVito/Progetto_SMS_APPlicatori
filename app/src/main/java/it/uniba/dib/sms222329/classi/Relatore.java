@@ -12,12 +12,14 @@ public class Relatore extends Supervisore {
 
     private String matricola;
     private String materiaInsegnata;
+    private String IDUniversita;
 
-    public Relatore(String matricola, String nome, String cognome, String materiaInsegnata, String email, String password) {
+    public Relatore(String matricola, String nome, String cognome, String materiaInsegnata, String IDUniversita, String email, String password) {
         this.matricola = matricola;
         this.nome = nome;
         this.cognome = cognome;
         this.materiaInsegnata = materiaInsegnata;
+        this.IDUniversita = IDUniversita;
         this.email = email;
         this.password = password;
     }
@@ -36,6 +38,10 @@ public class Relatore extends Supervisore {
 
     public void setMateriaInsegnata(String materiaInsegnata) {this.materiaInsegnata = materiaInsegnata;}
 
+    public String getIDUniversita() {return IDUniversita;}
+
+    public void setIDUniversita(String IDUniversita) {this.IDUniversita = IDUniversita;}
+
     //Registrazione account su database
     public boolean registrazione(Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
@@ -45,6 +51,7 @@ public class Relatore extends Supervisore {
         cvRelatore.put("Nome", this.nome);
         cvRelatore.put("Cognome", this.cognome);
         cvRelatore.put("MateriaInsegnata", this.materiaInsegnata);
+        cvRelatore.put("IdUniversita", this.IDUniversita);
         cvRelatore.put("Email", this.email);
         cvRelatore.put("Password", this.password);
 

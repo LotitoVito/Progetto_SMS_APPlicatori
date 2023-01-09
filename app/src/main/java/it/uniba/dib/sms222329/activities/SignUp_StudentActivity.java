@@ -57,8 +57,8 @@ public class SignUp_StudentActivity extends AppCompatActivity {
                     Integer.parseInt(media.getText().toString()), Integer.parseInt(numeroEsamiMancanti.getText().toString()),
                     idUniversita, idCorsoStudio);
 
-            if (!db.VerificaDatoEsistente("Matricola", "Tesista", account.getMatricola())){
-                if(!db.VerificaDatoEsistente("Email", "Utenti", account.getEmail())){
+            if (!db.VerificaDatoEsistente("SELECT Matricola FROM Tesista WHERE Matricola = '"+ account.getMatricola() +"';")){
+                if(!db.VerificaDatoEsistente("SELECT Email FROM Utenti WHERE Email = '"+ account.getEmail() +"';")){
 
                     if(account.registrazione(db)){
                         Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
@@ -102,7 +102,7 @@ public class SignUp_StudentActivity extends AppCompatActivity {
 
     private String RecuperaIdSpinner(Spinner spinner, String tabella){
         Cursor idCursor;
-        idCursor = db.RicercaDato("ID", tabella,"Nome",spinner.getSelectedItem().toString());
+        idCursor = db.RicercaDato("SELECT ID FROM "+ tabella +" WHERE Nome = '"+ spinner.getSelectedItem().toString() +"';");
         idCursor.moveToNext();
         return idCursor.getString(0);
     }
@@ -113,7 +113,7 @@ public class SignUp_StudentActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String idUniversita = RecuperaIdSpinner(spinner, "Universita");
 
-                Cursor risultato = db.RicercaDato("IDCorsoStudio", "UniversitaCorsistudio", "IDUniversita", idUniversita);
+                Cursor risultato = db.RicercaDato("SELECT IDCorsoStudio FROM UniversitaCorsistudio WHERE IDUniversita = '"+ idUniversita +"';");
                 List<String> idRisultati = new ArrayList<>();
                 while(risultato.moveToNext()){
                     idRisultati.add(risultato.getString(0));

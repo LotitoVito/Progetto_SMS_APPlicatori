@@ -36,7 +36,7 @@ public class SignUp_CorelatoreActivity extends AppCompatActivity {
             CoRelatore account = new CoRelatore(nome.getText().toString(), cognome.getText().toString(),
                     email.getText().toString(), password.getText().toString());
 
-            if(!db.VerificaDatoEsistente("Email", "Utenti", account.getEmail())){
+            if(!db.VerificaDatoEsistente("SELECT Email FROM Utenti WHERE Email = '" + account.getEmail() +"';")){
 
                 if(account.registrazione(db)){
                     Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);

@@ -140,8 +140,8 @@ public class Tesi {
     public void setCapacitaRichieste(String capacitaRichieste) {this.capacitaRichieste = capacitaRichieste;}
 
     public boolean RegistrazioneTesi(Database dbClass) {
-        if(dbClass.VerificaDatoEsistente("Matricola", "Relatore", this.idRelatore) &&
-        dbClass.VerificaDatoEsistente("ID", "CoRelatore", this.idCorelatore)){
+        if(dbClass.VerificaDatoEsistente("SELECT Matricola FROM Relatore WHERE Matricola = '"+ this.idRelatore +"';") &&
+        dbClass.VerificaDatoEsistente("SELECT ID FROM CoRelatore WHERE ID = '"+ this.idCorelatore +"';")){
 
             SQLiteDatabase db = dbClass.getWritableDatabase();
             ContentValues cvTesi = new ContentValues();
