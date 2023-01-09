@@ -1,10 +1,14 @@
 package it.uniba.dib.sms222329.fragment.relatore;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -55,6 +59,9 @@ public class GestioneTesiFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        setHasOptionsMenu(true);
+
+
     }
 
     @Override
@@ -63,4 +70,10 @@ public class GestioneTesiFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_gestione_tesi_relatore, container, false);
     }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_tesi_telatore, menu);
+    }
+
 }

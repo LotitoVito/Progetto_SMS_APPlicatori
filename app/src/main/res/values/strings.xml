@@ -47,5 +47,7 @@
     <string name="argomenti">Arguments</string>
     <string name="tempistiche">Tempistiche</string>
     <string name="media">Media</string>
+    <string name="salva">Salva</string>
+    <string name="indietro">Indietro</string>
 
 </resources>

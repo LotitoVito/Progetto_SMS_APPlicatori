@@ -1,8 +1,13 @@
 package it.uniba.dib.sms222329.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -31,7 +36,11 @@ public class UtenteLoggato extends AppCompatActivity {
         setContentView(R.layout.activity_utente_loggato);
         Database db = new Database(this);
 
+        // calling the action bar
+        ActionBar actionBar = getSupportActionBar();
 
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         UtenteRegistrato Utente = (UtenteRegistrato) getIntent().getSerializableExtra("utentePassato");
 
@@ -49,6 +58,7 @@ public class UtenteLoggato extends AppCompatActivity {
         }
 
     }
+
 
     @SuppressLint("NonConstantResourceId")
     private void setBottomNavigation(Fragment thesisFragment, Fragment messagesFragment, Fragment homeFragment, Fragment profileFragment) {
