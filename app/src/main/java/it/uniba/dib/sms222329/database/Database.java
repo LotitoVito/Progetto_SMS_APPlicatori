@@ -60,6 +60,7 @@ public class Database extends SQLiteOpenHelper {
                         "Nome CHAR(255) NOT NULL," +
                         "Cognome CHAR(255) NOT NULL," +
                         "MateriaInsegnata CHAR(255) NOT NULL," +
+                        "IdUniversita INTEGER(10) NOT NULL REFERENCES Universita(ID)," +
                         "Email CHAR(255) NOT NULL REFERENCES Utenti(Email)," +
                         "Password CHAR(255) NOT NULL);";
         db.execSQL(createTable);
@@ -146,9 +147,8 @@ public class Database extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1){}
 
     //Verifica che il dato cercato in una determinata tabella esiste o no
-    public boolean VerificaDatoEsistente(String campo, String tabella, String dato){
+    public boolean VerificaDatoEsistente(String query){
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + tabella + " WHERE " + campo + " = '" + dato + "';";
         Cursor cursore = db.rawQuery(query, null);
 
         if (cursore.getCount() != 0) {
@@ -158,9 +158,8 @@ public class Database extends SQLiteOpenHelper {
     }
 
     //Restituisce i risultati della ricerca di un dato
-    public Cursor RicercaDato(String campoSelect, String tabella, String campoWhere, String datoWhere){
+    public Cursor RicercaDato(String query){
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT " + campoSelect + " FROM " + tabella + " WHERE " + campoWhere + " = '" + datoWhere + "';";
         Cursor cursore = db.rawQuery(query, null);
         return cursore;
     }
@@ -197,13 +196,4 @@ public class Database extends SQLiteOpenHelper {
         cv.put("IDCorsoStudio", 3);
         db.insert("UniversitaCorsistudio", null, cv);
     }
-
-    //Restituisce i risultati della ricerca di un dato
-    public Cursor getItem(String campoRisultato, String tabella){
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT " + campoRisultato + " FROM " + tabella +";";
-        Cursor cursore = db.rawQuery(query, null);
-        return cursore;
-    }
-
 }
