@@ -108,8 +108,9 @@ public class UtenteRegistrato extends Utente {
         relatoreLog.setNome(cursore.getString(1));
         relatoreLog.setCognome(cursore.getString(2));
         relatoreLog.setMateriaInsegnata(cursore.getString(3));
-        relatoreLog.setEmail(cursore.getString(4));
-        relatoreLog.setPassword(cursore.getString(5));
+        relatoreLog.setIDUniversita(cursore.getString(4));
+        relatoreLog.setEmail(cursore.getString(5));
+        relatoreLog.setPassword(cursore.getString(6));
 
         return relatoreLog;
     }
