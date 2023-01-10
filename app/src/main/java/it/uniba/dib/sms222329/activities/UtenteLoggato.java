@@ -40,7 +40,7 @@ public class UtenteLoggato extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
 
         // showing the back button in action bar
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        //actionBar.setDisplayHomeAsUpEnabled(true);
 
         UtenteRegistrato Utente = (UtenteRegistrato) getIntent().getSerializableExtra("utentePassato");
 
@@ -49,9 +49,10 @@ public class UtenteLoggato extends AppCompatActivity {
 
         }
         else if (Utente.getTipoUtente().compareTo("1") == 0){ //relatore
-            replaceFragment(new HomeFragment());
+
             Relatore RelatoreLoggato = Utente.IstanziaRelatore(Utente.getEmail(), Utente.getPassword(), db);
-            setBottomNavigation(new TesiFragment(), new MessaggiFragment(), new HomeFragment(), new ProfiloFragment());
+            replaceFragment(new HomeFragment(RelatoreLoggato));
+            setBottomNavigation(new TesiFragment(), new MessaggiFragment(), new HomeFragment(RelatoreLoggato), new ProfiloFragment());
         }
         else if (Utente.getTipoUtente().compareTo("2") == 0){ //corelatore
             CoRelatore CoRelatoreLoggato = Utente.IstanziaCoRelatore(Utente.getEmail(), Utente.getPassword(), db);
