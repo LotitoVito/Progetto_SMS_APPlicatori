@@ -3,8 +3,15 @@ package it.uniba.dib.sms222329.classi;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.provider.ContactsContract;
 import android.widget.Toast;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.sql.Date;
 
@@ -201,5 +208,18 @@ public class Tesi {
             return true;
         }
         return false;
+    }
+
+    public Bitmap QRGenerator(){
+        MultiFormatWriter writer = new MultiFormatWriter();
+        Bitmap bitmap = null;
+        try{
+            BitMatrix  matrix = writer. encode(this.id, BarcodeFormat.QR_CODE, 400, 400);
+            BarcodeEncoder encoder = new BarcodeEncoder();
+            bitmap = encoder.createBitmap(matrix);
+        }catch(WriterException e){
+            e.printStackTrace();
+        }
+        return bitmap;
     }
 }
