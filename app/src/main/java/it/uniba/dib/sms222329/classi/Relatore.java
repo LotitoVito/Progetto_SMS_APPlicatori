@@ -69,4 +69,22 @@ public class Relatore extends Supervisore {
         }
         return false;
     }
+
+    private boolean modRelatore(Database dbClass, String nome, String cognome, String email, String password) {
+        this.nome=nome;
+        this.cognome=cognome;
+        this.email=email;
+        this.password=password;
+
+        SQLiteDatabase db = dbClass.getWritableDatabase();
+        ContentValues cvRelatore = new ContentValues();
+
+        cvRelatore.put("Nome", this.nome);
+        cvRelatore.put("Cognome", this.cognome);
+        cvRelatore.put("Email", this.email);
+        cvRelatore.put("Password", this.password);
+
+        long updateRelatore = db.update("Relatore", cvRelatore, "Matricola = " + this.matricola, null);
+        return updateRelatore != -1;
+    }
 }

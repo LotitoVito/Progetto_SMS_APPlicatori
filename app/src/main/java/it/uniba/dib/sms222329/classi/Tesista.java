@@ -99,4 +99,27 @@ public class Tesista extends UtenteRegistrato {
         }
         return false;
     }
+
+    private boolean modTesista(Database dbClass, String matricola, String nome, String cognome, String email, String password, float media, int numEsamiMancanti) {
+        this.matricola=matricola;
+        this.nome=nome;
+        this.cognome=cognome;
+        this.email=email;
+        this.password=password;
+        this.media=media;
+        this.numeroEsamiMancanti=numEsamiMancanti;
+
+        SQLiteDatabase db = dbClass.getWritableDatabase();
+        ContentValues cvTesista = new ContentValues();
+
+        cvTesista.put("Nome", this.nome);
+        cvTesista.put("Cognome", this.cognome);
+        cvTesista.put("Email", this.email);
+        cvTesista.put("Password", this.password);
+        cvTesista.put("MediaVoti", this.media);
+        cvTesista.put("NumeroEsamiMancanti", this.numeroEsamiMancanti);
+
+        long updateTesista = db.update("Tesista", cvTesista, "Matricola = " + this.matricola, null);
+        return updateTesista != -1;
+    }
 }

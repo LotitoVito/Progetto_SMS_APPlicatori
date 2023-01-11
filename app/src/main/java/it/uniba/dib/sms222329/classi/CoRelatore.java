@@ -64,4 +64,22 @@ public class CoRelatore extends Supervisore {
         }
         return false;
     }
+
+    private boolean modCoRelatore(Database dbClass, String nome, String cognome, String email, String password) {
+        this.nome=nome;
+        this.cognome=cognome;
+        this.email=email;
+        this.password=password;
+
+        SQLiteDatabase db = dbClass.getWritableDatabase();
+        ContentValues cvCoRelatore = new ContentValues();
+
+        cvCoRelatore.put("Nome", this.nome);
+        cvCoRelatore.put("Cognome", this.cognome);
+        cvCoRelatore.put("Email", this.email);
+        cvCoRelatore.put("Password", this.password);
+
+        long updateCoRelatore = db.update("CoRelatore", cvCoRelatore, "ID = " + this.id, null);
+        return updateCoRelatore != -1;
+    }
 }
