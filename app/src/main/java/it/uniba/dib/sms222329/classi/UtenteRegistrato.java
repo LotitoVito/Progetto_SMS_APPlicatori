@@ -74,9 +74,13 @@ public class UtenteRegistrato extends Utente {
         cvUtente.put("password", this.password);
         cvUtente.put("ruolo_id", ruolo);
 
-        long insertUtente = db.insert("utenti", null, cvUtente);
-        if(insertUtente != -1){
-            return true;
+        try{
+            long insertUtente = db.insert("utenti", null, cvUtente);
+            if(insertUtente != -1){
+                return true;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
         return false;
     }

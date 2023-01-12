@@ -46,9 +46,13 @@ public class CoRelatore extends Supervisore {
         cvCoRelatore.put("utente_id", idUtente.getString(0));
         //cvCoRelatore.put("organizzazione", this.organizzazione);
 
-        long insertCoRelatore = db.insert("coRelatore", null, cvCoRelatore);
-        if(insertCoRelatore != -1){
-            return true;
+        try{
+            long insertCoRelatore = db.insert("coRelatore", null, cvCoRelatore);
+            if(insertCoRelatore != -1){
+                return true;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return false;
     }
@@ -67,7 +71,12 @@ public class CoRelatore extends Supervisore {
         cvUtente.put("email", this.email);
         cvUtente.put("password", this.password);
 
-        long updateUtente = db.update("utenti", cvUtente, "id = " + this.idUtente, null);
-        return updateUtente != -1;
+        try {
+            long updateUtente = db.update("utenti", cvUtente, "id = " + this.idUtente, null);
+            return updateUtente != -1;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
     }
 }

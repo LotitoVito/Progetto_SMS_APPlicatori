@@ -83,9 +83,13 @@ public class Tesista extends UtenteRegistrato {
         cvTesista.put("esami_mancanti", this.numeroEsamiMancanti);
         cvTesista.put("universitacorso_id", this.idUniversitaCorso);
 
-        long insertCoRelatore = db.insert("tesista", null, cvTesista);
-        if(insertCoRelatore != -1){
-            return true;
+        try{
+            long insertCoRelatore = db.insert("tesista", null, cvTesista);
+            if(insertCoRelatore != -1){
+                return true;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
         return false;
     }
@@ -109,17 +113,21 @@ public class Tesista extends UtenteRegistrato {
         cvUtente.put("MediaVoti", this.media);
         cvUtente.put("NumeroEsamiMancanti", this.numeroEsamiMancanti);
 
-        long updateUtente = db.update("utenti", cvUtente, "id = " + this.idUtente, null);
-        if(updateUtente != -1){
-            ContentValues cvTesista = new ContentValues();
+        try{
+            long updateUtente = db.update("utenti", cvUtente, "id = " + this.idUtente, null);
+            if(updateUtente != -1){
+                ContentValues cvTesista = new ContentValues();
 
-            cvTesista.put("MediaVoti", this.media);
-            cvTesista.put("NumeroEsamiMancanti", this.numeroEsamiMancanti);
+                cvTesista.put("MediaVoti", this.media);
+                cvTesista.put("NumeroEsamiMancanti", this.numeroEsamiMancanti);
 
-            long updateTesista = db.update("tesista", cvTesista, "id = " + this.idTesista, null);
-            if(updateTesista != -1){
-                return true;
+                long updateTesista = db.update("tesista", cvTesista, "id = " + this.idTesista, null);
+                if(updateTesista != -1){
+                    return true;
+                }
             }
+        }catch(Exception e){
+            e.printStackTrace();
         }
         return false;
     }

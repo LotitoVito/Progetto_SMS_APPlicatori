@@ -49,9 +49,13 @@ public class Relatore extends Supervisore {
         cvRelatore.put("utente_id", idUtente.getString(0));
         cvRelatore.put("matricola", this.matricola);
 
-        long insertCoRelatore = db.insert("relatore", null, cvRelatore);
-        if(insertCoRelatore != -1){
-            return true;
+        try{
+            long insertCoRelatore = db.insert("relatore", null, cvRelatore);
+            if(insertCoRelatore != -1){
+                return true;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return false;
     }
@@ -70,7 +74,12 @@ public class Relatore extends Supervisore {
         cvUtente.put("Email", this.email);
         cvUtente.put("Password", this.password);
 
-        long updateUtente = db.update("utenti", cvUtente, "id = " + this.idUtente, null);
-        return updateUtente != -1;
+        try{
+            long updateUtente = db.update("utenti", cvUtente, "id = " + this.idUtente, null);
+            return updateUtente != -1;
+        }catch(Exception e){
+
+        }
+        return false;
     }
 }

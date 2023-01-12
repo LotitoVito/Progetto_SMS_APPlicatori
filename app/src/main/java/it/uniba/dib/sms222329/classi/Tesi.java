@@ -128,9 +128,13 @@ public class Tesi {
         cvTesi.put("visualizzazioni", this.numeroVisualizzazioni);
         cvTesi.put("relatore_id", this.idRelatore);
 
-        long insertTesi = db.insert("tesi", null, cvTesi);
-        if(insertTesi != -1){
-            return true;
+        try{
+            long insertTesi = db.insert("tesi", null, cvTesi);
+            if(insertTesi != -1){
+                return true;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return false;
     }
@@ -155,9 +159,13 @@ public class Tesi {
         cvTesi.put("esami_necessari", this.esamiMancantiNecessari);
         cvTesi.put("skill_richieste", this.capacitaRichieste);
 
-        long updateTesi = db.update("Tesi", cvTesi, "IDTesi = " + this.id, null);
-        if(updateTesi != -1){
-            return true;
+        try{
+            long updateTesi = db.update("Tesi", cvTesi, "IDTesi = " + this.id, null);
+            if(updateTesi != -1){
+                return true;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return false;
     }
