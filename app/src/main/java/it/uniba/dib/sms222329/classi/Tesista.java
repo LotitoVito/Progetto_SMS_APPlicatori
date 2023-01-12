@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222329.classi;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -11,14 +12,14 @@ import it.uniba.dib.sms222329.database.Database;
 
 public class Tesista extends UtenteRegistrato {
 
+    private String idTesista;
     private String matricola;
     private int tesiScelta;
     private float media;
     private int numeroEsamiMancanti;
-    private String IDCorsoStudi;
-    private String IDUniversita;
+    private String idUniversitaCorso;
 
-    public Tesista(String matricola, String nome, String cognome, String email, String password, float media, int numeroEsamiMancanti, String IDUniversita, String IDCorsoStudi) {
+    public Tesista(String matricola, String nome, String cognome, String email, String password, float media, int numeroEsamiMancanti, String idUniversitaCorso) {
         this.matricola = matricola;
         this.nome = nome;
         this.cognome = cognome;
@@ -26,10 +27,13 @@ public class Tesista extends UtenteRegistrato {
         this.password = password;
         this.media = media;
         this.numeroEsamiMancanti = numeroEsamiMancanti;
-        this.IDCorsoStudi = IDCorsoStudi;
-        this.IDUniversita = IDUniversita;
+        this.idUniversitaCorso = idUniversitaCorso;
     }
     public Tesista(){}
+
+    public String getIdTesista() {return idTesista;}
+
+    public void setIdTesista(String idTesista) {this.idTesista = idTesista;}
 
     public String getMatricola() {
         return matricola;
@@ -61,41 +65,27 @@ public class Tesista extends UtenteRegistrato {
         this.tesiScelta = tesiScelta;
     }
 
-    public String getIDCorsoStudi() {return IDCorsoStudi;}
+    public String getIdUniversitaCorso() {return idUniversitaCorso;}
 
-    public void setIDCorsoStudi(String IDCorsoStudi) {this.IDCorsoStudi = IDCorsoStudi;}
-
-    public String getIDUniversita() {return IDUniversita;}
-
-    public void setIDUniversita(String IDUniversita) {this.IDUniversita = IDUniversita;}
+    public void setIdUniversitaCorso(String idUniversitaCorso) {this.idUniversitaCorso = idUniversitaCorso;}
 
     //Registrazione account su database
-    public boolean registrazione(Database dbClass) {
+    public boolean RegistrazioneTesista(Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvTesista = new ContentValues();
 
-        cvTesista.put("Matricola", this.matricola);
-        cvTesista.put("Nome", this.nome);
-        cvTesista.put("Cognome", this.cognome);
-        cvTesista.put("Email", this.email);
-        cvTesista.put("Password", this.password);
-        cvTesista.put("MediaVoti", this.media);
-        cvTesista.put("NumeroEsamiMancanti", this.numeroEsamiMancanti);
-        cvTesista.put("IdCorsoStudi", this.IDCorsoStudi);
-        cvTesista.put("IdUniversita", this.IDUniversita);
+        Cursor idUtente = dbClass.RicercaDato("SELECT id FROM utenti WHERE email = '" + this.email + "';");
+        idUtente.moveToNext();
 
-        long insertTesista = db.insert("Tesista", null, cvTesista);
-        if(insertTesista != -1){
-            ContentValues cvUtente = new ContentValues();
+        cvTesista.put("utente_id", idUtente.getString(0));
+        cvTesista.put("matricola", this.matricola);
+        cvTesista.put("media_voti", this.media);
+        cvTesista.put("esami_mancanti", this.numeroEsamiMancanti);
+        cvTesista.put("universitacorso_id", this.idUniversitaCorso);
 
-            cvUtente.put("Email", this.email);
-            cvUtente.put("Password", this.password);
-            cvUtente.put("TipoUtente", 0);
-
-            long insertUtente = db.insert("Utenti", null, cvUtente);
-            if(insertUtente != -1){
-                return true;
-            }
+        long insertCoRelatore = db.insert("tesista", null, cvTesista);
+        if(insertCoRelatore != -1){
+            return true;
         }
         return false;
     }
@@ -110,16 +100,27 @@ public class Tesista extends UtenteRegistrato {
         this.numeroEsamiMancanti=numEsamiMancanti;
 
         SQLiteDatabase db = dbClass.getWritableDatabase();
-        ContentValues cvTesista = new ContentValues();
+        ContentValues cvUtente = new ContentValues();
 
-        cvTesista.put("Nome", this.nome);
-        cvTesista.put("Cognome", this.cognome);
-        cvTesista.put("Email", this.email);
-        cvTesista.put("Password", this.password);
-        cvTesista.put("MediaVoti", this.media);
-        cvTesista.put("NumeroEsamiMancanti", this.numeroEsamiMancanti);
+        cvUtente.put("Nome", this.nome);
+        cvUtente.put("Cognome", this.cognome);
+        cvUtente.put("Email", this.email);
+        cvUtente.put("Password", this.password);
+        cvUtente.put("MediaVoti", this.media);
+        cvUtente.put("NumeroEsamiMancanti", this.numeroEsamiMancanti);
 
-        long updateTesista = db.update("Tesista", cvTesista, "Matricola = " + this.matricola, null);
-        return updateTesista != -1;
+        long updateUtente = db.update("utenti", cvUtente, "id = " + this.idUtente, null);
+        if(updateUtente != -1){
+            ContentValues cvTesista = new ContentValues();
+
+            cvTesista.put("MediaVoti", this.media);
+            cvTesista.put("NumeroEsamiMancanti", this.numeroEsamiMancanti);
+
+            long updateTesista = db.update("tesista", cvTesista, "id = " + this.idTesista, null);
+            if(updateTesista != -1){
+                return true;
+            }
+        }
+        return false;
     }
 }

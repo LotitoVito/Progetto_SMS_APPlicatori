@@ -44,22 +44,18 @@ public class UtenteLoggato extends AppCompatActivity {
 
         UtenteRegistrato Utente = (UtenteRegistrato) getIntent().getSerializableExtra("utentePassato");
 
-        if(Utente.getTipoUtente().compareTo("0") == 0){ //tesista
-            Tesista TesistaLoggato = Utente.IstanziaTesista(Utente.getEmail(), Utente.getPassword(), db);
-
+        if(Utente.getTipoUtente().compareTo("1") == 0){ //tesista
+            Tesista TesistaLoggato = Utente.IstanziaTesista(db);
         }
-        else if (Utente.getTipoUtente().compareTo("1") == 0){ //relatore
-
-            Relatore RelatoreLoggato = Utente.IstanziaRelatore(Utente.getEmail(), Utente.getPassword(), db);
+        else if (Utente.getTipoUtente().compareTo("2") == 0){ //relatore
+            Relatore RelatoreLoggato = Utente.IstanziaRelatore(db);
             replaceFragment(new HomeFragment(RelatoreLoggato));
             setBottomNavigation(new TesiFragment(), new MessaggiFragment(), new HomeFragment(RelatoreLoggato), new ProfiloFragment());
         }
-        else if (Utente.getTipoUtente().compareTo("2") == 0){ //corelatore
-            CoRelatore CoRelatoreLoggato = Utente.IstanziaCoRelatore(Utente.getEmail(), Utente.getPassword(), db);
+        else if (Utente.getTipoUtente().compareTo("3") == 0){ //corelatore
+            CoRelatore CoRelatoreLoggato = Utente.IstanziaCoRelatore(db);
         }
-
     }
-
 
     @SuppressLint("NonConstantResourceId")
     private void setBottomNavigation(Fragment thesisFragment, Fragment messagesFragment, Fragment homeFragment, Fragment profileFragment) {

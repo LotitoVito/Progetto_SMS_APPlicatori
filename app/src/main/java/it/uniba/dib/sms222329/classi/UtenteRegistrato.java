@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import it.uniba.dib.sms222329.database.Database;
 
 public class UtenteRegistrato extends Utente {
+    String idUtente;
     String nome;
     String cognome;
     String email;
@@ -23,6 +24,10 @@ public class UtenteRegistrato extends Utente {
     public UtenteRegistrato() {
         TipoUtente = "-1";
     }
+
+    public String getIdUtente() {return idUtente;}
+
+    public void setIdUtente(String idUtente) {this.idUtente = idUtente;}
 
     public String getNome() {
         return nome;
@@ -58,79 +63,100 @@ public class UtenteRegistrato extends Utente {
         return TipoUtente;
     }
 
-    public boolean LoginStatus(Database dbClass) {
-        String query = "SELECT TipoUtente FROM Utenti WHERE Email = '" + email + "' AND Password = '" + password + "';";
-        SQLiteDatabase db = dbClass.getReadableDatabase();
-        Cursor cursore = db.rawQuery(query, null);
+    //Inserire anche codice_fiscale
+    public boolean RegistrazioneUtente(Database dbClass, int ruolo) {
+        SQLiteDatabase db = dbClass.getWritableDatabase();
+        ContentValues cvUtente = new ContentValues();
 
-        if (cursore.getCount() == 0) {
-            //INSERISCI MESSAGGIO DI ERRORE GESTITO TRAMITE LoginActivity.java
-            return false;
-        } else {
-            cursore.moveToNext();
-            TipoUtente = cursore.getString(0); //nel select puoi farti restituire piu valori, mettendo 0 restituisce solom il primo valore della prima colonna, è come un array
+        cvUtente.put("nome", this.nome);
+        cvUtente.put("cognome", this.cognome);
+        cvUtente.put("email", this.email);
+        cvUtente.put("password", this.password);
+        cvUtente.put("ruolo_id", ruolo);
+
+        long insertUtente = db.insert("utenti", null, cvUtente);
+        if(insertUtente != -1){
             return true;
         }
+        return false;
     }
 
-    public Tesista IstanziaTesista(String email, String password, Database dbClass){
-        Tesista TesistaLog = new Tesista();
-        TesistaLog.setEmail(email);
-        TesistaLog.setPassword(password);
+    public boolean LoginStatus(Database dbClass) {
+        SQLiteDatabase db = dbClass.getReadableDatabase();
+        String query = "SELECT ruolo_id FROM utenti WHERE email = '" + this.email + "' AND password = '" + this.password + "';";
+        Cursor cursore = db.rawQuery(query, null);
 
-        String query = "SELECT * FROM tesista WHERE email = '" + email + "';";
+        if (cursore.getCount() != 0) {
+            cursore.moveToNext();
+            this.TipoUtente = cursore.getString(0); //nel select puoi farti restituire piu valori, mettendo 0 restituisce solom il primo valore della prima colonna, è come un array
+            return true;
+        }
+        return false;
+    }
+
+    public Tesista IstanziaTesista(Database dbClass){
+        Tesista TesistaLog = new Tesista();
+
+        String query =  "SELECT u.id, t.id, matricola, nome, cognome, email, password, media_voti, esami_mancanti, universitacorso_id" +
+                        " FROM utenti u, tesista t WHERE u.id=t.utente_id AND email = '" + email + "';";
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();
 
-        TesistaLog.setMatricola(cursore.getString(0));
-        TesistaLog.setNome(cursore.getString(1));
-        TesistaLog.setCognome(cursore.getString(2));
-        TesistaLog.setMedia(cursore.getInt(5));
-        TesistaLog.setNumeroEsamiMancanti(cursore.getInt(6));
-        TesistaLog.setTesiScelta(cursore.getInt(7));
+        TesistaLog.setIdUtente(cursore.getString(0));
+        TesistaLog.setIdTesista(cursore.getString(1));
+        TesistaLog.setMatricola(cursore.getString(2));
+        TesistaLog.setNome(cursore.getString(3));
+        TesistaLog.setCognome(cursore.getString(4));
+        TesistaLog.setEmail(cursore.getString(5));
+        TesistaLog.setPassword(cursore.getString(6));
+        TesistaLog.setMedia(cursore.getInt(7));
+        TesistaLog.setNumeroEsamiMancanti(cursore.getInt(8));
+        TesistaLog.setIdUniversitaCorso(cursore.getString(9));
+        //Tesi scelta, codice fiscale
 
         return TesistaLog;
     }
 
-
-    public Relatore IstanziaRelatore(String email, String password, Database dbClass){
+    public Relatore IstanziaRelatore(Database dbClass){
         Relatore relatoreLog = new Relatore();
-        relatoreLog.setEmail(email);
-        relatoreLog.setPassword(password);
 
-        String query = "SELECT * FROM relatore WHERE email = '" + email + "';";
+        String query = "SELECT u.id, r.id, matricola, nome, cognome, email, password FROM utenti u, relatore r WHERE u.id=r.utente_id AND email = '" + this.email + "';";
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();
 
-        relatoreLog.setMatricola(cursore.getString(0));
-        relatoreLog.setNome(cursore.getString(1));
-        relatoreLog.setCognome(cursore.getString(2));
-        relatoreLog.setMateriaInsegnata(cursore.getString(3));
-        relatoreLog.setIDUniversita(cursore.getString(4));
+        relatoreLog.setIdUtente(cursore.getString(0));
+        relatoreLog.setIdRelatore(cursore.getString(1));
+        relatoreLog.setMatricola(cursore.getString(2));
+        relatoreLog.setNome(cursore.getString(3));
+        relatoreLog.setCognome(cursore.getString(4));
         relatoreLog.setEmail(cursore.getString(5));
         relatoreLog.setPassword(cursore.getString(6));
+        //CorsiUniversita, codice fiscale
 
         return relatoreLog;
     }
 
 
-    public CoRelatore IstanziaCoRelatore(String email, String password, Database dbClass){
+    public CoRelatore IstanziaCoRelatore(Database dbClass){
         CoRelatore CorelatoreLog = new CoRelatore();
         CorelatoreLog.setEmail(email);
         CorelatoreLog.setPassword(password);
 
-        String query = "SELECT * FROM Corelatore WHERE email = '" + email + "';";
+        String query =  "SELECT u.id, c.id, nome, cognome, email, password, organizzazione " +
+                        "FROM utenti u, Corelatore c WHERE u.id=c.utente_id AND email = '" + email + "';";
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();
 
-        CorelatoreLog.setId(cursore.getString(0));
-        CorelatoreLog.setNome(cursore.getString(1));
-        CorelatoreLog.setCognome(cursore.getString(2));
-        CorelatoreLog.setEmail(cursore.getString(3));
-        CorelatoreLog.setPassword(cursore.getString(4));
+        CorelatoreLog.setIdUtente(cursore.getString(0));
+        CorelatoreLog.setIdCorelatore(cursore.getString(1));
+        CorelatoreLog.setNome(cursore.getString(2));
+        CorelatoreLog.setCognome(cursore.getString(3));
+        CorelatoreLog.setEmail(cursore.getString(4));
+        CorelatoreLog.setPassword(cursore.getString(5));
+        //organizzazione, codice fiscale
 
         return CorelatoreLog;
     }

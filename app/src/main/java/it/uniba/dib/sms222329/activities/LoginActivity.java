@@ -26,12 +26,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
         Button signInButton = findViewById(R.id.signInButton);
-        EditText emailIns = findViewById(R.id.email);   //assegno la casella email alla variabile
+        EditText emailIns = findViewById(R.id.email);
         EditText editTextTextPassword = findViewById(R.id.editTextTextPassword);
 
         TextView forgotPasswordButton = findViewById(R.id.textView3);
@@ -48,24 +47,12 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(UtenteLoggato);
             } else {
                 Toast.makeText(this, "Accesso non riuscito", Toast.LENGTH_SHORT).show();
-            };
-
-
+            }
         }); //fini signInButton
 
         forgotPasswordButton.setOnClickListener(view -> {
-
             // inserisci cosa avviare quando si preme il bottone
             //passa il db al metodo
-
-        }); //fine forgotPassword
-
-
-
-
-
-
-
-    };
-
+        });
+    }
 }

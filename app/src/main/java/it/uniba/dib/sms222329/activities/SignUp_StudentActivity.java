@@ -27,7 +27,7 @@ public class SignUp_StudentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_student);
-        String query = "SELECT Nome FROM Universita;";
+        String query = "SELECT nome FROM universita;";
         spinnerCreate(R.id.universita, query);
     }
 
@@ -43,24 +43,24 @@ public class SignUp_StudentActivity extends AppCompatActivity {
         EditText password = findViewById(R.id.password);
         EditText media = findViewById(R.id.media);
         EditText numeroEsamiMancanti = findViewById(R.id.numeroEsamiMancanti);
-        Spinner universita = findViewById(R.id.universita);
-        Spinner corsoStudi = findViewById(R.id.corsoDiStudi);
+        Spinner spinnerUniversita = findViewById(R.id.universita);
+        Spinner spinnerCorsoStudi = findViewById(R.id.corsoDiStudi);
 
-        GestisciSpinner(universita);
+        GestisciSpinner(spinnerUniversita);
 
         registerButton.setOnClickListener(view -> {
-            String idUniversita = RecuperaIdSpinner(universita, "Universita");
-            String idCorsoStudio = RecuperaIdSpinner(corsoStudi,"CorsiStudio");
+            String idUniversita = RecuperaIdSpinner(spinnerUniversita, "universita");
+            String idCorsoStudio = RecuperaIdSpinner(spinnerCorsoStudi,"corsoStudi");
 
             Tesista account = new Tesista(matricola.getText().toString(), nome.getText().toString(),
                     cognome.getText().toString(), email.getText().toString(), password.getText().toString(),
                     Integer.parseInt(media.getText().toString()), Integer.parseInt(numeroEsamiMancanti.getText().toString()),
-                    idUniversita, idCorsoStudio);
+                    RecuperaUniversitaCorso(idUniversita, idCorsoStudio));
 
-            if (!db.VerificaDatoEsistente("SELECT Matricola FROM Tesista WHERE Matricola = '"+ account.getMatricola() +"';")){
-                if(!db.VerificaDatoEsistente("SELECT Email FROM Utenti WHERE Email = '"+ account.getEmail() +"';")){
+            if (!db.VerificaDatoEsistente("SELECT matricola FROM tesista WHERE matricola = '"+ account.getMatricola() +"';")){
+                if(!db.VerificaDatoEsistente("SELECT email FROM utenti WHERE email = '"+ account.getEmail() +"';")){
 
-                    if(account.registrazione(db)){
+                    if(account.RegistrazioneUtente(db, 1) && account.RegistrazioneTesista(db)){
                         Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(mainActivity);
                     } else{
@@ -102,7 +102,14 @@ public class SignUp_StudentActivity extends AppCompatActivity {
 
     private String RecuperaIdSpinner(Spinner spinner, String tabella){
         Cursor idCursor;
-        idCursor = db.RicercaDato("SELECT ID FROM "+ tabella +" WHERE Nome = '"+ spinner.getSelectedItem().toString() +"';");
+        idCursor = db.RicercaDato("SELECT id FROM "+ tabella +" WHERE nome = '"+ spinner.getSelectedItem().toString() +"';");
+        idCursor.moveToNext();
+        return idCursor.getString(0);
+    }
+
+    private String RecuperaUniversitaCorso(String idUniversita, String idCorso){
+        Cursor idCursor;
+        idCursor = db.RicercaDato("SELECT id FROM universitacorso WHERE universita_id = '"+ idUniversita +"' AND corso_id = '"+ idCorso +"';");
         idCursor.moveToNext();
         return idCursor.getString(0);
     }
@@ -111,15 +118,15 @@ public class SignUp_StudentActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String idUniversita = RecuperaIdSpinner(spinner, "Universita");
+                String idUniversita = RecuperaIdSpinner(spinner, "universita");
 
-                Cursor risultato = db.RicercaDato("SELECT IDCorsoStudio FROM UniversitaCorsistudio WHERE IDUniversita = '"+ idUniversita +"';");
+                Cursor risultato = db.RicercaDato("SELECT corso_id FROM universitacorso WHERE universita_id = '"+ idUniversita +"';");
                 List<String> idRisultati = new ArrayList<>();
                 while(risultato.moveToNext()){
                     idRisultati.add(risultato.getString(0));
                 }
 
-                String query = "SELECT Nome FROM CorsiStudio WHERE ID IN (" + idRisultati.toString().replace("[", "").replace("]", "") + ");";
+                String query = "SELECT nome FROM corsoStudi WHERE id IN (" + idRisultati.toString().replace("[", "").replace("]", "") + ");";
                 spinnerCreate(R.id.corsoDiStudi, query);
             }
 

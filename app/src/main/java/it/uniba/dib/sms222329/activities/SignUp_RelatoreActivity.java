@@ -26,8 +26,8 @@ public class SignUp_RelatoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_relatore);
-        String query = "SELECT Nome FROM Universita;";
-        spinnerCreate(R.id.universita, query);
+        //String query = "SELECT nome FROM universita;";
+        //spinnerCreate(R.id.universita, query);
     }
 
     @Override
@@ -38,22 +38,20 @@ public class SignUp_RelatoreActivity extends AppCompatActivity {
         EditText matricola = findViewById(R.id.matricola);
         EditText cognome = findViewById(R.id.cognome);
         EditText nome = findViewById(R.id.nome);
-        EditText materia = findViewById(R.id.materia);
         EditText email = findViewById(R.id.email);
         EditText password = findViewById(R.id.password);
-        Spinner universita = findViewById(R.id.universita);
+        //Spinner universita = findViewById(R.id.universita);
 
         registerButton.setOnClickListener(view -> {
-            String idUniversita = RecuperaIdSpinner(universita, "Universita");
+            //String idUniversita = RecuperaIdSpinner(universita, "Universita");
 
             Relatore account = new Relatore(matricola.getText().toString(), nome.getText().toString(),
-                    cognome.getText().toString(), materia.getText().toString(), idUniversita, email.getText().toString(),
-                    password.getText().toString());
+                    cognome.getText().toString(), email.getText().toString(), password.getText().toString());
 
-            if(!db.VerificaDatoEsistente("SELECT Matricola FROM Relatore WHERE Matricola = '"+ account.getMatricola() +"';")){
-                if(!db.VerificaDatoEsistente("SELECT Email FROM Utenti WHERE Email = '"+ account.getEmail() +"';")){
+            if(!db.VerificaDatoEsistente("SELECT matricola FROM relatore WHERE matricola = '"+ account.getMatricola() +"';")){
+                if(!db.VerificaDatoEsistente("SELECT email FROM utenti WHERE email = '"+ account.getEmail() +"';")){
 
-                    if(account.registrazione(db)){
+                    if(account.RegistrazioneUtente(db, 2) && account.RegistrazioneRelatore(db)){
                         Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(mainActivity);
                     } else{
@@ -69,7 +67,7 @@ public class SignUp_RelatoreActivity extends AppCompatActivity {
         });
     }
 
-    private void spinnerCreate(int idSpinner, String query){
+    /*private void spinnerCreate(int idSpinner, String query){
         Spinner spinner = findViewById(idSpinner);
 
         // Query the database for the data
@@ -91,12 +89,12 @@ public class SignUp_RelatoreActivity extends AppCompatActivity {
 
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
-    }
+    }*/
 
-    private String RecuperaIdSpinner(Spinner spinner, String tabella){
+    /*private String RecuperaIdSpinner(Spinner spinner, String tabella){
         Cursor idCursor;
         idCursor = db.RicercaDato("SELECT ID FROM "+ tabella +" WHERE Nome = '"+ spinner.getSelectedItem().toString() +"';");
         idCursor.moveToNext();
         return idCursor.getString(0);
-    }
+    }*/
 }

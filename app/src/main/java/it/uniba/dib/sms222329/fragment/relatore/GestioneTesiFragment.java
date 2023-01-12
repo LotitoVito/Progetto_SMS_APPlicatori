@@ -91,7 +91,6 @@ public class GestioneTesiFragment extends Fragment {
         Database db = new Database(context);
         TextInputEditText titolo = getView().findViewById(R.id.titoloTesi);
         TextInputEditText argomenti = getView().findViewById(R.id.argomenti_edit_text);
-        TextInputEditText corelatore = getView().findViewById(R.id.corelatore_edit_text);
         TextInputEditText tempistiche = getView().findViewById(R.id.tempistiche_edit_text);
         TextInputEditText esamiMancanti = getView().findViewById(R.id.esamiMancanti);
         TextInputEditText capacitaRichiesta = getView().findViewById(R.id.capacitaRichiesta);
@@ -100,24 +99,15 @@ public class GestioneTesiFragment extends Fragment {
         Button registra = getView().findViewById(R.id.add);
 
         registra.setOnClickListener(view -> {
-            if(db.VerificaDatoEsistente("SELECT * FROM CoRelatore WHERE Email = '" + corelatore.getText().toString() + "';")){
-            Cursor idCorelatore = db.RicercaDato("SELECT ID FROM CoRelatore WHERE Email = '" + corelatore.getText().toString() + "';");
-            idCorelatore.moveToNext();
             Tesi tesi = new Tesi(titolo.getText().toString(), argomenti.getText().toString(),
-                    statoDisponibilita.isChecked(), "1", idCorelatore.getString(0), tempistiche.getText().toString(),
+                    statoDisponibilita.isChecked(), "1", tempistiche.getText().toString(),
                     Integer.parseInt(media.getText().toString()), Integer.parseInt(esamiMancanti.getText().toString()),
                     capacitaRichiesta.getText().toString()); //Fixare idRelatore dall'activity
-                if(db.VerificaDatoEsistente("SELECT Matricola FROM Relatore WHERE Matricola = '"+ 1 +"';")){
-                    if(tesi.RegistrazioneTesi(db)){
-                        Toast.makeText(context, "Successo", Toast.LENGTH_SHORT).show();
-                    } else{
-                        Toast.makeText(context, "Registrazione fallita", Toast.LENGTH_SHORT).show();
-                    }
-                } else{
-                    Toast.makeText(context, "Relatore non esistente", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(context, "Corelatore non esistente", Toast.LENGTH_SHORT).show();
+
+            if(tesi.RegistrazioneTesi(db)){
+                Toast.makeText(context, "Successo", Toast.LENGTH_SHORT).show();
+            } else{
+                Toast.makeText(context, "Registrazione fallita", Toast.LENGTH_SHORT).show();
             }
         });
 

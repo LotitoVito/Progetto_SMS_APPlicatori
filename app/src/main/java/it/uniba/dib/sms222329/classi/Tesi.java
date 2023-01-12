@@ -23,48 +23,35 @@ public class Tesi {
     private String id;
     private String titolo;
     private String argomenti;
-    private Date dataPubblicazione;
-    private boolean statoDisponibilita;
-    private int numeroVisualizzazioni;
-    private String idRelatore;
-    private String idCorelatore;
-    private String linkMateriale;
-    private String QRCode;
     private String tempistiche;
     private int mediaVotiMinima;
     private int esamiMancantiNecessari;
     private String capacitaRichieste;
+    private boolean statoDisponibilita;
+    private int numeroVisualizzazioni;
+    private String idRelatore;
 
-
-    public Tesi(String id, String titolo, String argomenti, Date dataPubblicazione, boolean statoDisponibilita, int numeroVisualizzazioni,
-                String idRelatore, String idCorelatore, String linkMateriale, String QRCode,
-                String tempistiche, int mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste) {
+    public Tesi(String id, String titolo, String argomenti, String tempistiche, int mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste, boolean statoDisponibilita, int numeroVisualizzazioni, String idRelatore) {
         this.id = id;
         this.titolo = titolo;
         this.argomenti = argomenti;
-        this.dataPubblicazione = dataPubblicazione;
-        this.statoDisponibilita = statoDisponibilita;
-        this.numeroVisualizzazioni = numeroVisualizzazioni;
-        this.idRelatore = idRelatore;
-        this.idCorelatore = idCorelatore;
-        this.linkMateriale = linkMateriale;
-        this.QRCode = QRCode;
         this.tempistiche = tempistiche;
         this.mediaVotiMinima = mediaVotiMinima;
         this.esamiMancantiNecessari = esamiMancantiNecessari;
         this.capacitaRichieste = capacitaRichieste;
+        this.statoDisponibilita = statoDisponibilita;
+        this.numeroVisualizzazioni = numeroVisualizzazioni;
+        this.idRelatore = idRelatore;
     }
 
     //Usato per al registrazione
-    public Tesi(String titolo, String argomenti, boolean statoDisponibilita, String idRelatore, String idCorelatore,
-                String tempistiche, int mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste) {
+    public Tesi(String titolo, String argomenti, boolean statoDisponibilita, String idRelatore, String tempistiche,
+                int mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste) {
         this.titolo = titolo;
         this.argomenti = argomenti;
-        this.dataPubblicazione = new java.sql.Date(System.currentTimeMillis());
         this.statoDisponibilita = statoDisponibilita;
         this.numeroVisualizzazioni = 0;
         this.idRelatore = idRelatore;
-        this.idCorelatore = idCorelatore;
         this.tempistiche = tempistiche;
         this.mediaVotiMinima = mediaVotiMinima;
         this.esamiMancantiNecessari = esamiMancantiNecessari;
@@ -91,12 +78,6 @@ public class Tesi {
         this.argomenti = argomenti;
     }
 
-    public Date getDataPubblicazione() {
-        return dataPubblicazione;
-    }
-
-    public void setDataPubblicazione(Date dataPubblicazione) {this.dataPubblicazione = dataPubblicazione;}
-
     public boolean isStatoDisponibilita() {
         return statoDisponibilita;
     }
@@ -115,26 +96,6 @@ public class Tesi {
 
     public void setIdRelatore(String idRelatore) {
         this.idRelatore = idRelatore;
-    }
-
-    public String getIdCorelatore() {return idCorelatore;}
-
-    public void setIdCorelatore(String idCorelatore) {this.idCorelatore = idCorelatore;}
-
-    public String getLinkMateriale() {
-        return linkMateriale;
-    }
-
-    public void setLinkMateriale(String linkMateriale) {
-        this.linkMateriale = linkMateriale;
-    }
-
-    public String getQRCode() {
-        return QRCode;
-    }
-
-    public void setQRCode(String QRCode) {
-        this.QRCode = QRCode;
     }
 
     public String getTempistiche() {return tempistiche;}
@@ -157,34 +118,27 @@ public class Tesi {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvTesi = new ContentValues();
 
-        cvTesi.put("Titolo", this.titolo);
-        cvTesi.put("Argomenti", this.argomenti);
-        cvTesi.put("DataPubblicazione", String.valueOf(this.dataPubblicazione));
-        cvTesi.put("StatoDisponibilita", this.statoDisponibilita);
-        cvTesi.put("NumeroVisualizzazioni", this.numeroVisualizzazioni);
-        cvTesi.put("MatricolaRelatore", this.idRelatore);
-        cvTesi.put("IDCorelatore", this.idCorelatore);
-        cvTesi.put("LinkMateriale", this.linkMateriale);
-        cvTesi.put("QRCode", this.QRCode);
-        cvTesi.put("Tempistiche", this.tempistiche);
-        cvTesi.put("MediaVotiMinima", this.mediaVotiMinima);
-        cvTesi.put("EsamiMancantiNecessari", this.esamiMancantiNecessari);
-        cvTesi.put("SkillRichieste", this.capacitaRichieste);
+        cvTesi.put("titolo", this.titolo);
+        cvTesi.put("argomento", this.argomenti);
+        cvTesi.put("tempistiche", this.tempistiche);
+        cvTesi.put("media_voto_minima", this.mediaVotiMinima);
+        cvTesi.put("esami_necessari", this.esamiMancantiNecessari);
+        cvTesi.put("skill_richieste", this.capacitaRichieste);
+        cvTesi.put("stato", this.statoDisponibilita);
+        cvTesi.put("visualizzazioni", this.numeroVisualizzazioni);
+        cvTesi.put("relatore_id", this.idRelatore);
 
-        long insertTesi = db.insert("Tesi", null, cvTesi);
+        long insertTesi = db.insert("tesi", null, cvTesi);
         if(insertTesi != -1){
             return true;
         }
         return false;
     }
 
-    public boolean ModificaTesi(Database dbClass, String argomenti, boolean statoDisponibilita, String idCorelatore,
-                                String linkMateriale, String tempistiche, int mediaVotiMinima, int esamiMancantiNecessari,
-                                String capacitaRichieste){
+    public boolean ModificaTesi(Database dbClass, String argomenti, boolean statoDisponibilita, String tempistiche,
+                                int mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste){
         this.argomenti = argomenti;
         this.statoDisponibilita = statoDisponibilita;
-        this.idCorelatore = idCorelatore;
-        this.linkMateriale = linkMateriale;
         this.tempistiche = tempistiche;
         this.mediaVotiMinima = mediaVotiMinima;
         this.esamiMancantiNecessari = esamiMancantiNecessari;
@@ -193,15 +147,13 @@ public class Tesi {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvTesi = new ContentValues();
 
-        cvTesi.put("Titolo", this.titolo);
-        cvTesi.put("Argomenti", this.argomenti);
-        cvTesi.put("StatoDisponibilita", this.statoDisponibilita);
-        cvTesi.put("IDCorelatore", this.idCorelatore);
-        cvTesi.put("LinkMateriale", this.linkMateriale);
-        cvTesi.put("Tempistiche", this.tempistiche);
-        cvTesi.put("MediaVotiMinima", this.mediaVotiMinima);
-        cvTesi.put("EsamiMancantiNecessari", this.esamiMancantiNecessari);
-        cvTesi.put("SkillRichieste", this.capacitaRichieste);
+        cvTesi.put("titolo", this.titolo);
+        cvTesi.put("argomento", this.argomenti);
+        cvTesi.put("stato", this.statoDisponibilita);
+        cvTesi.put("tempistiche", this.tempistiche);
+        cvTesi.put("media_voto_minima", this.mediaVotiMinima);
+        cvTesi.put("esami_necessari", this.esamiMancantiNecessari);
+        cvTesi.put("skill_richieste", this.capacitaRichieste);
 
         long updateTesi = db.update("Tesi", cvTesi, "IDTesi = " + this.id, null);
         if(updateTesi != -1){

@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222329.classi;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.PreparedStatement;
@@ -10,21 +11,24 @@ import it.uniba.dib.sms222329.database.Database;
 
 public class Relatore extends Supervisore {
 
+    private String idRelatore;
     private String matricola;
-    private String materiaInsegnata;
-    private String IDUniversita;
+    private String IDCorsi[];
 
-    public Relatore(String matricola, String nome, String cognome, String materiaInsegnata, String IDUniversita, String email, String password) {
+    public Relatore(String matricola, String nome, String cognome, String email, String password) {
         this.matricola = matricola;
         this.nome = nome;
         this.cognome = cognome;
-        this.materiaInsegnata = materiaInsegnata;
-        this.IDUniversita = IDUniversita;
+        //inserire id corsi
         this.email = email;
         this.password = password;
     }
 
     public Relatore(){}
+
+    public String getIdRelatore() {return idRelatore;}
+
+    public void setIdRelatore(String idRelatore) {this.idRelatore = idRelatore;}
 
     public String getMatricola() {
         return matricola;
@@ -34,38 +38,20 @@ public class Relatore extends Supervisore {
         this.matricola = matricola;
     }
 
-    public String getMateriaInsegnata() {return materiaInsegnata;}
-
-    public void setMateriaInsegnata(String materiaInsegnata) {this.materiaInsegnata = materiaInsegnata;}
-
-    public String getIDUniversita() {return IDUniversita;}
-
-    public void setIDUniversita(String IDUniversita) {this.IDUniversita = IDUniversita;}
-
     //Registrazione account su database
-    public boolean registrazione(Database dbClass) {
+    public boolean RegistrazioneRelatore(Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvRelatore = new ContentValues();
 
-        cvRelatore.put("Matricola", this.matricola);
-        cvRelatore.put("Nome", this.nome);
-        cvRelatore.put("Cognome", this.cognome);
-        cvRelatore.put("MateriaInsegnata", this.materiaInsegnata);
-        cvRelatore.put("IdUniversita", this.IDUniversita);
-        cvRelatore.put("Email", this.email);
-        cvRelatore.put("Password", this.password);
+        Cursor idUtente = dbClass.RicercaDato("SELECT id FROM utenti WHERE email = '" + this.email + "';");
+        idUtente.moveToNext();
 
-        long insertRelatore = db.insert("Relatore", null, cvRelatore);
-        if(insertRelatore != -1){//se va bene l inserimento
-            ContentValues cvUtente = new ContentValues();
-            cvUtente.put("Email", this.email);
-            cvUtente.put("Password", this.password);
-            cvUtente.put("TipoUtente", 1);
+        cvRelatore.put("utente_id", idUtente.getString(0));
+        cvRelatore.put("matricola", this.matricola);
 
-            long insertUtente = db.insert("Utenti", null, cvUtente);
-            if(insertUtente != -1) {
-                return true;
-            }
+        long insertCoRelatore = db.insert("relatore", null, cvRelatore);
+        if(insertCoRelatore != -1){
+            return true;
         }
         return false;
     }
@@ -77,14 +63,14 @@ public class Relatore extends Supervisore {
         this.password=password;
 
         SQLiteDatabase db = dbClass.getWritableDatabase();
-        ContentValues cvRelatore = new ContentValues();
+        ContentValues cvUtente = new ContentValues();
 
-        cvRelatore.put("Nome", this.nome);
-        cvRelatore.put("Cognome", this.cognome);
-        cvRelatore.put("Email", this.email);
-        cvRelatore.put("Password", this.password);
+        cvUtente.put("Nome", this.nome);
+        cvUtente.put("Cognome", this.cognome);
+        cvUtente.put("Email", this.email);
+        cvUtente.put("Password", this.password);
 
-        long updateRelatore = db.update("Relatore", cvRelatore, "Matricola = " + this.matricola, null);
-        return updateRelatore != -1;
+        long updateUtente = db.update("utenti", cvUtente, "id = " + this.idUtente, null);
+        return updateUtente != -1;
     }
 }

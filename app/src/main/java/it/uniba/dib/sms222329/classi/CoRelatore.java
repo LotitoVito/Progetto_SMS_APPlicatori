@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222329.classi;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.PreparedStatement;
@@ -10,10 +11,10 @@ import it.uniba.dib.sms222329.database.Database;
 
 public class CoRelatore extends Supervisore {
 
-    private String id;
+    private String idCorelatore;
 
-    public CoRelatore(String id, String nome, String cognome, String email, String password) {
-        this.id = id;
+    public CoRelatore(String idCorelatore, String nome, String cognome, String email, String password) {
+        this.idCorelatore = idCorelatore;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
@@ -30,37 +31,24 @@ public class CoRelatore extends Supervisore {
 
     public CoRelatore() {}
 
-    public String getId() {
-        return id;
-    }
+    public String getIdCorelatore() {return idCorelatore;}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public void setIdCorelatore(String idCorelatore) {this.idCorelatore = idCorelatore;}
 
-    //Registrazione account su database
-
-    public boolean registrazione(Database dbClass) {
+    //Inserire organizzazione
+    public boolean RegistrazioneCoRelatore(Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvCoRelatore = new ContentValues();
 
-        cvCoRelatore.put("Nome", this.nome);
-        cvCoRelatore.put("Cognome", this.cognome);
-        cvCoRelatore.put("Email", this.email);
-        cvCoRelatore.put("Password", this.password);
+        Cursor idUtente = dbClass.RicercaDato("SELECT id FROM utenti WHERE email = '" + this.email + "';");
+        idUtente.moveToNext();
 
-        long insertCoRelatore = db.insert("CoRelatore", null, cvCoRelatore);
+        cvCoRelatore.put("utente_id", idUtente.getString(0));
+        //cvCoRelatore.put("organizzazione", this.organizzazione);
+
+        long insertCoRelatore = db.insert("coRelatore", null, cvCoRelatore);
         if(insertCoRelatore != -1){
-            ContentValues cvUtente = new ContentValues();
-
-            cvUtente.put("Email", this.email);
-            cvUtente.put("Password", this.password);
-            cvUtente.put("TipoUtente", 2);
-
-            long insertUtente = db.insert("Utenti", null, cvUtente);
-            if(insertUtente != -1) {
-                return true;
-            }
+            return true;
         }
         return false;
     }
@@ -72,14 +60,14 @@ public class CoRelatore extends Supervisore {
         this.password=password;
 
         SQLiteDatabase db = dbClass.getWritableDatabase();
-        ContentValues cvCoRelatore = new ContentValues();
+        ContentValues cvUtente = new ContentValues();
 
-        cvCoRelatore.put("Nome", this.nome);
-        cvCoRelatore.put("Cognome", this.cognome);
-        cvCoRelatore.put("Email", this.email);
-        cvCoRelatore.put("Password", this.password);
+        cvUtente.put("nome", this.nome);
+        cvUtente.put("cognome", this.cognome);
+        cvUtente.put("email", this.email);
+        cvUtente.put("password", this.password);
 
-        long updateCoRelatore = db.update("CoRelatore", cvCoRelatore, "ID = " + this.id, null);
-        return updateCoRelatore != -1;
+        long updateUtente = db.update("utenti", cvUtente, "id = " + this.idUtente, null);
+        return updateUtente != -1;
     }
 }
