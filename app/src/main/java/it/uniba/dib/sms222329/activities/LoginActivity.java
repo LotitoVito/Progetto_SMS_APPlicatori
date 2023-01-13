@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,10 +31,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Button signInButton = findViewById(R.id.signInButton);
+        Button forgotPasswordButton = findViewById(R.id.textView3);
         EditText emailIns = findViewById(R.id.email);
         EditText editTextTextPassword = findViewById(R.id.editTextTextPassword);
 
-        TextView forgotPasswordButton = findViewById(R.id.textView3);
+
 
         signInButton.setOnClickListener(view -> {
 
@@ -50,9 +52,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         }); //fini signInButton
 
+
+
+
+
         forgotPasswordButton.setOnClickListener(view -> {
-            // inserisci cosa avviare quando si preme il bottone
-            //passa il db al metodo
-        });
+
+            Intent Recupero_password_activity = new Intent(getApplicationContext(), it.uniba.dib.sms222329.activities.Recupero_password_activity.class);
+            startActivity(Recupero_password_activity);
+            });
+        }
     }
-}
