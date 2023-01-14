@@ -44,6 +44,10 @@ public class GestioneTesiFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public GestioneTesiFragment(Tesi tesi) {
+        // Required empty public constructor
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.

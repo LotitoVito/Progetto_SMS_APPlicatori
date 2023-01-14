@@ -22,10 +22,10 @@
     <string name="numero_esami_mancanti">Numero esami mancanti</string>
     <string name="e_mail">E-mail</string>
     <string name="Password">password</string>
-    <string name="Signup">Signup</string>
+    <string name="Signup">Iscriviti</string>
     <string name="atMricola">Matricola</string>
     <string name="Matricola">matricola</string>
-    <string name="signup_corelatore">Signup</string>
+    <string name="signup_corelatore">Iscriviti</string>
     <string name="confermaEmail">Conferma mail…</string>
     <string name="confermaPassword">Conferma mail…</string>
     <string name="title_home">Home</string>
@@ -47,5 +47,9 @@
     <string name="email_co_relatore">Inserire email Co-relatore</string>
     <string name="capacitaRichiesta">Capacità richieste</string>
     <string name="disponibilita">Disponibilità</string>
+    <string name="codiceFiscale">Codice fiscale</string>
+    <string name="next">Avanti</string>
+    <string name="registratiCome">Registrati come:</string>
+    <string name="organizzazione">Organizzazione</string>
 
 </resources>

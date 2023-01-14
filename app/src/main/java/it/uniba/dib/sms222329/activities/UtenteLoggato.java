@@ -14,8 +14,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.journeyapps.barcodescanner.Util;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.CoRelatore;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Tesista;
@@ -49,7 +51,7 @@ public class UtenteLoggato extends AppCompatActivity {
         }
         else if (Utente.getTipoUtente().compareTo("2") == 0){ //relatore
             Relatore RelatoreLoggato = Utente.IstanziaRelatore(db);
-            replaceFragment(new HomeFragment(RelatoreLoggato));
+            Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment(RelatoreLoggato));
             setBottomNavigation(new TesiFragment(), new MessaggiFragment(), new HomeFragment(RelatoreLoggato), new ProfiloFragment());
         }
         else if (Utente.getTipoUtente().compareTo("3") == 0){ //corelatore
@@ -66,19 +68,19 @@ public class UtenteLoggato extends AppCompatActivity {
             // Handle item selection
             switch (item.getItemId()) {
                 case R.id.navigation_thesis:
-                    replaceFragment(thesisFragment);
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, thesisFragment);
                     return true;
                 case R.id.navigation_messages:
-                    replaceFragment(messagesFragment);
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, messagesFragment);
                     return true;
                 case R.id.navigation_home:
-                    replaceFragment(homeFragment);
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, homeFragment);
                     return true;
                 case R.id.navigation_profile:
-                    replaceFragment(profileFragment);
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, profileFragment);
                     return true;
                 case R.id.navigation_settings:
-                    replaceFragment(new ImpostazioniFragment());
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ImpostazioniFragment());
                     return true;
             }
             return false;
@@ -86,10 +88,5 @@ public class UtenteLoggato extends AppCompatActivity {
 
     }
 
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.commit();
-    }
+
 }
