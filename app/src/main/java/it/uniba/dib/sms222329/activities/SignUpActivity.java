@@ -24,7 +24,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        setTitle(R.string.Signup);
+        setTitle(R.string.accedi);
 
     }
 }

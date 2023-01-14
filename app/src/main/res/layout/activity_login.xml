@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:text="@string/recoverPassword"
+            android:text="@string/passwordDimenticata"
             android:textColor="@color/red"
             android:textSize="16sp"
             android:background="@color/zxing_transparent"
@@ -63,7 +63,7 @@
         android:id="@+id/signInButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/signInButton"
+        android:text="@string/accedi"
         android:textColor="@android:color/white"
         android:layout_gravity="center"/>
 

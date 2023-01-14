@@ -1,62 +1,41 @@
 <resources>
     <string name="app_name">LaureApp</string>
-    <string name="buttonGuest">Sign in as guest</string>
-    <string name="orLabel">- You don\'t need to sign up? -</string>
-    <string name="loginEmail">e-mail…</string>
-    <string name="signInButton">Sign In</string>
-    <string name="signUpButton">Sign Up</string>
-    <string name="signInTitle">Sign In…</string>
-    <string name="insertEmail">Email…</string>
-    <string name="insertPassword">Password…</string>
-    <string name="recoverPassword">Forgot Password</string>
-    <string name="matricola">Matricola</string>
-    <string name="Cognome">Cognome</string>
-    <string name="nome">Nome</string>
+    <string name="passwordDimenticata">Forgot password</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="signup">Signup</string>
-    <string name="cognome">Cognome</string>
-    <string name="Nome">Nome</string>
-    <string name="media_esami">Media esami</string>
-    <string name="numero_esami_mancanti">Numero esami mancanti</string>
-    <string name="e_mail">E-mail</string>
-    <string name="Password">password</string>
-    <string name="Signup">Iscriviti</string>
-    <string name="atMricola">Matricola</string>
-    <string name="Matricola">Matricola</string>
-    <string name="studente" translatable="false">Studente</string>
-    <string name="relatore" translatable="false">Relatore</string>
-    <string name="co_relatore" translatable="false">Co-relatore</string>
-    <string name="Cognome_corelatore" translatable="false">Cognome</string>
-    <string name="nome_corelatore" translatable="false">Nome</string>
-    <string name="email_corelatore" translatable="false">Email</string>
-    <string name="password_corelatore" translatable="false">Password</string>
-    <string name="signup_corelatore">Signup</string>
-    <string name="confermaEmail">Confirm your email…</string>
-    <string name="confermaPassword">Confirm your password…</string>
-    <string name="title_home">Home</string>
-    <string name="title_settings">Settings</string>
-    <string name="title_profile">Profile</string>
+    <string name="accedi">Sign in</string>
+    <string name="buttonGuest">Sign as guest</string>
+    <string name="iscriviti">Sign up</string>
+    <string name="orLabel">-- Or --</string>
+    <string name="reset">Reset password</string>
+    <string name="confermaEmail">Confirm email</string>
+    <string name="confermaPassword">Confirm password</string>
+    <string name="salva">Save</string>
     <string name="title_thesis">Thesis</string>
     <string name="title_messages">Messages</string>
-    <string name="universita">Università</string>
-    <string name="corsoDiStudi">Corso di studi</string>
-    <string name="materia">Materia</string>
-    <string name="aggiungi">add</string>
+    <string name="title_home">Home</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_settings">Settings</string>
+    <string name="titolo">Title</string>
+    <string name="argomenti">Topic</string>
+    <string name="email_co_relatore">Email Co-advisor</string>
+    <string name="tempistiche">Schedule</string>
+    <string name="numero_esami_mancanti">Missing exams</string>
+    <string name="capacitaRichiesta">Required skills</string>
+    <string name="media">GPA</string>
+    <string name="disponibilita">Available</string>
+    <string name="aggiungi">Add</string>
+    <string name="nome">Name</string>
+    <string name="cognome">Surname</string>
+    <string name="codiceFiscale">Tax identification number</string>
+    <string name="registratiCome">Sign up as:</string>
+    <string name="studente">Student</string>
+    <string name="relatore">Advisor</string>
+    <string name="co_relatore">Co-advisor</string>
+    <string name="avanti">Next</string>
+    <string name="organizzazione">Company</string>
+    <string name="matricola">Id number</string>
     <string name="modifica">Edit</string>
-    <string name="argomenti">Arguments</string>
-    <string name="tempistiche">Tempistiche</string>
-    <string name="media">Media</string>
-    <string name="salva">Salva</string>
-    <string name="indietro">Indietro</string>
-    <string name="titolo">Titolo</string>
-    <string name="email_co_relatore">Inserire email Co-relatore</string>
-    <string name="capacitaRichiesta">Capacità richieste</string>
-    <string name="disponibilita">Disponibilità</string>
-    <string name="codiceFiscale">Codice fiscale</string>
-    <string name="next">Avanti</string>
-    <string name="registratiCome">Registrati come:</string>
-    <string name="organizzazione">Organizzazione</string>
-    <string name="reset">Reset</string>
+
 
 </resources>

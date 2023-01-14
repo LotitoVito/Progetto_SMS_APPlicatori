@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        setTitle(R.string.signInTitle);
+        setTitle(R.string.iscriviti);
         Button signInButton = findViewById(R.id.signInButton);
         Button forgotPasswordButton = findViewById(R.id.textView3);
         EditText emailIns = findViewById(R.id.email);

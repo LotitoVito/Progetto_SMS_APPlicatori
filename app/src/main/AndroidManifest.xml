@@ -57,7 +57,7 @@
         <activity
             android:name=".activities.LoginActivity"
             android:exported="false"
-            android:label="@string/signInTitle">
+            android:label="@string/accedi">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -75,13 +75,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".activities.Recupero_password_activity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+    
     </application>
 
 </manifest>
