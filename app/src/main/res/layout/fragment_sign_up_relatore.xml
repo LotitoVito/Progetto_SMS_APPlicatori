@@ -44,6 +44,12 @@
                 tools:ignore="LabelFor"
                 android:layout_marginBottom="16dp" />
 
+            <TextView
+                android:id="@+id/corsiInsegnati"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/corsiDiStudio"
+                android:textSize="16sp"/>
 
             <CheckBox
                 android:id="@+id/checkbox"

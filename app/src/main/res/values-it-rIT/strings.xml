@@ -37,6 +37,7 @@
     <string name="organizzazione">Organizzazione</string>
     <string name="matricola">Matricola</string>
     <string name="modifica">Modifica</string>
+    <string name="corsiDiStudio">Corsi di studio:</string>
 
 
 </resources>

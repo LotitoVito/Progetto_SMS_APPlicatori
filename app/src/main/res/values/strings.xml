@@ -36,6 +36,7 @@
     <string name="organizzazione">Company</string>
     <string name="matricola">Id number</string>
     <string name="modifica">Edit</string>
+    <string name="corsiDiStudio">Courses:</string>
 
 
 </resources>
