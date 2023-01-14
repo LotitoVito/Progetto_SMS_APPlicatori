@@ -25,7 +25,7 @@ public class Recupero_password_activity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Button signInButton = findViewById(R.id.signInButton);
+        Button signInButton = findViewById(R.id.recoverPasswordButton);
         EditText emailIns1 = findViewById(R.id.email2);
         EditText emailIns2 = findViewById(R.id.email);
         EditText passswordIns1 = findViewById(R.id.recoverPassword);
