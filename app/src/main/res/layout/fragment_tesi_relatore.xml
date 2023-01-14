@@ -3,58 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.relatore.TesiFragment"
-    >
+    tools:context=".fragment.relatore.TesiFragment">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
+
+    <LinearLayout
+        android:id="@+id/content2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:cardElevation="0dp"
-        app:contentPadding="8dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp">
 
-        <LinearLayout
+        <ListView
+            android:id="@+id/structureList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="16dp"
+            tools:listitem="@layout/relatore_tesi_item"
+           />
 
-            <TextView
-                android:id="@+id/titoloTesi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:text="Titolo tesi"/>
 
-            <TextView
-                android:id="@+id/argomentoTesi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:text="Descrizione tesi"/>
-
-            <TextView
-                android:id="@+id/statoTesi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textStyle="italic"
-                android:text="stato tesi (se la tesi è stata presa in carico, è conclusa, è libera...)"/>
-
-            <Button
-                android:id="@+id/modificaTesi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/modifica"
-                android:layout_gravity="end"
-                android:clickable="true"
-                android:paddingBottom="8dp"/>
         </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/aggiungiTesi"
@@ -69,3 +37,4 @@
 
 
 </FrameLayout>
+

@@ -14,68 +14,104 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:ignore="UselessParent">
+        tools:ignore="UselessParent"
+        android:padding="16dp">
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/titolo"
+            android:layout_marginBottom="16dp" >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/titoloTesi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/titolo"
             android:inputType="text"
             android:importantForAutofill="no"
             />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/argomenti"
+            android:layout_marginBottom="16dp" >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/argomenti_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/argomenti"
             android:inputType="text"
             android:minHeight="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email_co_relatore"
+            android:layout_marginBottom="16dp" >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/corelatore_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/email_co_relatore"
             android:inputType="text"
             android:minHeight="48dp"
             />
+        </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/tempistiche"
+            android:layout_marginBottom="16dp" >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tempistiche_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/tempistiche"
             android:inputType="text"
             android:minHeight="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/numero_esami_mancanti"
+            android:layout_marginBottom="16dp" >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/esamiMancanti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/numero_esami_mancanti"
             android:inputType="number"
             android:minHeight="48dp"
             android:importantForAutofill="no" />
+        </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/capacitaRichiesta"
+            android:layout_marginBottom="16dp" >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/capacitaRichiesta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/capacitaRichiesta"
             android:inputType="text"
             android:minHeight="48dp"
             android:importantForAutofill="no" />
+        </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/media"
+            android:layout_marginBottom="16dp" >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/media_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/media"
             android:inputType="text"
             android:minHeight="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/disponibilita"
@@ -90,7 +126,7 @@
             android:id="@+id/add"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/aggiungi"
+            android:text="@string/salva"
             android:layout_gravity="center"/>
     </LinearLayout>
     </ScrollView>
