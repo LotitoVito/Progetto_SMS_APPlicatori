@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
@@ -55,10 +56,12 @@ public class SignUpRelatoreFragment extends Fragment {
 
         registerButton.setOnClickListener(view -> {
             String idUniversita = RecuperaIdSpinner(universita, "Universita");
+            List idCorsiSelezionati = RecuperaIdCorsi();
+            List corsiRelatore = RecuperaUniversitaCorso(idUniversita, idCorsiSelezionati);
 
             Relatore account = new Relatore(matricola.getText().toString(), accountGenerale.getNome(),
                     accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(), accountGenerale.getEmail(),
-                    accountGenerale.getPassword());
+                    accountGenerale.getPassword(), corsiRelatore);
 
             if(!db.VerificaDatoEsistente("SELECT matricola FROM relatore WHERE matricola = '"+ account.getMatricola() +"';")){
 
@@ -104,6 +107,30 @@ public class SignUpRelatoreFragment extends Fragment {
         idCursor = db.RicercaDato("SELECT ID FROM "+ tabella +" WHERE Nome = '"+ spinner.getSelectedItem().toString() +"';");
         idCursor.moveToNext();
         return idCursor.getString(0);
+    }
+
+    private List RecuperaIdCorsi(){
+        ListView listView = getActivity().findViewById(R.id.corsiDiStudio);
+        List idCorsiSelezionati = new ArrayList();
+
+        //Dai nomi selezionati con le checkbox trovare gli id e metterli nella lista idCorsiSelezionati
+        /*for (int i=0; i<listView.getCount(); i++){
+            String query = "SELECT id FROM corsoStudi WHERE nome = '"+  +"';";
+        }*/
+
+
+        return idCorsiSelezionati;
+    }
+
+    private List RecuperaUniversitaCorso(String idUniversita, List idCorsiSelezionati){
+        Cursor idCursor;
+        List corsiRelatore = new ArrayList();
+        for(int i=0; i< idCorsiSelezionati.size(); i++){
+            idCursor = db.RicercaDato("SELECT id FROM universitacorso WHERE universita_id = '"+ idUniversita +"' AND corso_id = '"+ idCorsiSelezionati.get(i) +"';");
+            idCursor.moveToNext();
+            corsiRelatore.add(idCursor.getString(0));
+        }
+        return corsiRelatore;
     }
 
     private void GestisciSpinner(Spinner spinner){

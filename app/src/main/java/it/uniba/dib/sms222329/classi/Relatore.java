@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 import it.uniba.dib.sms222329.database.Database;
 
@@ -13,12 +14,12 @@ public class Relatore extends Supervisore {
 
     private String idRelatore;
     private String matricola;
-    private String IDCorsi[];
+    private List corsiRelatore;       //ID della tabella che unisce università e corsi
 
-    public Relatore(String matricola, String nome, String cognome, String codiceFiscale, String email, String password) {
+    public Relatore(String matricola, String nome, String cognome, String codiceFiscale, String email, String password, List corsiRelatore) {
         super(nome, cognome, codiceFiscale, email, password);
         this.matricola = matricola;
-        //inserire id corsi
+        this.corsiRelatore = corsiRelatore;
     }
 
     public Relatore(){ super();}
@@ -35,6 +36,10 @@ public class Relatore extends Supervisore {
         this.matricola = matricola;
     }
 
+    public List getCorsiRelatore() {return corsiRelatore;}
+
+    public void setCorsiRelatore(List corsiRelatore) {this.corsiRelatore = corsiRelatore;}
+
     //Registrazione account su database
     public boolean RegistrazioneRelatore(Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
@@ -47,9 +52,19 @@ public class Relatore extends Supervisore {
         cvRelatore.put("matricola", this.matricola);
 
         try{
-            long insertCoRelatore = db.insert("relatore", null, cvRelatore);
-            if(insertCoRelatore != -1){
-                return true;
+            long insertRelatore = db.insert("relatore", null, cvRelatore);
+            if(insertRelatore != -1){
+                ContentValues cvCorsiRelatore = new ContentValues();
+
+                for(int i=0; i<corsiRelatore.size(); i++){
+                    cvCorsiRelatore.put("relatore_id", this.idRelatore);
+                    cvCorsiRelatore.put("universitacorso_id", (String) this.corsiRelatore.get(i));
+
+                    long insertCorsiRelatore = db.insert("corsiRelatore", null, cvCorsiRelatore);
+                    if (insertCorsiRelatore == -1){
+                        return false;
+                    }
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
