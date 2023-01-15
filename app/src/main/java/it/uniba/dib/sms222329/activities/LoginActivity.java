@@ -36,13 +36,9 @@ public class LoginActivity extends AppCompatActivity {
         EditText emailIns = findViewById(R.id.email);
         EditText editTextTextPassword = findViewById(R.id.editTextTextPassword);
 
-
-
         signInButton.setOnClickListener(view -> {
 
-            UtenteRegistrato Utente = new UtenteRegistrato();
-            Utente.setEmail(emailIns.getText().toString());
-            Utente.setPassword(editTextTextPassword.getText().toString());
+            UtenteRegistrato Utente = new UtenteRegistrato(emailIns.getText().toString(), editTextTextPassword.getText().toString());
 
             if (Utente.LoginStatus(db)) {
                 Intent UtenteLoggato = new Intent(getApplicationContext(), UtenteLoggato.class);

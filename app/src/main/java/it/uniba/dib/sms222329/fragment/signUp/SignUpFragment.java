@@ -13,89 +13,69 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
+import it.uniba.dib.sms222329.classi.UtenteRegistrato;
+import it.uniba.dib.sms222329.database.Database;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SignUpFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SignUpFragment extends Fragment {
+    Database db;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public SignUpFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SignUpFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SignUpFragment newInstance(String param1, String param2) {
-        SignUpFragment fragment = new SignUpFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
+    public SignUpFragment(Database db) {
+        this.db = db;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_sign_up, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         Button button = view.findViewById(R.id.next_button);
+        TextInputEditText nome = getActivity().findViewById(R.id.nome);
+        TextInputEditText cognome = getActivity().findViewById(R.id.cognome);
+        TextInputEditText codiceFiscale = getActivity().findViewById(R.id.codiceFiscale);
+        TextInputEditText email = getActivity().findViewById(R.id.email);
+        TextInputEditText password = getActivity().findViewById(R.id.password);
+
         button.setOnClickListener(v -> {
-            loadNextFragment();
+            UtenteRegistrato account = new UtenteRegistrato(nome.getText().toString(), cognome.getText().toString(),
+                    codiceFiscale.getText().toString(), email.getText().toString(), password.getText().toString());
+
+            if (!db.VerificaDatoEsistente("SELECT codice_fiscale FROM utenti WHERE codice_fiscale = '" + account.getCodiceFiscale() + "';")){
+                if (!db.VerificaDatoEsistente("SELECT email FROM utenti WHERE email = '" + account.getEmail() + "';")) {
+
+                    loadNextFragment(account);
+
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Email già esistente", Toast.LENGTH_SHORT).show();
+                }
+            } else{
+                Toast.makeText(getActivity().getApplicationContext(), "Codice Fiscale già esistente", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
-    private void loadNextFragment(){
+    private void loadNextFragment(UtenteRegistrato account){
         RadioGroup radioGroup = getActivity().findViewById(R.id.radio_group);
         int checkedId = radioGroup.getCheckedRadioButtonId();
             switch (checkedId) {
                 case R.id.radio_button_1:
-                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new SignUpStudentFragment());
+                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new SignUpStudentFragment(db, account));
                     break;
                 case R.id.radio_button_2:
-                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new SignUpRelatoreFragment());
+                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new SignUpRelatoreFragment(db, account));
                     break;
                 case R.id.radio_button_3:
-                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new SignUpCoRelatoreFragment());
+                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new SignUpCoRelatoreFragment(db, account));
                     break;
             }
 
     }
-
-
 }

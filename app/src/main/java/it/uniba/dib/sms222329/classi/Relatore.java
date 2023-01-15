@@ -15,16 +15,13 @@ public class Relatore extends Supervisore {
     private String matricola;
     private String IDCorsi[];
 
-    public Relatore(String matricola, String nome, String cognome, String email, String password) {
+    public Relatore(String matricola, String nome, String cognome, String codiceFiscale, String email, String password) {
+        super(nome, cognome, codiceFiscale, email, password);
         this.matricola = matricola;
-        this.nome = nome;
-        this.cognome = cognome;
         //inserire id corsi
-        this.email = email;
-        this.password = password;
     }
 
-    public Relatore(){}
+    public Relatore(){ super();}
 
     public String getIdRelatore() {return idRelatore;}
 

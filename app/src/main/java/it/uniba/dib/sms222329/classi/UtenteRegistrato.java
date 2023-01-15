@@ -17,12 +17,25 @@ public class UtenteRegistrato extends Utente {
     String idUtente;
     String nome;
     String cognome;
+    String codiceFiscale;
     String email;
     String password;
     String TipoUtente;
 
+    public UtenteRegistrato(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public UtenteRegistrato(String nome, String cognome, String codiceFiscale, String email, String password) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.codiceFiscale = codiceFiscale;
+        this.email = email;
+        this.password = password;
+    }
+
     public UtenteRegistrato() {
-        TipoUtente = "-1";
     }
 
     public String getIdUtente() {return idUtente;}
@@ -42,6 +55,10 @@ public class UtenteRegistrato extends Utente {
     public void setCognome(String cognome) {
         this.cognome = cognome;
     }
+
+    public String getCodiceFiscale() {return codiceFiscale;}
+
+    public void setCodiceFiscale(String codiceFiscale) {this.codiceFiscale = codiceFiscale;}
 
     public String getEmail() {
         return email;
@@ -70,6 +87,7 @@ public class UtenteRegistrato extends Utente {
 
         cvUtente.put("nome", this.nome);
         cvUtente.put("cognome", this.cognome);
+        cvUtente.put("codice_fiscale", this.codiceFiscale);
         cvUtente.put("email", this.email);
         cvUtente.put("password", this.password);
         cvUtente.put("ruolo_id", ruolo);

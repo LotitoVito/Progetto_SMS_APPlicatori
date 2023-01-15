@@ -52,7 +52,7 @@ public class UtenteLoggato extends AppCompatActivity {
         else if (Utente.getTipoUtente().compareTo("2") == 0){ //relatore
             Relatore RelatoreLoggato = Utente.IstanziaRelatore(db);
             Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment(RelatoreLoggato));
-            setBottomNavigation(new TesiFragment(), new MessaggiFragment(), new HomeFragment(RelatoreLoggato), new ProfiloFragment());
+            setBottomNavigation(new TesiFragment(RelatoreLoggato), new MessaggiFragment(), new HomeFragment(RelatoreLoggato), new ProfiloFragment());
         }
         else if (Utente.getTipoUtente().compareTo("3") == 0){ //corelatore
             CoRelatore CoRelatoreLoggato = Utente.IstanziaCoRelatore(db);

@@ -21,7 +21,7 @@ import it.uniba.dib.sms222329.classi.Tesista;
 import it.uniba.dib.sms222329.database.Database;
 
 public class SignUp_StudentActivity extends AppCompatActivity {
-    Database db = new Database(this);
+    /*Database db = new Database(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,5 +135,5 @@ public class SignUp_StudentActivity extends AppCompatActivity {
                 // Do nothing
             }
         });
-    }
+    }*/
 }

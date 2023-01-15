@@ -22,12 +22,12 @@ import it.uniba.dib.sms222329.database.Database;
 public class SignUp_RelatoreActivity extends AppCompatActivity {
     Database db = new Database(this);
 
-    @Override
+    /*@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_relatore);
-        //String query = "SELECT nome FROM universita;";
-        //spinnerCreate(R.id.universita, query);
+        String query = "SELECT nome FROM universita;";
+        spinnerCreate(R.id.universita, query);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class SignUp_RelatoreActivity extends AppCompatActivity {
         });
     }
 
-    /*private void spinnerCreate(int idSpinner, String query){
+    private void spinnerCreate(int idSpinner, String query){
         Spinner spinner = findViewById(idSpinner);
 
         // Query the database for the data
@@ -89,9 +89,9 @@ public class SignUp_RelatoreActivity extends AppCompatActivity {
 
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
-    }*/
+    }
 
-    /*private String RecuperaIdSpinner(Spinner spinner, String tabella){
+    private String RecuperaIdSpinner(Spinner spinner, String tabella){
         Cursor idCursor;
         idCursor = db.RicercaDato("SELECT ID FROM "+ tabella +" WHERE Nome = '"+ spinner.getSelectedItem().toString() +"';");
         idCursor.moveToNext();

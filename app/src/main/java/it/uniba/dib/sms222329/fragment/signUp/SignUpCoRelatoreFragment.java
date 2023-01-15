@@ -1,5 +1,6 @@
 package it.uniba.dib.sms222329.fragment.signUp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,60 +8,49 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.activities.MainActivity;
+import it.uniba.dib.sms222329.classi.CoRelatore;
+import it.uniba.dib.sms222329.classi.UtenteRegistrato;
+import it.uniba.dib.sms222329.database.Database;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SignUpCoRelatoreFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SignUpCoRelatoreFragment extends Fragment {
+    Database db;
+    UtenteRegistrato accountGenerale;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public SignUpCoRelatoreFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SignUpCoRelatoreFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SignUpCoRelatoreFragment newInstance(String param1, String param2) {
-        SignUpCoRelatoreFragment fragment = new SignUpCoRelatoreFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public SignUpCoRelatoreFragment(Database db, UtenteRegistrato accountGenerale) {
+        this.db = db;
+        this.accountGenerale = accountGenerale;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_sign_up_co_relatore, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        View registerButton = getActivity().findViewById(R.id.Signupbutton);
+        TextInputEditText organizzaione = getActivity().findViewById(R.id.organizzazione);
+
+        registerButton.setOnClickListener(view -> {
+            CoRelatore account = new CoRelatore(accountGenerale.getNome(), accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(),
+                    accountGenerale.getEmail(), accountGenerale.getPassword(), organizzaione.getText().toString());
+
+                if(account.RegistrazioneUtente(db, 3) && account.RegistrazioneCoRelatore(db)){
+                    Intent mainActivity = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                    startActivity(mainActivity);
+                } else{
+                    Toast.makeText(getActivity().getApplicationContext(), "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
+                }
+        });
     }
 }

@@ -7,9 +7,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.fragment.signUp.SignUpFragment;
 
 public class SignUpActivity extends AppCompatActivity {
+    Database db = new Database(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +19,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.signUpcontainer, new SignUpFragment());
+        fragmentTransaction.replace(R.id.signUpcontainer, new SignUpFragment(db));
         fragmentTransaction.commit();
     }
 
@@ -25,6 +27,5 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setTitle(R.string.accedi);
-
     }
 }

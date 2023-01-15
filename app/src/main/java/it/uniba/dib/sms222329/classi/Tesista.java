@@ -19,17 +19,17 @@ public class Tesista extends UtenteRegistrato {
     private int numeroEsamiMancanti;
     private String idUniversitaCorso;
 
-    public Tesista(String matricola, String nome, String cognome, String email, String password, float media, int numeroEsamiMancanti, String idUniversitaCorso) {
+    public Tesista(String matricola, String nome, String cognome, String codiceFiscale, String email, String password, float media, int numeroEsamiMancanti, String idUniversitaCorso) {
+        super(nome, cognome, codiceFiscale, email, password);
         this.matricola = matricola;
-        this.nome = nome;
-        this.cognome = cognome;
-        this.email = email;
-        this.password = password;
         this.media = media;
         this.numeroEsamiMancanti = numeroEsamiMancanti;
         this.idUniversitaCorso = idUniversitaCorso;
     }
-    public Tesista(){}
+
+    public Tesista() {
+        super();
+    }
 
     public String getIdTesista() {return idTesista;}
 

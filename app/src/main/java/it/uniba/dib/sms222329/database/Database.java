@@ -31,7 +31,7 @@ public class Database extends SQLiteOpenHelper {
                         "nome VARCHAR(255) NOT NULL," +
                         "cognome VARCHAR(255) NOT NULL," +
                         "email VARCHAR(255) NOT NULL UNIQUE," +
-                        "codice_fiscale VARCHAR(255) UNIQUE," +
+                        "codice_fiscale VARCHAR(255) NOT NULL UNIQUE," +
                         "password VARCHAR(255) NOT NULL," +
                         "ruolo_id INT NOT NULL," +
                         "FOREIGN KEY (ruolo_id) REFERENCES ruoli(id) ON DELETE CASCADE);";
@@ -57,7 +57,7 @@ public class Database extends SQLiteOpenHelper {
         //CoRelatore
         createTable =   "CREATE TABLE coRelatore (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "organizzazione VARCHAR(255)," +
+                        "organizzazione VARCHAR(255) NOT NULL," +
                         "utente_id INT NOT NULL UNIQUE," +
                         "FOREIGN KEY (utente_id) REFERENCES utenti(id) ON DELETE CASCADE);";
         db.execSQL(createTable);
@@ -190,9 +190,9 @@ public class Database extends SQLiteOpenHelper {
         //Popolamento tabella ruoli
         ContentValues cvRuoli = new ContentValues();
         String[] listaRuoli = {"Tesista", "Relatore", "CoRelatore"};
-        for(int i=0; i<listaCorsiStudio.length; i++){
-            cvCorsiStudio.put("ruolo", listaCorsiStudio[i]);
-            db.insert("ruoli", null, cvCorsiStudio);
+        for(int i=0; i<listaRuoli.length; i++){
+            cvCorsiStudio.put("ruolo", listaRuoli[i]);
+            db.insert("ruoli", null, cvRuoli);
         }
     }
 

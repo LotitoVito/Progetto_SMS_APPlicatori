@@ -11,29 +11,32 @@ import it.uniba.dib.sms222329.database.Database;
 
 public class CoRelatore extends Supervisore {
 
+    private String organizzazione;
     private String idCorelatore;
 
-    public CoRelatore(String idCorelatore, String nome, String cognome, String email, String password) {
+    public CoRelatore(String idCorelatore, String nome, String cognome, String codiceFiscale, String email, String password, String organizzazione) {
+        super(nome, cognome, codiceFiscale, email, password);
         this.idCorelatore = idCorelatore;
-        this.nome = nome;
-        this.cognome = cognome;
-        this.email = email;
-        this.password = password;
+        this.organizzazione = organizzazione;
     }
 
     //Costruttore per registrazione
-    public CoRelatore(String nome, String cognome, String email, String password) {
-        this.nome = nome;
-        this.cognome = cognome;
-        this.email = email;
-        this.password = password;
+    public CoRelatore(String nome, String cognome, String codiceFiscale, String email, String password, String organizzazione) {
+        super(nome, cognome, codiceFiscale, email, password);
+        this.organizzazione = organizzazione;
     }
 
-    public CoRelatore() {}
+    public CoRelatore() {
+        super();
+    }
 
     public String getIdCorelatore() {return idCorelatore;}
 
     public void setIdCorelatore(String idCorelatore) {this.idCorelatore = idCorelatore;}
+
+    public String getOrganizzazione() {return organizzazione;}
+
+    public void setOrganizzazione(String organizzazione) {this.organizzazione = organizzazione;}
 
     //Inserire organizzazione
     public boolean RegistrazioneCoRelatore(Database dbClass) {
@@ -44,7 +47,7 @@ public class CoRelatore extends Supervisore {
         idUtente.moveToNext();
 
         cvCoRelatore.put("utente_id", idUtente.getString(0));
-        //cvCoRelatore.put("organizzazione", this.organizzazione);
+        cvCoRelatore.put("organizzazione", this.organizzazione);
 
         try{
             long insertCoRelatore = db.insert("coRelatore", null, cvCoRelatore);

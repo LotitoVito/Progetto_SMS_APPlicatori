@@ -16,7 +16,7 @@ import it.uniba.dib.sms222329.database.Database;
 public class SignUp_CorelatoreActivity extends AppCompatActivity {
     Database db = new Database(this);
 
-    @Override
+    /*@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_corelatore);
@@ -49,5 +49,5 @@ public class SignUp_CorelatoreActivity extends AppCompatActivity {
                 Toast.makeText(this, "Email già esistente", Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
 }
