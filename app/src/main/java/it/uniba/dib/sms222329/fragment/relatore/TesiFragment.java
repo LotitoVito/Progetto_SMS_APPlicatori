@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -20,7 +21,7 @@ import it.uniba.dib.sms222329.fragment.signUp.SignUpStudentFragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TesiFragment#newInstance} factory method to
+ * Use the {@link TesiFragment} factory method to
  * create an instance of this fragment.
  */
 public class TesiFragment extends Fragment {
@@ -38,12 +39,12 @@ public class TesiFragment extends Fragment {
 
         // Get a reference to the button
         FloatingActionButton addButton = view.findViewById(R.id.aggiungiTesi);
-        //Button editButton = view.findViewById(R.id.modificaTesi);
+
+        //ListView listView = getActivity().findViewById(R.id.tesiList);
+        //Button editButton = listView.findViewById(R.id.modificaTesi);
 
         // Set up a click listener for the button
-        addButton.setOnClickListener(view1 -> {
-            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new GestioneTesiFragment(relatoreLoggato));
-        });
+        addButton.setOnClickListener(view1 -> Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new GestioneTesiFragment(relatoreLoggato)));
 
         /*editButton.setOnClickListener(view1 -> {
             Fragment fragment = new GestioneTesiFragment(); //TODO Passare oggetto con tesi selezionata

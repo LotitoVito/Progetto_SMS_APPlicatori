@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -47,10 +49,12 @@ public class SignUpRelatoreFragment extends Fragment {
 
         View registerButton = getActivity().findViewById(R.id.Signupbutton);
         EditText matricola = getActivity().findViewById(R.id.matricola);
-        //Spinner universita = findViewById(R.id.universita);
+        Spinner universita = getActivity().findViewById(R.id.universita);
+
+        GestisciSpinner(universita);
 
         registerButton.setOnClickListener(view -> {
-            //String idUniversita = RecuperaIdSpinner(universita, "Universita");
+            String idUniversita = RecuperaIdSpinner(universita, "Universita");
 
             Relatore account = new Relatore(matricola.getText().toString(), accountGenerale.getNome(),
                     accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(), accountGenerale.getEmail(),
@@ -101,4 +105,42 @@ public class SignUpRelatoreFragment extends Fragment {
         idCursor.moveToNext();
         return idCursor.getString(0);
     }
+
+    private void GestisciSpinner(Spinner spinner){
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String idUniversita = RecuperaIdSpinner(spinner, "universita");
+
+                Cursor risultato = db.RicercaDato("SELECT corso_id FROM universitacorso WHERE universita_id = '"+ idUniversita +"';");
+                List<String> idRisultati = new ArrayList<>();
+                while(risultato.moveToNext()){
+                    idRisultati.add(risultato.getString(0));
+                }
+
+                String query = "SELECT nome FROM corsoStudi WHERE id IN (" + idRisultati.toString().replace("[", "").replace("]", "") + ");";
+                // Query the database for the data
+                Cursor cursor = db.getReadableDatabase().rawQuery(query, null);
+
+                // Create an array of strings using the data from the Cursor
+                List<String> corsi = new ArrayList<>();
+                while (cursor.moveToNext()) {
+                    String item = cursor.getString(0);
+                    corsi.add(item);
+                }
+                cursor.close();
+
+                ListView listView = getActivity().findViewById(R.id.corsiDiStudio);
+                CorsiDiStudiAdapter adapter = new CorsiDiStudiAdapter(getActivity().getApplicationContext(), corsi);
+                listView.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
+            }
+        });
+    }
+
 }

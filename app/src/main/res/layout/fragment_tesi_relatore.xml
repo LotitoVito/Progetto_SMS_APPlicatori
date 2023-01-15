@@ -14,7 +14,7 @@
         android:padding="8dp">
 
         <ListView
-            android:id="@+id/structureList"
+            android:id="@+id/tesiList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

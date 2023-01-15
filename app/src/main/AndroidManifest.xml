@@ -27,27 +27,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.SignUp_RelatoreActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".activities.SignUp_StudentActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".activities.SignUp_CorelatoreActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".activities.SignUpActivity"
             android:exported="false">
             <meta-data

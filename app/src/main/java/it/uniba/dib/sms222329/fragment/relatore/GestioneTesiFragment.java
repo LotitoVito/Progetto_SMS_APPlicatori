@@ -30,6 +30,10 @@ public class GestioneTesiFragment extends Fragment {
     Tesi tesi;
     Relatore relatoreLoggato;
 
+    public GestioneTesiFragment(){
+
+    }
+
     public GestioneTesiFragment(Relatore relatoreLoggato) {
         this.operazioneModifica = false;
         this.relatoreLoggato = relatoreLoggato;
