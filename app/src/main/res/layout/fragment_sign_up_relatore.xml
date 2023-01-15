@@ -51,21 +51,14 @@
                 android:text="@string/corsiDiStudio"
                 android:textSize="16sp"/>
 
-            <CheckBox
-                android:id="@+id/checkbox"
-                android:layout_width="wrap_content"
+            <ListView
+                android:id="@+id/corsiDiStudio"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Item 1"
-                android:checked="false"
-                />
+                android:layout_marginTop="16dp"
+                tools:listitem="@layout/checkbox_corsi_item"
+                tools:ignore="NestedScrolling" />
 
-            <CheckBox
-                android:id="@+id/checkbox2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Item 2"
-                android:checked="false"
-                />
 
             <LinearLayout
                 android:layout_width="match_parent"

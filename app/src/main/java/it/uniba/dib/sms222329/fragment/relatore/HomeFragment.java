@@ -34,9 +34,8 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_relatore, container, false);
-        TextView text = (TextView) view.findViewById(R.id.welcomeHome);
+        TextView text = view.findViewById(R.id.welcomeHome);
         if(this.RelatoreLoggato != null) text.setText(this.RelatoreLoggato.getCognome());
-
         return view;
     }
 
