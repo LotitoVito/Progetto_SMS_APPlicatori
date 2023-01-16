@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -111,7 +112,14 @@ public class SignUpRelatoreFragment extends Fragment {
 
     private List RecuperaIdCorsi(){
         ListView listView = getActivity().findViewById(R.id.corsiDiStudio);
-        List idCorsiSelezionati = new ArrayList();
+        List<String> idCorsiSelezionati = new ArrayList<>();
+
+        for (int i = 0; i < listView.getChildCount(); i++) {
+            CheckBox checkBox = listView.getChildAt(i).findViewById(R.id.checkbox);
+            if (checkBox.isChecked()) {
+                idCorsiSelezionati.add(checkBox.getText().toString());
+            }
+        }
 
         //Dai nomi selezionati con le checkbox trovare gli id e metterli nella lista idCorsiSelezionati
         /*for (int i=0; i<listView.getCount(); i++){
