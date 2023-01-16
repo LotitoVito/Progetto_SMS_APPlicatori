@@ -36,13 +36,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/argomenti"
-            android:layout_marginBottom="16dp" >
+            android:layout_marginBottom="16dp">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/argomenti_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:minHeight="48dp" />
+            android:inputType="textMultiLine"
+            android:minHeight="48dp"
+            android:maxLength="200"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -81,8 +82,9 @@
             android:id="@+id/capacitaRichiesta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:minHeight="48dp"
+            android:maxLength="200"
             android:importantForAutofill="no" />
         </com.google.android.material.textfield.TextInputLayout>
 
