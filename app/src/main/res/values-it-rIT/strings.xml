@@ -38,6 +38,9 @@
     <string name="matricola">Matricola</string>
     <string name="modifica">Modifica</string>
     <string name="corsiDiStudio">Corsi di studio:</string>
+    <string name="cerca">Ricerca…</string>
+    <string name="modalitaScura">Modalità notte</string>
+    <string name="esci">Esci</string>
 
 
 </resources>

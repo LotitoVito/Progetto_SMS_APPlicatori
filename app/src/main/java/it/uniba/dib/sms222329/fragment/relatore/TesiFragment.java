@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import it.uniba.dib.sms222329.R;
@@ -27,6 +28,7 @@ import it.uniba.dib.sms222329.fragment.signUp.SignUpStudentFragment;
 public class TesiFragment extends Fragment {
     Relatore relatoreLoggato;
 
+    public TesiFragment(){}
     public TesiFragment(Relatore relatoreLoggato) {
         this.relatoreLoggato = relatoreLoggato;
     }
@@ -36,6 +38,12 @@ public class TesiFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tesi_relatore, container, false);
+
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.navigation);
+        int selectedItemId = bottomNavigationView.getSelectedItemId();
+        if(selectedItemId != R.id.navigation_thesis) {
+            bottomNavigationView.getMenu().findItem(R.id.navigation_thesis).setChecked(true);
+        }
 
         // Get a reference to the button
         FloatingActionButton addButton = view.findViewById(R.id.aggiungiTesi);

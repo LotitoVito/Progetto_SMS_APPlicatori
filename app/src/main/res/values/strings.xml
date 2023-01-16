@@ -37,6 +37,9 @@
     <string name="matricola">Id number</string>
     <string name="modifica">Edit</string>
     <string name="corsiDiStudio">Courses:</string>
+    <string name="cerca">Search…</string>
+    <string name="modalitaScura">Dark mode</string>
+    <string name="esci">Log out</string>
 
 
 </resources>

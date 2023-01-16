@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -48,6 +49,13 @@ public class GestioneTesiFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.navigation);
+        int selectedItemId = bottomNavigationView.getSelectedItemId();
+        if(selectedItemId != R.id.navigation_thesis) {
+            bottomNavigationView.getMenu().findItem(R.id.navigation_thesis).setChecked(true);
+        }
+
         return inflater.inflate(R.layout.fragment_gestione_tesi_relatore, container, false);
     }
 

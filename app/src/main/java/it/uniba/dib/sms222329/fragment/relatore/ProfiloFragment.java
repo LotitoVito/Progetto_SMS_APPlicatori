@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import it.uniba.dib.sms222329.R;
 
 /**
@@ -60,6 +62,13 @@ public class ProfiloFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.navigation);
+        int selectedItemId = bottomNavigationView.getSelectedItemId();
+        if(selectedItemId != R.id.navigation_profile) {
+            bottomNavigationView.getMenu().findItem(R.id.navigation_profile).setChecked(true);
+        }
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profilo_relatore, container, false);
     }
