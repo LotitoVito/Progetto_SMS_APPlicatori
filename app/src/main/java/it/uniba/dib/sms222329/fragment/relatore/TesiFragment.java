@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -18,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Relatore;
+import it.uniba.dib.sms222329.fragment.VisualizzaTesiFragment;
 import it.uniba.dib.sms222329.fragment.signUp.SignUpStudentFragment;
 
 /**
@@ -61,6 +63,18 @@ public class TesiFragment extends Fragment {
             fragmentTransaction.replace(R.id.container, fragment);
             fragmentTransaction.commit();
         });*/
+
+
+        ListView listView = getActivity().findViewById(R.id.tesiList);
+        listView.setOnItemClickListener((adapterView, view12, position, id) -> {
+            // Get the item that was clicked
+            Object item = adapterView.getItemAtPosition(position);
+            // Create a new instance of the bottom sheet fragment
+            VisualizzaTesiFragment bottomSheet = new VisualizzaTesiFragment();
+            // Show the bottom sheet
+            bottomSheet.show(getActivity().getSupportFragmentManager(), bottomSheet.getTag());
+        });
+
 
         // Return the view hierarchy
         return view;

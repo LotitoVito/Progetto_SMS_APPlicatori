@@ -40,5 +40,6 @@
     <string name="cerca">Search…</string>
     <string name="modalitaScura">Dark mode</string>
     <string name="esci">Log out</string>
-
+    <string name="invia">Invia</string>
+    <string name="scriviMessaggio">Scrivi il tuo messaggio…</string>
 </resources>

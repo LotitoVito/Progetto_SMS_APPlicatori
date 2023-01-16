@@ -41,6 +41,8 @@
     <string name="cerca">Ricerca…</string>
     <string name="modalitaScura">Modalità notte</string>
     <string name="esci">Esci</string>
+    <string name="invia">Invia</string>
+    <string name="scriviMessaggio">Scrivi il tuo messaggio…</string>
 
 
 </resources>

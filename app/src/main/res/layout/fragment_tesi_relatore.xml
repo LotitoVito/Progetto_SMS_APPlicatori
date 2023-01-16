@@ -35,8 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             tools:listitem="@layout/relatore_tesi_item"
+            android:clickable="true"
            />
-
 
         </LinearLayout>
 
