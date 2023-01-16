@@ -14,6 +14,7 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 import it.uniba.dib.sms222329.activities.MainActivity;
 import it.uniba.dib.sms222329.database.Database;
@@ -181,5 +182,11 @@ public class Tesi {
             e.printStackTrace();
         }
         return bitmap;
+    }
+
+    public Cursor visualizzaTesi(Database dbClass, int id){
+        SQLiteDatabase db=dbClass.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM tesi WHERE id="+id+";", null);
+        return cursor;
     }
 }
