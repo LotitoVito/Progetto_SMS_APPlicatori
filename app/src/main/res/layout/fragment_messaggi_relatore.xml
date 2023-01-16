@@ -5,10 +5,35 @@
     android:layout_height="match_parent"
     tools:context=".fragment.relatore.MessaggiFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
+        android:id="@+id/content3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="MESSAGES" />
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <ListView
+            android:id="@+id/segnalazioniList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            tools:listitem="@layout/segnalazioni_item"
+            />
+
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/creaSegnalazione"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@android:drawable/ic_input_add"
+        android:layout_gravity="end|bottom"
+        android:contentDescription="@string/title_thesis"
+
+        />
+
 
 </FrameLayout>

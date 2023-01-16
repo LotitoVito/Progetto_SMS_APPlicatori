@@ -18,6 +18,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.activities.LoginActivity;
 import it.uniba.dib.sms222329.activities.MainActivity;
 
@@ -50,13 +51,11 @@ public class ImpostazioniFragment extends Fragment {
 
         toggleDarkMode.setChecked(loadDarkModePref());
 
-        toggleDarkMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            getActivity().runOnUiThread(() -> {
-            AppCompatDelegate.setDefaultNightMode(isChecked ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
-            getParentFragmentManager().beginTransaction().detach(this).attach(this).commit();
-            saveDarkModePref(isChecked);
-            });
-        });
+        toggleDarkMode.setOnCheckedChangeListener((buttonView, isChecked) -> getActivity().runOnUiThread(() -> {
+        AppCompatDelegate.setDefaultNightMode(isChecked ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+        saveDarkModePref(isChecked);
+        getActivity().recreate();
+        }));
 
         logOut.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -73,12 +72,18 @@ public class ImpostazioniFragment extends Fragment {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("dark_mode", isChecked);
-        editor.apply();
+        editor.commit();
     }
 
     private boolean loadDarkModePref() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         return prefs.getBoolean("dark_mode", false);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        saveDarkModePref(toggleDarkMode.isChecked());
     }
 
 
