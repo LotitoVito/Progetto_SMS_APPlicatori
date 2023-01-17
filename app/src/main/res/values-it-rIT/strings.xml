@@ -43,6 +43,14 @@
     <string name="esci">Esci</string>
     <string name="invia">Invia</string>
     <string name="scriviMessaggio">Scrivi il tuo messaggio…</string>
+    <string name="edit_name">Modifica nome</string>
+    <string name="edit_surname">Modifica cognome</string>
+    <string name="confirm">Conferma</string>
+    <string name="edit_e_mail">Modifica e-mail</string>
+    <string name="edit_password">"Modifica password "</string>
+    <string name="edit_tax_dentification_number">Modifica codice fiscale</string>
+    <string name="edit_id_number">Modifica matricola</string>
+    <string name="edit_courses">Modifica corso</string>
 
 
 </resources>

@@ -28,6 +28,7 @@ import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
 import it.uniba.dib.sms222329.fragment.relatore.MessaggiFragment;
 import it.uniba.dib.sms222329.fragment.relatore.ProfiloFragment;
 import it.uniba.dib.sms222329.fragment.relatore.TesiFragment;
+import it.uniba.dib.sms222329.fragment.signUp.ModificaProfiloFragment;
 
 public class UtenteLoggato extends AppCompatActivity {
 
@@ -77,7 +78,7 @@ public class UtenteLoggato extends AppCompatActivity {
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, homeFragment);
                     return true;
                 case R.id.navigation_profile:
-                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, profileFragment);
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ModificaProfiloFragment());
                     return true;
                 case R.id.navigation_settings:
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ImpostazioniFragment());
