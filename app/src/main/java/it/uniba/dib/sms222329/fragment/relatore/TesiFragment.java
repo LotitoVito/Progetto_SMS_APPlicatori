@@ -66,6 +66,8 @@ public class TesiFragment extends Fragment {
 
 
         ListView listView = getActivity().findViewById(R.id.tesiList);
+
+        /* Caricare le tesi nella listView
         listView.setOnItemClickListener((adapterView, view12, position, id) -> {
             // Get the item that was clicked
             Object item = adapterView.getItemAtPosition(position);
@@ -73,7 +75,7 @@ public class TesiFragment extends Fragment {
             VisualizzaTesiFragment bottomSheet = new VisualizzaTesiFragment();
             // Show the bottom sheet
             bottomSheet.show(getActivity().getSupportFragmentManager(), bottomSheet.getTag());
-        });
+        }); */
 
 
         // Return the view hierarchy
