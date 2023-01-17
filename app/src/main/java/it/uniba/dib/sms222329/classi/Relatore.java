@@ -56,8 +56,11 @@ public class Relatore extends Supervisore {
             if(insertRelatore != -1){
                 ContentValues cvCorsiRelatore = new ContentValues();
 
+                Cursor idRelatore = dbClass.RicercaDato("SELECT id FROM relatore WHERE utente_id = '" + idUtente.getString(0) + "';");
+                idRelatore.moveToNext();
+
                 for(int i=0; i<corsiRelatore.size(); i++){
-                    cvCorsiRelatore.put("relatore_id", this.idRelatore);
+                    cvCorsiRelatore.put("relatore_id", idRelatore.getString(0));
                     cvCorsiRelatore.put("universitacorso_id", (String) this.corsiRelatore.get(i));
 
                     long insertCorsiRelatore = db.insert("corsiRelatore", null, cvCorsiRelatore);
@@ -65,6 +68,7 @@ public class Relatore extends Supervisore {
                         return false;
                     }
                 }
+                return  true;
             }
         }catch (Exception e){
             e.printStackTrace();

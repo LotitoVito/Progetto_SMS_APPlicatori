@@ -184,9 +184,17 @@ public class Tesi {
         return bitmap;
     }
 
+    public void incrementaVisualizzazioni(Database dbClass){
+        this.numeroVisualizzazioni++;
+        SQLiteDatabase db = dbClass.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("visualizzazioni", this.numeroVisualizzazioni);
+        long risultato = db.update("tesi", cv, "id = '"+ this.id +"';", null);
+    }
+
     public Cursor visualizzaTesi(Database dbClass, int id){
         SQLiteDatabase db=dbClass.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM tesi WHERE id="+id+";", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM tesi WHERE id='"+id+"';", null);
         return cursor;
     }
 }

@@ -22,11 +22,6 @@ import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.fragment.VisualizzaTesiFragment;
 import it.uniba.dib.sms222329.fragment.signUp.SignUpStudentFragment;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TesiFragment} factory method to
- * create an instance of this fragment.
- */
 public class TesiFragment extends Fragment {
     Relatore relatoreLoggato;
 

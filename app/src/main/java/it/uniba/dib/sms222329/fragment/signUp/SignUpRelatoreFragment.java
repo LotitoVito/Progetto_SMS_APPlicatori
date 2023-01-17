@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,15 +118,12 @@ public class SignUpRelatoreFragment extends Fragment {
         for (int i = 0; i < listView.getChildCount(); i++) {
             CheckBox checkBox = listView.getChildAt(i).findViewById(R.id.checkbox);
             if (checkBox.isChecked()) {
-                idCorsiSelezionati.add(checkBox.getText().toString());
+                String query = "SELECT id FROM corsoStudi WHERE nome LIKE '"+ checkBox.getText() +"';";
+                Cursor risultati = db.RicercaDato(query);
+                risultati.moveToNext();
+                idCorsiSelezionati.add(risultati.getString(0));
             }
         }
-
-        //Dai nomi selezionati con le checkbox trovare gli id e metterli nella lista idCorsiSelezionati
-        /*for (int i=0; i<listView.getCount(); i++){
-            String query = "SELECT id FROM corsoStudi WHERE nome = '"+  +"';";
-        }*/
-
 
         return idCorsiSelezionati;
     }
