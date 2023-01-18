@@ -110,11 +110,11 @@ public class SignUpStudentFragment extends Fragment {
         return idCursor.getString(0);
     }
 
-    private String RecuperaUniversitaCorso(String idUniversita, String idCorso){
+    private int RecuperaUniversitaCorso(String idUniversita, String idCorso){
         Cursor idCursor;
         idCursor = db.RicercaDato("SELECT id FROM universitacorso WHERE universita_id = '"+ idUniversita +"' AND corso_id = '"+ idCorso +"';");
         idCursor.moveToNext();
-        return idCursor.getString(0);
+        return idCursor.getInt(0);
     }
 
     private void GestisciSpinner(Spinner spinner){

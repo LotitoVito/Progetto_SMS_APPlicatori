@@ -80,7 +80,7 @@ public class GestioneTesiFragment extends Fragment {
 
         registra.setOnClickListener(view -> {
             Tesi tesi = new Tesi(titolo.getText().toString(), argomenti.getText().toString(),
-                    statoDisponibilita.isChecked(), relatoreLoggato.getIdRelatore(), tempistiche.getText().toString(),
+                    statoDisponibilita.isChecked(), relatoreLoggato.getIdRelatore(), Integer.parseInt(tempistiche.getText().toString()),
                     Integer.parseInt(media.getText().toString()), Integer.parseInt(esamiMancanti.getText().toString()),
                     capacitaRichiesta.getText().toString());
 

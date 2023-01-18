@@ -12,9 +12,9 @@ import it.uniba.dib.sms222329.database.Database;
 public class CoRelatore extends Supervisore {
 
     private String organizzazione;
-    private String idCorelatore;
+    private int idCorelatore;
 
-    public CoRelatore(String idCorelatore, String nome, String cognome, String codiceFiscale, String email, String password, String organizzazione) {
+    public CoRelatore(int idCorelatore, String nome, String cognome, String codiceFiscale, String email, String password, String organizzazione) {
         super(nome, cognome, codiceFiscale, email, password);
         this.idCorelatore = idCorelatore;
         this.organizzazione = organizzazione;
@@ -30,9 +30,9 @@ public class CoRelatore extends Supervisore {
         super();
     }
 
-    public String getIdCorelatore() {return idCorelatore;}
+    public int getIdCorelatore() {return idCorelatore;}
 
-    public void setIdCorelatore(String idCorelatore) {this.idCorelatore = idCorelatore;}
+    public void setIdCorelatore(int idCorelatore) {this.idCorelatore = idCorelatore;}
 
     public String getOrganizzazione() {return organizzazione;}
 

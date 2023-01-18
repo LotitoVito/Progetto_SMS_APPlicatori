@@ -21,18 +21,18 @@ import it.uniba.dib.sms222329.database.Database;
 
 public class Tesi {
 
-    private String id;
+    private int id;
     private String titolo;
     private String argomenti;
-    private String tempistiche;
-    private int mediaVotiMinima;
+    private int tempistiche;
+    private float mediaVotiMinima;
     private int esamiMancantiNecessari;
     private String capacitaRichieste;
     private boolean statoDisponibilita;
     private int numeroVisualizzazioni;
-    private String idRelatore;
+    private int idRelatore;
 
-    public Tesi(String id, String titolo, String argomenti, String tempistiche, int mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste, boolean statoDisponibilita, int numeroVisualizzazioni, String idRelatore) {
+    public Tesi(int id, String titolo, String argomenti, int tempistiche, float mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste, boolean statoDisponibilita, int numeroVisualizzazioni, int idRelatore) {
         this.id = id;
         this.titolo = titolo;
         this.argomenti = argomenti;
@@ -46,8 +46,8 @@ public class Tesi {
     }
 
     //Usato per al registrazione
-    public Tesi(String titolo, String argomenti, boolean statoDisponibilita, String idRelatore, String tempistiche,
-                int mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste) {
+    public Tesi(String titolo, String argomenti, boolean statoDisponibilita, int idRelatore, int tempistiche,
+                float mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste) {
         this.titolo = titolo;
         this.argomenti = argomenti;
         this.statoDisponibilita = statoDisponibilita;
@@ -59,11 +59,11 @@ public class Tesi {
         this.capacitaRichieste = capacitaRichieste;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -91,21 +91,21 @@ public class Tesi {
 
     public void setNumeroVisualizzazioni(int numeroVisualizzazioni) {this.numeroVisualizzazioni = numeroVisualizzazioni;}
 
-    public String getIdRelatore() {
+    public int getIdRelatore() {
         return idRelatore;
     }
 
-    public void setIdRelatore(String idRelatore) {
+    public void setIdRelatore(int idRelatore) {
         this.idRelatore = idRelatore;
     }
 
-    public String getTempistiche() {return tempistiche;}
+    public int getTempistiche() {return tempistiche;}
 
-    public void setTempistiche(String tempistiche) {this.tempistiche = tempistiche;}
+    public void setTempistiche(int tempistiche) {this.tempistiche = tempistiche;}
 
-    public int getMediaVotiMinima() {return mediaVotiMinima;}
+    public float getMediaVotiMinima() {return mediaVotiMinima;}
 
-    public void setMediaVotiMinima(int mediaVotiMinima) {this.mediaVotiMinima = mediaVotiMinima;}
+    public void setMediaVotiMinima(float mediaVotiMinima) {this.mediaVotiMinima = mediaVotiMinima;}
 
     public int getEsamiMancantiNecessari() {return esamiMancantiNecessari;}
 
@@ -140,8 +140,8 @@ public class Tesi {
         return false;
     }
 
-    public boolean ModificaTesi(Database dbClass, String argomenti, boolean statoDisponibilita, String tempistiche,
-                                int mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste){
+    public boolean ModificaTesi(Database dbClass, String argomenti, boolean statoDisponibilita, int tempistiche,
+                                float mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste){
         this.argomenti = argomenti;
         this.statoDisponibilita = statoDisponibilita;
         this.tempistiche = tempistiche;
@@ -175,7 +175,7 @@ public class Tesi {
         MultiFormatWriter writer = new MultiFormatWriter();
         Bitmap bitmap = null;
         try{
-            BitMatrix  matrix = writer. encode(this.id, BarcodeFormat.QR_CODE, 400, 400);
+            BitMatrix  matrix = writer. encode(String.valueOf(this.id), BarcodeFormat.QR_CODE, 400, 400);
             BarcodeEncoder encoder = new BarcodeEncoder();
             bitmap = encoder.createBitmap(matrix);
         }catch(WriterException e){

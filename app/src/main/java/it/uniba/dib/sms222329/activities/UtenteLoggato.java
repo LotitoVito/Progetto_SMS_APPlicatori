@@ -40,15 +40,15 @@ public class UtenteLoggato extends AppCompatActivity {
 
         UtenteRegistrato Utente = (UtenteRegistrato) getIntent().getSerializableExtra("utentePassato");
 
-        if(Utente.getTipoUtente().compareTo("1") == 0){ //tesista
+        if(Utente.getTipoUtente() == 0){ //tesista
             Tesista TesistaLoggato = Utente.IstanziaTesista(db);
         }
-        else if (Utente.getTipoUtente().compareTo("2") == 0){ //relatore
+        else if (Utente.getTipoUtente() == 0){ //relatore
             Relatore RelatoreLoggato = Utente.IstanziaRelatore(db);
             Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment(RelatoreLoggato));
             setBottomNavigation(new TesiFragment(RelatoreLoggato), new MessaggiFragment(), new HomeFragment(RelatoreLoggato), new ProfiloFragment());
         }
-        else if (Utente.getTipoUtente().compareTo("3") == 0){ //corelatore
+        else if (Utente.getTipoUtente() == 0){ //corelatore
             CoRelatore CoRelatoreLoggato = Utente.IstanziaCoRelatore(db);
         }
     }

@@ -13,14 +13,13 @@ import it.uniba.dib.sms222329.database.Database;
 
 public class Tesista extends UtenteRegistrato {
 
-    private String idTesista;
+    private int idTesista;
     private String matricola;
-    private int tesiScelta;
     private float media;
     private int numeroEsamiMancanti;
-    private String idUniversitaCorso;
+    private int idUniversitaCorso;
 
-    public Tesista(String matricola, String nome, String cognome, String codiceFiscale, String email, String password, float media, int numeroEsamiMancanti, String idUniversitaCorso) {
+    public Tesista(String matricola, String nome, String cognome, String codiceFiscale, String email, String password, float media, int numeroEsamiMancanti, int idUniversitaCorso) {
         super(nome, cognome, codiceFiscale, email, password);
         this.matricola = matricola;
         this.media = media;
@@ -32,9 +31,9 @@ public class Tesista extends UtenteRegistrato {
         super();
     }
 
-    public String getIdTesista() {return idTesista;}
+    public int getIdTesista() {return idTesista;}
 
-    public void setIdTesista(String idTesista) {this.idTesista = idTesista;}
+    public void setIdTesista(int idTesista) {this.idTesista = idTesista;}
 
     public String getMatricola() {
         return matricola;
@@ -58,17 +57,9 @@ public class Tesista extends UtenteRegistrato {
 
     public void setNumeroEsamiMancanti(int numeroEsamiMancanti) {this.numeroEsamiMancanti = numeroEsamiMancanti;}
 
-    public int getTesiScelta(){
-        return tesiScelta;
-    }
+    public int getIdUniversitaCorso() {return idUniversitaCorso;}
 
-    public void setTesiScelta(int tesiScelta) {
-        this.tesiScelta = tesiScelta;
-    }
-
-    public String getIdUniversitaCorso() {return idUniversitaCorso;}
-
-    public void setIdUniversitaCorso(String idUniversitaCorso) {this.idUniversitaCorso = idUniversitaCorso;}
+    public void setIdUniversitaCorso(int idUniversitaCorso) {this.idUniversitaCorso = idUniversitaCorso;}
 
     //Registrazione account su database
     public boolean RegistrazioneTesista(Database dbClass) {

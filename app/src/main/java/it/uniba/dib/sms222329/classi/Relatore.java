@@ -12,9 +12,9 @@ import it.uniba.dib.sms222329.database.Database;
 
 public class Relatore extends Supervisore {
 
-    private String idRelatore;
+    private int idRelatore;
     private String matricola;
-    private List corsiRelatore;       //ID della tabella che unisce università e corsi
+    private List corsiRelatore;
 
     public Relatore(String matricola, String nome, String cognome, String codiceFiscale, String email, String password, List corsiRelatore) {
         super(nome, cognome, codiceFiscale, email, password);
@@ -24,9 +24,9 @@ public class Relatore extends Supervisore {
 
     public Relatore(){ super();}
 
-    public String getIdRelatore() {return idRelatore;}
+    public int getIdRelatore() {return idRelatore;}
 
-    public void setIdRelatore(String idRelatore) {this.idRelatore = idRelatore;}
+    public void setIdRelatore(int idRelatore) {this.idRelatore = idRelatore;}
 
     public String getMatricola() {
         return matricola;

@@ -14,13 +14,13 @@ import java.sql.SQLException;
 import it.uniba.dib.sms222329.database.Database;
 
 public class UtenteRegistrato extends Utente {
-    String idUtente;
+    int idUtente;
     String nome;
     String cognome;
     String codiceFiscale;
     String email;
     String password;
-    String TipoUtente;
+    int TipoUtente;
 
     public UtenteRegistrato(String email, String password) {
         this.email = email;
@@ -38,9 +38,9 @@ public class UtenteRegistrato extends Utente {
     public UtenteRegistrato() {
     }
 
-    public String getIdUtente() {return idUtente;}
+    public int getIdUtente() {return idUtente;}
 
-    public void setIdUtente(String idUtente) {this.idUtente = idUtente;}
+    public void setIdUtente(int idUtente) {this.idUtente = idUtente;}
 
     public String getNome() {
         return nome;
@@ -76,7 +76,7 @@ public class UtenteRegistrato extends Utente {
         this.password = password;
     }
 
-    public String getTipoUtente() {
+    public int getTipoUtente() {
         return TipoUtente;
     }
 
@@ -110,7 +110,7 @@ public class UtenteRegistrato extends Utente {
 
         if (cursore.getCount() != 0) {
             cursore.moveToNext();
-            this.TipoUtente = cursore.getString(0); //nel select puoi farti restituire piu valori, mettendo 0 restituisce solom il primo valore della prima colonna, è come un array
+            this.TipoUtente = cursore.getInt(0); //nel select puoi farti restituire piu valori, mettendo 0 restituisce solom il primo valore della prima colonna, è come un array
             return true;
         }
         return false;
@@ -125,8 +125,8 @@ public class UtenteRegistrato extends Utente {
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();
 
-        TesistaLog.setIdUtente(cursore.getString(0));
-        TesistaLog.setIdTesista(cursore.getString(1));
+        TesistaLog.setIdUtente(cursore.getInt(0));
+        TesistaLog.setIdTesista(cursore.getInt(1));
         TesistaLog.setMatricola(cursore.getString(2));
         TesistaLog.setNome(cursore.getString(3));
         TesistaLog.setCognome(cursore.getString(4));
@@ -134,7 +134,7 @@ public class UtenteRegistrato extends Utente {
         TesistaLog.setPassword(cursore.getString(6));
         TesistaLog.setMedia(cursore.getInt(7));
         TesistaLog.setNumeroEsamiMancanti(cursore.getInt(8));
-        TesistaLog.setIdUniversitaCorso(cursore.getString(9));
+        TesistaLog.setIdUniversitaCorso(cursore.getInt(9));
         //Tesi scelta, codice fiscale
 
         return TesistaLog;
@@ -148,8 +148,8 @@ public class UtenteRegistrato extends Utente {
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();
 
-        relatoreLog.setIdUtente(cursore.getString(0));
-        relatoreLog.setIdRelatore(cursore.getString(1));
+        relatoreLog.setIdUtente(cursore.getInt(0));
+        relatoreLog.setIdRelatore(cursore.getInt(1));
         relatoreLog.setMatricola(cursore.getString(2));
         relatoreLog.setNome(cursore.getString(3));
         relatoreLog.setCognome(cursore.getString(4));
@@ -172,8 +172,8 @@ public class UtenteRegistrato extends Utente {
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();
 
-        CorelatoreLog.setIdUtente(cursore.getString(0));
-        CorelatoreLog.setIdCorelatore(cursore.getString(1));
+        CorelatoreLog.setIdUtente(cursore.getInt(0));
+        CorelatoreLog.setIdCorelatore(cursore.getInt(1));
         CorelatoreLog.setNome(cursore.getString(2));
         CorelatoreLog.setCognome(cursore.getString(3));
         CorelatoreLog.setEmail(cursore.getString(4));
