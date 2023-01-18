@@ -51,6 +51,8 @@
     <string name="edit_tax_dentification_number">Modifica codice fiscale</string>
     <string name="edit_id_number">Modifica matricola</string>
     <string name="edit_courses">Modifica corso</string>
+    <string name="edit_gpa">Modifica media</string>
+
 
 
 </resources>

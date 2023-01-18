@@ -52,4 +52,9 @@
     <string name="edit_tax_dentification_number">Edit Tax dentification number</string>
     <string name="edit_id_number">Edit ID number</string>
     <string name="edit_courses">Edit Courses:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+  
+    <string name="edit_gpa" translatable="false">Edit GPA</string>
+<!-- TODO: Remove or change this placeholder text -->
+
 </resources>

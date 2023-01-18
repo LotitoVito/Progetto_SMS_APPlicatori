@@ -12,17 +12,17 @@ import it.uniba.dib.sms222329.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ModificaProfiloFragment#newInstance} factory method to
+ * Use the {@link ModificaProfiloRelatoreFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ModificaProfiloFragment extends Fragment {
+public class ModificaProfiloRelatoreFragment extends Fragment {
 
     //  Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    public ModificaProfiloFragment() {
+    public ModificaProfiloRelatoreFragment() {
         // Required empty public constructor
     }
 
@@ -35,8 +35,8 @@ public class ModificaProfiloFragment extends Fragment {
      * @return A new instance of fragment ModificaProfiloFragment.
      */
     // Rename and change types and number of parameters
-    public static ModificaProfiloFragment newInstance(String param1, String param2) {
-        ModificaProfiloFragment fragment = new ModificaProfiloFragment();
+    public static ModificaProfiloRelatoreFragment newInstance(String param1, String param2) {
+        ModificaProfiloRelatoreFragment fragment = new ModificaProfiloRelatoreFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -54,6 +54,6 @@ public class ModificaProfiloFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_modifica_profilo, container, false);
+        return inflater.inflate(R.layout.fragment_modifica_profilo_relatore, container, false);
     }
 }

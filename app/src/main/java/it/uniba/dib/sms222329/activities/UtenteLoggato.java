@@ -1,20 +1,13 @@
 package it.uniba.dib.sms222329.activities;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.journeyapps.barcodescanner.Util;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
@@ -28,7 +21,7 @@ import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
 import it.uniba.dib.sms222329.fragment.relatore.MessaggiFragment;
 import it.uniba.dib.sms222329.fragment.relatore.ProfiloFragment;
 import it.uniba.dib.sms222329.fragment.relatore.TesiFragment;
-import it.uniba.dib.sms222329.fragment.signUp.ModificaProfiloFragment;
+import it.uniba.dib.sms222329.fragment.signUp.ModificaProfiloRelatoreFragment;
 
 public class UtenteLoggato extends AppCompatActivity {
 
@@ -78,7 +71,7 @@ public class UtenteLoggato extends AppCompatActivity {
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, homeFragment);
                     return true;
                 case R.id.navigation_profile:
-                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ModificaProfiloFragment());
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ModificaProfiloRelatoreFragment());
                     return true;
                 case R.id.navigation_settings:
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ImpostazioniFragment());
