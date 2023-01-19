@@ -40,17 +40,22 @@ public class UtenteLoggato extends AppCompatActivity {
 
         UtenteRegistrato Utente = (UtenteRegistrato) getIntent().getSerializableExtra("utentePassato");
 
-        if(Utente.getTipoUtente() == 0){ //tesista
-            Tesista TesistaLoggato = Utente.IstanziaTesista(db);
+        try{
+            if(Utente.getTipoUtente() == 1){ //tesista
+                Tesista TesistaLoggato = Utente.IstanziaTesista(db);
+            }
+            else if (Utente.getTipoUtente() == 2){ //relatore
+                Relatore RelatoreLoggato = Utente.IstanziaRelatore(db);
+                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment(RelatoreLoggato));
+                setBottomNavigation(new TesiFragment(RelatoreLoggato), new MessaggiFragment(), new HomeFragment(RelatoreLoggato), new ProfiloFragment());
+            }
+            else if (Utente.getTipoUtente() == 3){ //corelatore
+                CoRelatore CoRelatoreLoggato = Utente.IstanziaCoRelatore(db);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        else if (Utente.getTipoUtente() == 0){ //relatore
-            Relatore RelatoreLoggato = Utente.IstanziaRelatore(db);
-            Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment(RelatoreLoggato));
-            setBottomNavigation(new TesiFragment(RelatoreLoggato), new MessaggiFragment(), new HomeFragment(RelatoreLoggato), new ProfiloFragment());
-        }
-        else if (Utente.getTipoUtente() == 0){ //corelatore
-            CoRelatore CoRelatoreLoggato = Utente.IstanziaCoRelatore(db);
-        }
+        
     }
 
     @SuppressLint("NonConstantResourceId")
