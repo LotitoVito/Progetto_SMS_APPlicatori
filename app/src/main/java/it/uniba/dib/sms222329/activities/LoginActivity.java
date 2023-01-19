@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.CoRelatore;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Tesista;
@@ -47,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Accesso non riuscito", Toast.LENGTH_SHORT).show();
             }
+
         }); //fini signInButton
 
 

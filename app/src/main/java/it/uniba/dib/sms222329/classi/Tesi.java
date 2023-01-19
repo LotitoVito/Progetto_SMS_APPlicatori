@@ -45,6 +45,9 @@ public class Tesi {
         this.idRelatore = idRelatore;
     }
 
+    public Tesi() {
+    }
+
     //Usato per al registrazione
     public Tesi(String titolo, String argomenti, boolean statoDisponibilita, int idRelatore, int tempistiche,
                 float mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste) {
