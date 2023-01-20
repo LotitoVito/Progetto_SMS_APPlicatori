@@ -87,6 +87,7 @@ public class Tesi {
     }
 
     public void setStatoDisponibilita(boolean statoDisponibilita) {this.statoDisponibilita = statoDisponibilita;}
+    public boolean getStatoDisponibilita() {return statoDisponibilita;}
 
     public int getNumeroVisualizzazioni() {
         return numeroVisualizzazioni;

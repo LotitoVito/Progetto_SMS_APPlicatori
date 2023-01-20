@@ -22,7 +22,6 @@ public class PasswordDimenticata {
 
 
     public boolean ResetPassword(String password1, String password2, String email, Database dbClass){
-        // trova come aggiornare db query on update on cascade
         if(password1.equals(password2)){
             String aggiornaPassword = "UPDATE utenti SET password = '" + password1 + "' WHERE email = '" + email + "';";
             SQLiteDatabase db = dbClass.getWritableDatabase();

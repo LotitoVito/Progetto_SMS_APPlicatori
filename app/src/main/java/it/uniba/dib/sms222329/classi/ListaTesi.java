@@ -52,27 +52,74 @@ public class ListaTesi {
         this.lista = listaTesiEstratte;
     }
 
+
+
     public ArrayList<Tesi> getLista() {
         return lista;
     }
 
-    //esempio ordinamento
+
+
+//ordinamenti vari
     public ArrayList<Tesi> OrdinaPerTitolo(){
         this.lista.sort(Comparator.comparing(Tesi::getTitolo));
         return this.lista;
     }
 
-    //esempio vincolo
-    public ArrayList<Tesi> vincoliTesi(ArrayList<Tesi> listaTesi, int vincolo){
+    public ArrayList<Tesi> OrdinaPerArgomento(){
+        this.lista.sort(Comparator.comparing(Tesi::getArgomenti));
+        return this.lista;
+    }
+
+    public ArrayList<Tesi> OrdinaPerTempistiche(){
+        this.lista.sort(Comparator.comparing(Tesi::getTempistiche));
+        return this.lista;
+    }
+
+
+
+//vincoli vari
+    public ArrayList<Tesi> vincoloVotoTesi(ArrayList<Tesi> listaTesi, int vincoloVotoMin){
 
         ArrayList<Tesi> listaRisultato = new ArrayList<Tesi>();
 
         for (int i=0; i<listaTesi.size(); i++){
-            if(listaTesi.get(i).getMediaVotiMinima() < vincolo){
+            if(listaTesi.get(i).getMediaVotiMinima() > vincoloVotoMin){
                 listaRisultato.add(listaTesi.get(i));
             }
         }
 
         return listaRisultato;
     }
+
+
+    public ArrayList<Tesi> vincoloEsamiMancanti(ArrayList<Tesi> listaTesi, int vincoloEsamiMancanti){
+
+        ArrayList<Tesi> listaRisultato = new ArrayList<Tesi>();
+
+        for (int i=0; i<listaTesi.size(); i++){
+            if(listaTesi.get(i).getEsamiMancantiNecessari() < vincoloEsamiMancanti){
+                listaRisultato.add(listaTesi.get(i));
+            }
+        }
+
+        return listaRisultato;
+    }
+
+    public ArrayList<Tesi> vincoloDisponibilità(ArrayList<Tesi> listaTesi, int disponibilità){ //visualizza solo tesi disponibili
+
+        ArrayList<Tesi> listaRisultato = new ArrayList<Tesi>();
+
+        for (int i=0; i<listaTesi.size(); i++){
+            if(listaTesi.get(i).getStatoDisponibilita() == true){
+                listaRisultato.add(listaTesi.get(i));
+            }
+        }
+
+        return listaRisultato;
+    }
+
+
+
+
 }
