@@ -3,14 +3,12 @@ package it.uniba.dib.sms222329.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import it.uniba.dib.sms222329.R;
-import it.uniba.dib.sms222329.classi.PasswordDimenticata;
+import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 import it.uniba.dib.sms222329.database.Database;
 
 public class Recupero_password_activity extends AppCompatActivity {
@@ -32,7 +30,7 @@ public class Recupero_password_activity extends AppCompatActivity {
         EditText passswordIns2 = findViewById(R.id.editTextTextPassword);
 
         signInButton.setOnClickListener(view -> {
-            PasswordDimenticata recuperaPass = new PasswordDimenticata();
+            UtenteRegistrato recuperaPass = new UtenteRegistrato();
             if(recuperaPass.ControlloMail(emailIns1.getText().toString(), emailIns2.getText().toString(), db)) {
 
 
