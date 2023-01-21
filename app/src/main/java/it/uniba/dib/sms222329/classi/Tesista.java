@@ -18,6 +18,7 @@ public class Tesista extends UtenteRegistrato {
     private float media;
     private int numeroEsamiMancanti;
     private int idUniversitaCorso;
+    private int corso;
 
     public Tesista(String matricola, String nome, String cognome, String codiceFiscale, String email, String password, float media, int numeroEsamiMancanti, int idUniversitaCorso) {
         super(nome, cognome, codiceFiscale, email, password);
@@ -86,7 +87,9 @@ public class Tesista extends UtenteRegistrato {
         return false;
     }
 
-    private boolean modTesista(Database dbClass, String matricola, String nome, String cognome, String email, String password, float media, int numEsamiMancanti) {
+    public boolean modTesista(Database dbClass, String matricola, String nome, String cognome,
+                              String email, String password, float media, int numEsamiMancanti,
+                              String codFisc, int corso) {
         this.matricola=matricola;
         this.nome=nome;
         this.cognome=cognome;
@@ -94,29 +97,30 @@ public class Tesista extends UtenteRegistrato {
         this.password=password;
         this.media=media;
         this.numeroEsamiMancanti=numEsamiMancanti;
+        this.codiceFiscale=codFisc;
+        this.corso=corso;
 
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
 
-        cvUtente.put("Nome", this.nome);
-        cvUtente.put("Cognome", this.cognome);
-        cvUtente.put("Email", this.email);
-        cvUtente.put("Password", this.password);
-        cvUtente.put("MediaVoti", this.media);
-        cvUtente.put("NumeroEsamiMancanti", this.numeroEsamiMancanti);
+        cvUtente.put("nome", this.nome);
+        cvUtente.put("cognome", this.cognome);
+        cvUtente.put("email", this.email);
+        cvUtente.put("password", this.password);
+        cvUtente.put("codice_fiscale", this.codiceFiscale);
 
         try{
             long updateUtente = db.update("utenti", cvUtente, "id = " + this.idUtente, null);
             if(updateUtente != -1){
                 ContentValues cvTesista = new ContentValues();
 
-                cvTesista.put("MediaVoti", this.media);
-                cvTesista.put("NumeroEsamiMancanti", this.numeroEsamiMancanti);
+                cvTesista.put("matricola", this.matricola);
+                cvTesista.put("media_voti", this.media);
+                cvTesista.put("esami_mancanti", this.numeroEsamiMancanti);
+                cvTesista.put("universitacorso_id", this.corso);
 
                 long updateTesista = db.update("tesista", cvTesista, "id = " + this.idTesista, null);
-                if(updateTesista != -1){
-                    return true;
-                }
+                return updateTesista != -1;
             }
         }catch(Exception e){
             e.printStackTrace();

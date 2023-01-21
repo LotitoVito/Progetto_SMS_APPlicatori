@@ -76,23 +76,40 @@ public class Relatore extends Supervisore {
         return false;
     }
 
-    private boolean modRelatore(Database dbClass, String nome, String cognome, String email, String password) {
+    public boolean modRelatore(Database dbClass, String matricola, String nome, String cognome,
+                               String codiceFiscale, String email, String password, List corsiRelatore) {
         this.nome=nome;
         this.cognome=cognome;
         this.email=email;
         this.password=password;
+        this.codiceFiscale=codiceFiscale;
+        this.matricola=matricola;
 
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
 
-        cvUtente.put("Nome", this.nome);
-        cvUtente.put("Cognome", this.cognome);
-        cvUtente.put("Email", this.email);
-        cvUtente.put("Password", this.password);
+        cvUtente.put("nome", this.nome);
+        cvUtente.put("cognome", this.cognome);
+        cvUtente.put("email", this.email);
+        cvUtente.put("password", this.password);
+        cvUtente.put("codice_fiscale", this.codiceFiscale);
+
 
         try{
             long updateUtente = db.update("utenti", cvUtente, "id = " + this.idUtente, null);
-            return updateUtente != -1;
+
+            ContentValues cvRelatore = new ContentValues();
+            cvRelatore.put("matricola", this.matricola);
+            long updateRelatore = db.update("relatore", cvRelatore, "id = " + this.idRelatore, null);
+
+            ContentValues cvLista = new ContentValues();
+            long updateLista = 0;
+            for(int i=0;i<corsiRelatore.size();i++){
+                cvLista.put("universitacorso_id", Integer.parseInt(corsiRelatore.get(i).toString()));
+                updateLista = db.update("corsiRelatore", cvLista, "relatore_id = " + this.idRelatore, null);
+            }
+
+            return updateUtente != -1 && updateRelatore!= -1 && updateLista!=-1;
         }catch(Exception e){
 
         }

@@ -7,8 +7,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.classi.CoRelatore;
+import it.uniba.dib.sms222329.classi.Tesista;
+import it.uniba.dib.sms222329.database.Database;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +33,8 @@ public class ModificaProfiloCorelatoreFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Database db;
 
     public ModificaProfiloCorelatoreFragment() {
         // Required empty public constructor
@@ -62,5 +72,27 @@ public class ModificaProfiloCorelatoreFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_modifica_profilo_corelatore, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        View registerButton = getActivity().findViewById(R.id.button);
+        EditText nome = getActivity().findViewById(R.id.nome);
+        EditText cognome = getActivity().findViewById(R.id.cognome);
+        EditText mail = getActivity().findViewById(R.id.email);
+        EditText password = getActivity().findViewById(R.id.password);
+        EditText codFisc = getActivity().findViewById(R.id.codiceFiscale);
+        EditText org = getActivity().findViewById(R.id.organizzazione);
+
+        registerButton.setOnClickListener(view -> {
+            CoRelatore coRelatore=new CoRelatore();
+            if (coRelatore.modCoRelatore(db, nome.getText().toString(), cognome.getText().toString(),
+                                         mail.getText().toString(), password.getText().toString(),
+                                         codFisc.getText().toString(), org.getText().toString())){
+                Toast.makeText(getActivity().getApplicationContext(),"modifica riuscita",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

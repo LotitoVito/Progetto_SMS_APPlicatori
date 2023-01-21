@@ -60,11 +60,14 @@ public class CoRelatore extends Supervisore {
         return false;
     }
 
-    private boolean modCoRelatore(Database dbClass, String nome, String cognome, String email, String password) {
+    public boolean modCoRelatore(Database dbClass, String nome, String cognome, String email,
+                                  String password, String codFisc, String org) {
         this.nome=nome;
         this.cognome=cognome;
         this.email=email;
         this.password=password;
+        this.organizzazione=org;
+        this.codiceFiscale=codFisc;
 
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
@@ -73,10 +76,16 @@ public class CoRelatore extends Supervisore {
         cvUtente.put("cognome", this.cognome);
         cvUtente.put("email", this.email);
         cvUtente.put("password", this.password);
+        cvUtente.put("codice_fiscale", this.codiceFiscale);
 
         try {
             long updateUtente = db.update("utenti", cvUtente, "id = " + this.idUtente, null);
-            return updateUtente != -1;
+
+            ContentValues cvCoRel= new ContentValues();
+            cvCoRel.put("organizzazione", this.organizzazione);
+            long updateCoRel = db.update("utenti", cvCoRel, "id = " + this.idCorelatore, null);
+
+            return updateUtente != -1 && updateCoRel !=-1;
         }catch (Exception e){
             e.printStackTrace();
         }
