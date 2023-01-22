@@ -19,7 +19,7 @@
     <string name="titolo">Title</string>
     <string name="argomenti">Topic</string>
     <string name="email_co_relatore">Email Co-advisor</string>
-    <string name="tempistiche">Schedule</string>
+    <string name="tempistiche">Schedule in months</string>
     <string name="numero_esami_mancanti">Missing exams</string>
     <string name="capacitaRichiesta">Required skills</string>
     <string name="media">GPA</string>
@@ -55,6 +55,7 @@
     <!-- TODO: Remove or change this placeholder text -->
 
     <string name="edit_gpa" >Edit GPA</string>
+    <string name="dettagli">Detalis</string>
     <!-- TODO: Remove or change this placeholder text -->
 
     <!-- TODO: Remove or change this placeholder text -->

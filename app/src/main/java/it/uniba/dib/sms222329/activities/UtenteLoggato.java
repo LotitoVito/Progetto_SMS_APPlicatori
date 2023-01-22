@@ -76,7 +76,7 @@ public class UtenteLoggato extends AppCompatActivity {
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, homeFragment);
                     return true;
                 case R.id.navigation_profile:
-                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ModificaProfiloRelatoreFragment());
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, profileFragment);
                     return true;
                 case R.id.navigation_settings:
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ImpostazioniFragment());

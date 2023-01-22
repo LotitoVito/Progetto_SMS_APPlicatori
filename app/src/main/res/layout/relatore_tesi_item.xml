@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:clickable="true">
 
     <TextView
         android:id="@+id/titoloTesi"
@@ -11,14 +12,16 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:text="Titolo tesi"/>
+        android:text="Titolo tesi"
+        android:clickable="true"/>
 
     <TextView
         android:id="@+id/argomentoTesi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:text="Descrizione tesi"/>
+        android:text="Descrizione tesi"
+        android:clickable="true"/>
 
     <TextView
         android:id="@+id/statoTesi"
@@ -26,16 +29,32 @@
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:textStyle="italic"
+        android:clickable="true"
         android:text="stato tesi (se la tesi è stata presa in carico, è conclusa, è libera...)"/>
 
-    <Button
-        android:id="@+id/modificaTesi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/modifica"
-        android:layout_gravity="end"
-        android:clickable="true"
-        android:paddingBottom="8dp"/>
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:gravity="end">
+
+       <Button
+           android:id="@+id/visualizzaTesi"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/dettagli"
+           android:clickable="true"
+           android:paddingBottom="8dp"
+           android:layout_marginRight="8dp"/>
+
+       <Button
+           android:id="@+id/modificaTesi"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/modifica"
+           android:clickable="true"
+           android:paddingBottom="8dp"/>
+
+   </LinearLayout>
 
 
 </LinearLayout>

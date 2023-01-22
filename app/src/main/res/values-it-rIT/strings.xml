@@ -20,7 +20,7 @@
     <string name="titolo">Titolo</string>
     <string name="argomenti">Argomenti</string>
     <string name="email_co_relatore">Email Co-relatore</string>
-    <string name="tempistiche">Tempistiche</string>
+    <string name="tempistiche">Tempistiche in mesi</string>
     <string name="numero_esami_mancanti">Esami mancanti</string>
     <string name="capacitaRichiesta">Capacità richieste</string>
     <string name="media">Media</string>
@@ -52,7 +52,7 @@
     <string name="edit_id_number">Modifica matricola</string>
     <string name="edit_courses">Modifica corso</string>
     <string name="edit_gpa">Modifica media</string>
-
+    <string name="dettagli">Dettagli</string>
 
 
 </resources>

@@ -120,6 +120,19 @@ public class ListaTesi {
     }
 
 
+    public ArrayList<Tesi> vincoloRelatore(int idRelatore){ //visualizza solo tesi disponibili
+
+        ArrayList<Tesi> listaRisultato = new ArrayList<>();
+
+        for (int i = 0; lista.size() > i; i++){
+            if(idRelatore == lista.get(i).getIdRelatore()){
+                listaRisultato.add(lista.get(i));
+            }
+        }
+
+        return listaRisultato;
+    }
+
 
 
 }

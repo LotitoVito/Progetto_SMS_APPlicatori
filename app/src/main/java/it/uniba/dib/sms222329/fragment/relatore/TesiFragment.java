@@ -3,24 +3,25 @@ package it.uniba.dib.sms222329.fragment.relatore;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
+
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
+import it.uniba.dib.sms222329.classi.ListaTesi;
 import it.uniba.dib.sms222329.classi.Relatore;
+import it.uniba.dib.sms222329.classi.Tesi;
+import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.fragment.VisualizzaTesiFragment;
-import it.uniba.dib.sms222329.fragment.signUp.SignUpStudentFragment;
 
 public class TesiFragment extends Fragment {
     Relatore relatoreLoggato;
@@ -42,40 +43,26 @@ public class TesiFragment extends Fragment {
             bottomNavigationView.getMenu().findItem(R.id.navigation_thesis).setChecked(true);
         }
 
-        // Get a reference to the button
-        FloatingActionButton addButton = view.findViewById(R.id.aggiungiTesi);
-
-        //ListView listView = getActivity().findViewById(R.id.tesiList);
-        //Button editButton = listView.findViewById(R.id.modificaTesi);
-
-        // Set up a click listener for the button
-        addButton.setOnClickListener(view1 -> Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new GestioneTesiFragment(relatoreLoggato)));
-
-        /*editButton.setOnClickListener(view1 -> {
-            Fragment fragment = new GestioneTesiFragment(); //TODO Passare oggetto con tesi selezionata
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container, fragment);
-            fragmentTransaction.commit();
-        });*/
-
-
-        ListView listView = getActivity().findViewById(R.id.tesiList);
-
-        /* Caricare le tesi nella listView
-        listView.setOnItemClickListener((adapterView, view12, position, id) -> {
-            // Get the item that was clicked
-            Object item = adapterView.getItemAtPosition(position);
-            // Create a new instance of the bottom sheet fragment
-            VisualizzaTesiFragment bottomSheet = new VisualizzaTesiFragment();
-            // Show the bottom sheet
-            bottomSheet.show(getActivity().getSupportFragmentManager(), bottomSheet.getTag());
-        }); */
-
-
         // Return the view hierarchy
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedIstanceState){
+        super.onViewCreated(view, savedIstanceState);
+
+        // Get a reference to the button
+        FloatingActionButton addButton = view.findViewById(R.id.aggiungiTesi);
+
+        // Set up a click listener for the button
+        addButton.setOnClickListener(view1 -> Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new GestioneTesiFragment(relatoreLoggato)));
+
+        ListView listView = getActivity().findViewById(R.id.tesiList);
+
+        ListaTesi lista = new ListaTesi(new Database(getActivity().getApplicationContext()));
+        List<Tesi> listaTesi = lista.vincoloRelatore(relatoreLoggato.getIdRelatore());
+        ListaTesiAdapter adapterLista = new ListaTesiAdapter(getActivity().getApplicationContext(), listaTesi, getActivity().getSupportFragmentManager(), relatoreLoggato);
+        listView.setAdapter(adapterLista);
+    }
 
 }
