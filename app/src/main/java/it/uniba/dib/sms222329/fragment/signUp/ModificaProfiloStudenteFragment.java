@@ -44,7 +44,6 @@ public class ModificaProfiloStudenteFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        View registerButton = getActivity().findViewById(R.id.button);
         EditText nome = getActivity().findViewById(R.id.nome);
         EditText cognome = getActivity().findViewById(R.id.cognome);
         EditText mail = getActivity().findViewById(R.id.email);
@@ -52,9 +51,10 @@ public class ModificaProfiloStudenteFragment extends Fragment {
         EditText codFisc = getActivity().findViewById(R.id.codiceFiscale);
         EditText matricola = getActivity().findViewById(R.id.matricola);
         TextInputEditText media = getActivity().findViewById(R.id.media);
-        TextInputEditText numeroEsamiMancanti = getActivity().findViewById(R.id.numeroEsamiMancanti);
+        TextInputEditText numeroEsamiMancanti = getActivity().findViewById(R.id.esamiMancanti);
         Spinner spinnerUniversita = getActivity().findViewById(R.id.universita);
         Spinner spinnerCorsoStudi = getActivity().findViewById(R.id.corsoDiStudi);
+        View registerButton = getActivity().findViewById(R.id.conferma);
 
         GestisciSpinner(spinnerUniversita);
 
@@ -71,7 +71,6 @@ public class ModificaProfiloStudenteFragment extends Fragment {
             if (TesistaDatabase.modTesista(tesista, db)){
                 Toast.makeText(getActivity().getApplicationContext(),"modifica riuscita",Toast.LENGTH_SHORT).show();
             }
-
         });
     }
 

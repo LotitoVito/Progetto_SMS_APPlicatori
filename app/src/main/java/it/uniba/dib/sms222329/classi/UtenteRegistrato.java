@@ -55,7 +55,7 @@ public class UtenteRegistrato extends Utente {
         return nome;
     }
 
-    public void setNome(String nome) {}
+    public void setNome(String nome) {this.nome = nome;}
 
     public String getCognome() {
         return cognome;

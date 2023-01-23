@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import it.uniba.dib.sms222329.database.Database;
@@ -14,9 +15,9 @@ public class Relatore extends Supervisore {
 
     private int idRelatore;
     private String matricola;
-    private List corsiRelatore;
+    private ArrayList<Integer> corsiRelatore;
 
-    public Relatore(String matricola, String nome, String cognome, String codiceFiscale, String email, String password, int tipoUtente, List corsiRelatore) {
+    public Relatore(String matricola, String nome, String cognome, String codiceFiscale, String email, String password, int tipoUtente, ArrayList<Integer> corsiRelatore) {
         super(nome, cognome, codiceFiscale, email, password, tipoUtente);
         this.matricola = matricola;
         this.corsiRelatore = corsiRelatore;
@@ -36,12 +37,12 @@ public class Relatore extends Supervisore {
         this.matricola = matricola;
     }
 
-    public List getCorsiRelatore() {return corsiRelatore;}
+    public ArrayList<Integer> getCorsiRelatore() {return corsiRelatore;}
 
-    public void setCorsiRelatore(List corsiRelatore) {this.corsiRelatore = corsiRelatore;}
+    public void setCorsiRelatore(ArrayList<Integer> corsiRelatore) {this.corsiRelatore = corsiRelatore;}
 
     public void modRelatore(String matricola, String nome, String cognome, String codiceFiscale,
-                            String email, String password, List corsiRelatore) {
+                            String email, String password, ArrayList<Integer> corsiRelatore) {
         this.nome=nome;
         this.cognome=cognome;
         this.email=email;

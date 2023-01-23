@@ -3,7 +3,9 @@ package it.uniba.dib.sms222329.database;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.classi.Tesista;
 import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 
@@ -34,7 +36,6 @@ public class TesistaDatabase {
     }
 
     public static boolean modTesista(Tesista tesista, Database dbClass) {
-
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
 
@@ -66,7 +67,7 @@ public class TesistaDatabase {
     public static Tesista IstanziaTesista(UtenteRegistrato account, Database dbClass){
         Tesista TesistaLog = new Tesista();
 
-        String query =  "SELECT u.id, t.id, matricola, nome, cognome, email, password, media_voti, esami_mancanti, universitacorso_id" +
+        String query =  "SELECT u.id, t.id, matricola, u.nome, cognome, email, password, media_voti, esami_mancanti, universitacorso_id, codice_fiscale" +
                 " FROM utenti u, tesista t WHERE u.id=t.utente_id AND email = '" + account.getEmail() + "';";
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
@@ -82,7 +83,7 @@ public class TesistaDatabase {
         TesistaLog.setMedia(cursore.getInt(7));
         TesistaLog.setNumeroEsamiMancanti(cursore.getInt(8));
         TesistaLog.setIdUniversitaCorso(cursore.getInt(9));
-        //Tesi scelta, codice fiscale
+        TesistaLog.setCodiceFiscale(cursore.getString(10));
 
         return TesistaLog;
     }

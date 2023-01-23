@@ -50,12 +50,12 @@ public class ModificaProfiloRelatoreFragment extends Fragment {
         Spinner universita = getActivity().findViewById(R.id.universita);
         GestisciSpinner(universita);
 
-        Button conferma = getActivity().findViewById(R.id.button9);
+        Button conferma = getActivity().findViewById(R.id.conferma);
 
         conferma.setOnClickListener(view -> {
             String idUniversita = RecuperaIdSpinner(universita,"Universita");
             List idCorsiSelezionati = RecuperaIdCorsi();
-            List corsiRelatore = RecuperaUniversitaCorso(idUniversita,idCorsiSelezionati);
+            ArrayList<Integer> corsiRelatore = RecuperaUniversitaCorso(idUniversita,idCorsiSelezionati);
 
             relatoreLoggato.modRelatore(nome.getText().toString(),cognome.getText().toString(),
                     mail.getText().toString(),password.getText().toString(),
@@ -115,13 +115,13 @@ public class ModificaProfiloRelatoreFragment extends Fragment {
         return idCorsiSelezionati;
     }
 
-    private List RecuperaUniversitaCorso(String idUniversita, List idCorsiSelezionati){
+    private ArrayList<Integer> RecuperaUniversitaCorso(String idUniversita, List idCorsiSelezionati){
         Cursor idCursor;
-        List corsiRelatore = new ArrayList();
+        ArrayList<Integer> corsiRelatore = new ArrayList();
         for(int i=0; i< idCorsiSelezionati.size(); i++){
             idCursor = db.RicercaDato("SELECT id FROM universitacorso WHERE universita_id = '"+ idUniversita +"' AND corso_id = '"+ idCorsiSelezionati.get(i) +"';");
             idCursor.moveToNext();
-            corsiRelatore.add(idCursor.getString(0));
+            corsiRelatore.add(idCursor.getInt(0));
         }
         return corsiRelatore;
     }

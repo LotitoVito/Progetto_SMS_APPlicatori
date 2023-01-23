@@ -31,7 +31,6 @@ public class CoRelatoreDatabase {
     }
 
     public static boolean modCoRelatore(CoRelatore corelatore, Database dbClass) {
-
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
 
@@ -58,7 +57,7 @@ public class CoRelatoreDatabase {
     public static CoRelatore IstanziaCoRelatore(UtenteRegistrato account, Database dbClass){
         CoRelatore CorelatoreLog = new CoRelatore();
 
-        String query =  "SELECT u.id, c.id, nome, cognome, email, password, organizzazione " +
+        String query =  "SELECT u.id, c.id, nome, cognome, email, password, organizzazione, codice_fiscale " +
                 "FROM utenti u, Corelatore c WHERE u.id=c.utente_id AND email = '" + account.getEmail() + "';";
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
@@ -70,7 +69,8 @@ public class CoRelatoreDatabase {
         CorelatoreLog.setCognome(cursore.getString(3));
         CorelatoreLog.setEmail(cursore.getString(4));
         CorelatoreLog.setPassword(cursore.getString(5));
-        //organizzazione, codice fiscale
+        CorelatoreLog.setOrganizzazione(cursore.getString(6));
+        CorelatoreLog.setCodiceFiscale(cursore.getString(7));
 
         return CorelatoreLog;
     }

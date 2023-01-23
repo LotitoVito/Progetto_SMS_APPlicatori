@@ -18,7 +18,6 @@ public class Tesista extends UtenteRegistrato {
     private float media;
     private int numeroEsamiMancanti;
     private int idUniversitaCorso;
-    private int corso;
 
     public Tesista(String matricola, String nome, String cognome, String codiceFiscale, String email, String password, int tipoUtente, float media, int numeroEsamiMancanti, int idUniversitaCorso) {
         super(nome, cognome, codiceFiscale, email, password, tipoUtente);
@@ -63,15 +62,15 @@ public class Tesista extends UtenteRegistrato {
     public void setIdUniversitaCorso(int idUniversitaCorso) {this.idUniversitaCorso = idUniversitaCorso;}
 
     public void modTesista(String matricola, String nome, String cognome, String email,
-                           String password, float media, int numEsamiMancanti, String codFisc, int corso) {
-        this.matricola=matricola;
+                           String password, float media, int numEsamiMancanti, String codFisc, int idUniversitaCorso) {
         this.nome=nome;
         this.cognome=cognome;
         this.email=email;
         this.password=password;
+        this.codiceFiscale=codFisc;
+        this.matricola=matricola;
         this.media=media;
         this.numeroEsamiMancanti=numEsamiMancanti;
-        this.codiceFiscale=codFisc;
-        this.corso=corso;
+        this.idUniversitaCorso=idUniversitaCorso;
     }
 }

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.uniba.dib.sms222329.classi.Relatore;
@@ -31,7 +32,7 @@ public class RelatoreDatabase {
 
                 for(int i=0; i<relatore.getCorsiRelatore().size(); i++){
                     cvCorsiRelatore.put("relatore_id", idRelatore.getString(0));
-                    cvCorsiRelatore.put("universitacorso_id", (String) relatore.getCorsiRelatore().get(i));
+                    cvCorsiRelatore.put("universitacorso_id", relatore.getCorsiRelatore().get(i));
 
                     long insertCorsiRelatore = db.insert("corsiRelatore", null, cvCorsiRelatore);
                     if (insertCorsiRelatore == -1){
@@ -47,7 +48,6 @@ public class RelatoreDatabase {
     }
 
     public static boolean modRelatore(Relatore account, Database dbClass) {
-
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
 
@@ -82,7 +82,7 @@ public class RelatoreDatabase {
     public static Relatore IstanziaRelatore(UtenteRegistrato account, Database dbClass){
         Relatore relatoreLog = new Relatore();
 
-        String query = "SELECT u.id, r.id, matricola, nome, cognome, email, password FROM utenti u, relatore r WHERE u.id=r.utente_id AND email = '" + account.getEmail() + "';";
+        String query = "SELECT u.id, r.id, matricola, nome, cognome, email, password, codice_fiscale FROM utenti u, relatore r WHERE u.id=r.utente_id AND email = '" + account.getEmail() + "';";
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();
@@ -94,7 +94,15 @@ public class RelatoreDatabase {
         relatoreLog.setCognome(cursore.getString(4));
         relatoreLog.setEmail(cursore.getString(5));
         relatoreLog.setPassword(cursore.getString(6));
-        //CorsiUniversita, codice fiscale
+        relatoreLog.setCodiceFiscale(cursore.getString(7));
+
+        query = "SELECT universitacorso_id FROM corsiRelatore WHERE relatore_id = '" + relatoreLog.getIdRelatore() + "';";
+        cursore = db.rawQuery(query, null);
+        ArrayList<Integer> lista = new ArrayList<>();
+        while(cursore.moveToNext()){
+            lista.add(cursore.getInt(0));
+        }
+        relatoreLog.setCorsiRelatore(lista);
 
         return relatoreLog;
     }

@@ -61,7 +61,7 @@ public class SignUpRelatoreFragment extends Fragment {
         registerButton.setOnClickListener(view -> {
             String idUniversita = RecuperaIdSpinner(universita, "Universita");
             List idCorsiSelezionati = RecuperaIdCorsi();
-            List corsiRelatore = RecuperaUniversitaCorso(idUniversita, idCorsiSelezionati);
+            ArrayList<Integer> corsiRelatore = RecuperaUniversitaCorso(idUniversita, idCorsiSelezionati);
 
             Relatore account = new Relatore(matricola.getText().toString(), accountGenerale.getNome(),
                     accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(), accountGenerale.getEmail(),
@@ -130,13 +130,13 @@ public class SignUpRelatoreFragment extends Fragment {
         return idCorsiSelezionati;
     }
 
-    private List RecuperaUniversitaCorso(String idUniversita, List idCorsiSelezionati){
+    private ArrayList<Integer> RecuperaUniversitaCorso(String idUniversita, List idCorsiSelezionati){
         Cursor idCursor;
-        List corsiRelatore = new ArrayList();
+        ArrayList<Integer> corsiRelatore = new ArrayList();
         for(int i=0; i< idCorsiSelezionati.size(); i++){
             idCursor = db.RicercaDato("SELECT id FROM universitacorso WHERE universita_id = '"+ idUniversita +"' AND corso_id = '"+ idCorsiSelezionati.get(i) +"';");
             idCursor.moveToNext();
-            corsiRelatore.add(idCursor.getString(0));
+            corsiRelatore.add(idCursor.getInt(0));
         }
         return corsiRelatore;
     }
