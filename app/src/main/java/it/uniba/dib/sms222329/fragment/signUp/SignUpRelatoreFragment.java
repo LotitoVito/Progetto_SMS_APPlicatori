@@ -27,6 +27,8 @@ import it.uniba.dib.sms222329.activities.MainActivity;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.RelatoreDatabase;
+import it.uniba.dib.sms222329.database.UtenteRegistratoDatabase;
 
 public class SignUpRelatoreFragment extends Fragment {
     Database db;
@@ -63,11 +65,11 @@ public class SignUpRelatoreFragment extends Fragment {
 
             Relatore account = new Relatore(matricola.getText().toString(), accountGenerale.getNome(),
                     accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(), accountGenerale.getEmail(),
-                    accountGenerale.getPassword(), corsiRelatore);
+                    accountGenerale.getPassword(), 2, corsiRelatore);
 
             if(!db.VerificaDatoEsistente("SELECT matricola FROM relatore WHERE matricola = '"+ account.getMatricola() +"';")){
 
-                    if(account.RegistrazioneUtente(db, 2) && account.RegistrazioneRelatore(db)){
+                    if(UtenteRegistratoDatabase.RegistrazioneUtente(account, db) && RelatoreDatabase.RegistrazioneRelatore(account, db)){
                         Intent mainActivity = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                         startActivity(mainActivity);
                     } else{

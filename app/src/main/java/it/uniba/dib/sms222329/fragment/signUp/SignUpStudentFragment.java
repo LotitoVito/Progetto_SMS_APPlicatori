@@ -24,6 +24,8 @@ import it.uniba.dib.sms222329.activities.MainActivity;
 import it.uniba.dib.sms222329.classi.Tesista;
 import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.TesistaDatabase;
+import it.uniba.dib.sms222329.database.UtenteRegistratoDatabase;
 
 public class SignUpStudentFragment extends Fragment {
     Database db;
@@ -61,12 +63,12 @@ public class SignUpStudentFragment extends Fragment {
 
             Tesista account = new Tesista(matricola.getText().toString(), accountGenerale.getNome(),
                     accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(), accountGenerale.getEmail(),
-                    accountGenerale.getPassword(), Integer.parseInt(media.getText().toString()),
+                    accountGenerale.getPassword(), 1, Integer.parseInt(media.getText().toString()),
                     Integer.parseInt(numeroEsamiMancanti.getText().toString()), RecuperaUniversitaCorso(idUniversita, idCorsoStudio));
 
             if (!db.VerificaDatoEsistente("SELECT matricola FROM tesista WHERE matricola = '"+ account.getMatricola() +"';")){
 
-                    if(account.RegistrazioneUtente(db, 1) && account.RegistrazioneTesista(db)){
+                    if(UtenteRegistratoDatabase.RegistrazioneUtente(account, db) && TesistaDatabase.RegistrazioneTesista(account, db)){
                         Intent mainActivity = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                         startActivity(mainActivity);
                     } else{

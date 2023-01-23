@@ -10,6 +10,7 @@ import android.widget.Toast;
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.UtenteRegistratoDatabase;
 
 public class Recupero_password_activity extends AppCompatActivity {
     Database db = new Database(this);
@@ -30,26 +31,15 @@ public class Recupero_password_activity extends AppCompatActivity {
         EditText passswordIns2 = findViewById(R.id.editTextTextPassword);
 
         signInButton.setOnClickListener(view -> {
-            UtenteRegistrato recuperaPass = new UtenteRegistrato();
-            if(recuperaPass.ControlloMail(emailIns1.getText().toString(), emailIns2.getText().toString(), db)) {
-
-
-                if(recuperaPass.ResetPassword(passswordIns1.getText().toString(), passswordIns2.getText().toString(), emailIns1.getText().toString(),  db)){
+            if(UtenteRegistratoDatabase.ControlloMail(emailIns1.getText().toString(), emailIns2.getText().toString(), db)) {
+                if(UtenteRegistratoDatabase.ResetPassword(passswordIns1.getText().toString(), passswordIns2.getText().toString(), emailIns1.getText().toString(), db)){
                     Toast.makeText(this, "Password ripristinata", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "Le password non corrispondono", Toast.LENGTH_SHORT).show();
                 }
-
-
             } else {
-
                 Toast.makeText(this, "Le email non corrispondono / email inesistente", Toast.LENGTH_SHORT).show();
-
             }
         });
     } // fine resume
-
-
-
-
 }

@@ -20,8 +20,8 @@ public class Tesista extends UtenteRegistrato {
     private int idUniversitaCorso;
     private int corso;
 
-    public Tesista(String matricola, String nome, String cognome, String codiceFiscale, String email, String password, float media, int numeroEsamiMancanti, int idUniversitaCorso) {
-        super(nome, cognome, codiceFiscale, email, password);
+    public Tesista(String matricola, String nome, String cognome, String codiceFiscale, String email, String password, int tipoUtente, float media, int numeroEsamiMancanti, int idUniversitaCorso) {
+        super(nome, cognome, codiceFiscale, email, password, tipoUtente);
         this.matricola = matricola;
         this.media = media;
         this.numeroEsamiMancanti = numeroEsamiMancanti;
@@ -62,34 +62,8 @@ public class Tesista extends UtenteRegistrato {
 
     public void setIdUniversitaCorso(int idUniversitaCorso) {this.idUniversitaCorso = idUniversitaCorso;}
 
-    //Registrazione account su database
-    public boolean RegistrazioneTesista(Database dbClass) {
-        SQLiteDatabase db = dbClass.getWritableDatabase();
-        ContentValues cvTesista = new ContentValues();
-
-        Cursor idUtente = dbClass.RicercaDato("SELECT id FROM utenti WHERE email = '" + this.email + "';");
-        idUtente.moveToNext();
-
-        cvTesista.put("utente_id", idUtente.getString(0));
-        cvTesista.put("matricola", this.matricola);
-        cvTesista.put("media_voti", this.media);
-        cvTesista.put("esami_mancanti", this.numeroEsamiMancanti);
-        cvTesista.put("universitacorso_id", this.idUniversitaCorso);
-
-        try{
-            long insertCoRelatore = db.insert("tesista", null, cvTesista);
-            if(insertCoRelatore != -1){
-                return true;
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public boolean modTesista(Database dbClass, String matricola, String nome, String cognome,
-                              String email, String password, float media, int numEsamiMancanti,
-                              String codFisc, int corso) {
+    public void modTesista(String matricola, String nome, String cognome, String email,
+                           String password, float media, int numEsamiMancanti, String codFisc, int corso) {
         this.matricola=matricola;
         this.nome=nome;
         this.cognome=cognome;
@@ -99,32 +73,5 @@ public class Tesista extends UtenteRegistrato {
         this.numeroEsamiMancanti=numEsamiMancanti;
         this.codiceFiscale=codFisc;
         this.corso=corso;
-
-        SQLiteDatabase db = dbClass.getWritableDatabase();
-        ContentValues cvUtente = new ContentValues();
-
-        cvUtente.put("nome", this.nome);
-        cvUtente.put("cognome", this.cognome);
-        cvUtente.put("email", this.email);
-        cvUtente.put("password", this.password);
-        cvUtente.put("codice_fiscale", this.codiceFiscale);
-
-        try{
-            long updateUtente = db.update("utenti", cvUtente, "id = " + this.idUtente, null);
-            if(updateUtente != -1){
-                ContentValues cvTesista = new ContentValues();
-
-                cvTesista.put("matricola", this.matricola);
-                cvTesista.put("media_voti", this.media);
-                cvTesista.put("esami_mancanti", this.numeroEsamiMancanti);
-                cvTesista.put("universitacorso_id", this.corso);
-
-                long updateTesista = db.update("tesista", cvTesista, "id = " + this.idTesista, null);
-                return updateTesista != -1;
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return false;
     }
 }

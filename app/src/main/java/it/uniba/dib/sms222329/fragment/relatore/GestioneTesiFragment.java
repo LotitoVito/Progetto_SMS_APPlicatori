@@ -25,6 +25,7 @@ import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.TesiDatabase;
 
 public class GestioneTesiFragment extends Fragment {
     boolean operazioneModifica;
@@ -84,7 +85,7 @@ public class GestioneTesiFragment extends Fragment {
                     Integer.parseInt(media.getText().toString()), Integer.parseInt(esamiMancanti.getText().toString()),
                     capacitaRichiesta.getText().toString());
 
-            if(tesi.RegistrazioneTesi(db)){
+            if(TesiDatabase.RegistrazioneTesi(tesi, db)){
                 Toast.makeText(context, "Successo", Toast.LENGTH_SHORT).show();
             } else{
                 Toast.makeText(context, "Registrazione fallita", Toast.LENGTH_SHORT).show();

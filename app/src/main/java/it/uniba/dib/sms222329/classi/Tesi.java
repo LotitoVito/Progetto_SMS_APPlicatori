@@ -119,32 +119,7 @@ public class Tesi {
 
     public void setCapacitaRichieste(String capacitaRichieste) {this.capacitaRichieste = capacitaRichieste;}
 
-    public boolean RegistrazioneTesi(Database dbClass) {
-        SQLiteDatabase db = dbClass.getWritableDatabase();
-        ContentValues cvTesi = new ContentValues();
-
-        cvTesi.put("titolo", this.titolo);
-        cvTesi.put("argomento", this.argomenti);
-        cvTesi.put("tempistiche", this.tempistiche);
-        cvTesi.put("media_voto_minima", this.mediaVotiMinima);
-        cvTesi.put("esami_necessari", this.esamiMancantiNecessari);
-        cvTesi.put("skill_richieste", this.capacitaRichieste);
-        cvTesi.put("stato", this.statoDisponibilita);
-        cvTesi.put("visualizzazioni", this.numeroVisualizzazioni);
-        cvTesi.put("relatore_id", this.idRelatore);
-
-        try{
-            long insertTesi = db.insert("tesi", null, cvTesi);
-            if(insertTesi != -1){
-                return true;
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public boolean ModificaTesi(Database dbClass, String argomenti, boolean statoDisponibilita, int tempistiche,
+    public void ModificaTesi(String argomenti, boolean statoDisponibilita, int tempistiche,
                                 float mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste){
         this.argomenti = argomenti;
         this.statoDisponibilita = statoDisponibilita;
@@ -152,27 +127,6 @@ public class Tesi {
         this.mediaVotiMinima = mediaVotiMinima;
         this.esamiMancantiNecessari = esamiMancantiNecessari;
         this.capacitaRichieste = capacitaRichieste;
-
-        SQLiteDatabase db = dbClass.getWritableDatabase();
-        ContentValues cvTesi = new ContentValues();
-
-        cvTesi.put("titolo", this.titolo);
-        cvTesi.put("argomento", this.argomenti);
-        cvTesi.put("stato", this.statoDisponibilita);
-        cvTesi.put("tempistiche", this.tempistiche);
-        cvTesi.put("media_voto_minima", this.mediaVotiMinima);
-        cvTesi.put("esami_necessari", this.esamiMancantiNecessari);
-        cvTesi.put("skill_richieste", this.capacitaRichieste);
-
-        try{
-            long updateTesi = db.update("Tesi", cvTesi, "IDTesi = " + this.id, null);
-            if(updateTesi != -1){
-                return true;
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return false;
     }
 
     public Bitmap QRGenerator(){
@@ -188,17 +142,7 @@ public class Tesi {
         return bitmap;
     }
 
-    public void incrementaVisualizzazioni(Database dbClass){
+    public void incrementaVisualizzazioni(){
         this.numeroVisualizzazioni++;
-        SQLiteDatabase db = dbClass.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put("visualizzazioni", this.numeroVisualizzazioni);
-        long risultato = db.update("tesi", cv, "id = '"+ this.id +"';", null);
-    }
-
-    public Cursor visualizzaTesi(Database dbClass, int id){
-        SQLiteDatabase db=dbClass.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM tesi WHERE id='"+id+"';", null);
-        return cursor;
     }
 }

@@ -23,53 +23,18 @@ import java.util.List;
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.RelatoreDatabase;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ModificaProfiloRelatoreFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ModificaProfiloRelatoreFragment extends Fragment {
-
-    //  Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private Database db=new Database(getActivity().getApplicationContext());
+    private Database db = new Database(getActivity().getApplicationContext());
+    private Relatore relatoreLoggato;
 
     public ModificaProfiloRelatoreFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ModificaProfiloFragment.
-     */
-    // Rename and change types and number of parameters
-    public static ModificaProfiloRelatoreFragment newInstance(String param1, String param2) {
-        ModificaProfiloRelatoreFragment fragment = new ModificaProfiloRelatoreFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // Rename and change types of parameters
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_modifica_profilo_relatore, container, false);
     }
 
@@ -92,19 +57,14 @@ public class ModificaProfiloRelatoreFragment extends Fragment {
             List idCorsiSelezionati = RecuperaIdCorsi();
             List corsiRelatore = RecuperaUniversitaCorso(idUniversita,idCorsiSelezionati);
 
-            Relatore relatore = new Relatore();
-            if (relatore.modRelatore(db,nome.getText().toString(),cognome.getText().toString(),
-                                     mail.getText().toString(),password.getText().toString(),
-                                     codFisc.getText().toString(),matricola.getText().toString(),
-                                     corsiRelatore)) {
-                                            Toast.makeText(getActivity().getApplicationContext(),"modifica riuscita",Toast.LENGTH_SHORT).show();
+            relatoreLoggato.modRelatore(nome.getText().toString(),cognome.getText().toString(),
+                    mail.getText().toString(),password.getText().toString(),
+                    codFisc.getText().toString(),matricola.getText().toString(),
+                    corsiRelatore);
+            if (RelatoreDatabase.modRelatore(relatoreLoggato, db)) {
+                Toast.makeText(getActivity().getApplicationContext(),"modifica riuscita",Toast.LENGTH_SHORT).show();
             }
-        }
-        );
-
-
-
-
+        });
     }
 
     private void spinnerCreate(int idSpinner, String query){

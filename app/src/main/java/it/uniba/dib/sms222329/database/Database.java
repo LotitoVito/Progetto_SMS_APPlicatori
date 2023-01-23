@@ -106,7 +106,7 @@ public class Database extends SQLiteOpenHelper {
                         "relatore_id INT NOT NULL," +
                         "FOREIGN KEY (relatore_id) REFERENCES relatore(id) ON DELETE CASCADE);";
         db.execSQL(createTable);
-        //Richiesta
+        //RichiestaTesi
         createTable =   "CREATE TABLE richiesta (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "messaggio VARCHAR(255) NOT NULL," +
@@ -162,7 +162,7 @@ public class Database extends SQLiteOpenHelper {
                         "tesi_scelta_id INT NOT NULL," +
                         "FOREIGN KEY (tesi_scelta_id) REFERENCES tesi_scelta(id) ON DELETE CASCADE);";
         db.execSQL(createTable);
-        //Task
+        //Ricevimenti
         createTable =   "CREATE TABLE ricevimenti (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "data DATE NOT NULL," +

@@ -17,7 +17,9 @@ import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.activities.MainActivity;
 import it.uniba.dib.sms222329.classi.CoRelatore;
 import it.uniba.dib.sms222329.classi.UtenteRegistrato;
+import it.uniba.dib.sms222329.database.CoRelatoreDatabase;
 import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.UtenteRegistratoDatabase;
 
 public class SignUpCoRelatoreFragment extends Fragment {
     Database db;
@@ -43,9 +45,9 @@ public class SignUpCoRelatoreFragment extends Fragment {
 
         registerButton.setOnClickListener(view -> {
             CoRelatore account = new CoRelatore(accountGenerale.getNome(), accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(),
-                    accountGenerale.getEmail(), accountGenerale.getPassword(), organizzaione.getText().toString());
+                    accountGenerale.getEmail(), accountGenerale.getPassword(), 3, organizzaione.getText().toString());
 
-                if(account.RegistrazioneUtente(db, 3) && account.RegistrazioneCoRelatore(db)){
+                if(UtenteRegistratoDatabase.RegistrazioneUtente(account, db) && CoRelatoreDatabase.RegistrazioneCoRelatore(account, db)){
                     Intent mainActivity = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                     startActivity(mainActivity);
                 } else{

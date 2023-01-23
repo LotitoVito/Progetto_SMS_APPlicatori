@@ -18,6 +18,7 @@ import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Tesista;
 import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.UtenteRegistratoDatabase;
 
 public class LoginActivity extends AppCompatActivity {
     Database db = new Database(this);
@@ -41,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
 
             UtenteRegistrato Utente = new UtenteRegistrato(emailIns.getText().toString(), editTextTextPassword.getText().toString());
 
-            if (Utente.LoginStatus(db)) {
+            if (UtenteRegistratoDatabase.LoginStatus(Utente, db)) {
                 Intent UtenteLoggato = new Intent(getApplicationContext(), UtenteLoggato.class);
                 UtenteLoggato.putExtra("utentePassato", Utente);
                 startActivity(UtenteLoggato);

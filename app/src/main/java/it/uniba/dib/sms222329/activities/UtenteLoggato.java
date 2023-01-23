@@ -15,7 +15,10 @@ import it.uniba.dib.sms222329.classi.CoRelatore;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Tesista;
 import it.uniba.dib.sms222329.classi.UtenteRegistrato;
+import it.uniba.dib.sms222329.database.CoRelatoreDatabase;
 import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.RelatoreDatabase;
+import it.uniba.dib.sms222329.database.TesistaDatabase;
 import it.uniba.dib.sms222329.fragment.ImpostazioniFragment;
 import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
 import it.uniba.dib.sms222329.fragment.relatore.MessaggiFragment;
@@ -42,15 +45,15 @@ public class UtenteLoggato extends AppCompatActivity {
 
         try{
             if(Utente.getTipoUtente() == 1){ //tesista
-                Tesista TesistaLoggato = Utente.IstanziaTesista(db);
+                Tesista TesistaLoggato = TesistaDatabase.IstanziaTesista(Utente, db);
             }
             else if (Utente.getTipoUtente() == 2){ //relatore
-                Relatore RelatoreLoggato = Utente.IstanziaRelatore(db);
+                Relatore RelatoreLoggato = RelatoreDatabase.IstanziaRelatore(Utente, db);
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment(RelatoreLoggato));
-                setBottomNavigation(new TesiFragment(RelatoreLoggato), new MessaggiFragment(), new HomeFragment(RelatoreLoggato), new ProfiloFragment());
+                setBottomNavigation(new TesiFragment(RelatoreLoggato), new MessaggiFragment(RelatoreLoggato), new HomeFragment(RelatoreLoggato), new ProfiloFragment(RelatoreLoggato));
             }
             else if (Utente.getTipoUtente() == 3){ //corelatore
-                CoRelatore CoRelatoreLoggato = Utente.IstanziaCoRelatore(db);
+                CoRelatore CoRelatoreLoggato = CoRelatoreDatabase.IstanziaCoRelatore(Utente, db);
             }
         }catch (Exception e){
             e.printStackTrace();
