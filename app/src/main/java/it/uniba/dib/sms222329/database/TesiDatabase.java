@@ -39,14 +39,13 @@ public class TesiDatabase {
 
         cvTesi.put("titolo", tesi.getTitolo());
         cvTesi.put("argomento", tesi.getArgomenti());
-        cvTesi.put("stato", tesi.getStatoDisponibilita());
         cvTesi.put("tempistiche", tesi.getTempistiche());
         cvTesi.put("media_voto_minima", tesi.getMediaVotiMinima());
         cvTesi.put("esami_necessari", tesi.getEsamiMancantiNecessari());
         cvTesi.put("skill_richieste", tesi.getCapacitaRichieste());
-
+        cvTesi.put("stato", tesi.getStatoDisponibilita());
         try{
-            long updateTesi = db.update("Tesi", cvTesi, "IDTesi = " + tesi.getId(), null);
+            long updateTesi = db.update("tesi", cvTesi, "id = " + tesi.getId(), null);
             if(updateTesi != -1){
                 return true;
             }

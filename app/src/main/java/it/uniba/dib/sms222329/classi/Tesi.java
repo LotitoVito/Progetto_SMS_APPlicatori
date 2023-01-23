@@ -119,14 +119,15 @@ public class Tesi {
 
     public void setCapacitaRichieste(String capacitaRichieste) {this.capacitaRichieste = capacitaRichieste;}
 
-    public void ModificaTesi(String argomenti, boolean statoDisponibilita, int tempistiche,
+    public void ModificaTesi(String titolo, String argomenti, boolean statoDisponibilita, int tempistiche,
                                 float mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste){
+        this.titolo = titolo;
         this.argomenti = argomenti;
-        this.statoDisponibilita = statoDisponibilita;
         this.tempistiche = tempistiche;
         this.mediaVotiMinima = mediaVotiMinima;
         this.esamiMancantiNecessari = esamiMancantiNecessari;
         this.capacitaRichieste = capacitaRichieste;
+        this.statoDisponibilita = statoDisponibilita;
     }
 
     public Bitmap QRGenerator(){

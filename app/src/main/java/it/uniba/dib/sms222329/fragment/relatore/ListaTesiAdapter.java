@@ -67,7 +67,7 @@ public class ListaTesiAdapter extends BaseAdapter {
         Button editButton = convertView.findViewById(R.id.modificaTesi);
 
         // Set up a click listener for the button
-        editButton.setOnClickListener(view1 -> Utility.replaceFragment( this.fragmentManager, R.id.container, new GestioneTesiFragment(this.relatoreLoggato)));
+        editButton.setOnClickListener(view1 -> Utility.replaceFragment( this.fragmentManager, R.id.container, new GestioneTesiFragment(this.tesi.get(i), this.relatoreLoggato)));
 
         Button detailButton = convertView.findViewById(R.id.visualizzaTesi);
 

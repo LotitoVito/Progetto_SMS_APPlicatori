@@ -14,7 +14,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.autofill.AutofillValue;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,7 +35,6 @@ public class GestioneTesiFragment extends Fragment {
     Relatore relatoreLoggato;
 
     public GestioneTesiFragment(){
-
     }
 
     public GestioneTesiFragment(Relatore relatoreLoggato) {
@@ -77,20 +78,58 @@ public class GestioneTesiFragment extends Fragment {
         TextInputEditText capacitaRichiesta = getView().findViewById(R.id.capacitaRichiesta);
         TextInputEditText media = getView().findViewById(R.id.media_edit_text);
         SwitchMaterial statoDisponibilita = getView().findViewById(R.id.disponibilita);
-        Button registra = getView().findViewById(R.id.add);
+        Button salva = getView().findViewById(R.id.add);
 
-        registra.setOnClickListener(view -> {
-            Tesi tesi = new Tesi(titolo.getText().toString(), argomenti.getText().toString(),
-                    statoDisponibilita.isChecked(), relatoreLoggato.getIdRelatore(), Integer.parseInt(tempistiche.getText().toString()),
-                    Integer.parseInt(media.getText().toString()), Integer.parseInt(esamiMancanti.getText().toString()),
-                    capacitaRichiesta.getText().toString());
+        if(operazioneModifica){
 
-            if(TesiDatabase.RegistrazioneTesi(tesi, db)){
-                Toast.makeText(context, "Successo", Toast.LENGTH_SHORT).show();
-            } else{
-                Toast.makeText(context, "Registrazione fallita", Toast.LENGTH_SHORT).show();
-            }
-        });
+            titolo.setHint(tesi.getTitolo());
+            argomenti.setHint(tesi.getArgomenti());
+            tempistiche.setHint(String.valueOf(tesi.getTempistiche()));
+            esamiMancanti.setHint(String.valueOf(tesi.getEsamiMancantiNecessari()));
+            capacitaRichiesta.setHint(tesi.getCapacitaRichieste());
+            media.setHint(String.valueOf(tesi.getMediaVotiMinima()));
+            statoDisponibilita.setChecked(tesi.getStatoDisponibilita());
 
+            salva.setOnClickListener(view -> {
+                fillIfEmpty(titolo, tesi.getTitolo());
+                fillIfEmpty(argomenti, tesi.getArgomenti());
+                fillIfEmpty(tempistiche, String.valueOf(tesi.getTempistiche()));
+                fillIfEmpty(esamiMancanti, String.valueOf(tesi.getEsamiMancantiNecessari()));
+                fillIfEmpty(capacitaRichiesta, tesi.getCapacitaRichieste());
+                fillIfEmpty(media, String.valueOf(tesi.getMediaVotiMinima()));
+
+                tesi.ModificaTesi(titolo.getText().toString(), argomenti.getText().toString(), statoDisponibilita.isChecked(),
+                        Integer.parseInt(tempistiche.getText().toString()), Float.parseFloat(media.getText().toString()),
+                        Integer.parseInt(esamiMancanti.getText().toString()), capacitaRichiesta.getText().toString());
+                if(TesiDatabase.ModificaTesi(tesi, db)){
+                    Toast.makeText(context, "Successo", Toast.LENGTH_SHORT).show();
+                } else{
+                    Toast.makeText(context, "Modifica fallita", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        } else{
+
+            salva.setOnClickListener(view -> {
+                Tesi tesi = new Tesi(titolo.getText().toString(), argomenti.getText().toString(),
+                        statoDisponibilita.isChecked(), relatoreLoggato.getIdRelatore(), Integer.parseInt(tempistiche.getText().toString()),
+                        Integer.parseInt(media.getText().toString()), Integer.parseInt(esamiMancanti.getText().toString()),
+                        capacitaRichiesta.getText().toString());
+
+                if(TesiDatabase.RegistrazioneTesi(tesi, db)){
+                    Toast.makeText(context, "Successo", Toast.LENGTH_SHORT).show();
+                } else{
+                    Toast.makeText(context, "Registrazione fallita", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
     }
+
+    private void fillIfEmpty(TextInputEditText campo, String value){
+        if(campo.getText().toString().matches("")){
+            campo.autofill(AutofillValue.forText(value));
+        }
+    }
+
 }
