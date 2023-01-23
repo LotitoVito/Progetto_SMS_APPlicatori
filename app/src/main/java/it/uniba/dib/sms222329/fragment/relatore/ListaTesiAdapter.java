@@ -74,7 +74,7 @@ public class ListaTesiAdapter extends BaseAdapter {
         // Set up a click listener for the button
         detailButton.setOnClickListener(view1 -> {
             // Create a new instance of the bottom sheet fragment
-            VisualizzaTesiFragment bottomSheet = new VisualizzaTesiFragment();
+            VisualizzaTesiFragment bottomSheet = new VisualizzaTesiFragment(tesi.get(i));
             // Show the bottom sheet
             bottomSheet.show(this.fragmentManager, bottomSheet.getTag());
         });
