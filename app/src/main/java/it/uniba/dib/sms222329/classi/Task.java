@@ -9,10 +9,10 @@ public class Task {
     private Date dataInizio;
     private Date dataFine;
     private String linkMateriale;
-    private boolean stato;
+    private int stato;
     private int idTesiScelta;
 
-    public Task(int idTask, String descrizione, Date dataInizio, Date dataFine, String linkMateriale, boolean stato, int idTesiScelta) {
+    public Task(int idTask, String descrizione, Date dataInizio, Date dataFine, String linkMateriale, int stato, int idTesiScelta) {
         this.idTask = idTask;
         this.descrizione = descrizione;
         this.dataInizio = dataInizio;
@@ -62,11 +62,9 @@ public class Task {
         this.linkMateriale = linkMateriale;
     }
 
-    public boolean isStato() {
-        return stato;
-    }
+    public int getStato() {return stato;}
 
-    public void setStato(boolean stato) {
+    public void setStato(int stato) {
         this.stato = stato;
     }
 

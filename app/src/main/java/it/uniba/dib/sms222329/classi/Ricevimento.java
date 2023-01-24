@@ -1,20 +1,26 @@
 package it.uniba.dib.sms222329.classi;
 
 import java.sql.Date;
+import java.sql.Time;
 
 public class Ricevimento {
 
     private int idRicevimento;
     private Date data;
-    //private orario
+    private Time orario;
     private String argomento;
     private int idTask;
+    private int accettazione;
+    private String messaggio;
 
-    public Ricevimento(int idRicevimento, Date data, String argomento, int idTask) {
+    public Ricevimento(int idRicevimento,Time orario, Date data, String argomento, int idTask, int accettazione, String messaggio) {
         this.idRicevimento = idRicevimento;
+        this.orario = orario;
         this.data = data;
         this.argomento = argomento;
         this.idTask = idTask;
+        this.accettazione = accettazione;
+        this.messaggio = messaggio;
     }
 
     public int getIdRicevimento() {
@@ -33,6 +39,10 @@ public class Ricevimento {
         this.data = data;
     }
 
+    public Time getOrario() {return orario;}
+
+    public void setOrario(Time orario) {this.orario = orario;}
+
     public String getArgomento() {
         return argomento;
     }
@@ -48,4 +58,12 @@ public class Ricevimento {
     public void setIdTask(int idTask) {
         this.idTask = idTask;
     }
+
+    public int getAccettazione() {return accettazione;}
+
+    public void setAccettazione(int accettazione) {this.accettazione = accettazione;}
+
+    public String getMessaggio() {return messaggio;}
+
+    public void setMessaggio(String messaggio) {this.messaggio = messaggio;}
 }

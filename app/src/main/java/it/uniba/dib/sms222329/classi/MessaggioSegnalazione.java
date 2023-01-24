@@ -2,7 +2,7 @@ package it.uniba.dib.sms222329.classi;
 
 import java.sql.Date;
 
-public class MessaggiSegnalazione {
+public class MessaggioSegnalazione extends SegnalazioneChat {
 
     private  int idMessaggio;
     private String messaggio;
@@ -10,7 +10,8 @@ public class MessaggiSegnalazione {
     private int idMittente;
     private int idSegnalazioneChat;
 
-    public MessaggiSegnalazione(int idMessaggio, String messaggio, Date timestamp, int idMittente, int idSegnalazioneChat) {
+    public MessaggioSegnalazione(int idMessaggio, String messaggio, Date timestamp, int idMittente, int idSegnalazioneChat) {
+        super();
         this.idMessaggio = idMessaggio;
         this.messaggio = messaggio;
         this.timestamp = timestamp;

@@ -165,6 +165,8 @@ public class Database extends SQLiteOpenHelper {
                         "orario TIME NOT NULL," +
                         "argomento VARCHAR(255) NOT NULL," +
                         "task_id INT NOT NULL," +
+                        "accettazione INT NOT NULL," +
+                        "messaggio  VARCHAR(255)," +
                         "FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE);";
         db.execSQL(createTable);
         //Popolamento tabella Universita
