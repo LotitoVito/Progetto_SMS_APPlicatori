@@ -10,57 +10,94 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp"
+        android:minHeight="400dp"
+        android:elevation="16dp"
+        android:weightSum="10"
         tools:ignore="UselessParent">
 
-    <TextView
-        android:id="@+id/titoloTesi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:text="Title"/>
+        <TextView
+            android:id="@+id/titoloTesi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textColor="@color/primaryColor"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+       />
 
-    <TextView
-        android:id="@+id/argomentoTesi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:text="Description"/>
+        <TextView
+            android:id="@+id/argomentoTesi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Topic"
+            android:textSize="16sp"
+            android:layout_weight="2"/>
 
-    <TextView
-        android:id="@+id/tempistiche"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:text="Topic"/>
+        <androidx.constraintlayout.utils.widget.MotionLabel
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/tempistiche" />
 
-    <TextView
-        android:id="@+id/esamiMancanti"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:text="Missing exam"/>
+        <TextView
+            android:id="@+id/tempistiche"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            />
 
-    <TextView
-        android:id="@+id/capacitaRichiesta"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:text="Skill required"/>
+        <androidx.constraintlayout.utils.widget.MotionLabel
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/numero_esami_mancanti" />
 
-    <TextView
-        android:id="@+id/media"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:text="gpt"/>
+
+        <TextView
+            android:id="@+id/esamiMancanti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Missing exam"
+            android:textSize="16sp"
+            android:layout_weight="1"/>
+
+        <androidx.constraintlayout.utils.widget.MotionLabel
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/capacitaRichiesta" />
+
+
+        <TextView
+            android:id="@+id/capacitaRichiesta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Skill required"
+            android:textSize="16sp"
+            android:layout_weight="1"/>
+
+        <androidx.constraintlayout.utils.widget.MotionLabel
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/media" />
+
+        <TextView
+            android:id="@+id/media"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="gpt"
+            android:textSize="16sp"
+            android:layout_weight="2"/>
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/disponibilita"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="false"
-            android:text="@string/disponibilita" />
+            android:text="@string/disponibilita"
+            android:textColor="@color/primaryColor"
+            android:layout_weight="2"
+            android:textSize="16sp"/>
 
 
     </LinearLayout>

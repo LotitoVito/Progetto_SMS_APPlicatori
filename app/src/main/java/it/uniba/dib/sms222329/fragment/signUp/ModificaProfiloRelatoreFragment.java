@@ -29,7 +29,7 @@ public class ModificaProfiloRelatoreFragment extends Fragment {
     private Database db = new Database(getActivity().getApplicationContext());
     private Relatore relatoreLoggato;
 
-    public ModificaProfiloRelatoreFragment() {
+    public ModificaProfiloRelatoreFragment(Relatore relatoreLoggato) {
     }
 
     @Override
