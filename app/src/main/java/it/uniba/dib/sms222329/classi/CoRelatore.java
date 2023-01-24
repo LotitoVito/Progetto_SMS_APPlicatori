@@ -1,15 +1,6 @@
 package it.uniba.dib.sms222329.classi;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-import it.uniba.dib.sms222329.database.Database;
-
-public class CoRelatore extends Supervisore {
+public class CoRelatore extends UtenteRegistrato {
 
     private String organizzazione;
     private int idCorelatore;

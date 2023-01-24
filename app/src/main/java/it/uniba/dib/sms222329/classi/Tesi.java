@@ -62,6 +62,14 @@ public class Tesi {
         this.capacitaRichieste = capacitaRichieste;
     }
 
+    //Usato per la tesi scelta
+    public Tesi(int id, String titolo, String argomenti, int idRelatore) {
+        this.id = id;
+        this.titolo = titolo;
+        this.argomenti = argomenti;
+        this.idRelatore = idRelatore;
+    }
+
     public int getId() {
         return id;
     }

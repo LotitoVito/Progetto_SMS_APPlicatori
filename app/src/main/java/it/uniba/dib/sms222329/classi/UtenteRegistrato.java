@@ -1,19 +1,9 @@
 package it.uniba.dib.sms222329.classi;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-import android.widget.Toast;
 
+import java.io.Serializable;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-import it.uniba.dib.sms222329.database.Database;
-
-public class UtenteRegistrato extends Utente {
+public class UtenteRegistrato implements Serializable {
     int idUtente;
     String nome;
     String cognome;
