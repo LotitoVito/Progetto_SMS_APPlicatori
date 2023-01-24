@@ -39,21 +39,21 @@
             <EditText
                 android:id="@+id/chat_input"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="48dp"
                 android:layout_weight="1"
-                android:padding="8dp"
-                android:inputType="textMultiLine"
                 android:background="@drawable/circle_border"
                 android:hint="@string/scriviMessaggio"
-                android:importantForAutofill="no" />
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:padding="8dp" />
 
             <ImageButton
                 android:id="@+id/send_button"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:background="@drawable/send_circle"
-                android:contentDescription="@string/invia" />
+                android:contentDescription="@string/invia"
+                android:src="@drawable/ic_back" />
 
         </LinearLayout>
 
