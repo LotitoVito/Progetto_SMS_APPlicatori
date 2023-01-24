@@ -122,6 +122,7 @@ public class Database extends SQLiteOpenHelper {
                         "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "data_pubblicazione DATE," +
                         "abstract VARCHAR(255)," +
+                        "download VARCHAR(255)," +
                         "tesi_id INT NOT NULL," +
                         "corelatore_id INT," +
                         "tesista_id INT NOT NULL UNIQUE," +
@@ -129,25 +130,20 @@ public class Database extends SQLiteOpenHelper {
                         "FOREIGN KEY (corelatore_id) REFERENCES coRelatore(id)," +
                         "FOREIGN KEY (tesista_id) REFERENCES tesista(id) ON DELETE CASCADE);";
         db.execSQL(createTable);
-        //Segnalazione
-        createTable =   "CREATE TABLE segnalazione (" +
+        //SegnalazioneChat
+        createTable =   "CREATE TABLE segnalazioneChat (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "messaggio VARCHAR(255) NOT NULL," +
-                        "riservato BOOLEAN NOT NULL," +
-                        "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP," +
+                        "oggetto VARCHAR(255) NOT NULL," +
                         "tesi_scelta_id INT NOT NULL," +
-                        "utente_id INT NOT NULL UNIQUE," +
-                        "FOREIGN KEY (utente_id) REFERENCES utenti(id)," +
                         "FOREIGN KEY (tesi_scelta_id) REFERENCES tesi_scelta(id) ON DELETE CASCADE);";
         db.execSQL(createTable);
         //RispostaSegnalazione
-        createTable =   "CREATE TABLE rispostaSegnalazione (" +
+        createTable =   "CREATE TABLE messaggiSegnalazione (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                         "messaggio VARCHAR(255) NOT NULL," +
-                        "riservato BOOLEAN NOT NULL," +
                         "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP," +
-                        "segnalazione_id INT NOT NULL," +
                         "utente_id INT NOT NULL UNIQUE," +
+                        "segnalazione_id INT NOT NULL," +
                         "FOREIGN KEY (utente_id) REFERENCES utenti(id)," +
                         "FOREIGN KEY (segnalazione_id) REFERENCES tesi_scelta(id) ON DELETE CASCADE);";
         db.execSQL(createTable);
