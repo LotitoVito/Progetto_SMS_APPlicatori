@@ -53,6 +53,9 @@
     <string name="edit_courses">Modifica corso</string>
     <string name="edit_gpa">Modifica media</string>
     <string name="dettagli">Dettagli</string>
+    <string name="mystudent">I miei tesisti</string>
+    <string name="segnalazioni">Segnalazioni</string>
+    <string name="scanQr">Scan QR Code</string>
 
 
 </resources>

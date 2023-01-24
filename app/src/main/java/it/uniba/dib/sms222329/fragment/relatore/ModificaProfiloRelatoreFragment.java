@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222329.fragment.signUp;
+package it.uniba.dib.sms222329.fragment.relatore;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -17,6 +17,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,17 +26,22 @@ import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.RelatoreDatabase;
+import it.uniba.dib.sms222329.fragment.signUp.CorsiDiStudiAdapter;
 
-public class ModificaProfiloRelatoreFragment extends Fragment {
-    private Database db = new Database(getActivity().getApplicationContext());
+public class  ModificaProfiloRelatoreFragment extends Fragment {
+    private Database db;
     private Relatore relatoreLoggato;
 
-    public ModificaProfiloRelatoreFragment(Relatore relatoreLoggato) {
+    public ModificaProfiloRelatoreFragment(Database db, Relatore relatoreLoggato) {
+        this.db = db;
+        this.relatoreLoggato = relatoreLoggato;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_modifica_profilo_relatore, container, false);
     }
 
@@ -126,7 +133,7 @@ public class ModificaProfiloRelatoreFragment extends Fragment {
         return corsiRelatore;
     }
 
-    private void GestisciSpinner(Spinner spinner){
+   private void GestisciSpinner(Spinner spinner){
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

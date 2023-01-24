@@ -40,12 +40,6 @@ public class ImpostazioniFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_impostazioni, container, false);
 
-        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.navigation);
-        int selectedItemId = bottomNavigationView.getSelectedItemId();
-        if(selectedItemId != R.id.navigation_settings) {
-            bottomNavigationView.getMenu().findItem(R.id.navigation_settings).setChecked(true);
-        }
-
         toggleDarkMode = view.findViewById(R.id.toggle_dark_mode);
         logOut = view.findViewById(R.id.log_out);
 

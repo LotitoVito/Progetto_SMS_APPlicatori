@@ -42,8 +42,6 @@
     <string name="esci">Log out</string>
     <string name="invia">Invia</string>
     <string name="scriviMessaggio">Scrivi il tuo messaggio…</string>
-    <!--  Remove or change this placeholder text -->
-
     <string name="edit_name">Edit Name</string>
     <string name="edit_surname">Edit Surname</string>
     <string name="confirm">Confirm</string>
@@ -52,12 +50,11 @@
     <string name="edit_tax_dentification_number">Edit Tax dentification number</string>
     <string name="edit_id_number">Edit ID number</string>
     <string name="edit_courses">Edit Courses:</string>
-    <!-- TODO: Remove or change this placeholder text -->
-
-    <string name="edit_gpa" >Edit GPA</string>
+    <string name="edit_gpa">Edit GPA</string>
     <string name="dettagli">Detalis</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="mystudent">My student</string>
+    <string name="segnalazioni">Issues</string>
+    <string name="scanQr">Scan QR Code</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
 
 </resources>

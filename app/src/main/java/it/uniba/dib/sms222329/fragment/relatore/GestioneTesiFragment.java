@@ -1,9 +1,6 @@
 package it.uniba.dib.sms222329.fragment.relatore;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.autofill.AutofillValue;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -63,7 +59,7 @@ public class GestioneTesiFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_tesi_telatore, menu);
+        inflater.inflate(R.menu.menu_actionbar, menu);
     }
 
     @Override
