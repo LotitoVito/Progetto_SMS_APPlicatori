@@ -65,4 +65,9 @@ public class RichiestaTesi {
     public void setRisposta(String risposta) {
         this.risposta = risposta;
     }
+
+    public void RispostaRichiestaTesi(boolean accettata, String risposta){
+        this.accettata = accettata;
+        this.risposta = risposta;
+    }
 }
