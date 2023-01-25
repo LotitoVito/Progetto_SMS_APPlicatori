@@ -67,10 +67,11 @@ public class RelatoreDatabase {
 
                 if(updateRelatore!= -1){
                     ContentValues cvLista = new ContentValues();
-                    long updateLista = 0;
+                    db.delete("corsiRelatore", "relatore_id = '"+ account.getIdRelatore() +"';", null);
                     for(int i=0;i<account.getCorsiRelatore().size();i++){
                         cvLista.put("universitacorso_id", Integer.parseInt(account.getCorsiRelatore().get(i).toString()));
-                        updateLista = db.update("corsiRelatore", cvLista, "relatore_id = " + account.getIdRelatore(), null);
+                        cvLista.put("relatore_id", account.getIdRelatore());
+                        long updateLista = db.insert("corsiRelatore",null, cvLista);
                         if(updateLista==-1){
                             return false;
                         }
