@@ -6,7 +6,7 @@ public class Relatore extends UtenteRegistrato {
 
     private int idRelatore;
     private String matricola;
-    private ArrayList<Integer> corsiRelatore;
+    private ArrayList<Integer> corsiRelatore;       //Nella tabella del db fa riferimento ad universitacorso_id ovvero l'id della coppia uni/corso
 
     public Relatore(String matricola, String nome, String cognome, String codiceFiscale, String email, String password, int tipoUtente, ArrayList<Integer> corsiRelatore) {
         super(nome, cognome, codiceFiscale, email, password, tipoUtente);

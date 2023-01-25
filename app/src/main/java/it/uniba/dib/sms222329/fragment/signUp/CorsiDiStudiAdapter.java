@@ -1,25 +1,43 @@
 package it.uniba.dib.sms222329.fragment.signUp;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
+import android.widget.Spinner;
 
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.classi.Relatore;
+import it.uniba.dib.sms222329.database.Database;
 
 public class CorsiDiStudiAdapter extends BaseAdapter {
 
     private List<String> corsi;
+    private Context context;
     private LayoutInflater inflater;
+    private Relatore relatore;
+    private boolean modifica;
+    private boolean oldCheckBox;
 
     public CorsiDiStudiAdapter(Context context, List<String> corsi) {
         this.corsi = corsi;
+        this.context = context;
         this.inflater = LayoutInflater.from(context);
+    }
+
+    public CorsiDiStudiAdapter(Context context, List<String> corsi, Relatore relatore, boolean oldCheckBox) {
+        this.corsi = corsi;
+        this.context = context;
+        this.inflater = LayoutInflater.from(context);
+        this.relatore = relatore;
+        this.modifica = true;
+        this.oldCheckBox = oldCheckBox;
     }
 
     @Override
@@ -45,6 +63,20 @@ public class CorsiDiStudiAdapter extends BaseAdapter {
 
         CheckBox checkBox = convertView.findViewById(R.id.checkbox);
         checkBox.setText(corsi.get(i));
+
+        if(this.modifica && this.oldCheckBox){
+            Database db = new Database(this.context);
+            for(int j=0; j<relatore.getCorsiRelatore().size(); j++){
+                Cursor cursor = db.getReadableDatabase().rawQuery("SELECT cd.nome FROM corsoStudi cd, universitacorso uc " +
+                        "WHERE uc.corso_id=cd.id AND uc.id='"+ relatore.getCorsiRelatore().get(j) +"';", null);
+                while(cursor.moveToNext()){
+                    if(checkBox.getText().toString().compareTo(cursor.getString(0))==0){
+                        checkBox.setChecked(true);
+                        break;
+                    }
+                }
+            }
+        }
 
         return convertView;
     }

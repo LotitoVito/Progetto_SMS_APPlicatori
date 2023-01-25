@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.autofill.AutofillValue;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,6 +32,7 @@ import it.uniba.dib.sms222329.fragment.signUp.CorsiDiStudiAdapter;
 public class  ModificaProfiloRelatoreFragment extends Fragment {
     private Database db;
     private Relatore relatoreLoggato;
+    private String oldSpinnerName;
 
     public ModificaProfiloRelatoreFragment(Database db, Relatore relatoreLoggato) {
         this.db = db;
@@ -40,34 +42,56 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_modifica_profilo_relatore, container, false);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        EditText nome = getActivity().findViewById(R.id.nome);
-        EditText cognome = getActivity().findViewById(R.id.cognome);
-        EditText mail = getActivity().findViewById(R.id.email);
-        EditText password = getActivity().findViewById(R.id.password);
-        EditText codFisc = getActivity().findViewById(R.id.codiceFiscale);
-        EditText matricola = getActivity().findViewById(R.id.matricola);
-        Spinner universita = getActivity().findViewById(R.id.universita);
+
+        //Crea lo spinner
+        String query = "SELECT nome FROM universita;";
+        spinnerCreate(R.id.universita, query);
+
+        //Reference agli elementi dell'interfaccia
+        EditText nome = getView().findViewById(R.id.nome);
+        EditText cognome = getView().findViewById(R.id.cognome);
+        EditText mail = getView().findViewById(R.id.email);
+        EditText password = getView().findViewById(R.id.password);
+        EditText codFisc = getView().findViewById(R.id.codiceFiscale);
+        EditText matricola = getView().findViewById(R.id.matricola);
+        Spinner universita = getView().findViewById(R.id.universita);
+        Button conferma = getView().findViewById(R.id.conferma);
+
+        //Carica come suggerimenti i valori attuali del profilo
+        nome.setHint(relatoreLoggato.getNome());
+        cognome.setHint(relatoreLoggato.getCognome());
+        mail.setHint(relatoreLoggato.getEmail());
+        password.setHint(relatoreLoggato.getPassword());
+        codFisc.setHint(relatoreLoggato.getCodiceFiscale());
+        matricola.setHint(relatoreLoggato.getMatricola());
+
+        //Gestisce lo spinner in caso di cambi
         GestisciSpinner(universita);
 
-        Button conferma = getActivity().findViewById(R.id.conferma);
-
         conferma.setOnClickListener(view -> {
+            //Riempie i campi non modificati con i valori esistenti
+            fillIfEmpty(nome, relatoreLoggato.getNome());
+            fillIfEmpty(cognome, relatoreLoggato.getCognome());
+            fillIfEmpty(mail, relatoreLoggato.getEmail());
+            fillIfEmpty(password, relatoreLoggato.getPassword());
+            fillIfEmpty(codFisc, relatoreLoggato.getCodiceFiscale());
+            fillIfEmpty(matricola, relatoreLoggato.getMatricola());
+
+            //Recupera gli id dei corsi dei relatori
             String idUniversita = RecuperaIdSpinner(universita,"Universita");
             List idCorsiSelezionati = RecuperaIdCorsi();
             ArrayList<Integer> corsiRelatore = RecuperaUniversitaCorso(idUniversita,idCorsiSelezionati);
 
-            relatoreLoggato.modRelatore(nome.getText().toString(),cognome.getText().toString(),
-                    mail.getText().toString(),password.getText().toString(),
-                    codFisc.getText().toString(),matricola.getText().toString(),
-                    corsiRelatore);
+            //Modifica
+            relatoreLoggato.modRelatore(matricola.getText().toString(),nome.getText().toString(),
+                    cognome.getText().toString(), codFisc.getText().toString(),mail.getText().toString(),
+                    password.getText().toString(), corsiRelatore);
             if (RelatoreDatabase.modRelatore(relatoreLoggato, db)) {
                 Toast.makeText(getActivity().getApplicationContext(),"modifica riuscita",Toast.LENGTH_SHORT).show();
             }
@@ -77,10 +101,7 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
     private void spinnerCreate(int idSpinner, String query){
         Spinner spinner = getView().findViewById(idSpinner);
 
-        // Query the database for the data
         Cursor cursor = db.getReadableDatabase().rawQuery(query, null);
-
-        // Create an array of strings using the data from the Cursor
         List<String> items = new ArrayList<>();
         while (cursor.moveToNext()) {
             String item = cursor.getString(0);
@@ -88,14 +109,18 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
         }
         cursor.close();
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, items);
-
-        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+
+        //Setta selezionata l'univerisità di cui il relatore fa parte
+        cursor = db.RicercaDato("SELECT u.nome " +
+                "FROM universitacorso uc , universita u " +
+                "WHERE uc.universita_id=u.id AND uc.id = '"+ relatoreLoggato.getCorsiRelatore().get(0) +"';");
+        if(cursor.moveToNext()){
+            spinner.setSelection(adapter.getPosition(cursor.getString(0)));
+            oldSpinnerName = spinner.getSelectedItem().toString();
+        }
     }
 
     private String RecuperaIdSpinner(Spinner spinner, String tabella){
@@ -156,11 +181,16 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
                     corsi.add(item);
                 }
                 cursor.close();
+                boolean oldCheckBox;
+                if(spinner.getSelectedItem().toString().compareTo(oldSpinnerName)==0){
+                    oldCheckBox = true;
+                } else{
+                    oldCheckBox = false;
+                }
 
                 ListView listView = getActivity().findViewById(R.id.corsiDiStudio);
-                CorsiDiStudiAdapter adapter = new CorsiDiStudiAdapter(getActivity().getApplicationContext(), corsi);
+                CorsiDiStudiAdapter adapter = new CorsiDiStudiAdapter(getActivity().getApplicationContext(), corsi, relatoreLoggato, oldCheckBox);
                 listView.setAdapter(adapter);
-
             }
 
             @Override
@@ -168,5 +198,12 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
                 // Do nothing
             }
         });
+    }
+
+    //Riempie il campo con il valore nel caso sia vuoto
+    private void fillIfEmpty(EditText campo, String value){
+        if(campo.getText().toString().matches("")){
+            campo.autofill(AutofillValue.forText(value));
+        }
     }
 }

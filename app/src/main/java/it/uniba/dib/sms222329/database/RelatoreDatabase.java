@@ -57,24 +57,29 @@ public class RelatoreDatabase {
         cvUtente.put("password", account.getPassword());
         cvUtente.put("codice_fiscale", account.getCodiceFiscale());
 
-
         try{
             long updateUtente = db.update("utenti", cvUtente, "id = " + account.getIdUtente(), null);
 
-            ContentValues cvRelatore = new ContentValues();
-            cvRelatore.put("matricola", account.getMatricola());
-            long updateRelatore = db.update("relatore", cvRelatore, "id = " + account.getIdRelatore(), null);
+            if(updateUtente != -1){
+                ContentValues cvRelatore = new ContentValues();
+                cvRelatore.put("matricola", account.getMatricola());
+                long updateRelatore = db.update("relatore", cvRelatore, "id = " + account.getIdRelatore(), null);
 
-            ContentValues cvLista = new ContentValues();
-            long updateLista = 0;
-            for(int i=0;i<account.getCorsiRelatore().size();i++){
-                cvLista.put("universitacorso_id", Integer.parseInt(account.getCorsiRelatore().get(i).toString()));
-                updateLista = db.update("corsiRelatore", cvLista, "relatore_id = " + account.getIdRelatore(), null);
+                if(updateRelatore!= -1){
+                    ContentValues cvLista = new ContentValues();
+                    long updateLista = 0;
+                    for(int i=0;i<account.getCorsiRelatore().size();i++){
+                        cvLista.put("universitacorso_id", Integer.parseInt(account.getCorsiRelatore().get(i).toString()));
+                        updateLista = db.update("corsiRelatore", cvLista, "relatore_id = " + account.getIdRelatore(), null);
+                        if(updateLista==-1){
+                            return false;
+                        }
+                    }
+                    return true;
+                }
             }
-
-            return updateUtente != -1 && updateRelatore!= -1 && updateLista!=-1;
         }catch(Exception e){
-
+            e.printStackTrace();
         }
         return false;
     }
