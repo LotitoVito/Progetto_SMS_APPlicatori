@@ -169,6 +169,13 @@ public class Database extends SQLiteOpenHelper {
                         "messaggio  VARCHAR(255)," +
                         "FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE);";
         db.execSQL(createTable);
+        //Popolamento tabella ruoli
+        ContentValues cvRuoli = new ContentValues();
+        String[] listaRuoli = {"Tesista", "Relatore", "CoRelatore"};
+        for(int i=0; i<listaRuoli.length; i++){
+            cvRuoli.put("ruolo", listaRuoli[i]);
+            db.insert("ruoli", null, cvRuoli);
+        }
         //Popolamento tabella Universita
         ContentValues cvUniversita = new ContentValues();
         String[] listaUniversita = {"UniBa", "UniCa", "UniNa"};
@@ -185,13 +192,6 @@ public class Database extends SQLiteOpenHelper {
         }
         //Popolamento tabella Universita-CorsiStudio
         PopolamentoUniCorsi(db);
-        //Popolamento tabella ruoli
-        ContentValues cvRuoli = new ContentValues();
-        String[] listaRuoli = {"Tesista", "Relatore", "CoRelatore"};
-        for(int i=0; i<listaRuoli.length; i++){
-            cvCorsiStudio.put("ruolo", listaRuoli[i]);
-            db.insert("ruoli", null, cvRuoli);
-        }
     }
 
     //Viene chiamato nel caso di aggiornamento della versione del database
