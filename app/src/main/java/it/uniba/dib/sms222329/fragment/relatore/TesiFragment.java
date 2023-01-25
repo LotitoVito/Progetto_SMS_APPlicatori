@@ -60,7 +60,8 @@ public class TesiFragment extends Fragment {
         ListView listView = getActivity().findViewById(R.id.tesiList);
 
         ListaTesi lista = new ListaTesi(new Database(getActivity().getApplicationContext()));
-        List<Tesi> listaTesi = lista.vincoloRelatore(relatoreLoggato.getIdRelatore());
+        Database db = new Database(getContext());
+        List<Tesi> listaTesi = lista.vincoloRelatore(relatoreLoggato.getIdRelatore(), db);
         ListaTesiAdapter adapterLista = new ListaTesiAdapter(getActivity().getApplicationContext(), listaTesi, getActivity().getSupportFragmentManager(), relatoreLoggato);
         listView.setAdapter(adapterLista);
     }
