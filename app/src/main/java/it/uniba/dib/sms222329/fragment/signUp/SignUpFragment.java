@@ -47,8 +47,8 @@ public class SignUpFragment extends Fragment {
         TextInputEditText password = getActivity().findViewById(R.id.password);
 
         button.setOnClickListener(v -> {
-            UtenteRegistrato account = new UtenteRegistrato(nome.getText().toString(), cognome.getText().toString(),
-                    codiceFiscale.getText().toString(), email.getText().toString(), password.getText().toString());
+            UtenteRegistrato account = new UtenteRegistrato(nome.getText().toString().trim(), cognome.getText().toString().trim(),
+                    codiceFiscale.getText().toString().trim(), email.getText().toString().trim(), password.getText().toString().trim());
 
             if(CheckEmpty(nome, cognome, codiceFiscale, email, password)){
 

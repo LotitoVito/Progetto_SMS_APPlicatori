@@ -96,9 +96,9 @@ public class GestioneTesiFragment extends Fragment {
                 fillIfEmpty(capacitaRichiesta, tesi.getCapacitaRichieste());
                 fillIfEmpty(media, String.valueOf(tesi.getMediaVotiMinima()));
 
-                tesi.ModificaTesi(titolo.getText().toString(), argomenti.getText().toString(), statoDisponibilita.isChecked(),
-                        Integer.parseInt(tempistiche.getText().toString()), Float.parseFloat(media.getText().toString()),
-                        Integer.parseInt(esamiMancanti.getText().toString()), capacitaRichiesta.getText().toString());
+                tesi.ModificaTesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(), statoDisponibilita.isChecked(),
+                        Integer.parseInt(tempistiche.getText().toString().trim()), Float.parseFloat(media.getText().toString().trim()),
+                        Integer.parseInt(esamiMancanti.getText().toString().trim()), capacitaRichiesta.getText().toString().trim());
                 if(TesiDatabase.ModificaTesi(tesi, db)){
                     Toast.makeText(context, "Successo", Toast.LENGTH_SHORT).show();
                 } else{
@@ -109,10 +109,10 @@ public class GestioneTesiFragment extends Fragment {
         } else{
 
             salva.setOnClickListener(view -> {
-                Tesi tesi = new Tesi(titolo.getText().toString(), argomenti.getText().toString(),
-                        statoDisponibilita.isChecked(), relatoreLoggato.getIdRelatore(), Integer.parseInt(tempistiche.getText().toString()),
-                        Integer.parseInt(media.getText().toString()), Integer.parseInt(esamiMancanti.getText().toString()),
-                        capacitaRichiesta.getText().toString());
+                Tesi tesi = new Tesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(),
+                        statoDisponibilita.isChecked(), relatoreLoggato.getIdRelatore(), Integer.parseInt(tempistiche.getText().toString().trim()),
+                        Integer.parseInt(media.getText().toString().trim()), Integer.parseInt(esamiMancanti.getText().toString().trim()),
+                        capacitaRichiesta.getText().toString().trim());
 
                 if(CheckEmpty(titolo, argomenti, tempistiche, media, esamiMancanti, capacitaRichiesta)) {
                     if (TesiDatabase.RegistrazioneTesi(tesi, db)) {
@@ -129,7 +129,7 @@ public class GestioneTesiFragment extends Fragment {
     }
 
     private void fillIfEmpty(TextInputEditText campo, String value){
-        if(campo.getText().toString().matches("")){
+        if(campo.getText().toString().trim().matches("")){
             campo.autofill(AutofillValue.forText(value));
         }
     }

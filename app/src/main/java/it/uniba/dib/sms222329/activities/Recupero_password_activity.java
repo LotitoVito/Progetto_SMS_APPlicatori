@@ -33,8 +33,8 @@ public class Recupero_password_activity extends AppCompatActivity {
 
         signInButton.setOnClickListener(view -> {
             if(CheckEmpty(emailIns1, emailIns2, passswordIns1, passswordIns2))  {
-                if (UtenteRegistratoDatabase.ControlloMail(emailIns1.getText().toString(), emailIns2.getText().toString(), db)) {
-                    if (UtenteRegistratoDatabase.ResetPassword(passswordIns1.getText().toString(), passswordIns2.getText().toString(), emailIns1.getText().toString(), db)) {
+                if (UtenteRegistratoDatabase.ControlloMail(emailIns1.getText().toString().trim(), emailIns2.getText().toString().trim(), db)) {
+                    if (UtenteRegistratoDatabase.ResetPassword(passswordIns1.getText().toString().trim(), passswordIns2.getText().toString().trim(), emailIns1.getText().toString().trim(), db)) {
                         Toast.makeText(this, "Password ripristinata", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(this, "Le password non corrispondono", Toast.LENGTH_SHORT).show();

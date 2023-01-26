@@ -64,7 +64,7 @@ public class SignUpRelatoreFragment extends Fragment {
             List idCorsiSelezionati = RecuperaIdCorsi();
             ArrayList<Integer> corsiRelatore = RecuperaUniversitaCorso(idUniversita, idCorsiSelezionati);
 
-            Relatore account = new Relatore(matricola.getText().toString(), accountGenerale.getNome(),
+            Relatore account = new Relatore(matricola.getText().toString().trim(), accountGenerale.getNome(),
                     accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(), accountGenerale.getEmail(),
                     accountGenerale.getPassword(), 2, corsiRelatore);
 

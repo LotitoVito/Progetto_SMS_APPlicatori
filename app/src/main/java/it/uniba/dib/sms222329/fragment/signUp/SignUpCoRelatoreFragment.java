@@ -46,7 +46,7 @@ public class SignUpCoRelatoreFragment extends Fragment {
 
         registerButton.setOnClickListener(view -> {
             CoRelatore account = new CoRelatore(accountGenerale.getNome(), accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(),
-                    accountGenerale.getEmail(), accountGenerale.getPassword(), 3, organizzaione.getText().toString());
+                    accountGenerale.getEmail(), accountGenerale.getPassword(), 3, organizzaione.getText().toString().trim());
 
             if(isEmptyTextbox(organizzaione)){
 

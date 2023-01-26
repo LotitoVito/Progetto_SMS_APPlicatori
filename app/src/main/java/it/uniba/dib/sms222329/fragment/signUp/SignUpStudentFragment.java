@@ -63,10 +63,10 @@ public class SignUpStudentFragment extends Fragment {
             String idUniversita = RecuperaIdSpinner(spinnerUniversita, Database.UNIVERSITA);
             String idCorsoStudio = RecuperaIdSpinner(spinnerCorsoStudi,Database.CORSOSTUDI);
 
-            Tesista account = new Tesista(matricola.getText().toString(), accountGenerale.getNome(),
+            Tesista account = new Tesista(matricola.getText().toString().trim(), accountGenerale.getNome(),
                     accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(), accountGenerale.getEmail(),
-                    accountGenerale.getPassword(), 1, Integer.parseInt(media.getText().toString()),
-                    Integer.parseInt(numeroEsamiMancanti.getText().toString()), RecuperaUniversitaCorso(idUniversita, idCorsoStudio));
+                    accountGenerale.getPassword(), 1, Integer.parseInt(media.getText().toString().trim()),
+                    Integer.parseInt(numeroEsamiMancanti.getText().toString().trim()), RecuperaUniversitaCorso(idUniversita, idCorsoStudio));
 
             if(CheckEmpty(matricola, media, numeroEsamiMancanti)){
 

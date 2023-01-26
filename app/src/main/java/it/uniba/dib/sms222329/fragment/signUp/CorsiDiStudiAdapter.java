@@ -69,7 +69,7 @@ public class CorsiDiStudiAdapter extends BaseAdapter {
             for(int j=0; j<relatore.getCorsiRelatore().size(); j++){
                 Cursor cursor = db.getReadableDatabase().rawQuery("SELECT cs." + Database.CORSOSTUDI_NOME + " FROM " + Database.CORSOSTUDI + " cs, " + Database.UNIVERSITACORSO + " uc WHERE uc." + Database.UNIVERSITACORSO_CORSOID + " = cs." + Database.CORSOSTUDI_ID + " AND uc." + Database.UNIVERSITACORSO_ID + "='"+ relatore.getCorsiRelatore().get(j) +"';", null);
                 while(cursor.moveToNext()){
-                    if(checkBox.getText().toString().compareTo(cursor.getString(0))==0){
+                    if(checkBox.getText().toString().trim().compareTo(cursor.getString(0))==0){
                         checkBox.setChecked(true);
                         break;
                     }
