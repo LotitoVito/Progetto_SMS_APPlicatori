@@ -17,178 +17,302 @@ import it.uniba.dib.sms222329.classi.Tesista;
 
 public class Database extends SQLiteOpenHelper {
 
+    //Tabella Utenti
+    public static final String UTENTI = "utenti";
+    public static final String UTENTI_ID = "id";
+    public static final String UTENTI_NOME = "nome";
+    public static final String UTENTI_COGNOME = "cognome";
+    public static final String UTENTI_EMAIL = "email";
+    public static final String UTENTI_CODICEFISCALE = "codice_fiscale";
+    public static final String UTENTI_PASSWORD = "password";
+    public static final String UTENTI_RUOLOID = "ruolo_id";
+
+    //Tabella Tesista
+    public static final String TESISTA = "tesista";
+    public static final String TESISTA_ID = "id";
+    public static final String TESISTA_MATRICOLA = "matricola";
+    public static final String TESISTA_MEDIAVOTI = "media_voti";
+    public static final String TESISTA_ESAMIMANCANTI = "esami_mancanti";
+    public static final String TESISTA_UTENTEID = "utente_id";
+    public static final String TESISTA_UNIVERSITACORSOID = "universitacorso_id";
+
+
+    //Tabella Relatore
+    public static final String RELATORE = "relatore";
+    public static final String RELATORE_ID = "id";
+    public static final String RELATORE_MATRICOLA = "matricola";
+    public static final String RELATORE_UTENTEID = "utente_id";
+
+    //Tabella CoRelatore
+    public static final String CORELATORE = "coRelatore";
+    public static final String CORELATORE_ID = "id";
+    public static final String CORELATORE_ORGANIZZAZIONE = "organizzazione";
+    public static final String CORELATORE_UTENTEID = "utente_id";
+
+    //Tabella Universita
+    public static final String UNIVERSITA = "universita";
+    public static final String UNIVERSITA_ID = "id";
+    public static final String UNIVERSITA_NOME = "nome";
+
+    //Tabella CorsoStudi
+    public static final String CORSOSTUDI = "corsoStudi";
+    public static final String CORSOSTUDI_ID = "id";
+    public static final String CORSOSTUDI_NOME = "nome";
+
+    //Tabella UniversitaCorso
+    public static final String UNIVERSITACORSO = "universitacorso";
+    public static final String UNIVERSITACORSO_ID = "id";
+    public static final String UNIVERSITACORSO_UNIVERSITAID = "universita_id";
+    public static final String UNIVERSITACORSO_CORSOID = "corso_id";
+
+    //Tabella Ruoli
+    public static final String RUOLI = "ruoli";
+    public static final String RUOLI_ID = "id";
+    public static final String RUOLI_RUOLO = "ruolo";
+
+    //Tabella CorsiRelatore
+    public static final String CORSIRELATORE = "corsiRelatore";
+    public static final String CORSIRELATORE_ID = "id";
+    public static final String CORSIRELATORE_RELATOREID = "relatore_id";
+    public static final String CORSIRELATORE_UNIVERSITACORSOID = "universitacorso_id";
+
+    //Tabella Tesi
+    public static final String TESI = "tesi";
+    public static final String TESI_ID = "id";
+    public static final String TESI_TITOLO = "titolo";
+    public static final String TESI_ARGOMENTO = "argomento";
+    public static final String TESI_TEMPISTICHE = "tempistiche";
+    public static final String TESI_MEDIAVOTOMINIMA = "media_voto_minima";
+    public static final String TESI_ESAMINECESSARI = "esami_necessari";
+    public static final String TESI_SKILLRICHIESTE = "skill_richieste";
+    public static final String TESI_STATO = "stato";
+    public static final String TESI_VISUALIZZAZIONI = "visualizzazioni";
+    public static final String TESI_RELATOREID = "relatore_id";
+
+    //Tabella Richiesta
+    public static final String RICHIESTA = "richiesta";
+    public static final String RICHIESTA_ID = "id";
+    public static final String RICHIESTA_MESSAGGIO = "messaggio";
+    public static final String RICHIESTA_TESIID = "tesi_id";
+    public static final String RICHIESTA_TESISTAID = "tesista_id";
+    public static final String RICHIESTA_ACCETTATA = "accettata";
+    public static final String RICHIESTA_RISPOSTA = "risposta";
+
+    //Tabella TesiScelta
+    public static final String TESISCELTA = "tesi_scelta";
+    public static final String TESISCELTA_ID = "id";
+    public static final String TESISCELTA_DATAPUBBLICAZIONE = "data_pubblicazione";
+    public static final String TESISCELTA_ABSTRACT = "abstract";
+    public static final String TESISCELTA_DOWNLOAD = "download";
+    public static final String TESISCELTA_TESIID = "tesi_id";
+    public static final String TESISCELTA_CORELATOREID = "corelatore_id";
+    public static final String TESISCELTA_TESISTAID = "tesista_id";
+
+    //Tabella SegnalazioneChat
+    public static final String SEGNALAZIONECHAT = "segnalazioneChat";
+    public static final String SEGNALAZIONECHAT_ID = "id";
+    public static final String SEGNALAZIONECHAT_OGGETTO = "oggetto";
+    public static final String SEGNALAZIONECHAT_TESISCELTAID = "tesi_scelta_id";
+
+    //Tabella MessaggiSegnalazione
+    public static final String MESSAGGISEGNALAZIONE = "messaggiSegnalazione";
+    public static final String MESSAGGISEGNALAZIONE_ID = "id";
+    public static final String MESSAGGISEGNALAZIONE_MESSAGGIO = "messaggio";
+    public static final String MESSAGGISEGNALAZIONE_TIMESTAMP = "timestamp";
+    public static final String MESSAGGISEGNALAZIONE_UTENTEID = "utente_id";
+    public static final String MESSAGGISEGNALAZIONE_SEGNALAZIONEID = "segnalazione_id";
+
+    //Tabella Task
+    public static final String TASK = "task";
+    public static final String TASK_ID = "id";
+    public static final String TASK_DESCRIZIONE = "descrizione";
+    public static final String TASK_DATAINIZIO = "data_inizio";
+    public static final String TASK_DATAFINE = "data_fine";
+    public static final String TASK_LINKMATERIALE = "link_materiale";
+    public static final String TASK_STATO = "stato";
+    public static final String TASK_TESISCELTAID = "tesi_scelta_id";
+
+    //Tabella Ricevimenti
+    public static final String RICEVIMENTI = "ricevimenti";
+    public static final String RICEVIMENTI_ID = "id";
+    public static final String RICEVIMENTI_DATA = "data";
+    public static final String RICEVIMENTI_ORARIO = "orario";
+    public static final String RICEVIMENTI_ARGOMENTO = "argomento";
+    public static final String RICEVIMENTI_TASKID = "task_id";
+    public static final String RICEVIMENTI_ACCETTAZIONE = "accettazione";
+    public static final String RICEVIMENTI_MESSAGGIO = "messaggio";
+
     public Database(@Nullable Context context) {
         super(context, "Laureapp.db", null, 1);
     }
 
-    //Usato quando si accede per la prima volta al Database, codice di inizializzazione
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable;
         //Utenti
-        createTable =   "CREATE TABLE utenti (" +
-                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "nome VARCHAR(255) NOT NULL," +
-                        "cognome VARCHAR(255) NOT NULL," +
-                        "email VARCHAR(255) NOT NULL UNIQUE," +
-                        "codice_fiscale VARCHAR(255) NOT NULL UNIQUE," +
-                        "password VARCHAR(255) NOT NULL," +
-                        "ruolo_id INT NOT NULL," +
-                        "FOREIGN KEY (ruolo_id) REFERENCES ruoli(id) ON DELETE CASCADE);";
+        createTable =   "CREATE TABLE " + UTENTI + " (" +
+                        UTENTI_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        UTENTI_NOME + " VARCHAR(255) NOT NULL," +
+                        UTENTI_COGNOME + " VARCHAR(255) NOT NULL," +
+                        UTENTI_EMAIL + " VARCHAR(255) NOT NULL UNIQUE," +
+                        UTENTI_CODICEFISCALE + " VARCHAR(255) NOT NULL UNIQUE," +
+                        UTENTI_PASSWORD + " VARCHAR(255) NOT NULL," +
+                        UTENTI_RUOLOID + " INT NOT NULL," +
+                        "FOREIGN KEY (" + UTENTI_RUOLOID + ") REFERENCES " + RUOLI + "(" + RUOLI_ID + ") ON DELETE CASCADE);";
         db.execSQL(createTable);
         //Tesista
-        createTable =   "CREATE TABLE tesista (" +
-                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "matricola VARCHAR(255) NOT NULL," +
-                        "media_voti FLOAT NOT NULL," +
-                        "esami_mancanti INT NOT NULL," +
-                        "utente_id INT NOT NULL UNIQUE," +
-                        "universitacorso_id INT NOT NULL," +
-                        "FOREIGN KEY (utente_id) REFERENCES utenti(id) ON DELETE CASCADE," +
-                        "FOREIGN KEY (universitacorso_id) REFERENCES universitacorso(id) ON DELETE CASCADE);";
+        createTable =   "CREATE TABLE " + TESISTA + " (" +
+                        TESISTA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        TESISTA_MATRICOLA + " VARCHAR(255) NOT NULL," +
+                        TESISTA_MEDIAVOTI + " FLOAT NOT NULL," +
+                        TESISTA_ESAMIMANCANTI + " INT NOT NULL," +
+                        TESISTA_UTENTEID + " INT NOT NULL UNIQUE," +
+                        TESISTA_UNIVERSITACORSOID + " INT NOT NULL," +
+                        "FOREIGN KEY (" + TESISTA_UTENTEID + ") REFERENCES " + UTENTI + "(" + UTENTI_ID + ") ON DELETE CASCADE," +
+                        "FOREIGN KEY (" + TESISTA_UNIVERSITACORSOID + ") REFERENCES " + UNIVERSITACORSO + "(" + UNIVERSITACORSO_ID + ") ON DELETE CASCADE);";
         db.execSQL(createTable);
         //Relatore
-        createTable =   "CREATE TABLE relatore (" +
-                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "matricola VARCHAR(255) NOT NULL," +
-                        "utente_id INT NOT NULL UNIQUE," +
-                        "FOREIGN KEY (utente_id) REFERENCES utenti(id) ON DELETE CASCADE);";
+        createTable =   "CREATE TABLE " + RELATORE + " (" +
+                        RELATORE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        RELATORE_MATRICOLA + " VARCHAR(255) NOT NULL," +
+                        RELATORE_UTENTEID + " INT NOT NULL UNIQUE," +
+                        "FOREIGN KEY (" + RELATORE_UTENTEID + ") REFERENCES " + UTENTI + "(" + UTENTI_ID + ") ON DELETE CASCADE);";
         db.execSQL(createTable);
         //CoRelatore
-        createTable =   "CREATE TABLE coRelatore (" +
-                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "organizzazione VARCHAR(255) NOT NULL," +
-                        "utente_id INT NOT NULL UNIQUE," +
-                        "FOREIGN KEY (utente_id) REFERENCES utenti(id) ON DELETE CASCADE);";
+        createTable =   "CREATE TABLE " + CORELATORE + " (" +
+                        CORELATORE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        CORELATORE_ORGANIZZAZIONE + " VARCHAR(255) NOT NULL," +
+                        CORELATORE_UTENTEID + " INT NOT NULL UNIQUE," +
+                        "FOREIGN KEY (" + CORELATORE_UTENTEID + ") REFERENCES " + UTENTI + "(" + UTENTI_ID + ") ON DELETE CASCADE);";
         db.execSQL(createTable);
         //Universita
-        createTable =   "CREATE TABLE universita (" +
-                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "nome VARCHAR(255) NOT NULL UNIQUE);";
+        createTable =   "CREATE TABLE " + UNIVERSITA + " (" +
+                        UNIVERSITA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        UNIVERSITA_NOME + " VARCHAR(255) NOT NULL UNIQUE);";
         db.execSQL(createTable);
         //CorsoStudi
-        createTable =   "CREATE TABLE corsoStudi (" +
-                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "nome VARCHAR(255) NOT NULL UNIQUE);";
+        createTable =   "CREATE TABLE " + CORSOSTUDI + " (" +
+                        CORSOSTUDI_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        CORSOSTUDI_NOME + " VARCHAR(255) NOT NULL UNIQUE);";
         db.execSQL(createTable);
         //UniversitaCorso
-        createTable =   "CREATE TABLE universitacorso (" +
-                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "universita_id INT NOT NULL," +
-                        "corso_id INT NOT NULL," +
-                        "FOREIGN KEY (universita_id) REFERENCES universita(id) ON DELETE CASCADE," +
-                        "FOREIGN KEY (corso_id) REFERENCES corsoStudi(id) ON DELETE CASCADE);";
+        createTable =   "CREATE TABLE " + UNIVERSITACORSO + " (" +
+                        UNIVERSITACORSO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        UNIVERSITACORSO_UNIVERSITAID + " INT NOT NULL," +
+                        UNIVERSITACORSO_CORSOID + " INT NOT NULL," +
+                        "FOREIGN KEY (" + UNIVERSITACORSO_UNIVERSITAID + ") REFERENCES " + UNIVERSITA + "(" + UNIVERSITA_ID + ") ON DELETE CASCADE," +
+                        "FOREIGN KEY (" + UNIVERSITACORSO_CORSOID + ") REFERENCES " + CORSOSTUDI + "(" + CORSOSTUDI_ID + ") ON DELETE CASCADE);";
         db.execSQL(createTable);
         //Ruoli
-        createTable =   "CREATE TABLE ruoli (" +
-                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "ruolo VARCHAR(255) NOT NULL);";
+        createTable =   "CREATE TABLE " + RUOLI + " (" +
+                        RUOLI_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        RUOLI_RUOLO + " VARCHAR(255) NOT NULL);";
         db.execSQL(createTable);
         //CorsiRelatore
-        createTable =   "CREATE TABLE corsiRelatore (" +
-                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "relatore_id INT NOT NULL," +
-                        "universitacorso_id INT NOT NULL," +
-                        "FOREIGN KEY (relatore_id) REFERENCES relatore(id) ON DELETE CASCADE," +
-                        "FOREIGN KEY (universitacorso_id) REFERENCES universitacorso(id) ON DELETE CASCADE);";
+        createTable =   "CREATE TABLE " + CORSIRELATORE + " (" +
+                        CORSIRELATORE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        CORSIRELATORE_RELATOREID + " INT NOT NULL," +
+                        CORSIRELATORE_UNIVERSITACORSOID + " INT NOT NULL," +
+                        "FOREIGN KEY (" + CORSIRELATORE_RELATOREID + ") REFERENCES " + RELATORE + "(" + RELATORE_ID + ") ON DELETE CASCADE," +
+                        "FOREIGN KEY (" + CORSIRELATORE_UNIVERSITACORSOID + ") REFERENCES " + UNIVERSITACORSO + "(" + UNIVERSITACORSO_ID + ") ON DELETE CASCADE);";
         db.execSQL(createTable);
         //Tesi
-        createTable =   "CREATE TABLE tesi (" +
-                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "titolo VARCHAR(255) NOT NULL," +
-                        "argomento VARCHAR(255) NOT NULL," +
-                        "tempistiche INT NOT NULL," +
-                        "media_voto_minima FLOAT NOT NULL," +
-                        "esami_necessari INT NOT NULL," +
-                        "skill_richieste VARCHAR(255) NOT NULL," +
-                        "stato BOOLEAN NOT NULL," +
-                        "visualizzazioni INT NOT NULL," +
-                        "relatore_id INT NOT NULL," +
-                        "FOREIGN KEY (relatore_id) REFERENCES relatore(id) ON DELETE CASCADE);";
+        createTable =   "CREATE TABLE " + TESI + " (" +
+                        TESI_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        TESI_TITOLO + " VARCHAR(255) NOT NULL," +
+                        TESI_ARGOMENTO + " VARCHAR(255) NOT NULL," +
+                        TESI_TEMPISTICHE + " INT NOT NULL," +
+                        TESI_MEDIAVOTOMINIMA + " FLOAT NOT NULL," +
+                        TESI_ESAMINECESSARI + " INT NOT NULL," +
+                        TESI_SKILLRICHIESTE + " VARCHAR(255) NOT NULL," +
+                        TESI_STATO + " BOOLEAN NOT NULL," +
+                        TESI_VISUALIZZAZIONI + " INT NOT NULL," +
+                        TESI_RELATOREID + " INT NOT NULL," +
+                        "FOREIGN KEY (" + TESI_RELATOREID + ") REFERENCES " + RELATORE + "(" + RELATORE_ID + ") ON DELETE CASCADE);";
         db.execSQL(createTable);
         //RichiestaTesi
-        createTable =   "CREATE TABLE richiesta (" +
-                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "messaggio VARCHAR(255) NOT NULL," +
-                        "tesi_id INT NOT NULL," +
-                        "tesista_id INT NOT NULL," +
-                        "accettata BOOLEAN NOT NULL," +
-                        "risposta VARCHAR(255)," +
-                        "FOREIGN KEY (tesi_id) REFERENCES tesi(id) ON DELETE CASCADE," +
-                        "FOREIGN KEY (tesista_id) REFERENCES tesista(id) ON DELETE CASCADE);";
+        createTable =   "CREATE TABLE " + RICHIESTA + " (" +
+                        RICHIESTA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        RICHIESTA_MESSAGGIO + " VARCHAR(255) NOT NULL," +
+                        RICHIESTA_TESIID + " INT NOT NULL," +
+                        RICHIESTA_TESISTAID + " INT NOT NULL," +
+                        RICHIESTA_ACCETTATA + " BOOLEAN NOT NULL," +
+                        RICHIESTA_RISPOSTA + " VARCHAR(255)," +
+                        "FOREIGN KEY (" + RICHIESTA_TESIID + ") REFERENCES " + TESI + "(" + TESI_ID + ") ON DELETE CASCADE," +
+                        "FOREIGN KEY (" + RICHIESTA_TESISTAID + ") REFERENCES " + TESISTA + "(" + TESISTA_ID + ") ON DELETE CASCADE);";
         db.execSQL(createTable);
         //TesiScelta
-        createTable =   "CREATE TABLE tesi_scelta (" +
-                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "data_pubblicazione DATE," +
-                        "abstract VARCHAR(255)," +
-                        "download VARCHAR(255)," +
-                        "tesi_id INT NOT NULL," +
-                        "corelatore_id INT," +
-                        "tesista_id INT NOT NULL UNIQUE," +
-                        "FOREIGN KEY (tesi_id) REFERENCES tesi(id) ON DELETE CASCADE," +
-                        "FOREIGN KEY (corelatore_id) REFERENCES coRelatore(id)," +
-                        "FOREIGN KEY (tesista_id) REFERENCES tesista(id) ON DELETE CASCADE);";
+        createTable =   "CREATE TABLE " + TESISCELTA + " (" +
+                        TESISCELTA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        TESISCELTA_DATAPUBBLICAZIONE + " DATE," +
+                        TESISCELTA_ABSTRACT + " VARCHAR(255)," +
+                        TESISCELTA_DOWNLOAD + " VARCHAR(255)," +
+                        TESISCELTA_TESIID + " INT NOT NULL," +
+                        TESISCELTA_CORELATOREID + " INT," +
+                        TESISCELTA_TESISTAID + " INT NOT NULL UNIQUE," +
+                        "FOREIGN KEY (" + TESISCELTA_TESIID + ") REFERENCES " + TESI + "(" + TESI_ID + ") ON DELETE CASCADE," +
+                        "FOREIGN KEY (" + TESISCELTA_CORELATOREID + ") REFERENCES " + CORELATORE + "(" + CORELATORE_ID + ")," +
+                        "FOREIGN KEY (" + TESISCELTA_TESISTAID + ") REFERENCES " + TESISTA + "(" + TESISTA_ID + ") ON DELETE CASCADE);";
         db.execSQL(createTable);
         //SegnalazioneChat
-        createTable =   "CREATE TABLE segnalazioneChat (" +
-                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "oggetto VARCHAR(255) NOT NULL," +
-                        "tesi_scelta_id INT NOT NULL," +
-                        "FOREIGN KEY (tesi_scelta_id) REFERENCES tesi_scelta(id) ON DELETE CASCADE);";
+        createTable =   "CREATE TABLE " + SEGNALAZIONECHAT + " (" +
+                        SEGNALAZIONECHAT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        SEGNALAZIONECHAT_OGGETTO + " VARCHAR(255) NOT NULL," +
+                        SEGNALAZIONECHAT_TESISCELTAID + " INT NOT NULL," +
+                        "FOREIGN KEY (" + SEGNALAZIONECHAT_TESISCELTAID + ") REFERENCES " + TESISCELTA + "(" + TESISCELTA_ID + ") ON DELETE CASCADE);";
         db.execSQL(createTable);
         //RispostaSegnalazione
-        createTable =   "CREATE TABLE messaggiSegnalazione (" +
-                        "id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                        "messaggio VARCHAR(255) NOT NULL," +
-                        "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP," +
-                        "utente_id INT NOT NULL UNIQUE," +
-                        "segnalazione_id INT NOT NULL," +
-                        "FOREIGN KEY (utente_id) REFERENCES utenti(id)," +
-                        "FOREIGN KEY (segnalazione_id) REFERENCES tesi_scelta(id) ON DELETE CASCADE);";
+        createTable =   "CREATE TABLE " + MESSAGGISEGNALAZIONE + " (" +
+                        MESSAGGISEGNALAZIONE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        MESSAGGISEGNALAZIONE_MESSAGGIO + " VARCHAR(255) NOT NULL," +
+                        MESSAGGISEGNALAZIONE_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP," +
+                        MESSAGGISEGNALAZIONE_UTENTEID + " INT NOT NULL UNIQUE," +
+                        MESSAGGISEGNALAZIONE_SEGNALAZIONEID + " INT NOT NULL," +
+                        "FOREIGN KEY (" + MESSAGGISEGNALAZIONE_UTENTEID + ") REFERENCES " + UTENTI + "(" + UTENTI_ID + ")," +
+                        "FOREIGN KEY (" + MESSAGGISEGNALAZIONE_SEGNALAZIONEID + ") REFERENCES " + SEGNALAZIONECHAT + "(" + SEGNALAZIONECHAT_ID + ") ON DELETE CASCADE);";
         db.execSQL(createTable);
         //Task
-        createTable =   "CREATE TABLE task (" +
-                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "descrizione VARCHAR(255) NOT NULL," +
-                        "data_inizio DATE NOT NULL," +
-                        "data_fine DATE NOT NULL," +
-                        "link_materiale VARCHAR(255)," +
-                        "stato VARCHAR(255) NOT NULL," +
-                        "tesi_scelta_id INT NOT NULL," +
-                        "FOREIGN KEY (tesi_scelta_id) REFERENCES tesi_scelta(id) ON DELETE CASCADE);";
+        createTable =   "CREATE TABLE " + TASK + " (" +
+                        TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        TASK_DESCRIZIONE + " VARCHAR(255) NOT NULL," +
+                        TASK_DATAINIZIO + " DATE NOT NULL," +
+                        TASK_DATAFINE + " DATE NOT NULL," +
+                        TASK_LINKMATERIALE + " VARCHAR(255)," +
+                        TASK_STATO + " VARCHAR(255) NOT NULL," +
+                        TASK_TESISCELTAID + " INT NOT NULL," +
+                        "FOREIGN KEY (" + TASK_TESISCELTAID + ") REFERENCES " + TESISCELTA + "(" + TESISCELTA_ID + ") ON DELETE CASCADE);";
         db.execSQL(createTable);
         //Ricevimenti
-        createTable =   "CREATE TABLE ricevimenti (" +
-                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "data DATE NOT NULL," +
-                        "orario TIME NOT NULL," +
-                        "argomento VARCHAR(255) NOT NULL," +
-                        "task_id INT NOT NULL," +
-                        "accettazione INT NOT NULL," +
-                        "messaggio  VARCHAR(255)," +
-                        "FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE);";
+        createTable =   "CREATE TABLE " + RICEVIMENTI + " (" +
+                        RICEVIMENTI_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        RICEVIMENTI_DATA + " DATE NOT NULL," +
+                        RICEVIMENTI_ORARIO + " TIME NOT NULL," +
+                        RICEVIMENTI_ARGOMENTO + " VARCHAR(255) NOT NULL," +
+                        RICEVIMENTI_TASKID + " INT NOT NULL," +
+                        RICEVIMENTI_ACCETTAZIONE + " INT NOT NULL," +
+                        RICEVIMENTI_MESSAGGIO + "  VARCHAR(255)," +
+                        "FOREIGN KEY (" + RICEVIMENTI_TASKID + ") REFERENCES " + TASK + "(" + TASK_ID + ") ON DELETE CASCADE);";
         db.execSQL(createTable);
         //Popolamento tabella ruoli
         ContentValues cvRuoli = new ContentValues();
         String[] listaRuoli = {"Tesista", "Relatore", "CoRelatore"};
         for(int i=0; i<listaRuoli.length; i++){
-            cvRuoli.put("ruolo", listaRuoli[i]);
-            db.insert("ruoli", null, cvRuoli);
+            cvRuoli.put(RUOLI_RUOLO, listaRuoli[i]);
+            db.insert(RUOLI, null, cvRuoli);
         }
         //Popolamento tabella Universita
         ContentValues cvUniversita = new ContentValues();
         String[] listaUniversita = {"UniBa", "UniCa", "UniNa"};
         for(int i=0; i<listaUniversita.length; i++){
-            cvUniversita.put("nome", listaUniversita[i]);
-            db.insert("universita", null, cvUniversita);
+            cvUniversita.put(UNIVERSITA_NOME, listaUniversita[i]);
+            db.insert(UNIVERSITA, null, cvUniversita);
         }
         //Popolamento tabella CorsiStudio
         ContentValues cvCorsiStudio = new ContentValues();
         String[] listaCorsiStudio = {"ITPS", "Chimica", "Matematica"};
         for(int i=0; i<listaCorsiStudio.length; i++){
-            cvCorsiStudio.put("nome", listaCorsiStudio[i]);
-            db.insert("corsoStudi", null, cvCorsiStudio);
+            cvCorsiStudio.put(CORSOSTUDI_NOME, listaCorsiStudio[i]);
+            db.insert(CORSOSTUDI, null, cvCorsiStudio);
         }
         //Popolamento tabella Universita-CorsiStudio
         PopolamentoUniCorsi(db);
@@ -220,32 +344,32 @@ public class Database extends SQLiteOpenHelper {
     private void PopolamentoUniCorsi(SQLiteDatabase db){
         ContentValues cv = new ContentValues();
 
-        cv.put("universita_id", 1);
-        cv.put("corso_id", 1);
-        db.insert("universitacorso", null, cv);
+        cv.put(UNIVERSITACORSO_UNIVERSITAID, 1);
+        cv.put(UNIVERSITACORSO_CORSOID, 1);
+        db.insert(UNIVERSITACORSO, null, cv);
 
-        cv.put("universita_id", 1);
-        cv.put("corso_id", 3);
-        db.insert("universitacorso", null, cv);
+        cv.put(UNIVERSITACORSO_UNIVERSITAID, 1);
+        cv.put(UNIVERSITACORSO_CORSOID, 3);
+        db.insert(UNIVERSITACORSO, null, cv);
 
-        cv.put("universita_id", 2);
-        cv.put("corso_id", 1);
-        db.insert("universitacorso", null, cv);
+        cv.put(UNIVERSITACORSO_UNIVERSITAID, 2);
+        cv.put(UNIVERSITACORSO_CORSOID, 1);
+        db.insert(UNIVERSITACORSO, null, cv);
 
-        cv.put("universita_id", 2);
-        cv.put("corso_id", 2);
-        db.insert("universitacorso", null, cv);
+        cv.put(UNIVERSITACORSO_UNIVERSITAID, 2);
+        cv.put(UNIVERSITACORSO_CORSOID, 2);
+        db.insert(UNIVERSITACORSO, null, cv);
 
-        cv.put("universita_id", 3);
-        cv.put("corso_id", 1);
-        db.insert("universitacorso", null, cv);
+        cv.put(UNIVERSITACORSO_UNIVERSITAID, 3);
+        cv.put(UNIVERSITACORSO_CORSOID, 1);
+        db.insert(UNIVERSITACORSO, null, cv);
 
-        cv.put("universita_id", 3);
-        cv.put("corso_id", 2);
-        db.insert("universitacorso", null, cv);
+        cv.put(UNIVERSITACORSO_UNIVERSITAID, 3);
+        cv.put(UNIVERSITACORSO_CORSOID, 2);
+        db.insert(UNIVERSITACORSO, null, cv);
 
-        cv.put("universita_id", 3);
-        cv.put("corso_id", 3);
-        db.insert("universitacorso", null, cv);
+        cv.put(UNIVERSITACORSO_UNIVERSITAID, 3);
+        cv.put(UNIVERSITACORSO_CORSOID, 3);
+        db.insert(UNIVERSITACORSO, null, cv);
     }
 }
