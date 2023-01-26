@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222329.fragment.signUp;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -66,7 +68,9 @@ public class SignUpStudentFragment extends Fragment {
                     accountGenerale.getPassword(), 1, Integer.parseInt(media.getText().toString()),
                     Integer.parseInt(numeroEsamiMancanti.getText().toString()), RecuperaUniversitaCorso(idUniversita, idCorsoStudio));
 
-            if (!db.VerificaDatoEsistente("SELECT " + Database.TESISTA_MATRICOLA + " FROM " + Database.TESISTA + " WHERE " + Database.TESISTA_MATRICOLA + " = '"+ account.getMatricola() +"';")){
+            if(CheckEmpty(matricola, media, numeroEsamiMancanti)){
+
+                if (!db.VerificaDatoEsistente("SELECT " + Database.TESISTA_MATRICOLA + " FROM " + Database.TESISTA + " WHERE " + Database.TESISTA_MATRICOLA + " = '"+ account.getMatricola() +"';")){
 
                     if(UtenteRegistratoDatabase.RegistrazioneUtente(account, db) && TesistaDatabase.RegistrazioneTesista(account, db)){
                         Intent mainActivity = new Intent(getActivity().getApplicationContext(), MainActivity.class);
@@ -75,8 +79,11 @@ public class SignUpStudentFragment extends Fragment {
                         Toast.makeText(getActivity().getApplicationContext(), "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
                     }
 
-            } else{
-                Toast.makeText(getActivity().getApplicationContext(), "Matricola già esistente", Toast.LENGTH_SHORT).show();
+                } else{
+                    Toast.makeText(getActivity().getApplicationContext(), "Matricola già esistente", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -140,5 +147,29 @@ public class SignUpStudentFragment extends Fragment {
                 // Do nothing
             }
         });
+    }
+
+    private boolean CheckEmpty(EditText matricola, EditText media, EditText numeroEsamiMancanti){
+        boolean risultato = true;
+
+        if(isEmptyTextbox(matricola)){
+            risultato = false;
+        }
+        if(isEmptyTextbox(media)){
+            risultato = false;
+        }
+        if(isEmptyTextbox(numeroEsamiMancanti)){
+            risultato = false;
+        }
+        return risultato;
+    }
+
+    private boolean isEmptyTextbox(EditText textbox){
+        if(textbox.getText().toString().trim().compareTo("")==0){
+            textbox.setError("Obbligatorio");
+            return false;
+        }
+        textbox.setError(null);
+        return true;
     }
 }

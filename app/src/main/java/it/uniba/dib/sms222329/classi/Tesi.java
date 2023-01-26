@@ -26,19 +26,19 @@ public class Tesi {
     private String argomenti;
     private int tempistiche;
     private float mediaVotiMinima;
-    private int esamiMancantiNecessari;
+    private int esamiNecessari;
     private String capacitaRichieste;
     private boolean statoDisponibilita;
     private int numeroVisualizzazioni;
     private int idRelatore;
 
-    public Tesi(int id, String titolo, String argomenti, int tempistiche, float mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste, boolean statoDisponibilita, int numeroVisualizzazioni, int idRelatore) {
+    public Tesi(int id, String titolo, String argomenti, int tempistiche, float mediaVotiMinima, int esamiNecessari, String capacitaRichieste, boolean statoDisponibilita, int numeroVisualizzazioni, int idRelatore) {
         this.id = id;
         this.titolo = titolo;
         this.argomenti = argomenti;
         this.tempistiche = tempistiche;
         this.mediaVotiMinima = mediaVotiMinima;
-        this.esamiMancantiNecessari = esamiMancantiNecessari;
+        this.esamiNecessari = esamiNecessari;
         this.capacitaRichieste = capacitaRichieste;
         this.statoDisponibilita = statoDisponibilita;
         this.numeroVisualizzazioni = numeroVisualizzazioni;
@@ -50,7 +50,7 @@ public class Tesi {
 
     //Usato per al registrazione
     public Tesi(String titolo, String argomenti, boolean statoDisponibilita, int idRelatore, int tempistiche,
-                float mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste) {
+                float mediaVotiMinima, int esamiNecessari, String capacitaRichieste) {
         this.titolo = titolo;
         this.argomenti = argomenti;
         this.statoDisponibilita = statoDisponibilita;
@@ -58,7 +58,7 @@ public class Tesi {
         this.idRelatore = idRelatore;
         this.tempistiche = tempistiche;
         this.mediaVotiMinima = mediaVotiMinima;
-        this.esamiMancantiNecessari = esamiMancantiNecessari;
+        this.esamiNecessari = esamiNecessari;
         this.capacitaRichieste = capacitaRichieste;
     }
 
@@ -95,6 +95,7 @@ public class Tesi {
     }
 
     public void setStatoDisponibilita(boolean statoDisponibilita) {this.statoDisponibilita = statoDisponibilita;}
+
     public boolean getStatoDisponibilita() {return statoDisponibilita;}
 
     public int getNumeroVisualizzazioni() {
@@ -119,21 +120,21 @@ public class Tesi {
 
     public void setMediaVotiMinima(float mediaVotiMinima) {this.mediaVotiMinima = mediaVotiMinima;}
 
-    public int getEsamiMancantiNecessari() {return esamiMancantiNecessari;}
+    public int getEsamiMancantiNecessari() {return esamiNecessari;}
 
-    public void setEsamiMancantiNecessari(int esamiMancantiNecessari) {this.esamiMancantiNecessari = esamiMancantiNecessari;}
+    public void setEsamiMancantiNecessari(int esamiNecessari) {this.esamiNecessari = esamiNecessari;}
 
     public String getCapacitaRichieste() {return capacitaRichieste;}
 
     public void setCapacitaRichieste(String capacitaRichieste) {this.capacitaRichieste = capacitaRichieste;}
 
     public void ModificaTesi(String titolo, String argomenti, boolean statoDisponibilita, int tempistiche,
-                                float mediaVotiMinima, int esamiMancantiNecessari, String capacitaRichieste){
+                                float mediaVotiMinima, int esamiNecessari, String capacitaRichieste){
         this.titolo = titolo;
         this.argomenti = argomenti;
         this.tempistiche = tempistiche;
         this.mediaVotiMinima = mediaVotiMinima;
-        this.esamiMancantiNecessari = esamiMancantiNecessari;
+        this.esamiNecessari = esamiNecessari;
         this.capacitaRichieste = capacitaRichieste;
         this.statoDisponibilita = statoDisponibilita;
     }

@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222329.fragment.signUp;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -47,12 +48,26 @@ public class SignUpCoRelatoreFragment extends Fragment {
             CoRelatore account = new CoRelatore(accountGenerale.getNome(), accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(),
                     accountGenerale.getEmail(), accountGenerale.getPassword(), 3, organizzaione.getText().toString());
 
+            if(isEmptyTextbox(organizzaione)){
+
                 if(UtenteRegistratoDatabase.RegistrazioneUtente(account, db) && CoRelatoreDatabase.RegistrazioneCoRelatore(account, db)){
                     Intent mainActivity = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                     startActivity(mainActivity);
                 } else{
                     Toast.makeText(getActivity().getApplicationContext(), "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
+            }
         });
+    }
+
+    private boolean isEmptyTextbox(EditText textbox){
+        if(textbox.getText().toString().trim().compareTo("")==0){
+            textbox.setError("Obbligatorio");
+            return false;
+        }
+        textbox.setError(null);
+        return true;
     }
 }

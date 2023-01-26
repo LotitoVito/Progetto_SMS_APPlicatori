@@ -1,5 +1,6 @@
 package it.uniba.dib.sms222329.fragment.signUp;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -48,16 +50,22 @@ public class SignUpFragment extends Fragment {
             UtenteRegistrato account = new UtenteRegistrato(nome.getText().toString(), cognome.getText().toString(),
                     codiceFiscale.getText().toString(), email.getText().toString(), password.getText().toString());
 
-            if (!db.VerificaDatoEsistente("SELECT " + Database.UTENTI_CODICEFISCALE + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_CODICEFISCALE + " = '" + account.getCodiceFiscale() + "';")){
-                if (!db.VerificaDatoEsistente("SELECT " + Database.UTENTI_EMAIL + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + " = '" + account.getEmail() + "';")) {
+            if(CheckEmpty(nome, cognome, codiceFiscale, email, password)){
 
-                    loadNextFragment(account);
+                if (!db.VerificaDatoEsistente("SELECT " + Database.UTENTI_CODICEFISCALE + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_CODICEFISCALE + " = '" + account.getCodiceFiscale() + "';")){
 
-                } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Email già esistente", Toast.LENGTH_SHORT).show();
+                    if (!db.VerificaDatoEsistente("SELECT " + Database.UTENTI_EMAIL + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + " = '" + account.getEmail() + "';")) {
+
+                        loadNextFragment(account);
+
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), "Email già esistente", Toast.LENGTH_SHORT).show();
+                    }
+                } else{
+                    Toast.makeText(getActivity().getApplicationContext(), "Codice Fiscale già esistente", Toast.LENGTH_SHORT).show();
                 }
-            } else{
-                Toast.makeText(getActivity().getApplicationContext(), "Codice Fiscale già esistente", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -77,5 +85,35 @@ public class SignUpFragment extends Fragment {
                     break;
             }
 
+    }
+
+    private boolean CheckEmpty(EditText nome, EditText cognome, EditText codiceFiscale, EditText email, EditText password){
+        boolean risultato = true;
+
+        if(isEmptyTextbox(nome)){
+            risultato = false;
+        }
+        if(isEmptyTextbox(cognome)){
+            risultato = false;
+        }
+        if(isEmptyTextbox(codiceFiscale)){
+            risultato = false;
+        }
+        if(isEmptyTextbox(email)){
+            risultato = false;
+        }
+        if(isEmptyTextbox(password)){
+            risultato = false;
+        }
+        return risultato;
+    }
+
+    private boolean isEmptyTextbox(EditText textbox){
+        if(textbox.getText().toString().trim().compareTo("")==0){
+            textbox.setError("Obbligatorio");
+            return false;
+        }
+        textbox.setError(null);
+        return true;
     }
 }
