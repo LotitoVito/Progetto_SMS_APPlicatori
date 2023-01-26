@@ -63,12 +63,11 @@ public class SignUpStudentFragment extends Fragment {
             String idUniversita = RecuperaIdSpinner(spinnerUniversita, Database.UNIVERSITA);
             String idCorsoStudio = RecuperaIdSpinner(spinnerCorsoStudi,Database.CORSOSTUDI);
 
+            if(CheckEmpty(matricola, media, numeroEsamiMancanti)){
             Tesista account = new Tesista(matricola.getText().toString().trim(), accountGenerale.getNome(),
                     accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(), accountGenerale.getEmail(),
                     accountGenerale.getPassword(), 1, Integer.parseInt(media.getText().toString().trim()),
                     Integer.parseInt(numeroEsamiMancanti.getText().toString().trim()), RecuperaUniversitaCorso(idUniversita, idCorsoStudio));
-
-            if(CheckEmpty(matricola, media, numeroEsamiMancanti)){
 
                 if (!db.VerificaDatoEsistente("SELECT " + Database.TESISTA_MATRICOLA + " FROM " + Database.TESISTA + " WHERE " + Database.TESISTA_MATRICOLA + " = '"+ account.getMatricola() +"';")){
 
@@ -167,9 +166,9 @@ public class SignUpStudentFragment extends Fragment {
     private boolean isEmptyTextbox(EditText textbox){
         if(textbox.getText().toString().trim().compareTo("")==0){
             textbox.setError("Obbligatorio");
-            return false;
+            return true;
         }
         textbox.setError(null);
-        return true;
+        return false;
     }
 }

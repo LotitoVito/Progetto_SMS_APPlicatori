@@ -45,10 +45,10 @@ public class SignUpCoRelatoreFragment extends Fragment {
         TextInputEditText organizzaione = getActivity().findViewById(R.id.organizzazione);
 
         registerButton.setOnClickListener(view -> {
-            CoRelatore account = new CoRelatore(accountGenerale.getNome(), accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(),
-                    accountGenerale.getEmail(), accountGenerale.getPassword(), 3, organizzaione.getText().toString().trim());
 
-            if(isEmptyTextbox(organizzaione)){
+            if(!isEmptyTextbox(organizzaione)){
+                CoRelatore account = new CoRelatore(accountGenerale.getNome(), accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(),
+                        accountGenerale.getEmail(), accountGenerale.getPassword(), 3, organizzaione.getText().toString().trim());
 
                 if(UtenteRegistratoDatabase.RegistrazioneUtente(account, db) && CoRelatoreDatabase.RegistrazioneCoRelatore(account, db)){
                     Intent mainActivity = new Intent(getActivity().getApplicationContext(), MainActivity.class);
@@ -56,6 +56,7 @@ public class SignUpCoRelatoreFragment extends Fragment {
                 } else{
                     Toast.makeText(getActivity().getApplicationContext(), "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
                 }
+
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
             }
@@ -65,9 +66,9 @@ public class SignUpCoRelatoreFragment extends Fragment {
     private boolean isEmptyTextbox(EditText textbox){
         if(textbox.getText().toString().trim().compareTo("")==0){
             textbox.setError("Obbligatorio");
-            return false;
+            return true;
         }
         textbox.setError(null);
-        return true;
+        return false;
     }
 }

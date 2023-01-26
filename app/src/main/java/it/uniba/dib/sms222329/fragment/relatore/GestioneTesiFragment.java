@@ -109,17 +109,19 @@ public class GestioneTesiFragment extends Fragment {
         } else{
 
             salva.setOnClickListener(view -> {
+
+                if(CheckEmpty(titolo, argomenti, tempistiche, media, esamiMancanti, capacitaRichiesta)) {
                 Tesi tesi = new Tesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(),
                         statoDisponibilita.isChecked(), relatoreLoggato.getIdRelatore(), Integer.parseInt(tempistiche.getText().toString().trim()),
                         Integer.parseInt(media.getText().toString().trim()), Integer.parseInt(esamiMancanti.getText().toString().trim()),
                         capacitaRichiesta.getText().toString().trim());
 
-                if(CheckEmpty(titolo, argomenti, tempistiche, media, esamiMancanti, capacitaRichiesta)) {
                     if (TesiDatabase.RegistrazioneTesi(tesi, db)) {
                         Toast.makeText(context, "Successo", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(context, "Registrazione fallita", Toast.LENGTH_SHORT).show();
                     }
+
                 }else{
                     Toast.makeText(getActivity().getApplicationContext(), "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
                 }
@@ -161,9 +163,9 @@ public class GestioneTesiFragment extends Fragment {
     private boolean isEmptyTextbox(EditText textbox){
         if(textbox.getText().toString().trim().compareTo("")==0){
             textbox.setError("Obbligatorio");
-            return false;
+            return true;
         }
         textbox.setError(null);
-        return true;
+        return false;
     }
 }

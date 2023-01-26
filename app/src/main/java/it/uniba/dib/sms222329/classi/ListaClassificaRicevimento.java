@@ -26,23 +26,23 @@ public class ListaClassificaRicevimento {
             Ricevimento ricevimentoEstratto = new Ricevimento();
 
             ricevimentoEstratto.setIdRicevimento(cursore.getInt(0));
-            //ricevimentoEstratto.setData(cursore.getInt(1));
-            //ricevimentoEstratto.setOrario(cursore.getInt(2));
+            Date data = new Date(cursore.getLong(1));
+            ricevimentoEstratto.setData(data);
+            Time orario = new Time(cursore.getLong(2));
+            ricevimentoEstratto.setOrario(orario);
             ricevimentoEstratto.setArgomento(cursore.getString(3));
             ricevimentoEstratto.setIdTask(cursore.getInt(4));
             ricevimentoEstratto.setAccettazione(cursore.getInt(5));
             ricevimentoEstratto.setMessaggio(cursore.getString(6));
 
-
-
-                                /*Log.d("Ricevimento ID", String.valueOf(ricevimentoEstratto.getIdRicevimento()));
-                                Log.d("Ricevimento data", String.valueOf(ricevimentoEstratto.getData()));
-                                Log.d("Ricevimento orario", String.valueOf(ricevimentoEstratto.getOrario()));
-                                Log.d("Ricevimento argomento", ricevimentoEstratto.getArgomento());
-                                Log.d("Ricevimento id task", String.valueOf(ricevimentoEstratto.getIdTask())));
-                                Log.d("Ricevimento accettazione", String.valueOf(ricevimentoEstratto.getAccettazione())));
-                                Log.d("Ricevimento messaggio", ricevimentoEstratto.getMessaggio());
-                                Log.d("Tesi NNNNNNNNNNNNNNNNNNNNN", "\n\n\n\n");*/
+            Log.d("Ricevimento ID", String.valueOf(ricevimentoEstratto.getIdRicevimento()));
+            Log.d("Ricevimento data", String.valueOf(ricevimentoEstratto.getData()));
+            Log.d("Ricevimento orario", String.valueOf(ricevimentoEstratto.getOrario()));
+            Log.d("Ricevimento argomento", ricevimentoEstratto.getArgomento());
+            Log.d("Ricevimento id task", String.valueOf(ricevimentoEstratto.getIdTask()));
+            Log.d("Ricevimento accettazione", String.valueOf(ricevimentoEstratto.getAccettazione()));
+            Log.d("Ricevimento messaggio", ricevimentoEstratto.getMessaggio());
+            Log.d("Tesi NNNNNNNNNNNNNNNNNNNNN", "\n\n\n\n");
 
             listaRicevimentiEstratti.add(ricevimentoEstratto);
 

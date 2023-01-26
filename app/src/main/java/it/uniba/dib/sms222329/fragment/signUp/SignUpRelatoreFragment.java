@@ -64,11 +64,10 @@ public class SignUpRelatoreFragment extends Fragment {
             List idCorsiSelezionati = RecuperaIdCorsi();
             ArrayList<Integer> corsiRelatore = RecuperaUniversitaCorso(idUniversita, idCorsiSelezionati);
 
+            if(!isEmptyTextbox(matricola) && corsiRelatore.size()!=0){
             Relatore account = new Relatore(matricola.getText().toString().trim(), accountGenerale.getNome(),
                     accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(), accountGenerale.getEmail(),
                     accountGenerale.getPassword(), 2, corsiRelatore);
-
-            if(isEmptyTextbox(matricola) && corsiRelatore.size()!=0){
 
                 if(!db.VerificaDatoEsistente("SELECT " + Database.RELATORE_MATRICOLA + " FROM " + Database.RELATORE + " WHERE " + Database.RELATORE_MATRICOLA + " = '"+ account.getMatricola() +"';")){
 
@@ -187,9 +186,9 @@ public class SignUpRelatoreFragment extends Fragment {
     private boolean isEmptyTextbox(EditText textbox){
         if(textbox.getText().toString().trim().compareTo("")==0){
             textbox.setError("Obbligatorio");
-            return false;
+            return true;
         }
         textbox.setError(null);
-        return true;
+        return false;
     }
 }

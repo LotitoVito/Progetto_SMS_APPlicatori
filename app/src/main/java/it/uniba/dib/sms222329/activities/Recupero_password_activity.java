@@ -69,9 +69,9 @@ public class Recupero_password_activity extends AppCompatActivity {
     private boolean isEmptyTextbox(EditText textbox){
         if(textbox.getText().toString().trim().compareTo("")==0){
             textbox.setError("Obbligatorio");
-            return false;
+            return true;
         }
         textbox.setError(null);
-        return true;
+        return false;
     }
 }

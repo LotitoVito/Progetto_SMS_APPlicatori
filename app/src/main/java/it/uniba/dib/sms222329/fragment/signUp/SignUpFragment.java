@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,10 +48,10 @@ public class SignUpFragment extends Fragment {
         TextInputEditText password = getActivity().findViewById(R.id.password);
 
         button.setOnClickListener(v -> {
-            UtenteRegistrato account = new UtenteRegistrato(nome.getText().toString().trim(), cognome.getText().toString().trim(),
-                    codiceFiscale.getText().toString().trim(), email.getText().toString().trim(), password.getText().toString().trim());
 
             if(CheckEmpty(nome, cognome, codiceFiscale, email, password)){
+            UtenteRegistrato account = new UtenteRegistrato(nome.getText().toString().trim(), cognome.getText().toString().trim(),
+                    codiceFiscale.getText().toString().trim(), email.getText().toString().trim(), password.getText().toString().trim());
 
                 if (!db.VerificaDatoEsistente("SELECT " + Database.UTENTI_CODICEFISCALE + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_CODICEFISCALE + " = '" + account.getCodiceFiscale() + "';")){
 
@@ -111,9 +112,9 @@ public class SignUpFragment extends Fragment {
     private boolean isEmptyTextbox(EditText textbox){
         if(textbox.getText().toString().trim().compareTo("")==0){
             textbox.setError("Obbligatorio");
-            return false;
+            return true;
         }
         textbox.setError(null);
-        return true;
+        return false;
     }
 }

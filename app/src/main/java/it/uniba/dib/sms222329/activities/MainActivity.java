@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
+import it.uniba.dib.sms222329.classi.ListaClassificaRicevimento;
 import it.uniba.dib.sms222329.classi.ListaTesi;
 import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.database.Database;
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         boolean isChecked = prefs.getBoolean("dark_mode", false);
 
         this.runOnUiThread(() -> AppCompatDelegate.setDefaultNightMode(isChecked ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO));
-
     }
 
     @Override
