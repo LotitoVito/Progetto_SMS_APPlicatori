@@ -14,7 +14,7 @@ public class ListaTesi {
     private ArrayList<Tesi> lista;
 
     public ListaTesi(Database dbClass) {
-        String query = "SELECT * FROM tesi;";
+        String query = "SELECT * FROM " + Database.TESI + ";";
 
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
@@ -64,7 +64,7 @@ public class ListaTesi {
     //ordinamenti vari
     public ArrayList<Tesi> OrdinaPerTitolo(Database dbClass){
         SQLiteDatabase db = dbClass.getReadableDatabase();
-        String query ="SELECT * FROM Tesi ORDER BY titolo;";
+        String query ="SELECT * FROM " + Database.TESI + " ORDER BY " + Database.TESI_TITOLO + ";";
         Cursor cursore = db.rawQuery(query, null);
 
 
@@ -92,7 +92,7 @@ public class ListaTesi {
 
     public ArrayList<Tesi> OrdinaPerArgomento(Database dbClass){
         SQLiteDatabase db = dbClass.getReadableDatabase();
-        String query ="SELECT * FROM Tesi ORDER BY argomento;";
+        String query ="SELECT * FROM " + Database.TESI + " ORDER BY " + Database.TESI_ARGOMENTO + ";";
         Cursor cursore = db.rawQuery(query, null);
 
 
@@ -120,7 +120,7 @@ public class ListaTesi {
 
     public ArrayList<Tesi> OrdinaPerTempistiche(Database dbClass){
         SQLiteDatabase db = dbClass.getReadableDatabase();
-        String query ="SELECT * FROM Tesi ORDER BY tempistiche;";
+        String query ="SELECT * FROM " + Database.TESI + " ORDER BY " + Database.TESI_TEMPISTICHE + ";";
         Cursor cursore = db.rawQuery(query, null);
 
 
@@ -151,7 +151,7 @@ public class ListaTesi {
     //vincoli vari
     public ArrayList<Tesi> vincoloVotoTesi(int vincoloVotoMin, Database dbClass){
         SQLiteDatabase db = dbClass.getReadableDatabase();
-        String query ="SELECT * FROM Tesi WHERE media_voto_minima <= " + vincoloVotoMin + ";";
+        String query ="SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_MEDIAVOTOMINIMA + " <= " + vincoloVotoMin + ";";
         Cursor cursore = db.rawQuery(query, null);
 
 
@@ -180,7 +180,7 @@ public class ListaTesi {
 
     public ArrayList<Tesi> vincoloEsamiMancanti(int vincoloEsamiMancanti, Database dbClass){
         SQLiteDatabase db = dbClass.getReadableDatabase();
-        String query ="SELECT * FROM Tesi WHERE esami_necessari <= " + vincoloEsamiMancanti + ";"; //all'utente mancano tot esami che devono essere inferiori al vincolo o uguali
+        String query ="SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_ESAMINECESSARI + " <= " + vincoloEsamiMancanti + ";"; //all'utente mancano tot esami che devono essere inferiori al vincolo o uguali
         Cursor cursore = db.rawQuery(query, null);
 
 
@@ -208,7 +208,7 @@ public class ListaTesi {
 
     public ArrayList<Tesi> vincoloDisponibilità(int disponibilità, Database dbClass){ //visualizza solo tesi disponibili
         SQLiteDatabase db = dbClass.getReadableDatabase();
-        String query ="SELECT * FROM Tesi WHERE stato == " + disponibilità + ";";
+        String query ="SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_STATO + " == " + disponibilità + ";";
         Cursor cursore = db.rawQuery(query, null);
 
 
@@ -237,7 +237,7 @@ public class ListaTesi {
 
     public ArrayList<Tesi> vincoloRelatore(int idRelatore, Database dbClass){ //visualizza solo tesi disponibili
         SQLiteDatabase db = dbClass.getReadableDatabase();
-        String query ="SELECT * FROM Tesi WHERE relatore_id == " + idRelatore + ";";
+        String query ="SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_RELATOREID + " == " + idRelatore + ";";
         Cursor cursore = db.rawQuery(query, null);
 
 

@@ -13,22 +13,22 @@ public class SegnalazioneChatDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues chatCv = new ContentValues();
 
-        chatCv.put("oggetto", chat.getOggetto());
-        chatCv.put("tesi_scelta_id", chat.getIdTesi());
+        chatCv.put(Database.SEGNALAZIONECHAT_OGGETTO, chat.getOggetto());
+        chatCv.put(Database.SEGNALAZIONECHAT_TESISCELTAID, chat.getIdTesi());
 
-        long insertChat = db.insert("segnalazioneChat", null, chatCv);
+        long insertChat = db.insert(Database.SEGNALAZIONECHAT, null, chatCv);
         if(insertChat != -1){
-            String query = "SELECT MAX(id) FROM segnalazioneChat WHERE oggetto = '"+ chat.getOggetto() +"' AND tesi_scelta_id = '"+ chat.getIdTesi() +"';";
+            String query = "SELECT MAX(" + Database.SEGNALAZIONECHAT_ID + ") FROM " + Database.SEGNALAZIONECHAT + " WHERE " + Database.SEGNALAZIONECHAT_OGGETTO + " = '"+ chat.getOggetto() +"' AND " + Database.SEGNALAZIONECHAT_TESISCELTAID + " = '"+ chat.getIdTesi() +"';";
             Cursor cursor = db.rawQuery(query, null);
             cursor.moveToNext();
 
             ContentValues messaggioCv = new ContentValues();
 
-            messaggioCv.put("messaggio", messaggio.getMessaggio());
-            messaggioCv.put("utente_id", messaggio.getIdMittente());
-            messaggioCv.put("segnalazione_id", cursor.getInt(0));
+            messaggioCv.put(Database.MESSAGGISEGNALAZIONE_MESSAGGIO, messaggio.getMessaggio());
+            messaggioCv.put(Database.MESSAGGISEGNALAZIONE_UTENTEID, messaggio.getIdMittente());
+            messaggioCv.put(Database.MESSAGGISEGNALAZIONE_SEGNALAZIONEID, cursor.getInt(0));
 
-            long insertMessaggio = db.insert("messaggiSegnalazione", null, messaggioCv);
+            long insertMessaggio = db.insert(Database.MESSAGGISEGNALAZIONE, null, messaggioCv);
             if(insertMessaggio != -1){
                 return true;
             }
@@ -40,11 +40,11 @@ public class SegnalazioneChatDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues messaggioCv = new ContentValues();
 
-        messaggioCv.put("messaggio", messaggio.getMessaggio());
-        messaggioCv.put("utente_id", messaggio.getIdMittente());
-        messaggioCv.put("segnalazione_id", messaggio.getIdSegnalazioneChat());
+        messaggioCv.put(Database.MESSAGGISEGNALAZIONE_MESSAGGIO, messaggio.getMessaggio());
+        messaggioCv.put(Database.MESSAGGISEGNALAZIONE_UTENTEID, messaggio.getIdMittente());
+        messaggioCv.put(Database.MESSAGGISEGNALAZIONE_SEGNALAZIONEID, messaggio.getIdSegnalazioneChat());
 
-        long insertMessaggio = db.insert("messaggiSegnalazione", null, messaggioCv);
+        long insertMessaggio = db.insert(Database.MESSAGGISEGNALAZIONE, null, messaggioCv);
         if(insertMessaggio != -1){
             return true;
         }

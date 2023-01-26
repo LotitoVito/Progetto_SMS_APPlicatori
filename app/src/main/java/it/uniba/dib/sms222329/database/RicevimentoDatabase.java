@@ -11,14 +11,14 @@ public class RicevimentoDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues richiestaCv = new ContentValues();
 
-        richiestaCv.put("data", String.valueOf(richiesta.getData()));
-        richiestaCv.put("orario", String.valueOf(richiesta.getOrario()));
-        richiestaCv.put("argomento", richiesta.getArgomento());
-        richiestaCv.put("task_id", richiesta.getIdTask());
-        richiestaCv.put("accettazione", 2);
-        richiestaCv.put("messaggio", richiesta.getMessaggio());
+        richiestaCv.put(Database.RICEVIMENTI_DATA, String.valueOf(richiesta.getData()));
+        richiestaCv.put(Database.RICEVIMENTI_ORARIO, String.valueOf(richiesta.getOrario()));
+        richiestaCv.put(Database.RICEVIMENTI_ARGOMENTO, richiesta.getArgomento());
+        richiestaCv.put(Database.RICEVIMENTI_TASKID, richiesta.getIdTask());
+        richiestaCv.put(Database.RICEVIMENTI_ACCETTAZIONE, 2);
+        richiestaCv.put(Database.RICEVIMENTI_MESSAGGIO, richiesta.getMessaggio());
 
-        long insertRichiesta = db.insert("ricevimenti", null, richiestaCv);
+        long insertRichiesta = db.insert(Database.RICEVIMENTI, null, richiestaCv);
         if(insertRichiesta != -1){
             return true;
         }
@@ -29,9 +29,9 @@ public class RicevimentoDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues ricevimentoCv = new ContentValues();
 
-        ricevimentoCv.put("accettazione", 1);
+        ricevimentoCv.put(Database.RICEVIMENTI_ACCETTAZIONE, 1);
 
-        long updateRicevimento = db.update("ricevimenti", ricevimentoCv, "id = '"+ ricevimento.getIdRicevimento() +"';", null);
+        long updateRicevimento = db.update(Database.RICEVIMENTI, ricevimentoCv, Database.RICEVIMENTI_ID +" = '"+ ricevimento.getIdRicevimento() +"';", null);
         if(updateRicevimento != -1){
             return true;
         }
@@ -42,9 +42,9 @@ public class RicevimentoDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues ricevimentoCv = new ContentValues();
 
-        ricevimentoCv.put("accettazione", 0);
+        ricevimentoCv.put(Database.RICEVIMENTI_ACCETTAZIONE, 0);
 
-        long updateRicevimento = db.update("ricevimenti", ricevimentoCv, "id = '"+ ricevimento.getIdRicevimento() +"';", null);
+        long updateRicevimento = db.update(Database.RICEVIMENTI, ricevimentoCv, Database.RICEVIMENTI_ID +" = '"+ ricevimento.getIdRicevimento() +"';", null);
         if(updateRicevimento != -1){
             return true;
         }
@@ -55,11 +55,11 @@ public class RicevimentoDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues ricevimentoCv = new ContentValues();
 
-        ricevimentoCv.put("data", String.valueOf(ricevimento.getData()));
-        ricevimentoCv.put("orario", String.valueOf(ricevimento.getOrario()));
-        ricevimentoCv.put("accettazione", 2);
+        ricevimentoCv.put(Database.RICEVIMENTI_DATA, String.valueOf(ricevimento.getData()));
+        ricevimentoCv.put(Database.RICEVIMENTI_ORARIO, String.valueOf(ricevimento.getOrario()));
+        ricevimentoCv.put(Database.RICEVIMENTI_ACCETTAZIONE, 2);
 
-        long updateRicevimento = db.update("ricevimenti", ricevimentoCv, "id = '"+ ricevimento.getIdRicevimento() +"';", null);
+        long updateRicevimento = db.update(Database.RICEVIMENTI, ricevimentoCv, Database.RICEVIMENTI_ID +" = '"+ ricevimento.getIdRicevimento() +"';", null);
         if(updateRicevimento != -1){
             return true;
         }

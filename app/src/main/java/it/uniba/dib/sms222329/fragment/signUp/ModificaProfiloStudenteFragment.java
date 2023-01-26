@@ -59,8 +59,8 @@ public class ModificaProfiloStudenteFragment extends Fragment {
         GestisciSpinner(spinnerUniversita);
 
         registerButton.setOnClickListener(view -> {
-            String idUniversita = RecuperaIdSpinner(spinnerUniversita, "universita");
-            String idCorsoStudio = RecuperaIdSpinner(spinnerCorsoStudi,"corsoStudi");
+            String idUniversita = RecuperaIdSpinner(spinnerUniversita, Database.UNIVERSITA);
+            String idCorsoStudio = RecuperaIdSpinner(spinnerCorsoStudi,Database.CORSOSTUDI);
             int corso= RecuperaUniversitaCorso(idUniversita, idCorsoStudio);
 
             tesista.modTesista(matricola.getText().toString(), nome.getText().toString(),
@@ -107,7 +107,7 @@ public class ModificaProfiloStudenteFragment extends Fragment {
 
     private int RecuperaUniversitaCorso(String idUniversita, String idCorso){
         Cursor idCursor;
-        idCursor = db.RicercaDato("SELECT id FROM universitacorso WHERE universita_id = '"+ idUniversita +"' AND corso_id = '"+ idCorso +"';");
+        idCursor = db.RicercaDato("SELECT " + Database.UNIVERSITACORSO_ID + " FROM " + Database.UNIVERSITACORSO + " WHERE " + Database.UNIVERSITACORSO_UNIVERSITAID + " = '"+ idUniversita +"' AND " + Database.UNIVERSITACORSO_CORSOID + " = '"+ idCorso +"';");
         idCursor.moveToNext();
         return idCursor.getInt(0);
     }
@@ -116,15 +116,15 @@ public class ModificaProfiloStudenteFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String idUniversita = RecuperaIdSpinner(spinner, "universita");
+                String idUniversita = RecuperaIdSpinner(spinner, Database.UNIVERSITA);
 
-                Cursor risultato = db.RicercaDato("SELECT corso_id FROM universitacorso WHERE universita_id = '"+ idUniversita +"';");
+                Cursor risultato = db.RicercaDato("SELECT " + Database.UNIVERSITACORSO_CORSOID + " FROM " + Database.UNIVERSITACORSO + " WHERE " + Database.UNIVERSITACORSO_UNIVERSITAID + " = '"+ idUniversita +"';");
                 List<String> idRisultati = new ArrayList<>();
                 while(risultato.moveToNext()){
                     idRisultati.add(risultato.getString(0));
                 }
 
-                String query = "SELECT nome FROM corsoStudi WHERE id IN (" + idRisultati.toString().replace("[", "").replace("]", "") + ");";
+                String query = "SELECT " + Database.CORSOSTUDI_NOME + " FROM " + Database.CORSOSTUDI + " WHERE " + Database.CORSOSTUDI_ID + " IN (" + idRisultati.toString().replace("[", "").replace("]", "") + ");";
                 spinnerCreate(R.id.corsoDiStudi, query);
             }
 

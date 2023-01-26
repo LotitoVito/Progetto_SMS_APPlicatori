@@ -16,15 +16,15 @@ public class UtenteRegistratoDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
 
-        cvUtente.put("nome", tesista.getNome());
-        cvUtente.put("cognome", tesista.getCognome());
-        cvUtente.put("codice_fiscale", tesista.getCodiceFiscale());
-        cvUtente.put("email", tesista.getEmail());
-        cvUtente.put("password", tesista.getPassword());
-        cvUtente.put("ruolo_id", tesista.getTipoUtente());
+        cvUtente.put(Database.UTENTI_NOME, tesista.getNome());
+        cvUtente.put(Database.UTENTI_COGNOME, tesista.getCognome());
+        cvUtente.put(Database.UTENTI_CODICEFISCALE, tesista.getCodiceFiscale());
+        cvUtente.put(Database.UTENTI_EMAIL, tesista.getEmail());
+        cvUtente.put(Database.UTENTI_PASSWORD, tesista.getPassword());
+        cvUtente.put(Database.UTENTI_RUOLOID, tesista.getTipoUtente());
 
         try{
-            long insertUtente = db.insert("utenti", null, cvUtente);
+            long insertUtente = db.insert(Database.UTENTI, null, cvUtente);
             if(insertUtente != -1){
                 return true;
             }
@@ -38,15 +38,15 @@ public class UtenteRegistratoDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
 
-        cvUtente.put("nome", relatore.getNome());
-        cvUtente.put("cognome", relatore.getCognome());
-        cvUtente.put("codice_fiscale", relatore.getCodiceFiscale());
-        cvUtente.put("email", relatore.getEmail());
-        cvUtente.put("password", relatore.getPassword());
-        cvUtente.put("ruolo_id", relatore.getTipoUtente());
+        cvUtente.put(Database.UTENTI_NOME, relatore.getNome());
+        cvUtente.put(Database.UTENTI_COGNOME, relatore.getCognome());
+        cvUtente.put(Database.UTENTI_CODICEFISCALE, relatore.getCodiceFiscale());
+        cvUtente.put(Database.UTENTI_EMAIL, relatore.getEmail());
+        cvUtente.put(Database.UTENTI_PASSWORD, relatore.getPassword());
+        cvUtente.put(Database.UTENTI_RUOLOID, relatore.getTipoUtente());
 
         try{
-            long insertUtente = db.insert("utenti", null, cvUtente);
+            long insertUtente = db.insert(Database.UTENTI, null, cvUtente);
             if(insertUtente != -1){
                 return true;
             }
@@ -60,15 +60,15 @@ public class UtenteRegistratoDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
 
-        cvUtente.put("nome", coRelatore.getNome());
-        cvUtente.put("cognome", coRelatore.getCognome());
-        cvUtente.put("codice_fiscale", coRelatore.getCodiceFiscale());
-        cvUtente.put("email", coRelatore.getEmail());
-        cvUtente.put("password", coRelatore.getPassword());
-        cvUtente.put("ruolo_id", coRelatore.getTipoUtente());
+        cvUtente.put(Database.UTENTI_NOME, coRelatore.getNome());
+        cvUtente.put(Database.UTENTI_COGNOME, coRelatore.getCognome());
+        cvUtente.put(Database.UTENTI_CODICEFISCALE, coRelatore.getCodiceFiscale());
+        cvUtente.put(Database.UTENTI_EMAIL, coRelatore.getEmail());
+        cvUtente.put(Database.UTENTI_PASSWORD, coRelatore.getPassword());
+        cvUtente.put(Database.UTENTI_RUOLOID, coRelatore.getTipoUtente());
 
         try{
-            long insertUtente = db.insert("utenti", null, cvUtente);
+            long insertUtente = db.insert(Database.UTENTI, null, cvUtente);
             if(insertUtente != -1){
                 return true;
             }
@@ -80,7 +80,7 @@ public class UtenteRegistratoDatabase {
 
     public static boolean LoginStatus(UtenteRegistrato account, Database dbClass) {
         SQLiteDatabase db = dbClass.getReadableDatabase();
-        String query = "SELECT ruolo_id FROM utenti WHERE email = '" + account.getEmail() + "' AND password = '" + account.getPassword() + "';";
+        String query = "SELECT " + Database.UTENTI_RUOLOID + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + " = '" + account.getEmail() + "' AND " + Database.UTENTI_PASSWORD + " = '" + account.getPassword() + "';";
         Cursor cursore = db.rawQuery(query, null);
 
         if (cursore.getCount() != 0) {
@@ -92,11 +92,8 @@ public class UtenteRegistratoDatabase {
     }
 
     public static boolean ControlloMail(String email1, String email2, Database dbClass){     //ritorna vero se le email corrispondono e se c'è corrispondenza nel db
-        String query = "SELECT email FROM utenti WHERE email = '" + email1 + "';";
+        String query = "SELECT " + Database.UTENTI_EMAIL + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + " = '" + email1 + "';";
         if (email1.equals(email2) && dbClass.VerificaDatoEsistente(query)){
-            Log.d("email1", email1);
-            Log.d("email2", email2);
-
             return true;
         }
         return false;
@@ -104,7 +101,7 @@ public class UtenteRegistratoDatabase {
 
     public static boolean ResetPassword(String password1, String password2, String email, Database dbClass){
         if(password1.equals(password2)){
-            String aggiornaPassword = "UPDATE utenti SET password = '" + password1 + "' WHERE email = '" + email + "';";
+            String aggiornaPassword = "UPDATE " + Database.UTENTI + " SET " + Database.UTENTI_PASSWORD + " = '" + password1 + "' WHERE " + Database.UTENTI_EMAIL + " = '" + email + "';";
             SQLiteDatabase db = dbClass.getWritableDatabase();
             db.execSQL(aggiornaPassword);
             return true;

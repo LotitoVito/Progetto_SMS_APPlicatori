@@ -48,8 +48,8 @@ public class SignUpFragment extends Fragment {
             UtenteRegistrato account = new UtenteRegistrato(nome.getText().toString(), cognome.getText().toString(),
                     codiceFiscale.getText().toString(), email.getText().toString(), password.getText().toString());
 
-            if (!db.VerificaDatoEsistente("SELECT codice_fiscale FROM utenti WHERE codice_fiscale = '" + account.getCodiceFiscale() + "';")){
-                if (!db.VerificaDatoEsistente("SELECT email FROM utenti WHERE email = '" + account.getEmail() + "';")) {
+            if (!db.VerificaDatoEsistente("SELECT " + Database.UTENTI_CODICEFISCALE + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_CODICEFISCALE + " = '" + account.getCodiceFiscale() + "';")){
+                if (!db.VerificaDatoEsistente("SELECT " + Database.UTENTI_EMAIL + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + " = '" + account.getEmail() + "';")) {
 
                     loadNextFragment(account);
 

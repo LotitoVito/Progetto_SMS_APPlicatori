@@ -13,11 +13,11 @@ public class RichiestaTesiDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvRichiesta = new ContentValues();
 
-        cvRichiesta.put("messaggio", richiesta.getMessaggio());
-        cvRichiesta.put("tesi_id", richiesta.getIdTesi());
-        cvRichiesta.put("tesista_id", richiesta.getIdTesista());
+        cvRichiesta.put(Database.RICHIESTA_MESSAGGIO, richiesta.getMessaggio());
+        cvRichiesta.put(Database.RICHIESTA_TESIID, richiesta.getIdTesi());
+        cvRichiesta.put(Database.RICHIESTA_TESISTAID, richiesta.getIdTesista());
 
-        long insertRichiesta = db.insert("richiesta", null, cvRichiesta);
+        long insertRichiesta = db.insert(Database.RICHIESTA, null, cvRichiesta);
         if(insertRichiesta != -1){
             return true;
         }
@@ -28,10 +28,10 @@ public class RichiestaTesiDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvRisposta = new ContentValues();
 
-        cvRisposta.put("accettata", risposta.isAccettata());
-        cvRisposta.put("risposta", risposta.getRisposta());
+        cvRisposta.put(Database.RICHIESTA_ACCETTATA, risposta.isAccettata());
+        cvRisposta.put(Database.RICHIESTA_RISPOSTA, risposta.getRisposta());
 
-        long updateRisposta = db.update("richiesta", cvRisposta, "id = '"+ risposta.getIdRichiesta() +"';", null);
+        long updateRisposta = db.update(Database.RICHIESTA, cvRisposta, Database.RICHIESTA_ID + " = '"+ risposta.getIdRichiesta() +"';", null);
         if(updateRisposta != -1){
             return true;
         }

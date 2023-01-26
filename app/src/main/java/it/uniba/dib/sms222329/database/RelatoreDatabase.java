@@ -16,25 +16,25 @@ public class RelatoreDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvRelatore = new ContentValues();
 
-        Cursor idUtente = dbClass.RicercaDato("SELECT id FROM utenti WHERE email = '" + relatore.getEmail() + "';");
+        Cursor idUtente = dbClass.RicercaDato("SELECT " + Database.UTENTI_ID + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + " = '" + relatore.getEmail() + "';");
         idUtente.moveToNext();
 
-        cvRelatore.put("utente_id", idUtente.getString(0));
-        cvRelatore.put("matricola", relatore.getMatricola());
+        cvRelatore.put(Database.RELATORE_UTENTEID, idUtente.getString(0));
+        cvRelatore.put(Database.RELATORE_MATRICOLA, relatore.getMatricola());
 
         try{
-            long insertRelatore = db.insert("relatore", null, cvRelatore);
+            long insertRelatore = db.insert(Database.RELATORE, null, cvRelatore);
             if(insertRelatore != -1){
                 ContentValues cvCorsiRelatore = new ContentValues();
 
-                Cursor idRelatore = dbClass.RicercaDato("SELECT id FROM relatore WHERE utente_id = '" + idUtente.getString(0) + "';");
+                Cursor idRelatore = dbClass.RicercaDato("SELECT " + Database.RELATORE_ID + " FROM " + Database.RELATORE + " WHERE " + Database.RELATORE_UTENTEID + " = '" + idUtente.getString(0) + "';");
                 idRelatore.moveToNext();
 
                 for(int i=0; i<relatore.getCorsiRelatore().size(); i++){
-                    cvCorsiRelatore.put("relatore_id", idRelatore.getString(0));
-                    cvCorsiRelatore.put("universitacorso_id", relatore.getCorsiRelatore().get(i));
+                    cvCorsiRelatore.put(Database.CORSIRELATORE_RELATOREID, idRelatore.getString(0));
+                    cvCorsiRelatore.put(Database.CORSIRELATORE_UNIVERSITACORSOID, relatore.getCorsiRelatore().get(i));
 
-                    long insertCorsiRelatore = db.insert("corsiRelatore", null, cvCorsiRelatore);
+                    long insertCorsiRelatore = db.insert(Database.CORSIRELATORE, null, cvCorsiRelatore);
                     if (insertCorsiRelatore == -1){
                         return false;
                     }
@@ -51,27 +51,27 @@ public class RelatoreDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
 
-        cvUtente.put("nome", account.getNome());
-        cvUtente.put("cognome", account.getCognome());
-        cvUtente.put("email", account.getEmail());
-        cvUtente.put("password", account.getPassword());
-        cvUtente.put("codice_fiscale", account.getCodiceFiscale());
+        cvUtente.put(Database.UTENTI_NOME, account.getNome());
+        cvUtente.put(Database.UTENTI_COGNOME, account.getCognome());
+        cvUtente.put(Database.UTENTI_EMAIL, account.getEmail());
+        cvUtente.put(Database.UTENTI_PASSWORD, account.getPassword());
+        cvUtente.put(Database.UTENTI_CODICEFISCALE, account.getCodiceFiscale());
 
         try{
-            long updateUtente = db.update("utenti", cvUtente, "id = " + account.getIdUtente(), null);
+            long updateUtente = db.update(Database.UTENTI, cvUtente, Database.UTENTI_ID+" = " + account.getIdUtente() + ";", null);
 
             if(updateUtente != -1){
                 ContentValues cvRelatore = new ContentValues();
-                cvRelatore.put("matricola", account.getMatricola());
-                long updateRelatore = db.update("relatore", cvRelatore, "id = " + account.getIdRelatore(), null);
+                cvRelatore.put(Database.RELATORE_MATRICOLA, account.getMatricola());
+                long updateRelatore = db.update(Database.RELATORE, cvRelatore, Database.RELATORE_ID +" = " + account.getIdRelatore() + ";", null);
 
                 if(updateRelatore!= -1){
                     ContentValues cvLista = new ContentValues();
-                    db.delete("corsiRelatore", "relatore_id = '"+ account.getIdRelatore() +"';", null);
+                    db.delete(Database.CORSIRELATORE, Database.CORSIRELATORE_RELATOREID + " = '"+ account.getIdRelatore() + "';", null);
                     for(int i=0;i<account.getCorsiRelatore().size();i++){
-                        cvLista.put("universitacorso_id", Integer.parseInt(account.getCorsiRelatore().get(i).toString()));
-                        cvLista.put("relatore_id", account.getIdRelatore());
-                        long updateLista = db.insert("corsiRelatore",null, cvLista);
+                        cvLista.put(Database.CORSIRELATORE_UNIVERSITACORSOID, Integer.parseInt(account.getCorsiRelatore().get(i).toString()));
+                        cvLista.put(Database.CORSIRELATORE_RELATOREID, account.getIdRelatore());
+                        long updateLista = db.insert(Database.CORSIRELATORE,null, cvLista);
                         if(updateLista==-1){
                             return false;
                         }
@@ -88,7 +88,9 @@ public class RelatoreDatabase {
     public static Relatore IstanziaRelatore(UtenteRegistrato account, Database dbClass){
         Relatore relatoreLog = new Relatore();
 
-        String query = "SELECT u.id, r.id, matricola, nome, cognome, email, password, codice_fiscale FROM utenti u, relatore r WHERE u.id=r.utente_id AND email = '" + account.getEmail() + "';";
+        String query =  "SELECT u." + Database.UTENTI_ID + ", r." + Database.RELATORE_ID + ", " + Database.RELATORE_MATRICOLA + ", " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + ", " + Database.UTENTI_PASSWORD + ", " + Database.UTENTI_CODICEFISCALE + " " +
+                        "FROM " + Database.UTENTI + " u, " + Database.RELATORE + " r " +
+                        "WHERE u." + Database.UTENTI_ID + "=r." + Database.RELATORE_UTENTEID + " AND " + Database.UTENTI_EMAIL + " = '" + account.getEmail() + "';";
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();
@@ -102,7 +104,7 @@ public class RelatoreDatabase {
         relatoreLog.setPassword(cursore.getString(6));
         relatoreLog.setCodiceFiscale(cursore.getString(7));
 
-        query = "SELECT universitacorso_id FROM corsiRelatore WHERE relatore_id = '" + relatoreLog.getIdRelatore() + "';";
+        query = "SELECT " + Database.CORSIRELATORE_UNIVERSITACORSOID + " FROM " + Database.CORSIRELATORE + " WHERE " + Database.CORSIRELATORE_RELATOREID + " = '" + relatoreLog.getIdRelatore() + "';";
         cursore = db.rawQuery(query, null);
         ArrayList<Integer> lista = new ArrayList<>();
         while(cursore.moveToNext()){

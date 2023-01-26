@@ -11,14 +11,14 @@ public class TaskDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues taskCv = new ContentValues();
 
-        taskCv.put("descrizione", task.getDescrizione());
-        taskCv.put("data_inizio", String.valueOf(task.getDataInizio()));
-        taskCv.put("data_fine", String.valueOf(task.getDataFine()));
-        taskCv.put("link_materiale", task.getLinkMateriale());
-        taskCv.put("stato", task.getStato());
-        taskCv.put("tesi_scelta_id", task.getIdTesiScelta());
+        taskCv.put(Database.TASK_DESCRIZIONE, task.getDescrizione());
+        taskCv.put(Database.TASK_DATAINIZIO, String.valueOf(task.getDataInizio()));
+        taskCv.put(Database.TASK_DATAFINE, String.valueOf(task.getDataFine()));
+        taskCv.put(Database.TASK_LINKMATERIALE, task.getLinkMateriale());
+        taskCv.put(Database.TASK_STATO, task.getStato());
+        taskCv.put(Database.TASK_TESISCELTAID, task.getIdTesiScelta());
 
-        long insertTask = db.insert("task", null, taskCv);
+        long insertTask = db.insert(Database.TASK, null, taskCv);
         if(insertTask != -1){
             return true;
         }

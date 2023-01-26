@@ -13,14 +13,14 @@ public class CoRelatoreDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvCoRelatore = new ContentValues();
 
-        Cursor idUtente = dbClass.RicercaDato("SELECT id FROM utenti WHERE email = '" + corelatore.getEmail() + "';");
+        Cursor idUtente = dbClass.RicercaDato("SELECT " + Database.UTENTI_ID + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + " = '" + corelatore.getEmail() + "';");
         idUtente.moveToNext();
 
-        cvCoRelatore.put("utente_id", idUtente.getString(0));
-        cvCoRelatore.put("organizzazione", corelatore.getOrganizzazione());
+        cvCoRelatore.put(Database.CORELATORE_UTENTEID, idUtente.getString(0));
+        cvCoRelatore.put(Database.CORELATORE_ORGANIZZAZIONE, corelatore.getOrganizzazione());
 
         try{
-            long insertCoRelatore = db.insert("coRelatore", null, cvCoRelatore);
+            long insertCoRelatore = db.insert(Database.CORELATORE, null, cvCoRelatore);
             if(insertCoRelatore != -1){
                 return true;
             }
@@ -34,18 +34,18 @@ public class CoRelatoreDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
 
-        cvUtente.put("nome", corelatore.getNome());
-        cvUtente.put("cognome", corelatore.getCognome());
-        cvUtente.put("email", corelatore.getEmail());
-        cvUtente.put("password", corelatore.getPassword());
-        cvUtente.put("codice_fiscale", corelatore.getCodiceFiscale());
+        cvUtente.put(Database.UTENTI_NOME, corelatore.getNome());
+        cvUtente.put(Database.UTENTI_COGNOME, corelatore.getCognome());
+        cvUtente.put(Database.UTENTI_EMAIL, corelatore.getEmail());
+        cvUtente.put(Database.UTENTI_PASSWORD, corelatore.getPassword());
+        cvUtente.put(Database.UTENTI_CODICEFISCALE, corelatore.getCodiceFiscale());
 
         try {
-            long updateUtente = db.update("utenti", cvUtente, "id = " + corelatore.getIdUtente(), null);
+            long updateUtente = db.update(Database.UTENTI, cvUtente, Database.UTENTI_ID + " = " + corelatore.getIdUtente() + ";", null);
 
             ContentValues cvCoRel= new ContentValues();
-            cvCoRel.put("organizzazione", corelatore.getOrganizzazione());
-            long updateCoRel = db.update("utenti", cvCoRel, "id = " + corelatore.getIdCorelatore(), null);
+            cvCoRel.put(Database.CORELATORE_ORGANIZZAZIONE, corelatore.getOrganizzazione());
+            long updateCoRel = db.update(Database.CORELATORE, cvCoRel, Database.CORELATORE_ID + " = " + corelatore.getIdCorelatore() + ";", null);
 
             return updateUtente != -1 && updateCoRel !=-1;
         }catch (Exception e){
@@ -57,8 +57,9 @@ public class CoRelatoreDatabase {
     public static CoRelatore IstanziaCoRelatore(UtenteRegistrato account, Database dbClass){
         CoRelatore CorelatoreLog = new CoRelatore();
 
-        String query =  "SELECT u.id, c.id, nome, cognome, email, password, organizzazione, codice_fiscale " +
-                "FROM utenti u, Corelatore c WHERE u.id=c.utente_id AND email = '" + account.getEmail() + "';";
+        String query =  "SELECT u." + Database.UTENTI_ID + ", c." + Database.CORELATORE_ID + ", " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + ", " + Database.UTENTI_PASSWORD + ", " + Database.CORELATORE_ORGANIZZAZIONE + ", " + Database.UTENTI_CODICEFISCALE + " " +
+                        "FROM " + Database.UTENTI + " u, " + Database.CORELATORE + " c " +
+                        "WHERE u." + Database.UTENTI_ID + "=c." + Database.CORELATORE_UTENTEID + " AND " + Database.UTENTI_EMAIL + " = '" + account.getEmail() + "';";
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();

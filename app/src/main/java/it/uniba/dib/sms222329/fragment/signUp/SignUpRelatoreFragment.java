@@ -49,7 +49,7 @@ public class SignUpRelatoreFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        String query = "SELECT nome FROM universita;";
+        String query = "SELECT " + Database.UNIVERSITA_NOME + " FROM " + Database.UNIVERSITA + ";";
         spinnerCreate(R.id.universita, query);
 
         View registerButton = getActivity().findViewById(R.id.Signupbutton);
@@ -59,7 +59,7 @@ public class SignUpRelatoreFragment extends Fragment {
         GestisciSpinner(universita);
 
         registerButton.setOnClickListener(view -> {
-            String idUniversita = RecuperaIdSpinner(universita, "Universita");
+            String idUniversita = RecuperaIdSpinner(universita, Database.UNIVERSITA);
             List idCorsiSelezionati = RecuperaIdCorsi();
             ArrayList<Integer> corsiRelatore = RecuperaUniversitaCorso(idUniversita, idCorsiSelezionati);
 
@@ -67,7 +67,7 @@ public class SignUpRelatoreFragment extends Fragment {
                     accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(), accountGenerale.getEmail(),
                     accountGenerale.getPassword(), 2, corsiRelatore);
 
-            if(!db.VerificaDatoEsistente("SELECT matricola FROM relatore WHERE matricola = '"+ account.getMatricola() +"';")){
+            if(!db.VerificaDatoEsistente("SELECT " + Database.RELATORE_MATRICOLA + " FROM " + Database.RELATORE + " WHERE " + Database.RELATORE_MATRICOLA + " = '"+ account.getMatricola() +"';")){
 
                     if(UtenteRegistratoDatabase.RegistrazioneUtente(account, db) && RelatoreDatabase.RegistrazioneRelatore(account, db)){
                         Intent mainActivity = new Intent(getActivity().getApplicationContext(), MainActivity.class);
@@ -108,7 +108,7 @@ public class SignUpRelatoreFragment extends Fragment {
 
     private String RecuperaIdSpinner(Spinner spinner, String tabella){
         Cursor idCursor;
-        idCursor = db.RicercaDato("SELECT ID FROM "+ tabella +" WHERE Nome = '"+ spinner.getSelectedItem().toString() +"';");
+        idCursor = db.RicercaDato("SELECT id FROM "+ tabella +" WHERE nome = '"+ spinner.getSelectedItem().toString() +"';");
         idCursor.moveToNext();
         return idCursor.getString(0);
     }
@@ -120,7 +120,7 @@ public class SignUpRelatoreFragment extends Fragment {
         for (int i = 0; i < listView.getChildCount(); i++) {
             CheckBox checkBox = listView.getChildAt(i).findViewById(R.id.checkbox);
             if (checkBox.isChecked()) {
-                String query = "SELECT id FROM corsoStudi WHERE nome LIKE '"+ checkBox.getText() +"';";
+                String query = "SELECT " + Database.CORSOSTUDI_ID + " FROM " + Database.CORSOSTUDI + " WHERE " + Database.CORSOSTUDI_NOME + " LIKE '"+ checkBox.getText() +"';";
                 Cursor risultati = db.RicercaDato(query);
                 risultati.moveToNext();
                 idCorsiSelezionati.add(risultati.getString(0));
@@ -134,7 +134,7 @@ public class SignUpRelatoreFragment extends Fragment {
         Cursor idCursor;
         ArrayList<Integer> corsiRelatore = new ArrayList();
         for(int i=0; i< idCorsiSelezionati.size(); i++){
-            idCursor = db.RicercaDato("SELECT id FROM universitacorso WHERE universita_id = '"+ idUniversita +"' AND corso_id = '"+ idCorsiSelezionati.get(i) +"';");
+            idCursor = db.RicercaDato("SELECT " + Database.UNIVERSITACORSO_ID + " FROM " + Database.UNIVERSITACORSO + " WHERE " + Database.UNIVERSITACORSO_UNIVERSITAID + " = '"+ idUniversita +"' AND " + Database.UNIVERSITACORSO_CORSOID + " = '"+ idCorsiSelezionati.get(i) +"';");
             idCursor.moveToNext();
             corsiRelatore.add(idCursor.getInt(0));
         }
@@ -145,15 +145,15 @@ public class SignUpRelatoreFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String idUniversita = RecuperaIdSpinner(spinner, "universita");
+                String idUniversita = RecuperaIdSpinner(spinner, Database.UNIVERSITA);
 
-                Cursor risultato = db.RicercaDato("SELECT corso_id FROM universitacorso WHERE universita_id = '"+ idUniversita +"';");
+                Cursor risultato = db.RicercaDato("SELECT " + Database.UNIVERSITACORSO_CORSOID + " FROM " + Database.UNIVERSITACORSO + " WHERE " + Database.UNIVERSITACORSO_UNIVERSITAID + " = '"+ idUniversita +"';");
                 List<String> idRisultati = new ArrayList<>();
                 while(risultato.moveToNext()){
                     idRisultati.add(risultato.getString(0));
                 }
 
-                String query = "SELECT nome FROM corsoStudi WHERE id IN (" + idRisultati.toString().replace("[", "").replace("]", "") + ");";
+                String query = "SELECT " + Database.CORSOSTUDI_NOME + " FROM " + Database.CORSOSTUDI + " WHERE " + Database.CORSOSTUDI_ID + " IN (" + idRisultati.toString().replace("[", "").replace("]", "") + ");";
                 // Query the database for the data
                 Cursor cursor = db.getReadableDatabase().rawQuery(query, null);
 

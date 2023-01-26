@@ -15,17 +15,17 @@ public class TesistaDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvTesista = new ContentValues();
 
-        Cursor idUtente = dbClass.RicercaDato("SELECT id FROM utenti WHERE email = '" + tesista.getEmail() + "';");
+        Cursor idUtente = dbClass.RicercaDato("SELECT " + Database.UTENTI_ID + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + " = '" + tesista.getEmail() + "';");
         idUtente.moveToNext();
 
-        cvTesista.put("utente_id", idUtente.getString(0));
-        cvTesista.put("matricola", tesista.getMatricola());
-        cvTesista.put("media_voti", tesista.getMedia());
-        cvTesista.put("esami_mancanti", tesista.getNumeroEsamiMancanti());
-        cvTesista.put("universitacorso_id", tesista.getIdUniversitaCorso());
+        cvTesista.put(Database.TESISTA_UTENTEID, idUtente.getString(0));
+        cvTesista.put(Database.TESISTA_MATRICOLA, tesista.getMatricola());
+        cvTesista.put(Database.TESISTA_MEDIAVOTI, tesista.getMedia());
+        cvTesista.put(Database.TESISTA_ESAMIMANCANTI, tesista.getNumeroEsamiMancanti());
+        cvTesista.put(Database.TESISTA_UNIVERSITACORSOID, tesista.getIdUniversitaCorso());
 
         try{
-            long insertCoRelatore = db.insert("tesista", null, cvTesista);
+            long insertCoRelatore = db.insert(Database.TESISTA, null, cvTesista);
             if(insertCoRelatore != -1){
                 return true;
             }
@@ -39,23 +39,23 @@ public class TesistaDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
 
-        cvUtente.put("nome", tesista.getNome());
-        cvUtente.put("cognome", tesista.getCognome());
-        cvUtente.put("email", tesista.getEmail());
-        cvUtente.put("password", tesista.getPassword());
-        cvUtente.put("codice_fiscale", tesista.getCodiceFiscale());
+        cvUtente.put(Database.UTENTI_NOME, tesista.getNome());
+        cvUtente.put(Database.UTENTI_COGNOME, tesista.getCognome());
+        cvUtente.put(Database.UTENTI_EMAIL, tesista.getEmail());
+        cvUtente.put(Database.UTENTI_PASSWORD, tesista.getPassword());
+        cvUtente.put(Database.UTENTI_CODICEFISCALE, tesista.getCodiceFiscale());
 
         try{
-            long updateUtente = db.update("utenti", cvUtente, "id = " + tesista.getIdUtente(), null);
+            long updateUtente = db.update(Database.UTENTI, cvUtente, Database.UTENTI_ID + " = " + tesista.getIdUtente(), null);
             if(updateUtente != -1){
                 ContentValues cvTesista = new ContentValues();
 
-                cvTesista.put("matricola", tesista.getMatricola());
-                cvTesista.put("media_voti", tesista.getMedia());
-                cvTesista.put("esami_mancanti", tesista.getNumeroEsamiMancanti());
-                cvTesista.put("universitacorso_id", tesista.getIdUniversitaCorso());
+                cvTesista.put(Database.TESISTA_MATRICOLA, tesista.getMatricola());
+                cvTesista.put(Database.TESISTA_MEDIAVOTI, tesista.getMedia());
+                cvTesista.put(Database.TESISTA_ESAMIMANCANTI, tesista.getNumeroEsamiMancanti());
+                cvTesista.put(Database.TESISTA_UNIVERSITACORSOID, tesista.getIdUniversitaCorso());
 
-                long updateTesista = db.update("tesista", cvTesista, "id = " + tesista.getIdTesista(), null);
+                long updateTesista = db.update(Database.TESISTA, cvTesista, Database.TESISTA_ID + " = " + tesista.getIdTesista(), null);
                 return updateTesista != -1;
             }
         }catch(Exception e){
@@ -67,8 +67,9 @@ public class TesistaDatabase {
     public static Tesista IstanziaTesista(UtenteRegistrato account, Database dbClass){
         Tesista TesistaLog = new Tesista();
 
-        String query =  "SELECT u.id, t.id, matricola, u.nome, cognome, email, password, media_voti, esami_mancanti, universitacorso_id, codice_fiscale" +
-                " FROM utenti u, tesista t WHERE u.id=t.utente_id AND email = '" + account.getEmail() + "';";
+        String query =  "SELECT u." + Database.UTENTI_ID + ", t." + Database.TESISTA_ID + ", " + Database.TESISTA_MATRICOLA + ", " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + ", " + Database.UTENTI_PASSWORD + ", " + Database.TESISTA_MEDIAVOTI + ", " + Database.TESISTA_ESAMIMANCANTI + ", " + Database.TESISTA_UNIVERSITACORSOID + ", " + Database.UTENTI_CODICEFISCALE + " " +
+                        "FROM " + Database.UTENTI + " u, " + Database.TESISTA + " t " +
+                        "WHERE u." + Database.UTENTI_ID + "=t." + Database.TESISTA_UTENTEID + " AND " + Database.UTENTI_EMAIL + " = '" + account.getEmail() + "';";
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();
