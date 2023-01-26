@@ -22,7 +22,9 @@ public class Ricevimento {
         this.accettazione = accettazione;
         this.messaggio = messaggio;
     }
+    public Ricevimento(){
 
+    }
     public int getIdRicevimento() {
         return idRicevimento;
     }
