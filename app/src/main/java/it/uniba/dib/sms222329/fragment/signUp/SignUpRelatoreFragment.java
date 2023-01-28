@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222329.fragment.signUp;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -63,11 +64,12 @@ public class SignUpRelatoreFragment extends Fragment {
             List idCorsiSelezionati = RecuperaIdCorsi();
             ArrayList<Integer> corsiRelatore = RecuperaUniversitaCorso(idUniversita, idCorsiSelezionati);
 
-            Relatore account = new Relatore(matricola.getText().toString(), accountGenerale.getNome(),
+            if(!isEmptyTextbox(matricola) && corsiRelatore.size()!=0){
+            Relatore account = new Relatore(matricola.getText().toString().trim(), accountGenerale.getNome(),
                     accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(), accountGenerale.getEmail(),
                     accountGenerale.getPassword(), 2, corsiRelatore);
 
-            if(!db.VerificaDatoEsistente("SELECT " + Database.RELATORE_MATRICOLA + " FROM " + Database.RELATORE + " WHERE " + Database.RELATORE_MATRICOLA + " = '"+ account.getMatricola() +"';")){
+                if(!db.VerificaDatoEsistente("SELECT " + Database.RELATORE_MATRICOLA + " FROM " + Database.RELATORE + " WHERE " + Database.RELATORE_MATRICOLA + " = '"+ account.getMatricola() +"';")){
 
                     if(UtenteRegistratoDatabase.RegistrazioneUtente(account, db) && RelatoreDatabase.RegistrazioneRelatore(account, db)){
                         Intent mainActivity = new Intent(getActivity().getApplicationContext(), MainActivity.class);
@@ -76,8 +78,11 @@ public class SignUpRelatoreFragment extends Fragment {
                         Toast.makeText(getActivity().getApplicationContext(), "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
                     }
 
-            }else{
-                Toast.makeText(getActivity().getApplicationContext(), "Matricola già esistente", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity().getApplicationContext(), "Matricola già esistente", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -178,4 +183,12 @@ public class SignUpRelatoreFragment extends Fragment {
         });
     }
 
+    private boolean isEmptyTextbox(EditText textbox){
+        if(textbox.getText().toString().trim().compareTo("")==0){
+            textbox.setError("Obbligatorio");
+            return true;
+        }
+        textbox.setError(null);
+        return false;
+    }
 }

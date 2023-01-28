@@ -22,6 +22,10 @@ public class Task {
         this.idTesiScelta = idTesiScelta;
     }
 
+    public Task(){
+
+    }
+
     public int getIdTask() {
         return idTask;
     }

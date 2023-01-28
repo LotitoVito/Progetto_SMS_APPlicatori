@@ -5,15 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+import android.provider.ContactsContract;
 
 import androidx.annotation.Nullable;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import it.uniba.dib.sms222329.classi.Tesista;
+import it.uniba.dib.sms222329.classi.Ricevimento;
 
 public class Database extends SQLiteOpenHelper {
 
@@ -316,6 +315,8 @@ public class Database extends SQLiteOpenHelper {
         }
         //Popolamento tabella Universita-CorsiStudio
         PopolamentoUniCorsi(db);
+        //Popolamento ricevimenti
+        Test(db);
     }
 
     //Viene chiamato nel caso di aggiornamento della versione del database
@@ -371,5 +372,8 @@ public class Database extends SQLiteOpenHelper {
         cv.put(UNIVERSITACORSO_UNIVERSITAID, 3);
         cv.put(UNIVERSITACORSO_CORSOID, 3);
         db.insert(UNIVERSITACORSO, null, cv);
+    }
+
+    private void Test(SQLiteDatabase db){
     }
 }

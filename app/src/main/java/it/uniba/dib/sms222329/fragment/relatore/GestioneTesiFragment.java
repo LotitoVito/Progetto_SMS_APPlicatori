@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222329.fragment.relatore;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.autofill.AutofillValue;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -94,9 +96,9 @@ public class GestioneTesiFragment extends Fragment {
                 fillIfEmpty(capacitaRichiesta, tesi.getCapacitaRichieste());
                 fillIfEmpty(media, String.valueOf(tesi.getMediaVotiMinima()));
 
-                tesi.ModificaTesi(titolo.getText().toString(), argomenti.getText().toString(), statoDisponibilita.isChecked(),
-                        Integer.parseInt(tempistiche.getText().toString()), Float.parseFloat(media.getText().toString()),
-                        Integer.parseInt(esamiMancanti.getText().toString()), capacitaRichiesta.getText().toString());
+                tesi.ModificaTesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(), statoDisponibilita.isChecked(),
+                        Integer.parseInt(tempistiche.getText().toString().trim()), Float.parseFloat(media.getText().toString().trim()),
+                        Integer.parseInt(esamiMancanti.getText().toString().trim()), capacitaRichiesta.getText().toString().trim());
                 if(TesiDatabase.ModificaTesi(tesi, db)){
                     Toast.makeText(context, "Successo", Toast.LENGTH_SHORT).show();
                 } else{
@@ -107,15 +109,21 @@ public class GestioneTesiFragment extends Fragment {
         } else{
 
             salva.setOnClickListener(view -> {
-                Tesi tesi = new Tesi(titolo.getText().toString(), argomenti.getText().toString(),
-                        statoDisponibilita.isChecked(), relatoreLoggato.getIdRelatore(), Integer.parseInt(tempistiche.getText().toString()),
-                        Integer.parseInt(media.getText().toString()), Integer.parseInt(esamiMancanti.getText().toString()),
-                        capacitaRichiesta.getText().toString());
 
-                if(TesiDatabase.RegistrazioneTesi(tesi, db)){
-                    Toast.makeText(context, "Successo", Toast.LENGTH_SHORT).show();
-                } else{
-                    Toast.makeText(context, "Registrazione fallita", Toast.LENGTH_SHORT).show();
+                if(CheckEmpty(titolo, argomenti, tempistiche, media, esamiMancanti, capacitaRichiesta)) {
+                Tesi tesi = new Tesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(),
+                        statoDisponibilita.isChecked(), relatoreLoggato.getIdRelatore(), Integer.parseInt(tempistiche.getText().toString().trim()),
+                        Integer.parseInt(media.getText().toString().trim()), Integer.parseInt(esamiMancanti.getText().toString().trim()),
+                        capacitaRichiesta.getText().toString().trim());
+
+                    if (TesiDatabase.RegistrazioneTesi(tesi, db)) {
+                        Toast.makeText(context, "Successo", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "Registrazione fallita", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else{
+                    Toast.makeText(getActivity().getApplicationContext(), "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -123,9 +131,41 @@ public class GestioneTesiFragment extends Fragment {
     }
 
     private void fillIfEmpty(TextInputEditText campo, String value){
-        if(campo.getText().toString().matches("")){
+        if(campo.getText().toString().trim().matches("")){
             campo.autofill(AutofillValue.forText(value));
         }
     }
 
+    private boolean CheckEmpty(EditText titolo, EditText argomenti, EditText tempistiche, EditText media, EditText esamiMancanti, EditText capacitaRichiesta){
+        boolean risultato = true;
+
+        if(isEmptyTextbox(titolo)){
+            risultato = false;
+        }
+        if(isEmptyTextbox(argomenti)){
+            risultato = false;
+        }
+        if(isEmptyTextbox(tempistiche)){
+            risultato = false;
+        }
+        if(isEmptyTextbox(media)){
+            risultato = false;
+        }
+        if(isEmptyTextbox(esamiMancanti)){
+            risultato = false;
+        }
+        if(isEmptyTextbox(capacitaRichiesta)){
+            risultato = false;
+        }
+        return risultato;
+    }
+
+    private boolean isEmptyTextbox(EditText textbox){
+        if(textbox.getText().toString().trim().compareTo("")==0){
+            textbox.setError("Obbligatorio");
+            return true;
+        }
+        textbox.setError(null);
+        return false;
+    }
 }

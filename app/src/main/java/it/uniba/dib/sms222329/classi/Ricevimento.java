@@ -1,7 +1,7 @@
 package it.uniba.dib.sms222329.classi;
 
-import java.sql.Date;
 import java.sql.Time;
+import java.util.Date;
 
 public class Ricevimento {
 
@@ -17,6 +17,19 @@ public class Ricevimento {
         this.idRicevimento = idRicevimento;
         this.orario = orario;
         this.data = data;
+        this.argomento = argomento;
+        this.idTask = idTask;
+        this.accettazione = accettazione;
+        this.messaggio = messaggio;
+    }
+
+    public Ricevimento(){
+
+    }
+
+    public Ricevimento(Date data, Time orario, String argomento, int idTask, int accettazione, String messaggio) {
+        this.data = data;
+        this.orario = orario;
         this.argomento = argomento;
         this.idTask = idTask;
         this.accettazione = accettazione;

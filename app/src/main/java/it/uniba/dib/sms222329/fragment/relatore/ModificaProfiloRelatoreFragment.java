@@ -89,9 +89,9 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
             ArrayList<Integer> corsiRelatore = RecuperaUniversitaCorso(idUniversita,idCorsiSelezionati);
 
             //Modifica
-            relatoreLoggato.modRelatore(matricola.getText().toString(),nome.getText().toString(),
-                    cognome.getText().toString(), codFisc.getText().toString(),mail.getText().toString(),
-                    password.getText().toString(), corsiRelatore);
+            relatoreLoggato.modRelatore(matricola.getText().toString().trim(),nome.getText().toString().trim(),
+                    cognome.getText().toString().trim(), codFisc.getText().toString().trim(),mail.getText().toString().trim(),
+                    password.getText().toString().trim(), corsiRelatore);
             if (RelatoreDatabase.modRelatore(relatoreLoggato, db)) {
                 Toast.makeText(getActivity().getApplicationContext(),"modifica riuscita",Toast.LENGTH_SHORT).show();
             }

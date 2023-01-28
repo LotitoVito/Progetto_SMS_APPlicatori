@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
         signInButton.setOnClickListener(view -> {
 
-            UtenteRegistrato Utente = new UtenteRegistrato(emailIns.getText().toString(), editTextTextPassword.getText().toString());
+            UtenteRegistrato Utente = new UtenteRegistrato(emailIns.getText().toString().trim(), editTextTextPassword.getText().toString().trim());
 
             if (UtenteRegistratoDatabase.LoginStatus(Utente, db)) {
                 Intent UtenteLoggato = new Intent(getApplicationContext(), UtenteLoggato.class);
