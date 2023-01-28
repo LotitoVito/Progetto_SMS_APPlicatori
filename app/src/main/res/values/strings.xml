@@ -55,6 +55,8 @@
     <string name="mystudent">My student</string>
     <string name="segnalazioni">Issues</string>
     <string name="scanQr">Scan QR Code</string>
+    <string name="condividi">Share</string>
+    <string name="tutte">All</string>
 
 
 </resources>

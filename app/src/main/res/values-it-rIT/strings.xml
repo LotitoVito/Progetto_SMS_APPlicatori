@@ -56,6 +56,8 @@
     <string name="mystudent">I miei tesisti</string>
     <string name="segnalazioni">Segnalazioni</string>
     <string name="scanQr">Scan QR Code</string>
+    <string name="condividi">Condividi</string>
+    <string name="tutte">Tutte</string>
 
 
 </resources>

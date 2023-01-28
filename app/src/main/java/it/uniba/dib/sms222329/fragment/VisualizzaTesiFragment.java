@@ -22,6 +22,7 @@ import it.uniba.dib.sms222329.classi.Tesi;
 public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
     Tesi tesi;
 
+    public  VisualizzaTesiFragment(){}
     public VisualizzaTesiFragment(Tesi tesi) {
         this.tesi = tesi;
     }

@@ -29,10 +29,89 @@
 
         </RelativeLayout>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/all"
+            android:text="@string/tutte"
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="6"
+           >
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:id="@+id/relatore"
+                android:text="@string/relatore"
+                android:textSize="10sp"
+                />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:id="@+id/argomento"
+                android:text="@string/argomenti"
+                android:textSize="10sp"
+                />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:id="@+id/tempi"
+                android:text="@string/tempistiche"
+                android:textSize="10sp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="6">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:id="@+id/voto"
+                android:text="@string/media"
+                android:textSize="10sp"
+                />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:id="@+id/numeroEsamiMancanti"
+                android:text="@string/numero_esami_mancanti"
+                android:textSize="10sp"
+                />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:id="@+id/disponibilita"
+                android:text="@string/disponibilita"
+                android:textSize="10sp"
+                />
+
+        </LinearLayout>
+
         <ListView
             android:id="@+id/tesiList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="16dp"
             tools:listitem="@layout/relatore_tesi_item"
            />
