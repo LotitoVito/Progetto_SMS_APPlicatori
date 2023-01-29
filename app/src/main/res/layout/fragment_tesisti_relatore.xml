@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.relatore.TesistiRelatoreFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:minHeight="400dp"
+        android:elevation="16dp"
+        android:weightSum="10"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4">
+        <TextView
+            android:id="@+id/richieste"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/richieste"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:clickable="true"/>
+
+        <TextView
+            android:id="@+id/tesisti"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/tesisti"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:clickable="true"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <View
+                android:id="@+id/u_richieste"
+                android:layout_width="wrap_content"
+                android:layout_height="4dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                />
+
+            <View
+                android:id="@+id/u_tesisti"
+                android:layout_width="wrap_content"
+                android:layout_height="4dp"
+                android:layout_weight="2"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/segnalazioniList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            tools:listitem="@layout/segnalazioni_item"
+            />
+
+
+
+    </LinearLayout>
+</FrameLayout>

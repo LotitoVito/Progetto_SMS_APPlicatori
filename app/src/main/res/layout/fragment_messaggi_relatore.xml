@@ -38,6 +38,8 @@
 
     </LinearLayout>
 
+
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/creaSegnalazione"
         android:layout_width="wrap_content"
@@ -46,6 +48,7 @@
         android:src="@android:drawable/ic_input_add"
         android:layout_gravity="end|bottom"
         android:contentDescription="@string/title_thesis"
+        android:visibility="gone"
 
         />
 

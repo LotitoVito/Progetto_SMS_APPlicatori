@@ -65,6 +65,8 @@
     <string name="chiusa">Chiusa</string>
     <string name="data">Data di creazione</string>
     <string name="ordina">Order ascendent</string>
+    <string name="richieste">Request</string>
+    <string name="tesisti">Students</string>
 
 
 </resources>
