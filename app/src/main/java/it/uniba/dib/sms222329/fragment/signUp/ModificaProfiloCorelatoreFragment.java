@@ -24,7 +24,9 @@ public class ModificaProfiloCorelatoreFragment extends Fragment {
     private Database db;
     private CoRelatore corelatore;
 
-    public ModificaProfiloCorelatoreFragment() {
+    public ModificaProfiloCorelatoreFragment(Database db, CoRelatore corelatoreLoggato) {
+        this.db = db;
+        this.corelatore = corelatoreLoggato;
     }
 
     @Override

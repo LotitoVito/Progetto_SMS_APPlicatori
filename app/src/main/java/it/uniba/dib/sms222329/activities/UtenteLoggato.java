@@ -33,32 +33,37 @@ import it.uniba.dib.sms222329.fragment.ProfiloFragment;
 import it.uniba.dib.sms222329.fragment.VisualizzaTesiFragment;
 import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
 import it.uniba.dib.sms222329.fragment.relatore.MessaggiFragment;
+import it.uniba.dib.sms222329.fragment.relatore.ModificaProfiloRelatoreFragment;
+import it.uniba.dib.sms222329.fragment.relatore.StudentiRelatoreFragment;
 import it.uniba.dib.sms222329.fragment.relatore.TesiFragment;
-import it.uniba.dib.sms222329.fragment.relatore.TesistiRelatoreFragment;
 
 public class UtenteLoggato extends AppCompatActivity {
 
     private Database db = new Database(this);
-    private Relatore RelatoreLoggato;
+    private UtenteRegistrato utenteLoggato;
+    private Tesista tesistaLoggato;
+    private Relatore relatoreLoggato;
+    private CoRelatore coRelatoreLoggato;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_utente_loggato);
 
-        UtenteRegistrato Utente = (UtenteRegistrato) getIntent().getSerializableExtra("utentePassato");
+        UtenteRegistrato utente = (UtenteRegistrato) getIntent().getSerializableExtra("utentePassato");
+        utenteLoggato = utente;
 
         try{
-            if(Utente.getTipoUtente() == 1){ //tesista
-                Tesista TesistaLoggato = TesistaDatabase.IstanziaTesista(Utente, db);
+            if(utente.getTipoUtente() == Utility.TESISTA){ //tesista
+                tesistaLoggato = TesistaDatabase.IstanziaTesista(utente, db);
             }
-            else if (Utente.getTipoUtente() == 2){ //relatore
-                RelatoreLoggato = RelatoreDatabase.IstanziaRelatore(Utente, db);
-                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment(RelatoreLoggato));
-                setBottomNavigation(new TesiFragment(RelatoreLoggato), new MessaggiFragment(RelatoreLoggato), new HomeFragment(RelatoreLoggato), new TesistiRelatoreFragment());
+            else if (utente.getTipoUtente() == Utility.RELATORE){ //relatore
+                relatoreLoggato = RelatoreDatabase.IstanziaRelatore(utente, db);
+                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment(relatoreLoggato));
+                setBottomNavigation(new TesiFragment(relatoreLoggato), new MessaggiFragment(relatoreLoggato), new HomeFragment(relatoreLoggato), new StudentiRelatoreFragment());
             }
-            else if (Utente.getTipoUtente() == 3){ //corelatore
-                CoRelatore CoRelatoreLoggato = CoRelatoreDatabase.IstanziaCoRelatore(Utente, db);
+            else if (utente.getTipoUtente() == Utility.CORELATORE){ //corelatore
+                coRelatoreLoggato = CoRelatoreDatabase.IstanziaCoRelatore(utente, db);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -106,7 +111,13 @@ public class UtenteLoggato extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.navigation_profile:
-                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment(db, RelatoreLoggato));
+                if(utenteLoggato.getTipoUtente() == Utility.TESISTA){
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment(db, utenteLoggato.getTipoUtente(), tesistaLoggato));
+                } else if (utenteLoggato.getTipoUtente() == Utility.RELATORE){
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment(db, utenteLoggato.getTipoUtente(), relatoreLoggato));
+                }else if(utenteLoggato.getTipoUtente() == Utility.CORELATORE){
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment(db, utenteLoggato.getTipoUtente(), coRelatoreLoggato));
+                }
                 return true;
             case R.id.navigation_settings:
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ImpostazioniFragment());
