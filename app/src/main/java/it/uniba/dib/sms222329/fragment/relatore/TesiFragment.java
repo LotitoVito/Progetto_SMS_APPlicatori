@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -21,6 +23,7 @@ import it.uniba.dib.sms222329.classi.ListaTesi;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.fragment.FilterFragment;
 import it.uniba.dib.sms222329.fragment.VisualizzaTesiFragment;
 
 public class TesiFragment extends Fragment {
@@ -56,6 +59,15 @@ public class TesiFragment extends Fragment {
 
         // Set up a click listener for the button
         addButton.setOnClickListener(view1 -> Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new GestioneTesiFragment(relatoreLoggato)));
+
+        TextView filtra = view.findViewById(R.id.filtra);
+        filtra.setOnClickListener(view1 -> {
+            // Create a new instance of the bottom sheet fragment
+            FilterFragment bottomSheet = new FilterFragment();
+            // Show the bottom sheet
+            bottomSheet.show(getActivity().getSupportFragmentManager(), bottomSheet.getTag());
+        });
+        ;
 
         ListView listView = getActivity().findViewById(R.id.tesiList);
 

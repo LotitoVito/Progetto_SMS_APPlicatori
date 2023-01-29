@@ -58,6 +58,8 @@
     <string name="scanQr">Scan QR Code</string>
     <string name="condividi">Condividi</string>
     <string name="tutte">Tutte</string>
+    <string name="filtra">FILTRA</string>
+    <string name="ordinaper">Ordinamento ascendente</string>
 
 
 </resources>
