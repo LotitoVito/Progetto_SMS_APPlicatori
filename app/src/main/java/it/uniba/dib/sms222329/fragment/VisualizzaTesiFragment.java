@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -50,6 +51,7 @@ public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
         TextView capacitaRichiesta = getView().findViewById(R.id.capacitaRichiesta);
         TextView media = getView().findViewById(R.id.media);
         SwitchMaterial disponibilita = getView().findViewById(R.id.disponibilita);
+        ImageView qrCode = getView().findViewById(R.id.qrCode);
 
         titolo.setText(tesi.getTitolo());
         argomento.setText(tesi.getArgomenti());
@@ -58,5 +60,6 @@ public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
         capacitaRichiesta.setText(tesi.getCapacitaRichieste());
         media.setText(String.valueOf(tesi.getMediaVotiMinima()));
         disponibilita.setChecked(tesi.getStatoDisponibilita());
+        qrCode.setImageBitmap(tesi.QRGenerator());
     }
 }

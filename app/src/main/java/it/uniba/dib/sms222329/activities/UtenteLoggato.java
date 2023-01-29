@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.CoRelatore;
 import it.uniba.dib.sms222329.classi.Relatore;
+import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.classi.Tesista;
 import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 import it.uniba.dib.sms222329.database.CoRelatoreDatabase;
@@ -28,6 +30,7 @@ import it.uniba.dib.sms222329.database.RelatoreDatabase;
 import it.uniba.dib.sms222329.database.TesistaDatabase;
 import it.uniba.dib.sms222329.fragment.ImpostazioniFragment;
 import it.uniba.dib.sms222329.fragment.ProfiloFragment;
+import it.uniba.dib.sms222329.fragment.VisualizzaTesiFragment;
 import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
 import it.uniba.dib.sms222329.fragment.relatore.MessaggiFragment;
 import it.uniba.dib.sms222329.fragment.relatore.ModificaProfiloRelatoreFragment;
@@ -131,10 +134,24 @@ public class UtenteLoggato extends AppCompatActivity {
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result->{
         if(result.getContents()!=null)
         {
+            Database db = new Database(this);
+            Cursor cursor = db.RicercaDato("SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_ID + "=" + result.getContents() + ";");
+            cursor.moveToNext();
+            String messaggio = cursor.getString(1) + cursor.getString(2);
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Result");
-            builder.setMessage(result.getContents());
+            builder.setTitle("Tesi");
+            builder.setMessage(messaggio);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Tesi tesi = new Tesi(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),
+                            cursor.getFloat(4), cursor.getInt(5), cursor.getString(6), cursor.getInt(7)==1,
+                            cursor.getInt(8), cursor.getInt(9));
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new VisualizzaTesiFragment(tesi));
+                }
+            }).show();
+            builder.setPositiveButton("Annulla", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();

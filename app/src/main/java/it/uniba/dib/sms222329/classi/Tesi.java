@@ -32,7 +32,8 @@ public class Tesi {
     private int numeroVisualizzazioni;
     private int idRelatore;
 
-    public Tesi(int id, String titolo, String argomenti, int tempistiche, float mediaVotiMinima, int esamiNecessari, String capacitaRichieste, boolean statoDisponibilita, int numeroVisualizzazioni, int idRelatore) {
+    public Tesi(int id, String titolo, String argomenti, int tempistiche, float mediaVotiMinima, int esamiNecessari,
+                String capacitaRichieste, boolean statoDisponibilita, int numeroVisualizzazioni, int idRelatore) {
         this.id = id;
         this.titolo = titolo;
         this.argomenti = argomenti;
