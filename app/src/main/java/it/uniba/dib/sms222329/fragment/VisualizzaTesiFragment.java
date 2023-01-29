@@ -1,5 +1,7 @@
 package it.uniba.dib.sms222329.fragment;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +21,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.classi.Tesi;
+import it.uniba.dib.sms222329.database.Database;
 
 
 public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
@@ -52,6 +56,7 @@ public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
         TextView media = getView().findViewById(R.id.media);
         SwitchMaterial disponibilita = getView().findViewById(R.id.disponibilita);
         ImageView qrCode = getView().findViewById(R.id.qrCode);
+        Button share = getView().findViewById(R.id.condividi);
 
         titolo.setText(tesi.getTitolo());
         argomento.setText(tesi.getArgomenti());
@@ -61,5 +66,24 @@ public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
         media.setText(String.valueOf(tesi.getMediaVotiMinima()));
         disponibilita.setChecked(tesi.getStatoDisponibilita());
         qrCode.setImageBitmap(tesi.QRGenerator());
+
+        share.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            String sub = "Guarda questa Tesi!\nTitolo: " + tesi.getTitolo() +"\nArgomenti: " + tesi.getArgomenti() +"\nTempistiche in mesi: "
+                    + tesi.getTempistiche() + "\nMedia: " + tesi.getMediaVotiMinima() + "\nEsami necessari: " + tesi.getEsamiMancantiNecessari() +
+                    "\nCapacità richieste: " + tesi.getCapacitaRichieste();
+            if(tesi.getStatoDisponibilita()){
+                sub += "\nDisponibile";
+            } else{
+                sub += "\nDisponibile";
+            }
+            Database db = new Database(getActivity().getApplicationContext());
+            Cursor cursor = db.RicercaDato("SELECT " + Database.RELATORE_MATRICOLA + " FROM " + Database.RELATORE + ";");
+            cursor.moveToNext();
+            sub += "\nMatricola Relatore: " + cursor.getString(0);
+            intent.putExtra(Intent.EXTRA_TEXT, sub);
+            startActivity(Intent.createChooser(intent, "Condividi con:"));
+        });
     }
 }

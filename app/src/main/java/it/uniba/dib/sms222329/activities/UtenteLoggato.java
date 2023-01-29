@@ -137,7 +137,7 @@ public class UtenteLoggato extends AppCompatActivity {
             Database db = new Database(this);
             Cursor cursor = db.RicercaDato("SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_ID + "=" + result.getContents() + ";");
             cursor.moveToNext();
-            String messaggio = cursor.getString(1) + cursor.getString(2);
+            String messaggio = cursor.getString(1) + "\n" + cursor.getString(2);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Tesi");
@@ -149,12 +149,6 @@ public class UtenteLoggato extends AppCompatActivity {
                             cursor.getFloat(4), cursor.getInt(5), cursor.getString(6), cursor.getInt(7)==1,
                             cursor.getInt(8), cursor.getInt(9));
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new VisualizzaTesiFragment(tesi));
-                }
-            }).show();
-            builder.setPositiveButton("Annulla", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
                 }
             }).show();
         }
