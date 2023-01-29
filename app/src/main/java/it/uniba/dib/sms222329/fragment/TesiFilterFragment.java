@@ -14,10 +14,10 @@ import it.uniba.dib.sms222329.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FilterFragment#newInstance} factory method to
+ * Use the {@link TesiFilterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FilterFragment extends BottomSheetDialogFragment {
+public class TesiFilterFragment extends BottomSheetDialogFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,7 +28,7 @@ public class FilterFragment extends BottomSheetDialogFragment {
     private String mParam1;
     private String mParam2;
 
-    public FilterFragment() {
+    public TesiFilterFragment() {
         // Required empty public constructor
     }
 
@@ -41,8 +41,8 @@ public class FilterFragment extends BottomSheetDialogFragment {
      * @return A new instance of fragment FilterFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FilterFragment newInstance(String param1, String param2) {
-        FilterFragment fragment = new FilterFragment();
+    public static TesiFilterFragment newInstance(String param1, String param2) {
+        TesiFilterFragment fragment = new TesiFilterFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,6 +63,6 @@ public class FilterFragment extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_filter, container, false);
+        return inflater.inflate(R.layout.fragment_tesi_filter, container, false);
     }
 }

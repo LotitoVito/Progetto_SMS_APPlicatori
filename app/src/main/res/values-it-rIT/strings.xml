@@ -59,8 +59,13 @@
     <string name="condividi">Condividi</string>
     <string name="tutte">Tutte</string>
     <string name="filtra">FILTRA</string>
-    <string name="ordinaper">Ordinamento ascendente</string>
+    <string name="ordinaper">Ordina per</string>
     <string name="ruolo">Ruolo</string>
+    <string name="utente">Creatore segnalazione</string>
+    <string name="task">Task</string>
+    <string name="chiusa">Chiusa</string>
+    <string name="data">Data di creazione</string>
+    <string name="ordina">Ordinamento ascendente</string>
 
 
 </resources>

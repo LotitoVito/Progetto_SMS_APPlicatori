@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,8 +21,7 @@ import it.uniba.dib.sms222329.classi.ListaTesi;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.database.Database;
-import it.uniba.dib.sms222329.fragment.FilterFragment;
-import it.uniba.dib.sms222329.fragment.VisualizzaTesiFragment;
+import it.uniba.dib.sms222329.fragment.TesiFilterFragment;
 
 public class TesiFragment extends Fragment {
     Relatore relatoreLoggato;
@@ -61,13 +58,13 @@ public class TesiFragment extends Fragment {
         addButton.setOnClickListener(view1 -> Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new GestioneTesiFragment(relatoreLoggato)));
 
         TextView filtra = view.findViewById(R.id.filtra);
+
         filtra.setOnClickListener(view1 -> {
             // Create a new instance of the bottom sheet fragment
-            FilterFragment bottomSheet = new FilterFragment();
+            TesiFilterFragment bottomSheet = new TesiFilterFragment();
             // Show the bottom sheet
             bottomSheet.show(getActivity().getSupportFragmentManager(), bottomSheet.getTag());
         });
-        ;
 
         ListView listView = getActivity().findViewById(R.id.tesiList);
 

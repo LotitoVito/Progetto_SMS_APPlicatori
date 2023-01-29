@@ -58,8 +58,13 @@
     <string name="condividi">Share</string>
     <string name="tutte">All</string>
     <string name="filtra">FILTER</string>
-    <string name="ordinaper">Order ascendent</string>
+    <string name="ordinaper">Order by</string>
     <string name="ruolo">Role</string>
+    <string name="utente">Creatore segnalazione</string>
+    <string name="task">Task</string>
+    <string name="chiusa">Chiusa</string>
+    <string name="data">Data di creazione</string>
+    <string name="ordina">Order ascendent</string>
 
 
 </resources>
