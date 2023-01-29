@@ -27,6 +27,7 @@ import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.RelatoreDatabase;
 import it.uniba.dib.sms222329.database.TesistaDatabase;
 import it.uniba.dib.sms222329.fragment.ImpostazioniFragment;
+import it.uniba.dib.sms222329.fragment.ProfiloFragment;
 import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
 import it.uniba.dib.sms222329.fragment.relatore.MessaggiFragment;
 import it.uniba.dib.sms222329.fragment.relatore.ModificaProfiloRelatoreFragment;
@@ -103,7 +104,7 @@ public class UtenteLoggato extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.navigation_profile:
-                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ModificaProfiloRelatoreFragment(db, RelatoreLoggato));
+                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment(db, RelatoreLoggato));
                 return true;
             case R.id.navigation_settings:
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ImpostazioniFragment());
