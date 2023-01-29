@@ -18,6 +18,10 @@ import it.uniba.dib.sms222329.database.Database;
 
 public class Utility {
 
+    public static final int TESISTA = 1;
+    public static final int RELATORE = 2;
+    public static final int CORELATORE = 3;
+
     private Utility() {}
 
     public static void replaceFragment(FragmentManager fragmentManager, int containerId, Fragment fragment) {

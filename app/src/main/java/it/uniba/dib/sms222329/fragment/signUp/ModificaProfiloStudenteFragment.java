@@ -30,7 +30,10 @@ public class ModificaProfiloStudenteFragment extends Fragment {
     private Database db;
     private Tesista tesista;
 
-    public ModificaProfiloStudenteFragment() {
+
+    public ModificaProfiloStudenteFragment(Database db, Tesista tesistaLoggato) {
+        this.db = db;
+        this.tesista = tesistaLoggato;
     }
 
 
