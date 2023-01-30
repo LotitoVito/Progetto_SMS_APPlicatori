@@ -24,17 +24,24 @@ import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.fragment.TesiFilterFragment;
 
 public class TesiFragment extends Fragment {
-    Relatore relatoreLoggato;
+    private Relatore relatoreLoggato;
+    private String queryFiltri;
 
     public TesiFragment(){}
+
     public TesiFragment(Relatore relatoreLoggato) {
         this.relatoreLoggato = relatoreLoggato;
+        this.queryFiltri = "SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_RELATOREID + "=" + relatoreLoggato.getIdRelatore() + ";";
+    }
+
+    public TesiFragment(Relatore relatoreLoggato, String queryFiltri) {
+        this.relatoreLoggato = relatoreLoggato;
+        this.queryFiltri = queryFiltri;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tesi_relatore, container, false);
 
         BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.navigation);
@@ -43,7 +50,6 @@ public class TesiFragment extends Fragment {
             bottomNavigationView.getMenu().findItem(R.id.navigation_thesis).setChecked(true);
         }
 
-        // Return the view hierarchy
         return view;
     }
 
@@ -61,16 +67,15 @@ public class TesiFragment extends Fragment {
 
         filtra.setOnClickListener(view1 -> {
             // Create a new instance of the bottom sheet fragment
-            TesiFilterFragment bottomSheet = new TesiFilterFragment();
+            TesiFilterFragment bottomSheet = new TesiFilterFragment(relatoreLoggato);
             // Show the bottom sheet
             bottomSheet.show(getActivity().getSupportFragmentManager(), bottomSheet.getTag());
         });
 
-        ListView listView = getActivity().findViewById(R.id.tesiList);
-
-        ListaTesi lista = new ListaTesi(new Database(getActivity().getApplicationContext()));
         Database db = new Database(getContext());
-        List<Tesi> listaTesi = lista.vincoloRelatore(relatoreLoggato.getIdRelatore(), db);
+        ListView listView = getActivity().findViewById(R.id.tesiList);
+        ListaTesi lista = new ListaTesi(db);
+        List<Tesi> listaTesi = lista.vincoloConQuery(queryFiltri, db);
         ListaTesiAdapter adapterLista = new ListaTesiAdapter(getActivity().getApplicationContext(), listaTesi, getActivity().getSupportFragmentManager(), relatoreLoggato);
         listView.setAdapter(adapterLista);
     }

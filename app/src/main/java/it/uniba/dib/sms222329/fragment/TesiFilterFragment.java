@@ -24,14 +24,17 @@ import java.util.List;
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.ListaTesi;
+import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.fragment.relatore.GestioneTesiFragment;
 import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
 import it.uniba.dib.sms222329.fragment.relatore.TesiFragment;
 
 public class TesiFilterFragment extends BottomSheetDialogFragment {
+    private Relatore relatoreLoggato;
 
-    public TesiFilterFragment() {
+    public TesiFilterFragment(Relatore relatoreLoggato) {
+        this.relatoreLoggato = relatoreLoggato;
     }
 
     @Override
@@ -54,6 +57,10 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
         SwitchMaterial ordinaAscendente = getView().findViewById(R.id.ordina);
         Button avviaRicerca = getView().findViewById(R.id.avviaRicerca); //ok
         spinnerCreate(campoOrdinamento); //ordinaper
+
+        if(relatoreLoggato != null){
+            relatore.setText(String.valueOf(relatoreLoggato.getIdRelatore()), EditText.BufferType.EDITABLE);
+        }
 
         avviaRicerca.setOnClickListener(view -> {
             Database db = new Database(getActivity().getApplicationContext());
@@ -84,7 +91,8 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
             listaTesiFiltrata.vincoloConQuery(query, db);
             Log.d("test", query);
 
-            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.content2, new TesiFragment());
+            this.dismiss();
+            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.content2, new TesiFragment(relatoreLoggato, query));
         });
     }
 

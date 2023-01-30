@@ -53,14 +53,6 @@ public class ListaTesi {
         this.lista = listaTesiEstratte;
     }
 
-
-
-    public ArrayList<Tesi> getLista() {
-        return lista;
-    }
-
-
-
     //ordinamenti vari
     public ArrayList<Tesi> OrdinaPerTitolo(Database dbClass){
         SQLiteDatabase db = dbClass.getReadableDatabase();
