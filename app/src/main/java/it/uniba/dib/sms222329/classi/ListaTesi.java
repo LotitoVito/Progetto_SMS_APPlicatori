@@ -262,6 +262,36 @@ public class ListaTesi {
         this.lista = listaTesiEstratte;
         return this.lista;
     }
+
+
+    public ArrayList<Tesi> vincoloConQuery(String query, Database dbClass){ //visualizza solo tesi disponibili
+        SQLiteDatabase db = dbClass.getReadableDatabase();
+        Cursor cursore = db.rawQuery(query, null);
+
+
+        ArrayList<Tesi> listaTesiEstratte = new ArrayList<Tesi>();
+
+        while(cursore.moveToNext()) {
+            Tesi tesiEstratta = new Tesi();
+
+            tesiEstratta.setId(cursore.getInt(0));
+            tesiEstratta.setTitolo(cursore.getString(1));
+            tesiEstratta.setArgomenti(cursore.getString(2));
+            tesiEstratta.setTempistiche(cursore.getInt(3));
+            tesiEstratta.setMediaVotiMinima(cursore.getFloat(4));
+            tesiEstratta.setEsamiMancantiNecessari(cursore.getInt(5));
+            tesiEstratta.setCapacitaRichieste(cursore.getString(6));
+            tesiEstratta.setStatoDisponibilita(cursore.getInt(7) != 0);
+            tesiEstratta.setNumeroVisualizzazioni(cursore.getInt(8));
+            tesiEstratta.setIdRelatore(cursore.getInt(9));
+
+            listaTesiEstratte.add(tesiEstratta);
+        }
+        this.lista = listaTesiEstratte;
+        return this.lista;
+    }
+
+
 }
 
 

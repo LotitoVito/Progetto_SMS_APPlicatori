@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
+import it.uniba.dib.sms222329.classi.ListaTesi;
 import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.fragment.relatore.GestioneTesiFragment;
+import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
+import it.uniba.dib.sms222329.fragment.relatore.TesiFragment;
 
 public class TesiFilterFragment extends BottomSheetDialogFragment {
 
@@ -46,8 +52,8 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
         SwitchMaterial disponibilita = getView().findViewById(R.id.disponibilita);
         Spinner campoOrdinamento = getView().findViewById(R.id.ordinaper);
         SwitchMaterial ordinaAscendente = getView().findViewById(R.id.ordina);
-        Button avviaRicerca = getView().findViewById(R.id.avviaRicerca);
-        spinnerCreate(campoOrdinamento);
+        Button avviaRicerca = getView().findViewById(R.id.avviaRicerca); //ok
+        spinnerCreate(campoOrdinamento); //ordinaper
 
         avviaRicerca.setOnClickListener(view -> {
             Database db = new Database(getActivity().getApplicationContext());
@@ -74,10 +80,15 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
             //Ordinamento
             query = AddToQueryOrderBy(query, campoOrdinamento);
             query = AddToQueryOrderType(query, ordinaAscendente);
-
+            ListaTesi listaTesiFiltrata = new ListaTesi(db);
+            listaTesiFiltrata.vincoloConQuery(query, db);
             Log.d("test", query);
+
+            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.content2, new TesiFragment());
         });
     }
+
+
 
     private void spinnerCreate(Spinner spinner){
         List<String> items = new ArrayList<>();
@@ -135,9 +146,9 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
 
     private String AddToQueryDisponibilita(String query, SwitchMaterial disponibilita){
         if(disponibilita.isChecked()){
-            query += " " + Database.TESI_STATO + "=1 AND"; //TRUE
+            query += " " + Database.TESI_STATO + "=1 "; //TRUE
         } else {
-            query += " " + Database.TESI_STATO + "=0 AND"; //FALSE
+            query += " " + Database.TESI_STATO + "=0 "; //FALSE
         }
         return query;
     }
