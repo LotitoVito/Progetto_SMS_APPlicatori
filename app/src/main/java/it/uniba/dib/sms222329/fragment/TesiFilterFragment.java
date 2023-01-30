@@ -1,68 +1,168 @@
 package it.uniba.dib.sms222329.fragment;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.switchmaterial.SwitchMaterial;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.database.Database;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TesiFilterFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class TesiFilterFragment extends BottomSheetDialogFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public TesiFilterFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FilterFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TesiFilterFragment newInstance(String param1, String param2) {
-        TesiFilterFragment fragment = new TesiFilterFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tesi_filter, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        EditText relatore = getView().findViewById(R.id.relatore);
+        EditText argomento = getView().findViewById(R.id.argomento);
+        EditText tempistiche = getView().findViewById(R.id.tempistiche);
+        EditText media = getView().findViewById(R.id.media);
+        EditText numeroEsamiMancanti = getView().findViewById(R.id.numeroEsamiMancanti);
+        SwitchMaterial disponibilita = getView().findViewById(R.id.disponibilita);
+        Spinner campoOrdinamento = getView().findViewById(R.id.ordinaper);
+        SwitchMaterial ordinaAscendente = getView().findViewById(R.id.ordina);
+        Button avviaRicerca = getView().findViewById(R.id.avviaRicerca);
+        spinnerCreate(campoOrdinamento);
+
+        avviaRicerca.setOnClickListener(view -> {
+            Database db = new Database(getActivity().getApplicationContext());
+            String query = "SELECT * FROM " + Database.TESI + " WHERE";
+
+            //Filtri
+            if(!isEmptyTextbox(relatore)){
+                query = AddToQueryRelatore(query, relatore, db);
+            }
+            if(!isEmptyTextbox(argomento)){
+                query = AddToQueryArgomento(query, argomento);
+            }
+            if(!isEmptyTextbox(tempistiche)){
+                query = AddToQueryTempistiche(query, tempistiche);
+            }
+            if(!isEmptyTextbox(media)){
+                query = AddToQueryMedia(query, media);
+            }
+            if(!isEmptyTextbox(numeroEsamiMancanti)){
+                query = AddToQueryNumeroEsamiMancanti(query, numeroEsamiMancanti);
+            }
+            query = AddToQueryDisponibilita(query, disponibilita);
+
+            //Ordinamento
+            query = AddToQueryOrderBy(query, campoOrdinamento);
+            query = AddToQueryOrderType(query, ordinaAscendente);
+
+            Log.d("test", query);
+        });
+    }
+
+    private void spinnerCreate(Spinner spinner){
+        List<String> items = new ArrayList<>();
+        items.add("Titolo");
+        items.add("Tempistiche");
+        items.add("Media");
+        items.add("Esami Necessari");
+        items.add("Visualizzazioni");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, items);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
+
+    private boolean isEmptyTextbox(EditText textbox){
+        if(textbox.getText().toString().trim().compareTo("")==0){
+            return true;
+        }
+        return false;
+    }
+
+    private String EndQuery(String query){
+        query += ";";
+        return query;
+    }
+
+    private String AddToQueryRelatore(String query, EditText relatore, Database db){
+        Cursor cursor = db.RicercaDato("SELECT " + Database.RELATORE_ID + " FROM " + Database.RELATORE +
+                " WHERE " + Database.RELATORE_MATRICOLA + "=" + relatore.getText().toString() + ";");
+        cursor.moveToNext();
+
+        query += " " + Database.TESI_RELATOREID + "=" + cursor.getInt(0) + " AND";
+        return query;
+    }
+
+    private String AddToQueryArgomento(String query, EditText argomento){
+        query += " " + Database.TESI_ARGOMENTO + "LIKE('" + argomento.getText().toString() + "') AND";
+        return query;
+    }
+
+    private String AddToQueryTempistiche(String query, EditText tempistiche){
+        query += " " + Database.TESI_TEMPISTICHE + ">" + tempistiche.getText().toString() + " AND";
+        return query;
+    }
+
+    private String AddToQueryMedia(String query, EditText media){
+        query += " " + Database.TESI_MEDIAVOTOMINIMA + ">" + media.getText().toString() + " AND";
+        return query;
+    }
+
+    private String AddToQueryNumeroEsamiMancanti(String query, EditText numeroEsamiMancanti){
+        query += " " + Database.TESI_ESAMINECESSARI + ">" + numeroEsamiMancanti.getText().toString() + " AND";
+        return query;
+    }
+
+    private String AddToQueryDisponibilita(String query, SwitchMaterial disponibilita){
+        if(disponibilita.isChecked()){
+            query += " " + Database.TESI_STATO + "=1 AND"; //TRUE
+        } else {
+            query += " " + Database.TESI_STATO + "=0 AND"; //FALSE
+        }
+        return query;
+    }
+
+    private String AddToQueryOrderBy(String query, Spinner campoOrdinamento) {
+        if (campoOrdinamento.getSelectedItem().toString().compareTo("Titolo") == 0){
+            query += " ORDER BY " + Database.TESI_TITOLO;
+        } else if (campoOrdinamento.getSelectedItem().toString().compareTo("Tempistiche") == 0){
+            query += " ORDER BY " + Database.TESI_TEMPISTICHE;
+        } else if (campoOrdinamento.getSelectedItem().toString().compareTo("Media") == 0){
+            query += " ORDER BY " + Database.TESI_MEDIAVOTOMINIMA;
+        } else if (campoOrdinamento.getSelectedItem().toString().compareTo("Esami Necessari") == 0){
+            query += " ORDER BY " + Database.TESI_ESAMINECESSARI;
+        } else if (campoOrdinamento.getSelectedItem().toString().compareTo("Visualizzazioni") == 0){
+            query += " ORDER BY " + Database.TESI_VISUALIZZAZIONI;
+        }
+        return query;
+    }
+
+    private String AddToQueryOrderType(String query, SwitchMaterial ordinaAscendente) {
+        if(ordinaAscendente.isChecked()){
+            query += " ASC;";
+        } else {
+            query += " DESC;";
+        }
+        return query;
     }
 }
