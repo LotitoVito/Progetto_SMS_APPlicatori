@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 import it.uniba.dib.sms222329.database.Database;
 
@@ -13,9 +14,10 @@ public class ListaClassificaSegnalazione {
 
     private ArrayList<SegnalazioneChat> lista;
 
+    public ListaClassificaSegnalazione() {
+    }
 
-
-    public void ListaSegnalazioni(Database dbClass) {
+    public List<SegnalazioneChat> ListaSegnalazioni(Database dbClass) {
         String query = "SELECT * FROM " + Database.SEGNALAZIONECHAT + ";";
 
         SQLiteDatabase db = dbClass.getReadableDatabase();
@@ -38,6 +40,7 @@ public class ListaClassificaSegnalazione {
 
             listaSegnalazioniEstratte.add(segnalazioneChatEstratta);
         }
+        return listaSegnalazioniEstratte;
     }
 
     public ArrayList<SegnalazioneChat> getLista() { //ordinamento standard

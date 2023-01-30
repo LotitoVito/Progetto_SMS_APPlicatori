@@ -12,7 +12,9 @@ import androidx.annotation.Nullable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import it.uniba.dib.sms222329.classi.MessaggioSegnalazione;
 import it.uniba.dib.sms222329.classi.Ricevimento;
+import it.uniba.dib.sms222329.classi.SegnalazioneChat;
 
 public class Database extends SQLiteOpenHelper {
 
@@ -375,5 +377,18 @@ public class Database extends SQLiteOpenHelper {
     }
 
     private void Test(SQLiteDatabase db){
+        ContentValues cv = new ContentValues();
+
+        cv.put(SEGNALAZIONECHAT_TESISCELTAID, 1);
+        cv.put(SEGNALAZIONECHAT_OGGETTO, "aaaaaaaa");
+        db.insert(SEGNALAZIONECHAT, null, cv);
+
+        cv.put(SEGNALAZIONECHAT_TESISCELTAID, 2);
+        cv.put(SEGNALAZIONECHAT_OGGETTO, "bbb");
+        db.insert(SEGNALAZIONECHAT, null, cv);
+
+        cv.put(SEGNALAZIONECHAT_TESISCELTAID, 3);
+        cv.put(SEGNALAZIONECHAT_OGGETTO, "ccc");
+        db.insert(SEGNALAZIONECHAT, null, cv);
     }
 }

@@ -56,13 +56,13 @@ public class ListaSegnalazioniAdapter extends BaseAdapter {
         }
 
         TextView idSegnalazione = convertView.findViewById(R.id.nomeSegnalazione);
-        idSegnalazione.setText(segnalazioni.get(i).getIdSegnalazioneChat());
+        idSegnalazione.setText(String.valueOf(segnalazioni.get(i).getIdSegnalazioneChat()));
 
         TextView oggettoSegnalazione = convertView.findViewById(R.id.descrizioneSegnalazione);
         oggettoSegnalazione.setText(segnalazioni.get(i).getOggetto());
 
         TextView idTesiScleta = convertView.findViewById(R.id.statoSegnalazione);
-        idTesiScleta.setText(segnalazioni.get(i).getIdTesi());
+        idTesiScleta.setText(String.valueOf(segnalazioni.get(i).getIdTesi()));
 
         LinearLayout item = convertView.findViewById(R.id.segnalazione);
 
