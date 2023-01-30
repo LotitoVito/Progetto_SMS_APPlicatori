@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.relatore.AccettaRichiestaTesiFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:minHeight="400dp"
+        android:elevation="16dp"
+        android:weightSum="10"
+        tools:ignore="UselessParent"
+        >
+
+        <TextView
+            android:id="@+id/titoloTesi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Titolo tesi richiesta"
+            android:textColor="@color/primaryColor"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:id="@+id/argomentoTesi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descrizione tesi"
+            android:textSize="16sp"
+            android:layout_weight="2"
+            android:layout_marginBottom="8dp"/>
+
+        <androidx.constraintlayout.utils.widget.MotionLabel
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/nome" />
+
+        <TextView
+            android:id="@+id/nome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nome studente"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:layout_marginBottom="8dp"
+            />
+
+
+        <androidx.constraintlayout.utils.widget.MotionLabel
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/tempistiche" />
+
+        <TextView
+            android:id="@+id/tempistiche"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:layout_marginBottom="8dp"
+            />
+
+        <androidx.constraintlayout.utils.widget.MotionLabel
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/numero_esami_mancanti" />
+
+
+        <TextView
+            android:id="@+id/esamiMancanti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="studente/richiesti"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginBottom="8dp" >
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/capacitaRichiesta"
+                android:layout_weight="1"/>
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/skillStudente"
+                android:layout_weight="1"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginBottom="16dp" >
+
+            <TextView
+                android:id="@+id/capacitaRichiesta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Skill required"
+                android:textSize="16sp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/capacitaEffettive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Student skills"
+                android:textSize="16sp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
+
+        <androidx.constraintlayout.utils.widget.MotionLabel
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/media" />
+
+        <TextView
+            android:id="@+id/media"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="media studente | media richiesta"
+            android:textSize="16sp"
+            android:layout_weight="2"
+            android:layout_marginBottom="16dp"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/accetta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/accetta"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"/>
+
+            <Button
+                android:id="@+id/rifiuta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rifiuta"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/red"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>

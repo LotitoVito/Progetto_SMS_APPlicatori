@@ -67,6 +67,9 @@
     <string name="ordina">Order ascendent</string>
     <string name="richieste">Request</string>
     <string name="tesisti">Students</string>
+    <string name="accetta">ACCEPT</string>
+    <string name="rifiuta">DENY</string>
+    <string name="skillStudente">Student skills</string>
 
 
 </resources>

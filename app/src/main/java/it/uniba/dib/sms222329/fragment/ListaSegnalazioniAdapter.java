@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222329.fragment.relatore;
+package it.uniba.dib.sms222329.fragment;
 
 import androidx.fragment.app.FragmentManager;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.SegnalazioneChat;
 import it.uniba.dib.sms222329.classi.Tesi;
+import it.uniba.dib.sms222329.fragment.SegnalazioneFragment;
 import it.uniba.dib.sms222329.fragment.VisualizzaTesiFragment;
 
 public class ListaSegnalazioniAdapter extends BaseAdapter {
@@ -61,6 +63,13 @@ public class ListaSegnalazioniAdapter extends BaseAdapter {
 
         TextView idTesiScleta = convertView.findViewById(R.id.statoSegnalazione);
         idTesiScleta.setText(segnalazioni.get(i).getIdTesi());
+
+        LinearLayout item = convertView.findViewById(R.id.segnalazione);
+
+        // Set up a click listener for the button
+        item.setOnClickListener(view1 -> {
+            Utility.replaceFragment(this.fragmentManager, R.id.container, new SegnalazioneFragment());
+        });
 
 
         return convertView;

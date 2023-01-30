@@ -68,6 +68,9 @@
     <string name="ordina">Ordinamento ascendente</string>
     <string name="richieste">Richieste</string>
     <string name="tesisti">Tesisti</string>
+    <string name="accetta">ACCETTA</string>
+    <string name="rifiuta">RIFIUTA</string>
+    <string name="skillStudente">Skill studente</string>
 
 
 </resources>
