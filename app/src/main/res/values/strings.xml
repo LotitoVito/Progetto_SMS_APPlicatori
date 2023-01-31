@@ -12,7 +12,7 @@
     <string name="confermaPassword">Confirm password</string>
     <string name="salva">Save</string>
     <string name="title_thesis">Thesis</string>
-    <string name="title_messages">Messages</string>
+    <string name="title_messages">Issues</string>
     <string name="title_home">Home</string>
     <string name="title_profile">Profile</string>
     <string name="title_settings">Settings</string>
@@ -40,8 +40,8 @@
     <string name="cerca">Search…</string>
     <string name="modalitaScura">Dark mode</string>
     <string name="esci">Log out</string>
-    <string name="invia">Invia</string>
-    <string name="scriviMessaggio">Scrivi il tuo messaggio…</string>
+    <string name="invia">Send</string>
+    <string name="scriviMessaggio">Type your message…</string>
     <string name="edit_name">Edit Name</string>
     <string name="edit_surname">Edit Surname</string>
     <string name="confirm">Confirm</string>
@@ -60,16 +60,33 @@
     <string name="filtra">FILTER</string>
     <string name="ordinaper">Order by</string>
     <string name="ruolo">Role</string>
-    <string name="utente">Creatore segnalazione</string>
+    <string name="utente">Issue sender</string>
     <string name="task">Task</string>
-    <string name="chiusa">Chiusa</string>
-    <string name="data">Data di creazione</string>
+    <string name="chiusa">Closed</string>
+    <string name="data">Creation date</string>
     <string name="ordina">Order ascendent</string>
     <string name="richieste">Request</string>
     <string name="tesisti">Students</string>
     <string name="accetta">ACCEPT</string>
     <string name="rifiuta">DENY</string>
     <string name="skillStudente">Student skills</string>
+    <string name="indietro"><![CDATA[<]]></string>
+    <string name="avantigiorno"><![CDATA[>]]></string>
+    <string name="lunedi">MON</string>
+    <string name="domenica">SUN</string>
+    <string name="martedi">TUE</string>
+    <string name="mercoledi">WED</string>
+    <string name="giovedi">THU</string>
+    <string name="venerdi">FRI</string>
+    <string name="sabato">SAT</string>
+    <string name="ricevimenti">Receptions</string>
+    <string name="data_prevista">Submission date</string>
+    <string name="scarica_tesi">DOWNLOAD THESIS</string>
+    <string name="carica_tesi">UPLOAD THESIS</string>
+    <string name="elimina">REMOVE</string>
+    <string name="crea_task">CREATE TASK</string>
+    <string name="visualizza_task">SHOW TASK</string>
+    <string name="aggiungi_relatore">ADD COADVISOR</string>
 
 
 </resources>

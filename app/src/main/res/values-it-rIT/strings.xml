@@ -13,7 +13,7 @@
     <string name="confermaPassword">Conferma password</string>
     <string name="salva">Salva</string>
     <string name="title_thesis">Tesi</string>
-    <string name="title_messages">Messaggi</string>
+    <string name="title_messages">Segnalazioni</string>
     <string name="title_home">Home</string>
     <string name="title_profile">Profilo</string>
     <string name="title_settings">Impostazioni</string>
@@ -71,6 +71,23 @@
     <string name="accetta">ACCETTA</string>
     <string name="rifiuta">RIFIUTA</string>
     <string name="skillStudente">Skill studente</string>
+    <string name="indietro"><![CDATA[<]]></string>
+    <string name="avantigiorno"><![CDATA[>]]></string>
+    <string name="lunedi">LUN</string>
+    <string name="domenica">DOM</string>
+    <string name="martedi">MAR</string>
+    <string name="mercoledi">MER</string>
+    <string name="giovedi">GIO</string>
+    <string name="venerdi">VEN</string>
+    <string name="sabato">SAB</string>
+    <string name="ricevimenti">Ricevimenti</string>
+    <string name="data_prevista">Data consegna</string>
+    <string name="scarica_tesi">SCARICA TESI</string>
+    <string name="elimina">Rimuovi</string>
+    <string name="visualizza_task">VISUALIZZA TASK</string>
+    <string name="carica_tesi">CARICA TESI</string>
+    <string name="crea_task">CREA TASK</string>
+    <string name="aggiungi_relatore">AGGIUNGI CORELATORE</string>
 
 
 </resources>

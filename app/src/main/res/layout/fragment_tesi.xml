@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.TesiFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+
+
+            <TextView
+                android:id="@+id/nomeStudente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/studente"
+                android:textSize="24sp"
+                android:textColor="@color/primaryColor" />
+
+            <TextView
+                android:id="@+id/titoloTesi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Titolo tesi richiesta"
+                android:textColor="@color/primaryColor"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:id="@+id/argomentoTesi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Descrizione tesi"
+                android:textSize="16sp"
+                android:layout_weight="2"
+                android:layout_marginBottom="8dp"/>
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/argomenti" />
+
+            <TextView
+                android:id="@+id/nome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="abstract tesi"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                android:layout_marginBottom="8dp"
+                />
+
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/tempistiche" />
+
+            <TextView
+                android:id="@+id/tempistiche"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                android:layout_marginBottom="8dp"
+                />
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/numero_esami_mancanti" />
+
+
+            <TextView
+                android:id="@+id/esamiMancanti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="studente/richiesti"
+                android:textSize="16sp"
+                android:layout_weight="1"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginBottom="8dp" >
+
+                <androidx.constraintlayout.utils.widget.MotionLabel
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/capacitaRichiesta"
+                    android:layout_weight="1"/>
+
+                <androidx.constraintlayout.utils.widget.MotionLabel
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/skillStudente"
+                    android:layout_weight="1"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginBottom="16dp" >
+
+                <TextView
+                    android:id="@+id/capacitaRichiesta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Skill required"
+                    android:textSize="16sp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/capacitaEffettive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Student skills"
+                    android:textSize="16sp"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/data_prevista" />
+
+            <TextView
+                android:id="@+id/media"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="data consegna"
+                android:textSize="16sp"
+                android:layout_weight="2"
+                android:layout_marginBottom="16dp"/>
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/co_relatore" />
+
+            <TextView
+                android:id="@+id/corelatore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="nome"
+                android:textSize="16sp"
+                android:layout_weight="2"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:id="@+id/email_corelatore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="email"
+                android:textSize="16sp"
+                android:layout_weight="2"
+                android:layout_marginBottom="16dp"/>
+
+
+                <Button
+                    android:id="@+id/aggiungi_corelatore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/aggiungi_relatore"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/rimuovi_corelatore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/elimina"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/red"
+                    android:layout_marginBottom="16dp"
+                    />
+
+
+            <TextView
+                android:id="@+id/crea_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:minHeight="48dp"
+                android:text="@string/crea_task"
+                android:textColor="@color/primaryColor"
+                android:textSize="16sp"
+                android:gravity="left|center"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/visualizza_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:minHeight="48dp"
+                android:text="@string/visualizza_task"
+                android:textColor="@color/primaryColor"
+                android:textSize="16sp"
+                android:gravity="left|center"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:gravity="bottom">
+
+                <Button
+                    android:id="@+id/scarica"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/scarica_tesi"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"/>
+
+                <Button
+                    android:id="@+id/carica"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/carica_tesi"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/zxing_possible_result_points"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</FrameLayout>
