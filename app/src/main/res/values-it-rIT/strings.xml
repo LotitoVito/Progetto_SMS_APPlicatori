@@ -88,6 +88,13 @@
     <string name="carica_tesi">CARICA TESI</string>
     <string name="crea_task">CREA TASK</string>
     <string name="aggiungi_relatore">AGGIUNGI CORELATORE</string>
+    <string name="suggerimenti">Suggerimenti</string>
+    <string name="stato">Stato completamento</string>
+    <string name="scarica_materiale">CARICA MATERIALE</string>
+    <string name="carica_materiale">SCARICA MATERIALE</string>
+    <string name="richiedi">Sei in difficoltà? Richiedi un ricevimento</string>
+    <string name="richiedi_ora">PRENOTA ORA</string>
+    <string name="materiale">Materiale</string>
 
 
 </resources>

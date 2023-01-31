@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.task.DettagliTaskFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/nome_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nome task"
+                android:textColor="@color/primaryColor"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:layout_marginBottom="8dp"
+                />
+
+            <TextView
+                android:id="@+id/descrizione"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Descrizione task"
+                android:textSize="16sp"
+                android:layout_weight="2"
+                android:layout_marginBottom="16dp" />
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/suggerimenti" />
+
+            <TextView
+                android:id="@+id/suggerimenti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="descrizione"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                android:layout_marginBottom="16dp"
+                />
+
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/data_prevista" />
+
+            <TextView
+                android:id="@+id/tempistiche"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Data inizio e data fine task"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                android:layout_marginBottom="16dp"
+                />
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/stato" />
+
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="0.0"
+                android:valueTo="100.0"
+                app:values="@array/range_slider"
+                android:stepSize="25.0"
+
+                />
+
+            <TextView
+                android:id="@+id/stato"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="STATO TASK"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:labelFor="@id/slider"
+                />
+
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/materiale" />
+
+            <TextView
+                android:id="@+id/materiale_nome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NOME FILE SE C'E', SE NON C'E' DISABILITARE BOTTONE SCARICA"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:labelFor="@id/slider"
+                />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:gravity="bottom"
+                android:layout_marginBottom="16dp" >
+
+                <Button
+                    android:id="@+id/scarica_materiale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/carica_materiale"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"/>
+
+                <Button
+                    android:id="@+id/carica_materiale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/scarica_materiale"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/zxing_possible_result_points"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/richiedi"
+                android:textColor="@color/red"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/crea_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:minHeight="48dp"
+                android:text="@string/richiedi_ora"
+                android:textColor="@color/primaryColor"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textStyle="bold" />
+
+
+
+
+            <Button
+                    android:id="@+id/modifica_task"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/modifica"
+                    android:layout_gravity="center" />
+
+
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</FrameLayout>

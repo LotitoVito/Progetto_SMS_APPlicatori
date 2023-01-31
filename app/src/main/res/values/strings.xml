@@ -87,6 +87,13 @@
     <string name="crea_task">CREATE TASK</string>
     <string name="visualizza_task">SHOW TASK</string>
     <string name="aggiungi_relatore">ADD COADVISOR</string>
+    <string name="suggerimenti">Suggestions</string>
+    <string name="stato">State</string>
+    <string name="materiale">Resources</string>
+    <string name="scarica_materiale">UPLOAD</string>
+    <string name="carica_materiale">DOWNLOAD</string>
+    <string name="richiedi">Having troubles? Meet with your advisor</string>
+    <string name="richiedi_ora">BOOK NOW</string>
 
 
 </resources>
