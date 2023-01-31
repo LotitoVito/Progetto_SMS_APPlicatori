@@ -36,7 +36,6 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_relatore, container, false);
-        TextView text = view.findViewById(R.id.welcomeHome);
 
         BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.navigation);
         int selectedItemId = bottomNavigationView.getSelectedItemId();
@@ -44,7 +43,6 @@ public class HomeFragment extends Fragment {
             bottomNavigationView.getMenu().findItem(R.id.navigation_home).setChecked(true);
         }
 
-        if(this.RelatoreLoggato != null) text.setText(this.RelatoreLoggato.getCognome());
         return view;
     }
 
