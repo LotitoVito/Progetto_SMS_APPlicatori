@@ -181,6 +181,7 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
                     corsi.add(item);
                 }
                 cursor.close();
+
                 boolean oldCheckBox;
                 if(spinner.getSelectedItem().toString().compareTo(oldSpinnerName)==0){
                     oldCheckBox = true;
