@@ -5,6 +5,10 @@ import java.util.Date;
 
 public class Ricevimento {
 
+    public static final int ACCETTATO = 1;
+    public static final int IN_ATTESA = 2;
+    public static final int RIFIUTATO = 3;
+
     private int idRicevimento;
     private Date data;
     private Time orario;

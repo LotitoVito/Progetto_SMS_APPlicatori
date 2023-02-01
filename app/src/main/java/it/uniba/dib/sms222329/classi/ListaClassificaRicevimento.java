@@ -7,6 +7,7 @@ import android.util.Log;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import it.uniba.dib.sms222329.database.Database;
 
@@ -14,7 +15,7 @@ public class ListaClassificaRicevimento {
 
     private ArrayList<Ricevimento> listaRicevimenti;
 
-    public void ListaRicevimenti(Database dbClass) {
+    public List<Ricevimento> ListaRicevimenti(Database dbClass) {
         String query = "SELECT * FROM " + Database.RICEVIMENTI + ";";
 
         SQLiteDatabase db = dbClass.getReadableDatabase();
@@ -35,19 +36,19 @@ public class ListaClassificaRicevimento {
             ricevimentoEstratto.setAccettazione(cursore.getInt(5));
             ricevimentoEstratto.setMessaggio(cursore.getString(6));
 
-            Log.d("Ricevimento ID", String.valueOf(ricevimentoEstratto.getIdRicevimento()));
+            /*Log.d("Ricevimento ID", String.valueOf(ricevimentoEstratto.getIdRicevimento()));
             Log.d("Ricevimento data", String.valueOf(ricevimentoEstratto.getData()));
             Log.d("Ricevimento orario", String.valueOf(ricevimentoEstratto.getOrario()));
             Log.d("Ricevimento argomento", ricevimentoEstratto.getArgomento());
             Log.d("Ricevimento id task", String.valueOf(ricevimentoEstratto.getIdTask()));
             Log.d("Ricevimento accettazione", String.valueOf(ricevimentoEstratto.getAccettazione()));
             Log.d("Ricevimento messaggio", ricevimentoEstratto.getMessaggio());
-            Log.d("Tesi NNNNNNNNNNNNNNNNNNNNN", "\n\n\n\n");
+            Log.d("Tesi NNNNNNNNNNNNNNNNNNNNN", "\n\n\n\n");*/
 
             listaRicevimentiEstratti.add(ricevimentoEstratto);
 
         }
-        this.listaRicevimenti = listaRicevimentiEstratti;
+        return listaRicevimentiEstratti;
     }
 
     public ArrayList<Ricevimento> getListaRicevimenti() { //ordinamento standard
