@@ -8,26 +8,27 @@
     android:clickable="true">
 
     <TextView
-        android:id="@+id/nomeSegnalazione"
+        android:id="@+id/titolo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
+        android:textColor="@color/primaryColor"
         android:textStyle="bold"
-        android:text="Nome segnalazione"/>
+        android:text="TITOLO"/>
 
     <TextView
-        android:id="@+id/descrizioneSegnalazione"
+        android:id="@+id/descrizione"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:text="Descrizione segnalazione"/>
+        android:text="Descrizione"/>
 
     <TextView
-        android:id="@+id/statoSegnalazione"
+        android:id="@+id/sottotitolo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:textStyle="italic"
-        android:text="Ultimo messaggio: sulla segnalazione"/>
+        android:text="Maggiori dettagli: qui vanno altre informazioni"/>
 
 </LinearLayout>

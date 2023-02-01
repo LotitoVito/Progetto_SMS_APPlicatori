@@ -49,22 +49,22 @@ public class ListaTesiAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.relatore_tesi_item, viewGroup, false);
+            convertView = inflater.inflate(R.layout.generic_item_with_buttons, viewGroup, false);
         }
 
-        TextView titolo = convertView.findViewById(R.id.titoloTesi);
+        TextView titolo = convertView.findViewById(R.id.titolo);
         titolo.setText(tesi.get(i).getTitolo());
 
-        TextView argomento = convertView.findViewById(R.id.argomentoTesi);
+        TextView argomento = convertView.findViewById(R.id.descrizione);
         argomento.setText(tesi.get(i).getArgomenti());
 
-        TextView statoTesi = convertView.findViewById(R.id.statoTesi);
+        TextView statoTesi = convertView.findViewById(R.id.sottotitolo);
         String disponibilita = "";
         if (tesi.get(i).getStatoDisponibilita()) disponibilita = "Disponibile";
         else disponibilita = "Non Disponibile";
         statoTesi.setText(disponibilita);
 
-        Button editButton = convertView.findViewById(R.id.modificaTesi);
+        Button editButton = convertView.findViewById(R.id.modifica);
 
         if(tesi.get(i).getIdRelatore() != relatoreLoggato.getIdRelatore()){
             editButton.setVisibility(View.GONE);
@@ -73,7 +73,7 @@ public class ListaTesiAdapter extends BaseAdapter {
         // Set up a click listener for the button
         editButton.setOnClickListener(view1 -> Utility.replaceFragment( this.fragmentManager, R.id.container, new GestioneTesiFragment(this.tesi.get(i), this.relatoreLoggato)));
 
-        Button detailButton = convertView.findViewById(R.id.visualizzaTesi);
+        Button detailButton = convertView.findViewById(R.id.visualizza);
 
         // Set up a click listener for the button
         detailButton.setOnClickListener(view1 -> {
