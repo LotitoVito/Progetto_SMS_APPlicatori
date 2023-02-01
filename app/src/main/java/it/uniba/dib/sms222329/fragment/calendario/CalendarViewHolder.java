@@ -10,10 +10,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import it.uniba.dib.sms222329.R;
-/*
+
 public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 {
-    /*private final ArrayList<LocalDate> days;
+    private final ArrayList<LocalDate> days;
     public final View parentView;
     public final TextView dayOfMonth;
     private final CalendarAdapter.OnItemListener onItemListener;
@@ -32,4 +32,4 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.
     {
         onItemListener.onItemClick(getAdapterPosition(), days.get(getAdapterPosition()));
     }
-}*/
+}

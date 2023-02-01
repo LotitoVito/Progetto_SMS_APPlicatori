@@ -5,16 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.ContactsContract;
 
 import androidx.annotation.Nullable;
 
+import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import it.uniba.dib.sms222329.classi.MessaggioSegnalazione;
-import it.uniba.dib.sms222329.classi.Ricevimento;
-import it.uniba.dib.sms222329.classi.SegnalazioneChat;
 
 public class Database extends SQLiteOpenHelper {
 
@@ -379,6 +376,7 @@ public class Database extends SQLiteOpenHelper {
     private void Test(SQLiteDatabase db){
         ContentValues cv = new ContentValues();
 
+        //Segnalazione
         cv.put(SEGNALAZIONECHAT_TESISCELTAID, 1);
         cv.put(SEGNALAZIONECHAT_OGGETTO, "aaaaaaaa");
         db.insert(SEGNALAZIONECHAT, null, cv);
@@ -390,5 +388,15 @@ public class Database extends SQLiteOpenHelper {
         cv.put(SEGNALAZIONECHAT_TESISCELTAID, 3);
         cv.put(SEGNALAZIONECHAT_OGGETTO, "ccc");
         db.insert(SEGNALAZIONECHAT, null, cv);
+
+        //Ricevimenti
+        ContentValues cv1 = new ContentValues();
+        cv1.put(RICEVIMENTI_TASKID, 1);
+        cv1.put(RICEVIMENTI_DATA, "04-02-2023");
+        cv1.put(RICEVIMENTI_ORARIO, "16:50");
+        cv1.put(RICEVIMENTI_ACCETTAZIONE, 1);
+        cv1.put(RICEVIMENTI_ARGOMENTO, "A");
+        cv1.put(RICEVIMENTI_MESSAGGIO, "A");
+        db.insert(RICEVIMENTI, null, cv1);
     }
 }

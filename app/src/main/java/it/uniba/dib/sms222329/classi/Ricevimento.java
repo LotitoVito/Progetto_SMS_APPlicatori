@@ -1,6 +1,9 @@
 package it.uniba.dib.sms222329.classi;
 
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 
 public class Ricevimento {
@@ -10,14 +13,14 @@ public class Ricevimento {
     public static final int RIFIUTATO = 3;
 
     private int idRicevimento;
-    private Date data;
-    private Time orario;
+    private LocalDate data;
+    private LocalTime orario;
     private String argomento;
     private int idTask;
     private int accettazione;
     private String messaggio;
 
-    public Ricevimento(int idRicevimento,Time orario, Date data, String argomento, int idTask, int accettazione, String messaggio) {
+    public Ricevimento(int idRicevimento, LocalTime orario, LocalDate data, String argomento, int idTask, int accettazione, String messaggio) {
         this.idRicevimento = idRicevimento;
         this.orario = orario;
         this.data = data;
@@ -31,7 +34,7 @@ public class Ricevimento {
 
     }
 
-    public Ricevimento(Date data, Time orario, String argomento, int idTask, int accettazione, String messaggio) {
+    public Ricevimento(LocalDate data, LocalTime orario, String argomento, int idTask, int accettazione, String messaggio) {
         this.data = data;
         this.orario = orario;
         this.argomento = argomento;
@@ -48,17 +51,15 @@ public class Ricevimento {
         this.idRicevimento = idRicevimento;
     }
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(Date data) {
-        this.data = data;
-    }
+    public void setData(LocalDate data) {this.data = data;}
 
-    public Time getOrario() {return orario;}
+    public LocalTime getOrario() {return orario;}
 
-    public void setOrario(Time orario) {this.orario = orario;}
+    public void setOrario(LocalTime orario) {this.orario = orario;}
 
     public String getArgomento() {
         return argomento;

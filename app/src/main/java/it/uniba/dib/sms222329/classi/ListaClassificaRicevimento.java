@@ -5,10 +5,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.database.Database;
 
 public class ListaClassificaRicevimento {
@@ -27,9 +34,10 @@ public class ListaClassificaRicevimento {
             Ricevimento ricevimentoEstratto = new Ricevimento();
 
             ricevimentoEstratto.setIdRicevimento(cursore.getInt(0));
-            Date data = new Date(cursore.getLong(1));
+            LocalDate data = LocalDate.parse(cursore.getString(1), Utility.formatterDate);
             ricevimentoEstratto.setData(data);
-            Time orario = new Time(cursore.getLong(2));
+            Log.d("test", cursore.getString(2));
+            LocalTime orario = LocalTime.parse(cursore.getString(2));
             ricevimentoEstratto.setOrario(orario);
             ricevimentoEstratto.setArgomento(cursore.getString(3));
             ricevimentoEstratto.setIdTask(cursore.getInt(4));
@@ -95,9 +103,9 @@ public class ListaClassificaRicevimento {
 
             ricevimentoEstratto.setIdRicevimento(cursore.getInt(0));
             Date data = new Date(cursore.getLong(1)*1000);
-            ricevimentoEstratto.setData((java.sql.Date) data);
+            //ricevimentoEstratto.setData(data);
             Time orario = new Time(cursore.getLong(2)*4);
-            ricevimentoEstratto.setOrario(orario);
+            //ricevimentoEstratto.setOrario(orario);
             ricevimentoEstratto.setArgomento(cursore.getString(3));
             ricevimentoEstratto.setIdTask(cursore.getInt(4));
             ricevimentoEstratto.setAccettazione(cursore.getInt(5));

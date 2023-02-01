@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
@@ -51,10 +52,11 @@ public class ListaRicevimentiAdapter extends BaseAdapter {
         }
 
         TextView tesista = convertView.findViewById(R.id.titolo);
-        tesista.setText(ricevimenti.get(i).getIdTask());    //Sostituire con nome e cognome Tesista
+        tesista.setText(String.valueOf(ricevimenti.get(i).getIdTask()));    //Sostituire con nome e cognome Tesista
 
         TextView dataOrario = convertView.findViewById(R.id.descrizione);
-        dataOrario.setText(ricevimenti.get(i).getData().toString() + " " + ricevimenti.get(i).getOrario().toString());
+
+        dataOrario.setText(ricevimenti.get(i).getData().format(Utility.formatterDate) + " " + ricevimenti.get(i).getOrario());
 
         TextView stato = convertView.findViewById(R.id.sottotitolo);
         String disponibilita = "";

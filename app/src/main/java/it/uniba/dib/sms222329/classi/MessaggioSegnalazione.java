@@ -10,6 +10,9 @@ public class MessaggioSegnalazione extends SegnalazioneChat {
     private int idMittente;
     private int idSegnalazioneChat;
 
+    public MessaggioSegnalazione() {
+    }
+
     public MessaggioSegnalazione(int idMessaggio, String messaggio, Date timestamp, int idMittente, int idSegnalazioneChat) {
         super();
         this.idMessaggio = idMessaggio;

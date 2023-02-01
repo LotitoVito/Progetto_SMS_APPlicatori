@@ -10,14 +10,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -31,11 +32,11 @@ import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.fragment.ListaRicevimentiAdapter;
 import it.uniba.dib.sms222329.fragment.calendario.CalendarAdapter;
 import it.uniba.dib.sms222329.fragment.calendario.CalendarUtils;
-import it.uniba.dib.sms222329.fragment.calendario.WeekViewActivity;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements CalendarAdapter.OnItemListener {
 
     private Relatore RelatoreLoggato;
+    private LocalDate selectedDate;
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
 
@@ -49,9 +50,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initWidgets();
-        CalendarUtils.selectedDate = LocalDate.now();
-        setMonthView();
     }
 
     @Override
@@ -72,12 +70,28 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        initWidgets();
+        CalendarUtils.selectedDate = LocalDate.now();
+        setMonthView();
+
+        Button previousMonth = getView().findViewById(R.id.precedente);
+        Button nextMonth = getView().findViewById(R.id.successivo);
+
+        previousMonth.setOnClickListener(view -> {
+            previousMonthAction();
+        });
+
+        nextMonth.setOnClickListener(view -> {
+            nextMonthAction();
+        });
+
         Database db = new Database(getActivity().getApplicationContext());
         ListView listaRicevimenti = getView().findViewById(R.id.lista_ricevimenti);
         ListaClassificaRicevimento lista = new ListaClassificaRicevimento();
         List<Ricevimento> lista2 = lista.ListaRicevimenti(db);
         ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista2);
         listaRicevimenti.setAdapter(adapter);
+        Log.d("dataSelezionata", String.valueOf(selectedDate));
     }
 
     private void initWidgets()
@@ -91,19 +105,19 @@ public class HomeFragment extends Fragment {
         monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
         ArrayList<LocalDate> daysInMonth = daysInMonthArray(CalendarUtils.selectedDate);
 
-        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, (CalendarAdapter.OnItemListener) this);
+        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this::onItemClick);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
     }
 
-    public void previousMonthAction(View view)
+    public void previousMonthAction()
     {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusMonths(1);
         setMonthView();
     }
 
-    public void nextMonthAction(View view)
+    public void nextMonthAction()
     {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusMonths(1);
         setMonthView();
@@ -114,12 +128,8 @@ public class HomeFragment extends Fragment {
         if(date != null)
         {
             CalendarUtils.selectedDate = date;
+            selectedDate = CalendarUtils.selectedDate;
             setMonthView();
         }
-    }
-
-    public void weeklyAction(View view)
-    {
-        startActivity(new Intent(getActivity().getApplicationContext(), WeekViewActivity.class));
     }
 }

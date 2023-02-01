@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import it.uniba.dib.sms222329.R;
-/*
+
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
 {
     private final ArrayList<LocalDate> days;
@@ -59,8 +59,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
         return days.size();
     }
 
-    public interface  OnItemListener
+    public interface OnItemListener
     {
         void onItemClick(int position, LocalDate date);
     }
-}*/
+}
