@@ -36,12 +36,17 @@ import it.uniba.dib.sms222329.fragment.calendario.CalendarUtils;
 
 public class HomeFragment extends Fragment implements CalendarAdapter.OnItemListener {
 
+    //Variabili e Oggetto
     private Relatore RelatoreLoggato;
-    private LocalDate selectedDate;
-    private TextView monthYearText;
-    private ListView eventListView;
+    private Database db;
 
+    //View Items
+    private LocalDate selectedDate;
+    private ListView listaRicevimenti;
+    private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
+    private Button previousWeek;
+    private Button nextWeek;
 
     public  HomeFragment(){}
 
@@ -49,12 +54,9 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         this.RelatoreLoggato = relatore;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -74,32 +76,31 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
     @Override
     public void onResume() {
         super.onResume();
+
         CalendarUtils.selectedDate = LocalDate.now();
-        initWidgets();
+        selectedDate = CalendarUtils.selectedDate;
+        Init();
         setWeekView();
+        RefreshList();
 
-        Button previousMonth = getView().findViewById(R.id.precedente);
-        Button nextMonth = getView().findViewById(R.id.successivo);
-
-        previousMonth.setOnClickListener(view -> {
+        previousWeek.setOnClickListener(view -> {
             CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusWeeks(1);
             setWeekView();
         });
 
-        nextMonth.setOnClickListener(view -> {
+        nextWeek.setOnClickListener(view -> {
             CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusWeeks(1);
             setWeekView();
         });
 
-        Database db = new Database(getActivity().getApplicationContext());
-        ListView listaRicevimenti = getView().findViewById(R.id.lista_ricevimenti);
-        List<Ricevimento> lista = ListaRicevimentiDatabase.ListaRicevimenti(db);
-        ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista);
-        listaRicevimenti.setAdapter(adapter);
     }
 
-    private void initWidgets()
+    private void Init()
     {
+        db = new Database(getActivity().getApplicationContext());
+        previousWeek = getView().findViewById(R.id.precedente);
+        nextWeek = getView().findViewById(R.id.successivo);
+        listaRicevimenti = getView().findViewById(R.id.lista_ricevimenti);
         calendarRecyclerView = getView().findViewById(R.id.calendarRecyclerView);
         monthYearText = getView().findViewById(R.id.mese_corrente);
     }
@@ -122,7 +123,16 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         {
             CalendarUtils.selectedDate = date;
             selectedDate = CalendarUtils.selectedDate;
+
+            RefreshList();
             setWeekView();
         }
+    }
+
+    private void RefreshList(){
+        Log.d("test", selectedDate.toString());
+        List<Ricevimento> lista = ListaRicevimentiDatabase.ListaRicevimenti(db, selectedDate.toString());
+        ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista);
+        listaRicevimenti.setAdapter(adapter);
     }
 }

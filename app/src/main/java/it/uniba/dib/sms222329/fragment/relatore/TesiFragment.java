@@ -2,8 +2,10 @@ package it.uniba.dib.sms222329.fragment.relatore;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +28,18 @@ import it.uniba.dib.sms222329.fragment.TesiFilterFragment;
 import it.uniba.dib.sms222329.fragment.adapter.ListaTesiAdapter;
 
 public class TesiFragment extends Fragment {
+
+    //Variabili e Oggetti
     private Relatore relatoreLoggato;
+    private Database db;
+    private ListaTesiAdapter adapterLista;
+
+    //View Items
     private String queryFiltri;
+    private TextView filtra;
+    private FloatingActionButton addButton;
+    private ListView listView;
+    private SearchView barraRicerca;
 
     public TesiFragment(){}
 
@@ -59,13 +71,12 @@ public class TesiFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedIstanceState){
         super.onViewCreated(view, savedIstanceState);
 
-        // Get a reference to the button
-        FloatingActionButton addButton = view.findViewById(R.id.aggiungiTesi);
+        Init();
 
         // Set up a click listener for the button
-        addButton.setOnClickListener(view1 -> Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new GestioneTesiFragment(relatoreLoggato)));
-
-        TextView filtra = view.findViewById(R.id.filtra);
+        addButton.setOnClickListener(view1 -> {
+            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new GestioneTesiFragment(relatoreLoggato));
+        });
 
         filtra.setOnClickListener(view1 -> {
             // Create a new instance of the bottom sheet fragment
@@ -74,11 +85,40 @@ public class TesiFragment extends Fragment {
             bottomSheet.show(getActivity().getSupportFragmentManager(), bottomSheet.getTag());
         });
 
-        Database db = new Database(getContext());
-        ListView listView = getActivity().findViewById(R.id.tesiList);
-        List<Tesi> listaTesi = ListaTesiDatabase.ListaTesi(queryFiltri, db);
-        ListaTesiAdapter adapterLista = new ListaTesiAdapter(getActivity().getApplicationContext(), listaTesi, getActivity().getSupportFragmentManager(), relatoreLoggato);
-        listView.setAdapter(adapterLista);
+        barraRicerca.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if (TextUtils.isEmpty(s)){
+                    adapterLista.filter("");
+                    listView.clearTextFilter();
+                }
+                else {
+                    adapterLista.filter(s);
+                }
+                return true;
+            }
+        });
+
+        RefreshList();
     }
 
+    private void Init() {
+        db = new Database(getContext());
+        addButton = getView().findViewById(R.id.aggiungiTesi);
+        filtra = getView().findViewById(R.id.filtra);
+        listView = getActivity().findViewById(R.id.tesiList);
+        barraRicerca = getView().findViewById(R.id.search_view);
+        barraRicerca.setQueryHint("Inserisci il titolo della tesi");
+    }
+
+    private void RefreshList(){
+        List<Tesi> listaTesi = ListaTesiDatabase.ListaTesi(queryFiltri, db);
+        adapterLista = new ListaTesiAdapter(getActivity().getApplicationContext(), listaTesi, getActivity().getSupportFragmentManager(), relatoreLoggato);
+        listView.setAdapter(adapterLista);
+    }
 }

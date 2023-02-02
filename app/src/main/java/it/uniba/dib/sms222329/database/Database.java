@@ -233,7 +233,7 @@ public class Database extends SQLiteOpenHelper {
         createTable =   "CREATE TABLE " + RICHIESTA + " (" +
                         RICHIESTA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         RICHIESTA_MESSAGGIO + " VARCHAR(255) NOT NULL," +
-                        RICHIESTA_CAPACITASTUDENTE + "VARCHAR(255) NOT NULL," +
+                        RICHIESTA_CAPACITASTUDENTE + " VARCHAR(255) NOT NULL," +
                         RICHIESTA_TESIID + " INT NOT NULL," +
                         RICHIESTA_TESISTAID + " INT NOT NULL," +
                         RICHIESTA_ACCETTATA + " BOOLEAN NOT NULL," +

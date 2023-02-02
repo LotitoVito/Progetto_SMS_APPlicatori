@@ -8,6 +8,9 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.TesiDatabase;
+
 public class Tesi {
 
     private int idTesi;
@@ -142,7 +145,8 @@ public class Tesi {
         return bitmap;
     }
 
-    public void incrementaVisualizzazioni(){
+    public void incrementaVisualizzazioni(Database db){
         this.numeroVisualizzazioni++;
+        TesiDatabase.incrementaVisualizzazioni(this, db);
     }
 }

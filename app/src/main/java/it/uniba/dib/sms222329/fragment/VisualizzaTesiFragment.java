@@ -22,10 +22,14 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.TesiDatabase;
 
 
 public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
-    Tesi tesi;
+
+    //Variabili e Oggetti
+    private Tesi tesi;
+    private Database db;
 
     public  VisualizzaTesiFragment(){}
     public VisualizzaTesiFragment(Tesi tesi) {
@@ -47,6 +51,8 @@ public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        db = new Database(getActivity().getApplicationContext());
 
         TextView titolo = getView().findViewById(R.id.titoloTesi);
         TextView argomento = getView().findViewById(R.id.argomentoTesi);
@@ -85,5 +91,7 @@ public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
             intent.putExtra(Intent.EXTRA_TEXT, sub);
             startActivity(Intent.createChooser(intent, "Condividi con:"));
         });
+
+        tesi.incrementaVisualizzazioni(db);
     }
 }

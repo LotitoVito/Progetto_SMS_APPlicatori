@@ -31,6 +31,7 @@ import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
 import it.uniba.dib.sms222329.fragment.relatore.TesiFragment;
 
 public class TesiFilterFragment extends BottomSheetDialogFragment {
+
     private Relatore relatoreLoggato;
 
     public TesiFilterFragment(Relatore relatoreLoggato) {
@@ -61,6 +62,7 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
         if(relatoreLoggato != null){
             relatore.setText(String.valueOf(relatoreLoggato.getIdRelatore()), EditText.BufferType.EDITABLE);
         }
+        disponibilita.setChecked(true);
 
         avviaRicerca.setOnClickListener(view -> {
             Database db = new Database(getActivity().getApplicationContext());

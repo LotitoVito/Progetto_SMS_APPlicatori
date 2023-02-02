@@ -9,7 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
@@ -21,12 +23,17 @@ import it.uniba.dib.sms222329.fragment.relatore.GestioneTesiFragment;
 public class ListaTesiAdapter extends BaseAdapter {
 
     private List<Tesi> tesi;
+    private ArrayList<Tesi> copiaRicerca;
     private LayoutInflater inflater;
     private FragmentManager fragmentManager;
     private Relatore relatoreLoggato;
 
     public ListaTesiAdapter(Context context, List<Tesi> tesi, FragmentManager fragmentManager, Relatore relatoreLoggato) {
         this.tesi = tesi;
+        if(tesi.size()!=0){
+            this.copiaRicerca = new ArrayList<Tesi>();
+            this.copiaRicerca.addAll(tesi);
+        }
         this.inflater = LayoutInflater.from(context);
         this.fragmentManager = fragmentManager;
         this.relatoreLoggato = relatoreLoggato;
@@ -84,9 +91,23 @@ public class ListaTesiAdapter extends BaseAdapter {
             bottomSheet.show(this.fragmentManager, bottomSheet.getTag());
         });
 
-
-
         return convertView;
     }
 
+    public void filter(String ricerca){
+        ricerca = ricerca.toLowerCase(Locale.getDefault());
+        tesi.clear();
+        if (ricerca.length()==0){
+            tesi.addAll(copiaRicerca);
+        }
+        else {
+            for (Tesi tesi : copiaRicerca){
+                if (tesi.getTitolo().toLowerCase(Locale.getDefault())
+                        .contains(ricerca)){
+                    this.tesi.add(tesi);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
 }
