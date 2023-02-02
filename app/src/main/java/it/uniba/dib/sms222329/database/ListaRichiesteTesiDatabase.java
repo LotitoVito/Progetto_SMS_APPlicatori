@@ -1,21 +1,16 @@
-package it.uniba.dib.sms222329.classi;
+package it.uniba.dib.sms222329.database;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.classi.RichiestaTesi;
 
-public class ListaRichiesteTesi {
+public class ListaRichiesteTesiDatabase {
 
-    private ArrayList<RichiestaTesi> listaRichiesteTesi;
-
-    public List<RichiestaTesi> listaRichiesteTesi(Database dbClass) {
+    public static List<RichiestaTesi> ListaRichiesteTesi(Database dbClass) {
         String query = "SELECT * FROM " + Database.RICHIESTA + ";";
 
         SQLiteDatabase db = dbClass.getReadableDatabase();
@@ -38,9 +33,4 @@ public class ListaRichiesteTesi {
         }
         return listaRichiesteTesi;
     }
-
-    public ArrayList<RichiestaTesi> getListaRichiesteTesi() { //ordinamento standard
-        return listaRichiesteTesi;
-    }
-
 }

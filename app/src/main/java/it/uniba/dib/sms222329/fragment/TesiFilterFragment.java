@@ -87,9 +87,6 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
             //Ordinamento
             query = AddToQueryOrderBy(query, campoOrdinamento);
             query = AddToQueryOrderType(query, ordinaAscendente);
-            ListaTesi listaTesiFiltrata = new ListaTesi(db);
-            listaTesiFiltrata.vincoloConQuery(query, db);
-            Log.d("test", query);
 
             this.dismiss();
             Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.content2, new TesiFragment(relatoreLoggato, query));

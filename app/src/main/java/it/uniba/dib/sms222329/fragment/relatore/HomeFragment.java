@@ -28,6 +28,7 @@ import it.uniba.dib.sms222329.classi.ListaClassificaRicevimento;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Ricevimento;
 import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.ListaRicevimentiDatabase;
 import it.uniba.dib.sms222329.fragment.adapter.ListaRicevimentiAdapter;
 import it.uniba.dib.sms222329.fragment.calendario.CalendarAdapter;
 import it.uniba.dib.sms222329.fragment.calendario.CalendarUtils;
@@ -86,11 +87,9 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
 
         Database db = new Database(getActivity().getApplicationContext());
         ListView listaRicevimenti = getView().findViewById(R.id.lista_ricevimenti);
-        ListaClassificaRicevimento lista = new ListaClassificaRicevimento();
-        List<Ricevimento> lista2 = lista.ListaRicevimenti(db);
-        ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista2);
+        List<Ricevimento> lista = ListaRicevimentiDatabase.ListaRicevimenti(db);
+        ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista);
         listaRicevimenti.setAdapter(adapter);
-        Log.d("dataSelezionata", String.valueOf(selectedDate));
     }
 
     private void initWidgets()

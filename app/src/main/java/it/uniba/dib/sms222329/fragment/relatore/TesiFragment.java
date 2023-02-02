@@ -21,6 +21,7 @@ import it.uniba.dib.sms222329.classi.ListaTesi;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.ListaTesiDatabase;
 import it.uniba.dib.sms222329.fragment.TesiFilterFragment;
 import it.uniba.dib.sms222329.fragment.adapter.ListaTesiAdapter;
 
@@ -75,8 +76,7 @@ public class TesiFragment extends Fragment {
 
         Database db = new Database(getContext());
         ListView listView = getActivity().findViewById(R.id.tesiList);
-        ListaTesi lista = new ListaTesi(db);
-        List<Tesi> listaTesi = lista.vincoloConQuery(queryFiltri, db);
+        List<Tesi> listaTesi = ListaTesiDatabase.ListaTesi(queryFiltri, db);
         ListaTesiAdapter adapterLista = new ListaTesiAdapter(getActivity().getApplicationContext(), listaTesi, getActivity().getSupportFragmentManager(), relatoreLoggato);
         listView.setAdapter(adapterLista);
     }

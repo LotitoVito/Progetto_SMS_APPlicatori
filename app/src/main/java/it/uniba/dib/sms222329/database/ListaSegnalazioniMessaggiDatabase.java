@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222329.classi;
+package it.uniba.dib.sms222329.database;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.uniba.dib.sms222329.Utility;
-import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.classi.SegnalazioneMessaggio;
 
-public class ListaMessaggiSegnalazione {
+public class ListaSegnalazioniMessaggiDatabase {
 
-    private ArrayList<SegnalazioneMessaggio> listaMessaggiSegnalazione;
-
-    public List<SegnalazioneMessaggio> listamessaggi(Database dbClass, int idChat) {
+    public static List<SegnalazioneMessaggio> ListaMessaggi(Database dbClass, int idChat) {
         String query = "SELECT * FROM " + Database.MESSAGGISEGNALAZIONE + " WHERE " + Database.MESSAGGISEGNALAZIONE_SEGNALAZIONEID + "=" + idChat + " ORDER BY " + Database.MESSAGGISEGNALAZIONE_TIMESTAMP +";";
 
         SQLiteDatabase db = dbClass.getReadableDatabase();
@@ -37,9 +35,4 @@ public class ListaMessaggiSegnalazione {
         }
         return listaMessaggiSegnalazione;
     }
-
-    public ArrayList<SegnalazioneMessaggio> getListaMessaggiSegnalazione() { //ordinamento standard
-        return listaMessaggiSegnalazione;
-    }
-
 }

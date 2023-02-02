@@ -21,6 +21,7 @@ import it.uniba.dib.sms222329.classi.ListaClassificaSegnalazione;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.SegnalazioneChat;
 import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.ListaSegnalazioniChatDatabase;
 import it.uniba.dib.sms222329.fragment.adapter.ListaSegnalazioniChatAdapter;
 import it.uniba.dib.sms222329.fragment.SegnalazioniFilterFragment;
 
@@ -52,9 +53,8 @@ public class SegnalazioneChatFragment extends Fragment {
 
         Database db = new Database(getContext());
         ListView listView = getActivity().findViewById(R.id.segnalazioniList);
-        ListaClassificaSegnalazione lista = new ListaClassificaSegnalazione();
-        List<SegnalazioneChat> listaSegnalazioni = lista.ListaSegnalazioni(db);
-        ListaSegnalazioniChatAdapter adapterLista = new ListaSegnalazioniChatAdapter(getActivity().getApplicationContext(), listaSegnalazioni, getActivity().getSupportFragmentManager(), relatoreLoggato);
+        List<SegnalazioneChat> lista = ListaSegnalazioniChatDatabase.ListaSegnalazioniChat(db);
+        ListaSegnalazioniChatAdapter adapterLista = new ListaSegnalazioniChatAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager(), relatoreLoggato);
         listView.setAdapter(adapterLista);
 
         TextView filtra = view.findViewById(R.id.filtra);
