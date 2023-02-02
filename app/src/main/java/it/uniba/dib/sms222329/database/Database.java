@@ -12,6 +12,8 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import it.uniba.dib.sms222329.classi.RichiestaTesi;
+
 
 public class Database extends SQLiteOpenHelper {
 
@@ -431,19 +433,22 @@ public class Database extends SQLiteOpenHelper {
         cvRichieste.put(RICHIESTA_TESIID, 1);
         cvRichieste.put(RICHIESTA_TESISTAID, 1);
         cvRichieste.put(RICHIESTA_MESSAGGIO, "aaaa");
-        cvRichieste.put(RICHIESTA_ACCETTATA, false);
+        cvRichieste.put(RICHIESTA_CAPACITASTUDENTE, "A");
+        cvRichieste.put(RICHIESTA_ACCETTATA, RichiestaTesi.IN_ATTESA);
         db.insert(RICHIESTA, null, cvRichieste);
 
         cvRichieste.put(RICHIESTA_TESIID, 1);
         cvRichieste.put(RICHIESTA_TESISTAID, 2);
         cvRichieste.put(RICHIESTA_MESSAGGIO, "bbbb");
-        cvRichieste.put(RICHIESTA_ACCETTATA, false);
+        cvRichieste.put(RICHIESTA_CAPACITASTUDENTE, "B");
+        cvRichieste.put(RICHIESTA_ACCETTATA, RichiestaTesi.IN_ATTESA);
         db.insert(RICHIESTA, null, cvRichieste);
 
         cvRichieste.put(RICHIESTA_TESIID, 1);
         cvRichieste.put(RICHIESTA_TESISTAID, 3);
         cvRichieste.put(RICHIESTA_MESSAGGIO, "abbbbaaa");
-        cvRichieste.put(RICHIESTA_ACCETTATA, false);
+        cvRichieste.put(RICHIESTA_CAPACITASTUDENTE, "C");
+        cvRichieste.put(RICHIESTA_ACCETTATA, RichiestaTesi.IN_ATTESA);
         db.insert(RICHIESTA, null, cvRichieste);
 
         //TesiScelte

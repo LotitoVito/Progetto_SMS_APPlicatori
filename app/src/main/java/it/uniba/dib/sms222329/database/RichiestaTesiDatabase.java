@@ -28,7 +28,7 @@ public class RichiestaTesiDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvRisposta = new ContentValues();
 
-        cvRisposta.put(Database.RICHIESTA_ACCETTATA, risposta.isAccettata());
+        cvRisposta.put(Database.RICHIESTA_ACCETTATA, risposta.getAccettata());
         cvRisposta.put(Database.RICHIESTA_RISPOSTA, risposta.getRisposta());
 
         long updateRisposta = db.update(Database.RICHIESTA, cvRisposta, Database.RICHIESTA_ID + " = '"+ risposta.getIdRichiesta() +"';", null);

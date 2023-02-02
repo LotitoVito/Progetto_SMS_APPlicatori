@@ -11,7 +11,7 @@ import it.uniba.dib.sms222329.classi.RichiestaTesi;
 public class ListaRichiesteTesiDatabase {
 
     public static List<RichiestaTesi> ListaRichiesteTesi(Database dbClass) {
-        String query = "SELECT * FROM " + Database.RICHIESTA + ";";
+        String query = "SELECT * FROM " + Database.RICHIESTA + " WHERE " + Database.RICHIESTA_ACCETTATA + "=" + RichiestaTesi.IN_ATTESA + ";";
 
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
@@ -23,10 +23,11 @@ public class ListaRichiesteTesiDatabase {
 
             richiestaTesi.setIdRichiesta(cursore.getInt(0));
             richiestaTesi.setMessaggio(cursore.getString(1));
-            richiestaTesi.setIdTesi(cursore.getInt(2));
-            richiestaTesi.setIdTesista(cursore.getInt(3));
-            richiestaTesi.setAccettata(cursore.getInt(4)==1);
-            richiestaTesi.setRisposta(cursore.getString(5));
+            richiestaTesi.setCapacitàStudente(cursore.getString(2));
+            richiestaTesi.setIdTesi(cursore.getInt(3));
+            richiestaTesi.setIdTesista(cursore.getInt(4));
+            richiestaTesi.setAccettata(cursore.getInt(5));
+            richiestaTesi.setRisposta(cursore.getString(6));
 
             listaRichiesteTesi.add(richiestaTesi);
 
