@@ -18,8 +18,6 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +25,7 @@ import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.RelatoreDatabase;
-import it.uniba.dib.sms222329.fragment.signUp.CorsiDiStudiAdapter;
+import it.uniba.dib.sms222329.fragment.adapter.CorsiDiStudiAdapter;
 
 public class  ModificaProfiloRelatoreFragment extends Fragment {
     private Database db;

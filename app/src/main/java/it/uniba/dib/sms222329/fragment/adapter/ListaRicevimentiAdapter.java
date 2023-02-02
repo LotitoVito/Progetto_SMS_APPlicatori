@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222329.fragment;
+package it.uniba.dib.sms222329.fragment.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

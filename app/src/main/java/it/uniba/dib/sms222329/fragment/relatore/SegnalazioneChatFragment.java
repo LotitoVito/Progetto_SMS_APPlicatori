@@ -18,21 +18,17 @@ import java.util.List;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.classi.ListaClassificaSegnalazione;
-import it.uniba.dib.sms222329.classi.ListaTesi;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.SegnalazioneChat;
-import it.uniba.dib.sms222329.classi.Tesi;
-import it.uniba.dib.sms222329.classi.Tesista;
 import it.uniba.dib.sms222329.database.Database;
-import it.uniba.dib.sms222329.fragment.ListaSegnalazioniAdapter;
+import it.uniba.dib.sms222329.fragment.adapter.ListaSegnalazioniChatAdapter;
 import it.uniba.dib.sms222329.fragment.SegnalazioniFilterFragment;
-import it.uniba.dib.sms222329.fragment.TesiFilterFragment;
 
-public class MessaggiFragment extends Fragment {
+public class SegnalazioneChatFragment extends Fragment {
     private Relatore relatoreLoggato;
     private String queryFiltri;
 
-    public MessaggiFragment(Relatore relatoreLoggato) {
+    public SegnalazioneChatFragment(Relatore relatoreLoggato) {
         this.queryFiltri = "SELECT * FROM " + Database.SEGNALAZIONECHAT + ";";
         this.relatoreLoggato = relatoreLoggato;
     }
@@ -47,7 +43,7 @@ public class MessaggiFragment extends Fragment {
             bottomNavigationView.getMenu().findItem(R.id.navigation_messages).setChecked(true);
         }
 
-        return inflater.inflate(R.layout.fragment_messaggi_relatore, container, false);
+        return inflater.inflate(R.layout.fragment_segnalazione_chat_relatore, container, false);
     }
 
     @Override
@@ -58,7 +54,7 @@ public class MessaggiFragment extends Fragment {
         ListView listView = getActivity().findViewById(R.id.segnalazioniList);
         ListaClassificaSegnalazione lista = new ListaClassificaSegnalazione();
         List<SegnalazioneChat> listaSegnalazioni = lista.ListaSegnalazioni(db);
-        ListaSegnalazioniAdapter adapterLista = new ListaSegnalazioniAdapter(getActivity().getApplicationContext(), listaSegnalazioni, getActivity().getSupportFragmentManager(), relatoreLoggato);
+        ListaSegnalazioniChatAdapter adapterLista = new ListaSegnalazioniChatAdapter(getActivity().getApplicationContext(), listaSegnalazioni, getActivity().getSupportFragmentManager(), relatoreLoggato);
         listView.setAdapter(adapterLista);
 
         TextView filtra = view.findViewById(R.id.filtra);

@@ -1,13 +1,11 @@
 package it.uniba.dib.sms222329.fragment.signUp;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
@@ -30,6 +27,7 @@ import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.RelatoreDatabase;
 import it.uniba.dib.sms222329.database.UtenteRegistratoDatabase;
+import it.uniba.dib.sms222329.fragment.adapter.CorsiDiStudiAdapter;
 
 public class SignUpRelatoreFragment extends Fragment {
     Database db;

@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222329.fragment;
+package it.uniba.dib.sms222329.fragment.adapter;
 
 import androidx.fragment.app.FragmentManager;
 import android.content.Context;
@@ -15,15 +15,16 @@ import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.SegnalazioneChat;
+import it.uniba.dib.sms222329.fragment.SegnalazioneMessaggiFragment;
 
-public class ListaSegnalazioniAdapter extends BaseAdapter {
+public class ListaSegnalazioniChatAdapter extends BaseAdapter {
 
     private List<SegnalazioneChat> segnalazioni;
     private LayoutInflater inflater;
     private FragmentManager fragmentManager;
     private Relatore relatoreLoggato;
 
-    public ListaSegnalazioniAdapter(Context context, List<SegnalazioneChat> segnalazioni, FragmentManager fragmentManager, Relatore relatoreLoggato) {
+    public ListaSegnalazioniChatAdapter(Context context, List<SegnalazioneChat> segnalazioni, FragmentManager fragmentManager, Relatore relatoreLoggato) {
         this.segnalazioni = segnalazioni;
         this.inflater = LayoutInflater.from(context);
         this.fragmentManager = fragmentManager;
@@ -64,7 +65,7 @@ public class ListaSegnalazioniAdapter extends BaseAdapter {
 
         // Set up a click listener for the button
         item.setOnClickListener(view1 -> {
-            Utility.replaceFragment(this.fragmentManager, R.id.container, new SegnalazioneFragment());
+            Utility.replaceFragment(this.fragmentManager, R.id.container, new SegnalazioneMessaggiFragment(segnalazioni.get(i).getIdSegnalazioneChat(), relatoreLoggato));
         });
 
 

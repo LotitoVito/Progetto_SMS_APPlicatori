@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222329.fragment.relatore;
+package it.uniba.dib.sms222329.fragment.adapter;
 
 import androidx.fragment.app.FragmentManager;
 import android.content.Context;
@@ -6,23 +6,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Relatore;
-import it.uniba.dib.sms222329.classi.Tesista;
+import it.uniba.dib.sms222329.classi.Tesi;
+import it.uniba.dib.sms222329.fragment.VisualizzaTesiFragment;
+import it.uniba.dib.sms222329.fragment.relatore.GestioneTesiFragment;
 
-public class ListaTesistiAdapter extends BaseAdapter {
+public class ListaTesiAdapter extends BaseAdapter {
 
-    private List<Tesista> listaTesisti;
+    private List<Tesi> tesi;
     private LayoutInflater inflater;
     private FragmentManager fragmentManager;
     private Relatore relatoreLoggato;
 
-    public ListaTesistiAdapter(Context context, List<Tesista> listaTesisti, FragmentManager fragmentManager, Relatore relatoreLoggato) {
-        this.listaTesisti = listaTesisti;
+    public ListaTesiAdapter(Context context, List<Tesi> tesi, FragmentManager fragmentManager, Relatore relatoreLoggato) {
+        this.tesi = tesi;
         this.inflater = LayoutInflater.from(context);
         this.fragmentManager = fragmentManager;
         this.relatoreLoggato = relatoreLoggato;
@@ -30,12 +34,12 @@ public class ListaTesistiAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return listaTesisti.size();
+        return tesi.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return listaTesisti.get(i);
+        return tesi.get(i);
     }
 
     @Override
@@ -49,16 +53,18 @@ public class ListaTesistiAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.generic_item_with_buttons, viewGroup, false);
         }
 
-        TextView idTesista = convertView.findViewById(R.id.titolo);
-        idTesista.setText(listaTesisti.get(i).getIdTesista()); //sostituisci con nome
+        TextView titolo = convertView.findViewById(R.id.titolo);
+        titolo.setText(tesi.get(i).getTitolo());
 
-        TextView matricola = convertView.findViewById(R.id.descrizione);
-        matricola.setText(listaTesisti.get(i).getMatricola());
+        TextView argomento = convertView.findViewById(R.id.descrizione);
+        argomento.setText(tesi.get(i).getArgomenti());
 
-        TextView idUniversitàCorso = convertView.findViewById(R.id.sottotitolo);
-        idUniversitàCorso.setText(listaTesisti.get(i).getIdUniversitaCorso());
+        TextView statoTesi = convertView.findViewById(R.id.sottotitolo);
+        String disponibilita = "";
+        if (tesi.get(i).getStatoDisponibilita()) disponibilita = "Disponibile";
+        else disponibilita = "Non Disponibile";
+        statoTesi.setText(disponibilita);
 
-        /*
         Button editButton = convertView.findViewById(R.id.modifica);
 
         if(tesi.get(i).getIdRelatore() != relatoreLoggato.getIdRelatore()){
@@ -76,7 +82,7 @@ public class ListaTesistiAdapter extends BaseAdapter {
             VisualizzaTesiFragment bottomSheet = new VisualizzaTesiFragment(tesi.get(i));
             // Show the bottom sheet
             bottomSheet.show(this.fragmentManager, bottomSheet.getTag());
-        }); */
+        });
 
 
 

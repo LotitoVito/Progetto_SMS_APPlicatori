@@ -22,6 +22,7 @@ import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.fragment.TesiFilterFragment;
+import it.uniba.dib.sms222329.fragment.adapter.ListaTesiAdapter;
 
 public class TesiFragment extends Fragment {
     private Relatore relatoreLoggato;

@@ -264,7 +264,7 @@ public class Database extends SQLiteOpenHelper {
                         MESSAGGISEGNALAZIONE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         MESSAGGISEGNALAZIONE_MESSAGGIO + " VARCHAR(255) NOT NULL," +
                         MESSAGGISEGNALAZIONE_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP," +
-                        MESSAGGISEGNALAZIONE_UTENTEID + " INT NOT NULL UNIQUE," +
+                        MESSAGGISEGNALAZIONE_UTENTEID + " INT NOT NULL," +
                         MESSAGGISEGNALAZIONE_SEGNALAZIONEID + " INT NOT NULL," +
                         "FOREIGN KEY (" + MESSAGGISEGNALAZIONE_UTENTEID + ") REFERENCES " + UTENTI + "(" + UTENTI_ID + ")," +
                         "FOREIGN KEY (" + MESSAGGISEGNALAZIONE_SEGNALAZIONEID + ") REFERENCES " + SEGNALAZIONECHAT + "(" + SEGNALAZIONECHAT_ID + ") ON DELETE CASCADE);";
@@ -389,10 +389,36 @@ public class Database extends SQLiteOpenHelper {
         cv.put(SEGNALAZIONECHAT_OGGETTO, "ccc");
         db.insert(SEGNALAZIONECHAT, null, cv);
 
+        //Messaggi
+        ContentValues cv2 = new ContentValues();
+        cv2.put(MESSAGGISEGNALAZIONE_UTENTEID, 1);
+        cv2.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "aaa");
+        cv2.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-03 08:47:00");
+        cv2.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 1);
+        db.insert(MESSAGGISEGNALAZIONE, null, cv2);
+
+        cv2.put(MESSAGGISEGNALAZIONE_UTENTEID, 2);
+        cv2.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "bbb");
+        cv2.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-03 08:50:20");
+        cv2.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 1);
+        db.insert(MESSAGGISEGNALAZIONE, null, cv2);
+
+        cv2.put(MESSAGGISEGNALAZIONE_UTENTEID, 1);
+        cv2.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "ccc");
+        cv2.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-03 08:48:45");
+        cv2.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 1);
+        db.insert(MESSAGGISEGNALAZIONE, null, cv2);
+
+        cv2.put(MESSAGGISEGNALAZIONE_UTENTEID, 1);
+        cv2.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "ddd");
+        cv2.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-03 12:45:23");
+        cv2.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 2);
+        db.insert(MESSAGGISEGNALAZIONE, null, cv2);
+
         //Ricevimenti
         ContentValues cv1 = new ContentValues();
         cv1.put(RICEVIMENTI_TASKID, 1);
-        cv1.put(RICEVIMENTI_DATA, "04-02-2023");
+        cv1.put(RICEVIMENTI_DATA, "2023-02-04");
         cv1.put(RICEVIMENTI_ORARIO, "16:50");
         cv1.put(RICEVIMENTI_ACCETTAZIONE, 1);
         cv1.put(RICEVIMENTI_ARGOMENTO, "A");

@@ -4,12 +4,12 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import it.uniba.dib.sms222329.classi.MessaggioSegnalazione;
+import it.uniba.dib.sms222329.classi.SegnalazioneMessaggio;
 import it.uniba.dib.sms222329.classi.SegnalazioneChat;
 
-public class SegnalazioneChatDatabase {
+public class SegnalazioneDatabase {
 
-    public static boolean AvviaChat(Database dbClass, SegnalazioneChat chat, MessaggioSegnalazione messaggio){
+    public static boolean AvviaChat(Database dbClass, SegnalazioneChat chat, SegnalazioneMessaggio messaggio){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues chatCv = new ContentValues();
 
@@ -36,7 +36,7 @@ public class SegnalazioneChatDatabase {
         return false;
     }
 
-    public static boolean MessaggioChat(Database dbClass, MessaggioSegnalazione messaggio){
+    public static boolean MessaggioChat(Database dbClass, SegnalazioneMessaggio messaggio){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues messaggioCv = new ContentValues();
 

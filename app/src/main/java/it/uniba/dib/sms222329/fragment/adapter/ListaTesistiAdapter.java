@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222329.fragment.relatore;
+package it.uniba.dib.sms222329.fragment.adapter;
 
 import androidx.fragment.app.FragmentManager;
 import android.content.Context;
@@ -6,27 +6,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
-import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Relatore;
-import it.uniba.dib.sms222329.classi.SegnalazioneChat;
-import it.uniba.dib.sms222329.classi.Tesi;
-import it.uniba.dib.sms222329.fragment.VisualizzaTesiFragment;
+import it.uniba.dib.sms222329.classi.Tesista;
 
-public class ListaSegnalazioniAdapter extends BaseAdapter {
+public class ListaTesistiAdapter extends BaseAdapter {
 
-    private List<SegnalazioneChat> segnalazioni;
+    private List<Tesista> listaTesisti;
     private LayoutInflater inflater;
     private FragmentManager fragmentManager;
     private Relatore relatoreLoggato;
 
-    public ListaSegnalazioniAdapter(Context context, List<SegnalazioneChat> segnalazioni, FragmentManager fragmentManager, Relatore relatoreLoggato) {
-        this.segnalazioni = segnalazioni;
+    public ListaTesistiAdapter(Context context, List<Tesista> listaTesisti, FragmentManager fragmentManager, Relatore relatoreLoggato) {
+        this.listaTesisti = listaTesisti;
         this.inflater = LayoutInflater.from(context);
         this.fragmentManager = fragmentManager;
         this.relatoreLoggato = relatoreLoggato;
@@ -34,12 +30,12 @@ public class ListaSegnalazioniAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return segnalazioni.size();
+        return listaTesisti.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return segnalazioni.get(i);
+        return listaTesisti.get(i);
     }
 
     @Override
@@ -53,14 +49,14 @@ public class ListaSegnalazioniAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.generic_item_with_buttons, viewGroup, false);
         }
 
-        TextView idSegnalazione = convertView.findViewById(R.id.titolo);
-        idSegnalazione.setText(segnalazioni.get(i).getIdSegnalazioneChat());
+        TextView idTesista = convertView.findViewById(R.id.titolo);
+        idTesista.setText(listaTesisti.get(i).getIdTesista()); //sostituisci con nome
 
-        TextView oggetto = convertView.findViewById(R.id.descrizione);
-        oggetto.setText(segnalazioni.get(i).getOggetto());
+        TextView matricola = convertView.findViewById(R.id.descrizione);
+        matricola.setText(listaTesisti.get(i).getMatricola());
 
-        TextView idTesiScelta = convertView.findViewById(R.id.sottotitolo);
-        idSegnalazione.setText(segnalazioni.get(i).getIdTesi());
+        TextView idUniversitàCorso = convertView.findViewById(R.id.sottotitolo);
+        idUniversitàCorso.setText(listaTesisti.get(i).getIdUniversitaCorso());
 
         /*
         Button editButton = convertView.findViewById(R.id.modifica);

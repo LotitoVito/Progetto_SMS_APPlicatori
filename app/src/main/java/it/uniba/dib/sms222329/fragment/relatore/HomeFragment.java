@@ -3,7 +3,6 @@ package it.uniba.dib.sms222329.fragment.relatore;
 import static it.uniba.dib.sms222329.fragment.calendario.CalendarUtils.daysInMonthArray;
 import static it.uniba.dib.sms222329.fragment.calendario.CalendarUtils.monthYearFromDate;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -29,7 +28,7 @@ import it.uniba.dib.sms222329.classi.ListaClassificaRicevimento;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Ricevimento;
 import it.uniba.dib.sms222329.database.Database;
-import it.uniba.dib.sms222329.fragment.ListaRicevimentiAdapter;
+import it.uniba.dib.sms222329.fragment.adapter.ListaRicevimentiAdapter;
 import it.uniba.dib.sms222329.fragment.calendario.CalendarAdapter;
 import it.uniba.dib.sms222329.fragment.calendario.CalendarUtils;
 

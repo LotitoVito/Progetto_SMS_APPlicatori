@@ -1,25 +1,30 @@
 package it.uniba.dib.sms222329.classi;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
-public class MessaggioSegnalazione extends SegnalazioneChat {
+public class SegnalazioneMessaggio extends SegnalazioneChat {
 
     private  int idMessaggio;
     private String messaggio;
-    private Date timestamp;
-    private int idMittente;
-    private int idSegnalazioneChat;
+    private LocalDateTime timestamp;
+    private int idMittente;                 //idUtente della tabella Utenti
 
-    public MessaggioSegnalazione() {
+    public SegnalazioneMessaggio() {
     }
 
-    public MessaggioSegnalazione(int idMessaggio, String messaggio, Date timestamp, int idMittente, int idSegnalazioneChat) {
+    public SegnalazioneMessaggio(int idMessaggio, String messaggio, LocalDateTime timestamp, int idMittente) {
         super();
         this.idMessaggio = idMessaggio;
         this.messaggio = messaggio;
         this.timestamp = timestamp;
         this.idMittente = idMittente;
-        this.idSegnalazioneChat = idSegnalazioneChat;
+    }
+
+    public SegnalazioneMessaggio(int idSegnalazioneChat, String messaggio, int idMittente) {
+        super(idSegnalazioneChat);
+        this.messaggio = messaggio;
+        this.idMittente = idMittente;
     }
 
     public int getIdMessaggio() {
@@ -38,11 +43,11 @@ public class MessaggioSegnalazione extends SegnalazioneChat {
         this.messaggio = messaggio;
     }
 
-    public Date getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -52,13 +57,5 @@ public class MessaggioSegnalazione extends SegnalazioneChat {
 
     public void setIdMittente(int idMittente) {
         this.idMittente = idMittente;
-    }
-
-    public int getIdSegnalazioneChat() {
-        return idSegnalazioneChat;
-    }
-
-    public void setIdSegnalazioneChat(int idSegnalazioneChat) {
-        this.idSegnalazioneChat = idSegnalazioneChat;
     }
 }

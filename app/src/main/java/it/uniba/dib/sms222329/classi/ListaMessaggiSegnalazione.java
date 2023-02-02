@@ -2,33 +2,35 @@ package it.uniba.dib.sms222329.classi;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.database.Database;
 
 public class ListaMessaggiSegnalazione {
 
-    private ArrayList<MessaggioSegnalazione> listaMessaggiSegnalazione;
+    private ArrayList<SegnalazioneMessaggio> listaMessaggiSegnalazione;
 
-    public List<MessaggioSegnalazione> listaTesisti(Database dbClass) {
-        String query = "SELECT * FROM " + Database.MESSAGGISEGNALAZIONE + ";";
+    public List<SegnalazioneMessaggio> listamessaggi(Database dbClass, int idChat) {
+        String query = "SELECT * FROM " + Database.MESSAGGISEGNALAZIONE + " WHERE " + Database.MESSAGGISEGNALAZIONE_SEGNALAZIONEID + "=" + idChat + " ORDER BY " + Database.MESSAGGISEGNALAZIONE_TIMESTAMP +";";
 
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
 
-        ArrayList<MessaggioSegnalazione> listaMessaggiSegnalazione = new ArrayList<MessaggioSegnalazione>();
+        ArrayList<SegnalazioneMessaggio> listaMessaggiSegnalazione = new ArrayList<SegnalazioneMessaggio>();
 
         while (cursore.moveToNext()) {
-            MessaggioSegnalazione messaggioEstratto = new MessaggioSegnalazione();
+            SegnalazioneMessaggio messaggioEstratto = new SegnalazioneMessaggio();
 
             messaggioEstratto.setIdMessaggio(cursore.getInt(0));
             messaggioEstratto.setMessaggio(cursore.getString(1));
-            //messaggioEstratto.setTimestamp(cursore.getFloat(2));
+            LocalDateTime timestamp = LocalDateTime.parse(cursore.getString(2), Utility.formatterDateTime);
+            messaggioEstratto.setTimestamp(timestamp);
             messaggioEstratto.setIdMittente(cursore.getInt(3));
             messaggioEstratto.setIdSegnalazioneChat(cursore.getInt(4));
 
@@ -38,7 +40,7 @@ public class ListaMessaggiSegnalazione {
         return listaMessaggiSegnalazione;
     }
 
-    public ArrayList<MessaggioSegnalazione> getListaMessaggiSegnalazione() { //ordinamento standard
+    public ArrayList<SegnalazioneMessaggio> getListaMessaggiSegnalazione() { //ordinamento standard
         return listaMessaggiSegnalazione;
     }
 

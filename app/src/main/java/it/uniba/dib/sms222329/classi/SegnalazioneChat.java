@@ -4,24 +4,26 @@ public class SegnalazioneChat {
 
     private int idSegnalazioneChat;
     private String oggetto;
-    private int idTesiSceta;
+    private int idTesiScelta;
 
-    public SegnalazioneChat(int idSegnalazioneChat, String oggetto, int idTesiSceta) {
+    public SegnalazioneChat(int idSegnalazioneChat, String oggetto, int idTesiScelta) {
         this.idSegnalazioneChat = idSegnalazioneChat;
         this.oggetto = oggetto;
-        this.idTesiSceta = idTesiSceta;
+        this.idTesiScelta = idTesiScelta;
     }
 
     public SegnalazioneChat() {
+    }
+
+    public SegnalazioneChat(int idSegnalazioneChat) {
+        this.idSegnalazioneChat = idSegnalazioneChat;
     }
 
     public int getIdSegnalazioneChat() {
         return idSegnalazioneChat;
     }
 
-    public void setIdSegnalazioneChat(int idSegnalazioneChat) {
-        this.idSegnalazioneChat = idSegnalazioneChat;
-    }
+    public void setIdSegnalazioneChat(int idSegnalazioneChat) {this.idSegnalazioneChat = idSegnalazioneChat;}
 
     public String getOggetto() {
         return oggetto;
@@ -32,10 +34,10 @@ public class SegnalazioneChat {
     }
 
     public int getIdTesi() {
-        return idTesiSceta;
+        return idTesiScelta;
     }
 
-    public void setIdTesi(int idTesiSceta) {
-        this.idTesiSceta = idTesiSceta;
+    public void setIdTesi(int idTesiScelta) {
+        this.idTesiScelta = idTesiScelta;
     }
 }

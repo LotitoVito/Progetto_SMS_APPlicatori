@@ -29,7 +29,7 @@ import it.uniba.dib.sms222329.fragment.ImpostazioniFragment;
 import it.uniba.dib.sms222329.fragment.ProfiloFragment;
 import it.uniba.dib.sms222329.fragment.VisualizzaTesiFragment;
 import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
-import it.uniba.dib.sms222329.fragment.relatore.MessaggiFragment;
+import it.uniba.dib.sms222329.fragment.relatore.SegnalazioneChatFragment;
 import it.uniba.dib.sms222329.fragment.relatore.TesiFragment;
 import it.uniba.dib.sms222329.fragment.relatore.TesistiRelatoreFragment;
 
@@ -56,7 +56,7 @@ public class UtenteLoggato extends AppCompatActivity {
             else if (utente.getTipoUtente() == Utility.RELATORE){ //relatore
                 relatoreLoggato = RelatoreDatabase.IstanziaRelatore(utente, db);
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment(relatoreLoggato));
-                setBottomNavigation(new TesiFragment(relatoreLoggato), new MessaggiFragment(relatoreLoggato), new HomeFragment(relatoreLoggato), new TesistiRelatoreFragment());
+                setBottomNavigation(new TesiFragment(relatoreLoggato), new SegnalazioneChatFragment(relatoreLoggato), new HomeFragment(relatoreLoggato), new TesistiRelatoreFragment());
             }
             else if (utente.getTipoUtente() == Utility.CORELATORE){ //corelatore
                 coRelatoreLoggato = CoRelatoreDatabase.IstanziaCoRelatore(utente, db);

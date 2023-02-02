@@ -22,7 +22,8 @@ public class Utility {
     public static final int TESISTA = 1;
     public static final int RELATORE = 2;
     public static final int CORELATORE = 3;
-    public static DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    public static DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public static DateTimeFormatter formatterDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private Utility() {}
 
@@ -33,4 +34,3 @@ public class Utility {
                 .commit();
     }
 }
-
