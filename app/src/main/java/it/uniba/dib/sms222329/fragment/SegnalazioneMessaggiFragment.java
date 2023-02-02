@@ -24,9 +24,15 @@ import it.uniba.dib.sms222329.database.SegnalazioneDatabase;
 import it.uniba.dib.sms222329.fragment.adapter.ListaSegnalazioniMessaggiAdapter;
 
 public class SegnalazioneMessaggiFragment extends Fragment {
+
+    //Oggetti
     private int idChat;
     private Relatore relatoreLoggato;
     private Tesista tesistaLoggato;
+
+    //View Items
+    private Database db;
+    private ListView listView;
 
     public SegnalazioneMessaggiFragment(int idChat, Relatore relatoreLoggato) {
         this.idChat = idChat;
@@ -43,12 +49,9 @@ public class SegnalazioneMessaggiFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        Database db = new Database(getContext());
-        ListView listView = getActivity().findViewById(R.id.chat_list);
-        ListaMessaggiSegnalazione lista = new ListaMessaggiSegnalazione();
-        List<SegnalazioneMessaggio> listaSegnalazioni = lista.listamessaggi(db, this.idChat);
-        ListaSegnalazioniMessaggiAdapter adapterLista = new ListaSegnalazioniMessaggiAdapter(getActivity().getApplicationContext(), listaSegnalazioni);
-        listView.setAdapter(adapterLista);
+        InitViewItems();
+
+        refreshChat();
 
         ImageButton sendMessage = getView().findViewById(R.id.send_button);
         EditText messaggio = getView().findViewById(R.id.chat_input);
@@ -56,6 +59,7 @@ public class SegnalazioneMessaggiFragment extends Fragment {
             if(!isEmptyTextbox(messaggio)){
                 SegnalazioneMessaggio messaggioOggetto = new SegnalazioneMessaggio(idChat, messaggio.getText().toString(), relatoreLoggato.getIdUtente());
                 SegnalazioneDatabase.MessaggioChat(db, messaggioOggetto);
+                refreshChat();
             }
         });
     }
@@ -65,5 +69,17 @@ public class SegnalazioneMessaggiFragment extends Fragment {
             return true;
         }
         return false;
+    }
+
+    private void InitViewItems(){
+        db = new Database(getContext());
+        listView = getView().findViewById(R.id.chat_list);
+    }
+
+    private void refreshChat(){
+        ListaMessaggiSegnalazione lista = new ListaMessaggiSegnalazione();
+        List<SegnalazioneMessaggio> listaSegnalazioni = lista.listamessaggi(db, this.idChat);
+        ListaSegnalazioniMessaggiAdapter adapterLista = new ListaSegnalazioniMessaggiAdapter(getActivity().getApplicationContext(), listaSegnalazioni);
+        listView.setAdapter(adapterLista);
     }
 }

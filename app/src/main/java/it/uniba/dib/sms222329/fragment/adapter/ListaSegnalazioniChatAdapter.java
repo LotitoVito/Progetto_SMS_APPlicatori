@@ -68,7 +68,6 @@ public class ListaSegnalazioniChatAdapter extends BaseAdapter {
             Utility.replaceFragment(this.fragmentManager, R.id.container, new SegnalazioneMessaggiFragment(segnalazioni.get(i).getIdSegnalazioneChat(), relatoreLoggato));
         });
 
-
         return convertView;
     }
 
