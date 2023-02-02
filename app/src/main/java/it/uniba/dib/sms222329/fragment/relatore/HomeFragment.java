@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222329.fragment.relatore;
 
 import static it.uniba.dib.sms222329.fragment.calendario.CalendarUtils.daysInMonthArray;
+import static it.uniba.dib.sms222329.fragment.calendario.CalendarUtils.daysInWeekArray;
 import static it.uniba.dib.sms222329.fragment.calendario.CalendarUtils.monthYearFromDate;
 
 import android.os.Bundle;
@@ -38,6 +39,8 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
     private Relatore RelatoreLoggato;
     private LocalDate selectedDate;
     private TextView monthYearText;
+    private ListView eventListView;
+
     private RecyclerView calendarRecyclerView;
 
     public  HomeFragment(){}
@@ -49,7 +52,9 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -69,20 +74,21 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
     @Override
     public void onResume() {
         super.onResume();
-
-        initWidgets();
         CalendarUtils.selectedDate = LocalDate.now();
-        setMonthView();
+        initWidgets();
+        setWeekView();
 
         Button previousMonth = getView().findViewById(R.id.precedente);
         Button nextMonth = getView().findViewById(R.id.successivo);
 
         previousMonth.setOnClickListener(view -> {
-            previousMonthAction();
+            CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusWeeks(1);
+            setWeekView();
         });
 
         nextMonth.setOnClickListener(view -> {
-            nextMonthAction();
+            CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusWeeks(1);
+            setWeekView();
         });
 
         Database db = new Database(getActivity().getApplicationContext());
@@ -98,27 +104,16 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         monthYearText = getView().findViewById(R.id.mese_corrente);
     }
 
-    private void setMonthView()
+
+    private void setWeekView()
     {
         monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
-        ArrayList<LocalDate> daysInMonth = daysInMonthArray(CalendarUtils.selectedDate);
+        ArrayList<LocalDate> days = daysInWeekArray(CalendarUtils.selectedDate);
 
-        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this::onItemClick);
+        CalendarAdapter calendarAdapter = new CalendarAdapter(days, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
-    }
-
-    public void previousMonthAction()
-    {
-        CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusMonths(1);
-        setMonthView();
-    }
-
-    public void nextMonthAction()
-    {
-        CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusMonths(1);
-        setMonthView();
     }
 
     public void onItemClick(int position, LocalDate date)
@@ -127,7 +122,7 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         {
             CalendarUtils.selectedDate = date;
             selectedDate = CalendarUtils.selectedDate;
-            setMonthView();
+            setWeekView();
         }
     }
 }

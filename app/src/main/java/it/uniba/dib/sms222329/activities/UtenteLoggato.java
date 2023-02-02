@@ -77,15 +77,19 @@ public class UtenteLoggato extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_thesis:
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, thesisFragment);
+                    setTitle(R.string.tesi);
                     return true;
                 case R.id.navigation_messages:
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, messagesFragment);
+                    setTitle(R.string.title_messages);
                     return true;
                 case R.id.navigation_home:
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, homeFragment);
+                    setTitle(R.string.title_home);
                     return true;
                 case R.id.navigation_student:
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, studentFragment);
+                    setTitle(R.string.mystudent);
                     return true;
                 case R.id.navigation_camera:
                     scanQR();
@@ -114,9 +118,11 @@ public class UtenteLoggato extends AppCompatActivity {
                 }else if(utenteLoggato.getTipoUtente() == Utility.CORELATORE){
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment(db, utenteLoggato.getTipoUtente(), coRelatoreLoggato));
                 }
+                setTitle(R.string.title_profile);
                 return true;
             case R.id.navigation_settings:
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ImpostazioniFragment());
+                setTitle(R.string.title_settings);
                 return true;
             case R.id.navigation_logout:
                 Intent intent = new Intent(this, MainActivity.class);
@@ -146,7 +152,7 @@ public class UtenteLoggato extends AppCompatActivity {
             String messaggio = cursor.getString(1) + "\n" + cursor.getString(2);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Tesi");
+            builder.setTitle(R.string.tesi);
             builder.setMessage(messaggio);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override

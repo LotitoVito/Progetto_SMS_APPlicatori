@@ -83,23 +83,6 @@
             android:orientation="horizontal"
             >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textSize="18sp"
-                android:text="@string/data"
-                android:labelFor="@+id/data"
-                android:layout_marginEnd="8sp"
-                android:gravity="center" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/data"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:importantForAutofill="no"
-                android:inputType="date"
-                tools:ignore="VisualLintTextFieldSize" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -112,8 +95,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textSize="18sp"
-                android:text="@string/chiusa"
-                android:labelFor="@+id/chiusa"
+                android:text="@string/tesisti"
+                android:labelFor="@+id/tesista"
                 android:layout_marginEnd="8sp"
                 android:gravity="center" />
 
