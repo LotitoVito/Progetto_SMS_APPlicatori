@@ -5,20 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.fragment.app.FragmentManager;
-
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
-import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Ricevimento;
-import it.uniba.dib.sms222329.classi.Tesi;
-import it.uniba.dib.sms222329.fragment.relatore.GestioneTesiFragment;
 
 public class ListaRicevimentiAdapter extends BaseAdapter {
 
@@ -51,13 +44,15 @@ public class ListaRicevimentiAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.generic_item_with_buttons, viewGroup, false);
         }
 
+        //Tesista
         TextView tesista = convertView.findViewById(R.id.titolo);
         tesista.setText(String.valueOf(ricevimenti.get(i).getIdTask()));    //Sostituire con nome e cognome Tesista
 
+        //Data e orario
         TextView dataOrario = convertView.findViewById(R.id.descrizione);
+        dataOrario.setText(ricevimenti.get(i).getData().format(Utility.showDate) + " " + ricevimenti.get(i).getOrario());
 
-        dataOrario.setText(ricevimenti.get(i).getData().format(Utility.formatterDate) + " " + ricevimenti.get(i).getOrario());
-
+        //Stato
         TextView stato = convertView.findViewById(R.id.sottotitolo);
         String disponibilita = "";
         if (ricevimenti.get(i).getAccettazione()==Ricevimento.ACCETTATO){

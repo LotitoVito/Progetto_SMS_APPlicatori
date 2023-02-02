@@ -3,9 +3,7 @@ package it.uniba.dib.sms222329.classi;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +27,7 @@ public class ListaMessaggiSegnalazione {
 
             messaggioEstratto.setIdMessaggio(cursore.getInt(0));
             messaggioEstratto.setMessaggio(cursore.getString(1));
-            LocalDateTime timestamp = LocalDateTime.parse(cursore.getString(2), Utility.formatterDateTime);
+            LocalDateTime timestamp = LocalDateTime.parse(cursore.getString(2), Utility.convertFromStringDateTime);
             messaggioEstratto.setTimestamp(timestamp);
             messaggioEstratto.setIdMittente(cursore.getInt(3));
             messaggioEstratto.setIdSegnalazioneChat(cursore.getInt(4));

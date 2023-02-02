@@ -5,12 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +30,7 @@ public class ListaClassificaRicevimento {
             Ricevimento ricevimentoEstratto = new Ricevimento();
 
             ricevimentoEstratto.setIdRicevimento(cursore.getInt(0));
-            LocalDate data = LocalDate.parse(cursore.getString(1), Utility.formatterDate);
+            LocalDate data = LocalDate.parse(cursore.getString(1), Utility.convertFromStringDate);
             ricevimentoEstratto.setData(data);
             Log.d("test", cursore.getString(2));
             LocalTime orario = LocalTime.parse(cursore.getString(2));

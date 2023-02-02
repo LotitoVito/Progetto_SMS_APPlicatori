@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.SegnalazioneMessaggio;
 
 public class ListaSegnalazioniMessaggiAdapter extends BaseAdapter {
@@ -53,7 +55,8 @@ public class ListaSegnalazioniMessaggiAdapter extends BaseAdapter {
 
         //Timestamp
         TextView timestamp = convertView.findViewById(R.id.sottotitolo);
-        timestamp.setText(String.valueOf(messaggi.get(i).getTimestamp()));
+        LocalDateTime timestampValue = messaggi.get(i).getTimestamp();
+        timestamp.setText(String.valueOf(timestampValue.format(Utility.showDateTime)));
 
         return convertView;
     }
