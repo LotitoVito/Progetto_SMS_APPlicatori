@@ -57,16 +57,19 @@ public class AccettaRichiestaTesiFragment extends Fragment {
 
         accetta.setOnClickListener(view -> {
             richiesta.setAccettata(RichiestaTesi.ACCETTATO);
-            //if risposta not void
-            //richiesta.setRisposta();
-            RichiestaTesiDatabase.RispostaRichiestaTesi(db, richiesta);
+            if(richiesta.RispostaRichiestaTesi(RichiestaTesi.ACCETTATO, null, db)){ //inserire risposta
+                //ok
+            } else{
+                //errore
+            }
         });
 
         rifiuta.setOnClickListener(view -> {
-            richiesta.setAccettata(RichiestaTesi.RIFIUTATO);
-            //if risposta not void
-            //richiesta.setRisposta();
-            RichiestaTesiDatabase.RispostaRichiestaTesi(db, richiesta);
+            if(richiesta.RispostaRichiestaTesi(RichiestaTesi.RIFIUTATO, null, db)){ //inserire risposta
+                //ok
+            } else{
+                //errore
+            }
         });
     }
 

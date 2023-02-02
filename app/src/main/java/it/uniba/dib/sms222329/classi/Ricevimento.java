@@ -20,6 +20,8 @@ public class Ricevimento {
     private int accettazione;
     private String messaggio;
 
+    public Ricevimento(){}
+
     public Ricevimento(int idRicevimento, LocalTime orario, LocalDate data, String argomento, int idTask, int accettazione, String messaggio) {
         this.idRicevimento = idRicevimento;
         this.orario = orario;
@@ -28,10 +30,6 @@ public class Ricevimento {
         this.idTask = idTask;
         this.accettazione = accettazione;
         this.messaggio = messaggio;
-    }
-
-    public Ricevimento(){
-
     }
 
     public Ricevimento(LocalDate data, LocalTime orario, String argomento, int idTask, int accettazione, String messaggio) {

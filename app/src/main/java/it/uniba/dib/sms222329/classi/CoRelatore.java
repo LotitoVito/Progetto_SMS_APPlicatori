@@ -1,5 +1,8 @@
 package it.uniba.dib.sms222329.classi;
 
+import it.uniba.dib.sms222329.database.CoRelatoreDatabase;
+import it.uniba.dib.sms222329.database.Database;
+
 public class CoRelatore extends UtenteRegistrato {
 
     private String organizzazione;
@@ -30,13 +33,18 @@ public class CoRelatore extends UtenteRegistrato {
     public void setOrganizzazione(String organizzazione) {this.organizzazione = organizzazione;}
 
 
-    public void modCoRelatore(String nome, String cognome, String email,
-                                 String password, String codFisc, String org) {
+    public boolean modCoRelatore(String nome, String cognome, String email,
+                                 String password, String codFisc, String org, Database db) {
         this.nome=nome;
         this.cognome=cognome;
         this.email=email;
         this.password=password;
         this.organizzazione=org;
         this.codiceFiscale=codFisc;
+
+        if(CoRelatoreDatabase.modCoRelatore(this, db)){
+            return true;
+        }
+        return false;
     }
 }

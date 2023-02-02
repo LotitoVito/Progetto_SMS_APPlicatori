@@ -96,10 +96,9 @@ public class GestioneTesiFragment extends Fragment {
                 fillIfEmpty(capacitaRichiesta, tesi.getCapacitaRichieste());
                 fillIfEmpty(media, String.valueOf(tesi.getMediaVotiMinima()));
 
-                tesi.ModificaTesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(), statoDisponibilita.isChecked(),
+                if(tesi.ModificaTesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(), statoDisponibilita.isChecked(),
                         Integer.parseInt(tempistiche.getText().toString().trim()), Float.parseFloat(media.getText().toString().trim()),
-                        Integer.parseInt(esamiMancanti.getText().toString().trim()), capacitaRichiesta.getText().toString().trim());
-                if(TesiDatabase.ModificaTesi(tesi, db)){
+                        Integer.parseInt(esamiMancanti.getText().toString().trim()), capacitaRichiesta.getText().toString().trim(), db)){
                     Toast.makeText(context, "Successo", Toast.LENGTH_SHORT).show();
                 } else{
                     Toast.makeText(context, "Modifica fallita", Toast.LENGTH_SHORT).show();

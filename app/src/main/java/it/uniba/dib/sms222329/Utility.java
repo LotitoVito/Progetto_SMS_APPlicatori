@@ -1,5 +1,7 @@
 package it.uniba.dib.sms222329;
 
+import android.widget.EditText;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -22,5 +24,12 @@ public class Utility {
                 .replace(containerId, fragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public static boolean isEmptyTextbox(EditText textbox){
+        if(textbox.getText().toString().trim().compareTo("")==0){
+            return true;
+        }
+        return false;
     }
 }

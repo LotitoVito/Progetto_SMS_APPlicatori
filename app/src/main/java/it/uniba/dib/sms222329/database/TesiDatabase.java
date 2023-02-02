@@ -55,16 +55,18 @@ public class TesiDatabase {
         return false;
     }
 
-    public static Cursor visualizzaTesi(Database dbClass, int id){
-        SQLiteDatabase db=dbClass.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_ID + "='" + id + "';", null);
-        return cursor;
-    }
-
-    public static void incrementaVisualizzazioni(Tesi tesi, Database dbClass){
+    public static boolean incrementaVisualizzazioni(Tesi tesi, Database dbClass){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(Database.TESI_VISUALIZZAZIONI, tesi.getNumeroVisualizzazioni());
-        db.update(Database.TESI, cv, Database.TESI_ID + " = '"+ tesi.getIdTesi() +"';", null);
+        try {
+            long updateTesi = db.update(Database.TESI, cv, Database.TESI_ID + " = '"+ tesi.getIdTesi() +"';", null);
+            if (updateTesi != -1){
+                return true;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
     }
 }

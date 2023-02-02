@@ -2,6 +2,9 @@ package it.uniba.dib.sms222329.classi;
 
 import java.util.ArrayList;
 
+import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.RelatoreDatabase;
+
 public class Relatore extends UtenteRegistrato {
 
     private int idRelatore;
@@ -32,8 +35,8 @@ public class Relatore extends UtenteRegistrato {
 
     public void setCorsiRelatore(ArrayList<Integer> corsiRelatore) {this.corsiRelatore = corsiRelatore;}
 
-    public void modRelatore(String matricola, String nome, String cognome, String codiceFiscale,
-                            String email, String password, ArrayList<Integer> corsiRelatore) {
+    public boolean modRelatore(String matricola, String nome, String cognome, String codiceFiscale,
+                               String email, String password, ArrayList<Integer> corsiRelatore, Database db) {
         this.nome=nome;
         this.cognome=cognome;
         this.email=email;
@@ -41,5 +44,10 @@ public class Relatore extends UtenteRegistrato {
         this.codiceFiscale=codiceFiscale;
         this.matricola=matricola;
         this.corsiRelatore = corsiRelatore;
+
+        if(RelatoreDatabase.modRelatore(this, db)){
+            return true;
+        }
+        return false;
     }
 }

@@ -10,8 +10,7 @@ public class SegnalazioneMessaggio extends SegnalazioneChat {
     private LocalDateTime timestamp;
     private int idMittente;                 //idUtente della tabella Utenti
 
-    public SegnalazioneMessaggio() {
-    }
+    public SegnalazioneMessaggio() {}
 
     public SegnalazioneMessaggio(int idMessaggio, String messaggio, LocalDateTime timestamp, int idMittente) {
         super();

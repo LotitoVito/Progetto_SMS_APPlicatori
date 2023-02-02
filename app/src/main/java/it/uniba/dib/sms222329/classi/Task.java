@@ -12,6 +12,8 @@ public class Task {
     private int stato;
     private int idTesiScelta;
 
+    public Task(){}
+
     public Task(int idTask, String descrizione, Date dataInizio, Date dataFine, String linkMateriale, int stato, int idTesiScelta) {
         this.idTask = idTask;
         this.descrizione = descrizione;
@@ -20,10 +22,6 @@ public class Task {
         this.linkMateriale = linkMateriale;
         this.stato = stato;
         this.idTesiScelta = idTesiScelta;
-    }
-
-    public Task(){
-
     }
 
     public int getIdTask() {

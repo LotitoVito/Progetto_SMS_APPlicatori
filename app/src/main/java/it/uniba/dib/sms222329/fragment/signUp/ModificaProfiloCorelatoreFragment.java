@@ -66,9 +66,9 @@ public class ModificaProfiloCorelatoreFragment extends Fragment {
             fillIfEmpty(org, corelatore.getOrganizzazione());
 
             //Modifica
-            corelatore.modCoRelatore(nome.getText().toString(), cognome.getText().toString(), mail.getText().toString(),
-                    password.getText().toString(), codFisc.getText().toString(), org.getText().toString());
-            if (CoRelatoreDatabase.modCoRelatore(corelatore, db)){
+
+            if (corelatore.modCoRelatore(nome.getText().toString(), cognome.getText().toString(), mail.getText().toString(),
+                    password.getText().toString(), codFisc.getText().toString(), org.getText().toString(), db)){
                 Toast.makeText(getActivity().getApplicationContext(),"modifica riuscita",Toast.LENGTH_SHORT).show();
             }
         });

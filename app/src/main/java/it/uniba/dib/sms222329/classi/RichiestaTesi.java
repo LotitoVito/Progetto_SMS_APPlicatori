@@ -1,5 +1,8 @@
 package it.uniba.dib.sms222329.classi;
 
+import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.RichiestaTesiDatabase;
+
 public class RichiestaTesi {
 
     public static final int ACCETTATO = 1;
@@ -76,8 +79,13 @@ public class RichiestaTesi {
         this.risposta = risposta;
     }
 
-    public void RispostaRichiestaTesi(int accettata, String risposta){
+    public boolean RispostaRichiestaTesi(int accettata, String risposta, Database db){
         this.accettata = accettata;
         this.risposta = risposta;
+
+        if(RichiestaTesiDatabase.RispostaRichiestaTesi(this, db)){
+            return true;
+        }
+        return false;
     }
 }

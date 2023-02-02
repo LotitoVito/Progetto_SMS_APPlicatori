@@ -95,12 +95,11 @@ public class ModificaProfiloStudenteFragment extends Fragment {
             int corso= RecuperaUniversitaCorso(idUniversita, idCorsoStudio);
 
             //Modifica
-            tesista.modTesista(matricola.getText().toString(), nome.getText().toString(),
+            if (tesista.modTesista(matricola.getText().toString(), nome.getText().toString(),
                     cognome.getText().toString(), mail.getText().toString(),
                     password.getText().toString(),Float.parseFloat(media.getText().toString()),
                     Integer.parseInt(numeroEsamiMancanti.getText().toString()),
-                    codFisc.getText().toString(), corso);
-            if (TesistaDatabase.modTesista(tesista, db)){
+                    codFisc.getText().toString(), corso, db)){
                 Toast.makeText(getActivity().getApplicationContext(),"modifica riuscita",Toast.LENGTH_SHORT).show();
             }
         });

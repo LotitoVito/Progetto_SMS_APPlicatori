@@ -35,6 +35,7 @@ import it.uniba.dib.sms222329.fragment.relatore.TesistiRelatoreFragment;
 
 public class UtenteLoggato extends AppCompatActivity {
 
+    //Variabili e Oggetti
     private Database db = new Database(this);
     private UtenteRegistrato utenteLoggato;
     private Tesista tesistaLoggato;
@@ -46,20 +47,19 @@ public class UtenteLoggato extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_utente_loggato);
 
-        UtenteRegistrato utente = (UtenteRegistrato) getIntent().getSerializableExtra("utentePassato");
-        utenteLoggato = utente;
+        utenteLoggato = (UtenteRegistrato) getIntent().getSerializableExtra("utentePassato");
 
         try{
-            if(utente.getTipoUtente() == Utility.TESISTA){ //tesista
-                tesistaLoggato = TesistaDatabase.IstanziaTesista(utente, db);
+            if(utenteLoggato.getTipoUtente() == Utility.TESISTA){ //tesista
+                tesistaLoggato = TesistaDatabase.IstanziaTesista(utenteLoggato, db);
             }
-            else if (utente.getTipoUtente() == Utility.RELATORE){ //relatore
-                relatoreLoggato = RelatoreDatabase.IstanziaRelatore(utente, db);
+            else if (utenteLoggato.getTipoUtente() == Utility.RELATORE){ //relatore
+                relatoreLoggato = RelatoreDatabase.IstanziaRelatore(utenteLoggato, db);
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment(relatoreLoggato));
                 setBottomNavigation(new TesiFragment(relatoreLoggato), new SegnalazioneChatFragment(relatoreLoggato), new HomeFragment(relatoreLoggato), new TesistiRelatoreFragment());
             }
-            else if (utente.getTipoUtente() == Utility.CORELATORE){ //corelatore
-                coRelatoreLoggato = CoRelatoreDatabase.IstanziaCoRelatore(utente, db);
+            else if (utenteLoggato.getTipoUtente() == Utility.CORELATORE){ //corelatore
+                coRelatoreLoggato = CoRelatoreDatabase.IstanziaCoRelatore(utenteLoggato, db);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -136,7 +136,7 @@ public class UtenteLoggato extends AppCompatActivity {
 
     private void scanQR(){
         ScanOptions options = new ScanOptions();
-        options.setPrompt("Volume up to flash on");
+        options.setPrompt("Volume up per usare il flash");
         options.setBeepEnabled(true);
         options.setOrientationLocked(true);
         options.setCaptureActivity(CaptureAct.class);

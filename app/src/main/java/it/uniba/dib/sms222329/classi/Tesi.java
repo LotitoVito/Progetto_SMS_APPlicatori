@@ -24,6 +24,8 @@ public class Tesi {
     private int numeroVisualizzazioni;
     private int idRelatore;
 
+    public Tesi() {}
+
     public Tesi(int id, String titolo, String argomenti, int tempistiche, float mediaVotiMinima, int esamiNecessari,
                 String capacitaRichieste, boolean statoDisponibilita, int numeroVisualizzazioni, int idRelatore) {
         this.idTesi = id;
@@ -36,9 +38,6 @@ public class Tesi {
         this.statoDisponibilita = statoDisponibilita;
         this.numeroVisualizzazioni = numeroVisualizzazioni;
         this.idRelatore = idRelatore;
-    }
-
-    public Tesi() {
     }
 
     //Usato per al registrazione
@@ -121,8 +120,8 @@ public class Tesi {
 
     public void setCapacitaRichieste(String capacitaRichieste) {this.capacitaRichieste = capacitaRichieste;}
 
-    public void ModificaTesi(String titolo, String argomenti, boolean statoDisponibilita, int tempistiche,
-                                float mediaVotiMinima, int esamiNecessari, String capacitaRichieste){
+    public boolean ModificaTesi(String titolo, String argomenti, boolean statoDisponibilita, int tempistiche,
+                                float mediaVotiMinima, int esamiNecessari, String capacitaRichieste, Database db){
         this.titolo = titolo;
         this.argomenti = argomenti;
         this.tempistiche = tempistiche;
@@ -130,6 +129,11 @@ public class Tesi {
         this.esamiNecessari = esamiNecessari;
         this.capacitaRichieste = capacitaRichieste;
         this.statoDisponibilita = statoDisponibilita;
+
+        if(TesiDatabase.ModificaTesi(this, db)){
+            return true;
+        }
+        return false;
     }
 
     public Bitmap QRGenerator(){
@@ -145,8 +149,11 @@ public class Tesi {
         return bitmap;
     }
 
-    public void incrementaVisualizzazioni(Database db){
+    public boolean incrementaVisualizzazioni(Database db){
         this.numeroVisualizzazioni++;
-        TesiDatabase.incrementaVisualizzazioni(this, db);
+        if(TesiDatabase.incrementaVisualizzazioni(this, db)){
+            return true;
+        }
+        return false;
     }
 }

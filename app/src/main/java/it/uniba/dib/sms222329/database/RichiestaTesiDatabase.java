@@ -9,7 +9,7 @@ import it.uniba.dib.sms222329.classi.Tesista;
 
 public class RichiestaTesiDatabase {
 
-    public static boolean RichiestaTesi(Database dbClass, RichiestaTesi richiesta) {
+    public static boolean RichiestaTesi(RichiestaTesi richiesta, Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvRichiesta = new ContentValues();
 
@@ -24,7 +24,7 @@ public class RichiestaTesiDatabase {
         return false;
     }
 
-    public static boolean RispostaRichiestaTesi(Database dbClass, RichiestaTesi risposta){
+    public static boolean RispostaRichiestaTesi(RichiestaTesi risposta,Database dbClass){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvRisposta = new ContentValues();
 

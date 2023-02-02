@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Nasconde l'action bar per l'homepage
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         View signInButton = findViewById(R.id.signInButton);
+
         signInButton.setOnClickListener(view -> {
             Intent login = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(login);

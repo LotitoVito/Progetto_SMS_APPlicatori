@@ -6,13 +6,12 @@ public class SegnalazioneChat {
     private String oggetto;
     private int idTesiScelta;
 
+    public SegnalazioneChat() {}
+
     public SegnalazioneChat(int idSegnalazioneChat, String oggetto, int idTesiScelta) {
         this.idSegnalazioneChat = idSegnalazioneChat;
         this.oggetto = oggetto;
         this.idTesiScelta = idTesiScelta;
-    }
-
-    public SegnalazioneChat() {
     }
 
     public SegnalazioneChat(int idSegnalazioneChat) {

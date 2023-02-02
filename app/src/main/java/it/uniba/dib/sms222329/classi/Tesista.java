@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.TesiDatabase;
+import it.uniba.dib.sms222329.database.TesistaDatabase;
 
 public class Tesista extends UtenteRegistrato {
 
@@ -61,8 +63,8 @@ public class Tesista extends UtenteRegistrato {
 
     public void setIdUniversitaCorso(int idUniversitaCorso) {this.idUniversitaCorso = idUniversitaCorso;}
 
-    public void modTesista(String matricola, String nome, String cognome, String email,
-                           String password, float media, int numEsamiMancanti, String codFisc, int idUniversitaCorso) {
+    public boolean modTesista(String matricola, String nome, String cognome, String email,
+                           String password, float media, int numEsamiMancanti, String codFisc, int idUniversitaCorso, Database db) {
         this.nome=nome;
         this.cognome=cognome;
         this.email=email;
@@ -72,5 +74,10 @@ public class Tesista extends UtenteRegistrato {
         this.media=media;
         this.numeroEsamiMancanti=numEsamiMancanti;
         this.idUniversitaCorso=idUniversitaCorso;
+
+        if (TesistaDatabase.modTesista(this, db)){
+            return true;
+        }
+        return false;
     }
 }

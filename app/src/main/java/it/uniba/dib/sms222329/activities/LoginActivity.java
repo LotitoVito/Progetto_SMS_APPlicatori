@@ -21,7 +21,15 @@ import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.UtenteRegistratoDatabase;
 
 public class LoginActivity extends AppCompatActivity {
-    Database db = new Database(this);
+
+    //Variabili e Oggetti
+    private Database db;
+
+    //View Items
+    private Button signInButton;
+    private Button forgotPasswordButton;
+    private EditText emailIns;
+    private EditText editTextTextPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +41,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setTitle(R.string.iscriviti);
-        Button signInButton = findViewById(R.id.signInButton);
-        Button forgotPasswordButton = findViewById(R.id.textView3);
-        EditText emailIns = findViewById(R.id.email);
-        EditText editTextTextPassword = findViewById(R.id.editTextTextPassword);
+
+        Init();
 
         signInButton.setOnClickListener(view -> {
-
             UtenteRegistrato Utente = new UtenteRegistrato(emailIns.getText().toString().trim(), editTextTextPassword.getText().toString().trim());
 
             if (UtenteRegistratoDatabase.LoginStatus(Utente, db)) {
@@ -49,17 +54,22 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Accesso non riuscito", Toast.LENGTH_SHORT).show();
             }
-
-        }); //fini signInButton
-
-
-
-
+        });
 
         forgotPasswordButton.setOnClickListener(view -> {
-
             Intent Recupero_password_activity = new Intent(getApplicationContext(), it.uniba.dib.sms222329.activities.Recupero_password_activity.class);
             startActivity(Recupero_password_activity);
-            });
-        }
+        });
     }
+
+    private void Init(){
+        db = new Database(this);
+        signInButton = findViewById(R.id.signInButton);
+        forgotPasswordButton = findViewById(R.id.textView3);
+        emailIns = findViewById(R.id.email);
+        editTextTextPassword = findViewById(R.id.editTextTextPassword);
+    }
+}
+
+
+

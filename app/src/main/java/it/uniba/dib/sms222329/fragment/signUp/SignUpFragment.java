@@ -24,10 +24,9 @@ import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 import it.uniba.dib.sms222329.database.Database;
 
 public class SignUpFragment extends Fragment {
-    Database db;
+    private Database db;
 
-    public SignUpFragment(Database db) {
-        this.db = db;
+    public SignUpFragment() {
     }
 
     @Override
@@ -40,6 +39,7 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        db = new Database(getActivity().getApplicationContext());
         Button button = view.findViewById(R.id.next_button);
         TextInputEditText nome = getActivity().findViewById(R.id.nome);
         TextInputEditText cognome = getActivity().findViewById(R.id.cognome);
