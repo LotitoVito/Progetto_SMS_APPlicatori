@@ -21,7 +21,7 @@ public class ListaTesiDatabase {
         while(cursore.moveToNext()){
             Tesi tesiEstratta = new Tesi();
 
-            tesiEstratta.setId(cursore.getInt(0));
+            tesiEstratta.setIdTesi(cursore.getInt(0));
             tesiEstratta.setTitolo(cursore.getString(1));
             tesiEstratta.setArgomenti(cursore.getString(2));
             tesiEstratta.setTempistiche(cursore.getInt(3));
@@ -60,7 +60,7 @@ public class ListaTesiDatabase {
         while(cursore.moveToNext()) {
             Tesi tesiEstratta = new Tesi();
 
-            tesiEstratta.setId(cursore.getInt(0));
+            tesiEstratta.setIdTesi(cursore.getInt(0));
             tesiEstratta.setTitolo(cursore.getString(1));
             tesiEstratta.setArgomenti(cursore.getString(2));
             tesiEstratta.setTempistiche(cursore.getInt(3));

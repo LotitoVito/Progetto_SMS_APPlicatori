@@ -91,6 +91,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String RICHIESTA = "richiesta";
     public static final String RICHIESTA_ID = "id";
     public static final String RICHIESTA_MESSAGGIO = "messaggio";
+    private static final String RICHIESTA_CAPACITASTUDENTE = "capacita_studente";
     public static final String RICHIESTA_TESIID = "tesi_id";
     public static final String RICHIESTA_TESISTAID = "tesista_id";
     public static final String RICHIESTA_ACCETTATA = "accettata";
@@ -232,6 +233,7 @@ public class Database extends SQLiteOpenHelper {
         createTable =   "CREATE TABLE " + RICHIESTA + " (" +
                         RICHIESTA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         RICHIESTA_MESSAGGIO + " VARCHAR(255) NOT NULL," +
+                        RICHIESTA_CAPACITASTUDENTE + "VARCHAR(255) NOT NULL," +
                         RICHIESTA_TESIID + " INT NOT NULL," +
                         RICHIESTA_TESISTAID + " INT NOT NULL," +
                         RICHIESTA_ACCETTATA + " BOOLEAN NOT NULL," +
@@ -374,55 +376,86 @@ public class Database extends SQLiteOpenHelper {
     }
 
     private void Test(SQLiteDatabase db){
-        ContentValues cv = new ContentValues();
-
         //Segnalazione
-        cv.put(SEGNALAZIONECHAT_TESISCELTAID, 1);
-        cv.put(SEGNALAZIONECHAT_OGGETTO, "aaaaaaaa");
-        db.insert(SEGNALAZIONECHAT, null, cv);
+        ContentValues cvSegnalazione = new ContentValues();
+        cvSegnalazione.put(SEGNALAZIONECHAT_TESISCELTAID, 1);
+        cvSegnalazione.put(SEGNALAZIONECHAT_OGGETTO, "aaaaaaaa");
+        db.insert(SEGNALAZIONECHAT, null, cvSegnalazione);
 
-        cv.put(SEGNALAZIONECHAT_TESISCELTAID, 2);
-        cv.put(SEGNALAZIONECHAT_OGGETTO, "bbb");
-        db.insert(SEGNALAZIONECHAT, null, cv);
+        cvSegnalazione.put(SEGNALAZIONECHAT_TESISCELTAID, 2);
+        cvSegnalazione.put(SEGNALAZIONECHAT_OGGETTO, "bbb");
+        db.insert(SEGNALAZIONECHAT, null, cvSegnalazione);
 
-        cv.put(SEGNALAZIONECHAT_TESISCELTAID, 3);
-        cv.put(SEGNALAZIONECHAT_OGGETTO, "ccc");
-        db.insert(SEGNALAZIONECHAT, null, cv);
+        cvSegnalazione.put(SEGNALAZIONECHAT_TESISCELTAID, 3);
+        cvSegnalazione.put(SEGNALAZIONECHAT_OGGETTO, "ccc");
+        db.insert(SEGNALAZIONECHAT, null, cvSegnalazione);
 
         //Messaggi
-        ContentValues cv2 = new ContentValues();
-        cv2.put(MESSAGGISEGNALAZIONE_UTENTEID, 1);
-        cv2.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "aaa");
-        cv2.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-03 08:47:00");
-        cv2.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 1);
-        db.insert(MESSAGGISEGNALAZIONE, null, cv2);
+        ContentValues cvMessaggi = new ContentValues();
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_UTENTEID, 1);
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "aaa");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-03 08:47:00");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 1);
+        db.insert(MESSAGGISEGNALAZIONE, null, cvMessaggi);
 
-        cv2.put(MESSAGGISEGNALAZIONE_UTENTEID, 2);
-        cv2.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "bbb");
-        cv2.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-03 08:50:20");
-        cv2.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 1);
-        db.insert(MESSAGGISEGNALAZIONE, null, cv2);
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_UTENTEID, 2);
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "bbb");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-03 08:50:20");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 1);
+        db.insert(MESSAGGISEGNALAZIONE, null, cvMessaggi);
 
-        cv2.put(MESSAGGISEGNALAZIONE_UTENTEID, 1);
-        cv2.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "ccc");
-        cv2.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-03 08:48:45");
-        cv2.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 1);
-        db.insert(MESSAGGISEGNALAZIONE, null, cv2);
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_UTENTEID, 1);
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "ccc");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-03 08:48:45");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 1);
+        db.insert(MESSAGGISEGNALAZIONE, null, cvMessaggi);
 
-        cv2.put(MESSAGGISEGNALAZIONE_UTENTEID, 1);
-        cv2.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "ddd");
-        cv2.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-03 12:45:23");
-        cv2.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 2);
-        db.insert(MESSAGGISEGNALAZIONE, null, cv2);
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_UTENTEID, 1);
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "ddd");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-03 12:45:23");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 2);
+        db.insert(MESSAGGISEGNALAZIONE, null, cvMessaggi);
 
         //Ricevimenti
-        ContentValues cv1 = new ContentValues();
-        cv1.put(RICEVIMENTI_TASKID, 1);
-        cv1.put(RICEVIMENTI_DATA, "2023-02-04");
-        cv1.put(RICEVIMENTI_ORARIO, "16:50");
-        cv1.put(RICEVIMENTI_ACCETTAZIONE, 1);
-        cv1.put(RICEVIMENTI_ARGOMENTO, "A");
-        cv1.put(RICEVIMENTI_MESSAGGIO, "A");
-        db.insert(RICEVIMENTI, null, cv1);
+        ContentValues cvRicevimenti = new ContentValues();
+        cvRicevimenti.put(RICEVIMENTI_TASKID, 1);
+        cvRicevimenti.put(RICEVIMENTI_DATA, "2023-02-04");
+        cvRicevimenti.put(RICEVIMENTI_ORARIO, "16:50");
+        cvRicevimenti.put(RICEVIMENTI_ACCETTAZIONE, 1);
+        cvRicevimenti.put(RICEVIMENTI_ARGOMENTO, "A");
+        cvRicevimenti.put(RICEVIMENTI_MESSAGGIO, "A");
+        db.insert(RICEVIMENTI, null, cvRicevimenti);
+
+        //Richieste
+        ContentValues cvRichieste = new ContentValues();
+        cvRichieste.put(RICHIESTA_TESIID, 1);
+        cvRichieste.put(RICHIESTA_TESISTAID, 1);
+        cvRichieste.put(RICHIESTA_MESSAGGIO, "aaaa");
+        cvRichieste.put(RICHIESTA_ACCETTATA, false);
+        db.insert(RICHIESTA, null, cvRichieste);
+
+        cvRichieste.put(RICHIESTA_TESIID, 1);
+        cvRichieste.put(RICHIESTA_TESISTAID, 2);
+        cvRichieste.put(RICHIESTA_MESSAGGIO, "bbbb");
+        cvRichieste.put(RICHIESTA_ACCETTATA, false);
+        db.insert(RICHIESTA, null, cvRichieste);
+
+        cvRichieste.put(RICHIESTA_TESIID, 1);
+        cvRichieste.put(RICHIESTA_TESISTAID, 3);
+        cvRichieste.put(RICHIESTA_MESSAGGIO, "abbbbaaa");
+        cvRichieste.put(RICHIESTA_ACCETTATA, false);
+        db.insert(RICHIESTA, null, cvRichieste);
+
+        //TesiScelte
+        ContentValues cvTesiScelte = new ContentValues();
+        cvTesiScelte.put(TESISCELTA_TESIID, 1);
+        cvTesiScelte.put(TESISCELTA_TESISTAID, 1);
+        cvTesiScelte.put(TESISCELTA_CORELATOREID, 1);
+        db.insert(TESISCELTA, null, cvTesiScelte);
+
+        cvTesiScelte.put(TESISCELTA_TESIID, 2);
+        cvTesiScelte.put(TESISCELTA_TESISTAID, 2);
+        cvTesiScelte.put(TESISCELTA_CORELATOREID, 1);
+        db.insert(TESISCELTA, null, cvTesiScelte);
     }
 }

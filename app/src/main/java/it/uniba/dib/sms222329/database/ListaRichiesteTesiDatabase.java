@@ -25,8 +25,8 @@ public class ListaRichiesteTesiDatabase {
             richiestaTesi.setMessaggio(cursore.getString(1));
             richiestaTesi.setIdTesi(cursore.getInt(2));
             richiestaTesi.setIdTesista(cursore.getInt(3));
-            richiestaTesi.setAccettata(cursore.getInt(4));
-            richiestaTesi.setMessaggio(cursore.getString(5));
+            richiestaTesi.setAccettata(cursore.getInt(4)==1);
+            richiestaTesi.setRisposta(cursore.getString(5));
 
             listaRichiesteTesi.add(richiestaTesi);
 

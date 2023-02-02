@@ -45,7 +45,7 @@ public class TesiDatabase {
         cvTesi.put(Database.TESI_SKILLRICHIESTE, tesi.getCapacitaRichieste());
         cvTesi.put(Database.TESI_STATO, tesi.getStatoDisponibilita());
         try{
-            long updateTesi = db.update(Database.TESI, cvTesi, Database.TESI_ID + " = " + tesi.getId(), null);
+            long updateTesi = db.update(Database.TESI, cvTesi, Database.TESI_ID + " = " + tesi.getIdTesi(), null);
             if(updateTesi != -1){
                 return true;
             }
@@ -65,6 +65,6 @@ public class TesiDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(Database.TESI_VISUALIZZAZIONI, tesi.getNumeroVisualizzazioni());
-        db.update(Database.TESI, cv, Database.TESI_ID + " = '"+ tesi.getId() +"';", null);
+        db.update(Database.TESI, cv, Database.TESI_ID + " = '"+ tesi.getIdTesi() +"';", null);
     }
 }

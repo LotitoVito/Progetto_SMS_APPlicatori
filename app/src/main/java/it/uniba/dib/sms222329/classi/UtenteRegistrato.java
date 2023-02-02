@@ -4,6 +4,7 @@ package it.uniba.dib.sms222329.classi;
 import java.io.Serializable;
 
 public class UtenteRegistrato implements Serializable {
+
     int idUtente;
     String nome;
     String cognome;

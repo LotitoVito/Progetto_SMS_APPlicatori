@@ -4,14 +4,16 @@ public class RichiestaTesi {
 
     private int idRichiesta;
     private String messaggio;
+    private String capacitàStudente;
     private int idTesi;
     private int idTesista;
-    private int accettata;
+    private boolean accettata;
     private String risposta;
 
-    public RichiestaTesi(int idRichiesta, String messaggio, int idTesi, int idTesista, int accettata, String risposta) {
+    public RichiestaTesi(int idRichiesta, String messaggio, String capacitàStudente, int idTesi, int idTesista, boolean accettata, String risposta) {
         this.idRichiesta = idRichiesta;
         this.messaggio = messaggio;
+        this.capacitàStudente = capacitàStudente;
         this.idTesi = idTesi;
         this.idTesista = idTesista;
         this.accettata = accettata;
@@ -36,6 +38,12 @@ public class RichiestaTesi {
         this.messaggio = messaggio;
     }
 
+    public String getCapacitàStudente() {return capacitàStudente;}
+
+    public void setCapacitàStudente(String capacitàStudente) {this.capacitàStudente = capacitàStudente;}
+
+    public boolean getAccettata() {return accettata;}
+
     public int getIdTesi() {
         return idTesi;
     }
@@ -52,11 +60,11 @@ public class RichiestaTesi {
         this.idTesista = idTesista;
     }
 
-    public int isAccettata() {
+    public boolean isAccettata() {
         return accettata;
     }
 
-    public void setAccettata(int accettata) {
+    public void setAccettata(boolean accettata) {
         this.accettata = accettata;
     }
 
@@ -68,7 +76,7 @@ public class RichiestaTesi {
         this.risposta = risposta;
     }
 
-    public void RispostaRichiestaTesi(int accettata, String risposta){
+    public void RispostaRichiestaTesi(boolean accettata, String risposta){
         this.accettata = accettata;
         this.risposta = risposta;
     }

@@ -7,54 +7,38 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.classi.RichiestaTesi;
+import it.uniba.dib.sms222329.classi.TesiScelta;
+import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.RichiestaTesiDatabase;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AccettaRichiestaTesiFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AccettaRichiestaTesiFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    //Variabili ed Oggetti
+    private RichiestaTesi richiesta;
+    private Database db;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //View Items
+    private TextView titoloTesi;
+    private TextView argomento;
+    private TextView tesista;
+    private TextView tempistiche;
+    private TextView esamiMancanti;
+    private TextView capacitaRichiesta;
+    private TextView capacitaEffettive;
+    private TextView media;
+    private Button accetta;
+    private Button rifiuta;
 
-    public AccettaRichiestaTesiFragment() {
-        // Required empty public constructor
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AccettaRichiestaTesiFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AccettaRichiestaTesiFragment newInstance(String param1, String param2) {
-        AccettaRichiestaTesiFragment fragment = new AccettaRichiestaTesiFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public AccettaRichiestaTesiFragment(RichiestaTesi richiesta) {
+        this.richiesta = richiesta;
     }
 
     @Override
@@ -62,5 +46,52 @@ public class AccettaRichiestaTesiFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_accetta_richiesta_tesi, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Init();
+        ViewItemsSetText();
+
+        accetta.setOnClickListener(view -> {
+            richiesta.setAccettata(true);
+            //if risposta not void
+            //richiesta.setRisposta();
+            RichiestaTesiDatabase.RispostaRichiestaTesi(db, richiesta);
+        });
+
+        rifiuta.setOnClickListener(view -> {
+            richiesta.setAccettata(false);
+            //if risposta not void
+            //richiesta.setRisposta();
+            RichiestaTesiDatabase.RispostaRichiestaTesi(db, richiesta);
+        });
+    }
+
+    private void Init(){
+        db = new Database(getActivity().getApplicationContext());
+        titoloTesi = getView().findViewById(R.id.titoloTesi);
+        argomento = getView().findViewById(R.id.argomentoTesi);
+        tesista = getView().findViewById(R.id.nome);
+        tempistiche = getView().findViewById(R.id.tempistiche);
+        esamiMancanti = getView().findViewById(R.id.esamiMancanti);
+        capacitaRichiesta = getView().findViewById(R.id.capacitaRichiesta);
+        capacitaEffettive = getView().findViewById(R.id.capacitaEffettive);
+        media = getView().findViewById(R.id.media);
+        accetta = getView().findViewById(R.id.accetta);
+        rifiuta = getView().findViewById(R.id.rifiuta);
+    }
+
+    private void ViewItemsSetText(){
+        titoloTesi.setText(String.valueOf(richiesta.getIdTesi()));
+        argomento.setText(String.valueOf(richiesta.getIdTesi()));
+        tesista.setText(String.valueOf(richiesta.getIdTesista()));
+        tempistiche.setText(String.valueOf(richiesta.getIdTesi()));
+        esamiMancanti.setText(String.valueOf(richiesta.getIdTesi()));
+        capacitaRichiesta.setText(String.valueOf(richiesta.getIdTesi()));
+        capacitaEffettive.setText(richiesta.getCapacitàStudente());
+        media.setText(String.valueOf(richiesta.getIdTesi()));
     }
 }

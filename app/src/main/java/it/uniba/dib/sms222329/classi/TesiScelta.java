@@ -10,8 +10,11 @@ public class TesiScelta extends Tesi{
     private Date dataPubblicazione;
     private String riassunto;
 
+    public TesiScelta() {
+    }
+
     public TesiScelta(Tesi tesi, int idTesiScelta, int idTesista, int idCorelatore, Date dataPubblicazione, String riassunto) {
-        super(tesi.getId(), tesi.getTitolo(), tesi.getArgomenti(), tesi.getIdRelatore());
+        super(tesi.getIdTesi(), tesi.getTitolo(), tesi.getArgomenti(), tesi.getIdRelatore());
         this.idTesiScelta = idTesiScelta;
         this.idTesista = idTesista;
         this.idCorelatore = idCorelatore;

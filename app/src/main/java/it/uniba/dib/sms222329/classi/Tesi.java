@@ -1,11 +1,6 @@
 package it.uniba.dib.sms222329.classi;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.provider.ContactsContract;
-import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -13,15 +8,9 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-import java.sql.Date;
-import java.util.ArrayList;
-
-import it.uniba.dib.sms222329.activities.MainActivity;
-import it.uniba.dib.sms222329.database.Database;
-
 public class Tesi {
 
-    private int id;
+    private int idTesi;
     private String titolo;
     private String argomenti;
     private int tempistiche;
@@ -34,7 +23,7 @@ public class Tesi {
 
     public Tesi(int id, String titolo, String argomenti, int tempistiche, float mediaVotiMinima, int esamiNecessari,
                 String capacitaRichieste, boolean statoDisponibilita, int numeroVisualizzazioni, int idRelatore) {
-        this.id = id;
+        this.idTesi = id;
         this.titolo = titolo;
         this.argomenti = argomenti;
         this.tempistiche = tempistiche;
@@ -65,18 +54,18 @@ public class Tesi {
 
     //Usato per la tesi scelta
     public Tesi(int id, String titolo, String argomenti, int idRelatore) {
-        this.id = id;
+        this.idTesi = id;
         this.titolo = titolo;
         this.argomenti = argomenti;
         this.idRelatore = idRelatore;
     }
 
-    public int getId() {
-        return id;
+    public int getIdTesi() {
+        return idTesi;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdTesi(int idTesi) {
+        this.idTesi = idTesi;
     }
 
     public String getTitolo() {return titolo;}
@@ -144,7 +133,7 @@ public class Tesi {
         MultiFormatWriter writer = new MultiFormatWriter();
         Bitmap bitmap = null;
         try{
-            BitMatrix  matrix = writer. encode(String.valueOf(this.id), BarcodeFormat.QR_CODE, 400, 400);
+            BitMatrix  matrix = writer. encode(String.valueOf(this.idTesi), BarcodeFormat.QR_CODE, 400, 400);
             BarcodeEncoder encoder = new BarcodeEncoder();
             bitmap = encoder.createBitmap(matrix);
         }catch(WriterException e){
