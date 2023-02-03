@@ -1,13 +1,11 @@
 package it.uniba.dib.sms222329.fragment.signUp;
 
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +21,7 @@ import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 import it.uniba.dib.sms222329.database.Database;
 
-public class SignUpFragment extends Fragment {
+public class RegistraFragment extends Fragment {
 
     //Variabili e Oggetti
     private Database db;
@@ -36,7 +34,7 @@ public class SignUpFragment extends Fragment {
     private TextInputEditText password;
     private Button button;
 
-    public SignUpFragment() {}
+    public RegistraFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,13 +71,13 @@ public class SignUpFragment extends Fragment {
         int checkedId = radioGroup.getCheckedRadioButtonId();
             switch (checkedId) {
                 case R.id.radio_button_1:
-                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new SignUpStudentFragment(account));
+                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new RegistraStudentFragment(account));
                     break;
                 case R.id.radio_button_2:
-                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new SignUpRelatoreFragment(account));
+                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new RegistraRelatoreFragment(account));
                     break;
                 case R.id.radio_button_3:
-                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new SignUpCoRelatoreFragment(account));
+                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new RegistraCoRelatoreFragment(account));
                     break;
             }
 

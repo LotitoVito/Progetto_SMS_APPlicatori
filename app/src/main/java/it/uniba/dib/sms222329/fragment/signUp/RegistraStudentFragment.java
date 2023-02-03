@@ -1,7 +1,6 @@
 package it.uniba.dib.sms222329.fragment.signUp;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -31,7 +30,7 @@ import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.TesistaDatabase;
 import it.uniba.dib.sms222329.database.UtenteRegistratoDatabase;
 
-public class SignUpStudentFragment extends Fragment {
+public class RegistraStudentFragment extends Fragment {
 
     //Variabili e Oggetti
     private Database db;
@@ -45,7 +44,7 @@ public class SignUpStudentFragment extends Fragment {
     private Spinner spinnerCorsoStudi;
     private Button registerButton;
 
-    public SignUpStudentFragment(UtenteRegistrato accountGenerale) {
+    public RegistraStudentFragment(UtenteRegistrato accountGenerale) {
         this.accountGenerale = accountGenerale;
     }
 

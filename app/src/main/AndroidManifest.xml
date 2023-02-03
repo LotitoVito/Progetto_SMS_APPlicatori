@@ -20,7 +20,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.UtenteLoggato"
+            android:name=".activities.LoggedActivity"
             android:windowSoftInputMode="adjustPan"
             android:exported="false">
             <meta-data

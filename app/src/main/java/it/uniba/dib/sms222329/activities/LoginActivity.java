@@ -1,21 +1,13 @@
 package it.uniba.dib.sms222329.activities;
-import java.util.*;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import it.uniba.dib.sms222329.R;
-import it.uniba.dib.sms222329.Utility;
-import it.uniba.dib.sms222329.classi.CoRelatore;
-import it.uniba.dib.sms222329.classi.Relatore;
-import it.uniba.dib.sms222329.classi.Tesista;
 import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.UtenteRegistratoDatabase;
@@ -48,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
             UtenteRegistrato Utente = new UtenteRegistrato(emailIns.getText().toString().trim(), editTextTextPassword.getText().toString().trim());
 
             if (UtenteRegistratoDatabase.LoginStatus(Utente, db)) {
-                Intent UtenteLoggato = new Intent(getApplicationContext(), UtenteLoggato.class);
+                Intent UtenteLoggato = new Intent(getApplicationContext(), LoggedActivity.class);
                 UtenteLoggato.putExtra("utentePassato", Utente);
                 startActivity(UtenteLoggato);
             } else {

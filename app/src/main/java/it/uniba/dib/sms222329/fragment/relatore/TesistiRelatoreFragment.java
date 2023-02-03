@@ -87,7 +87,7 @@ public class TesistiRelatoreFragment extends Fragment {
 
     private void Init(){
         db = new Database(getActivity().getApplicationContext());
-        listView = getView().findViewById(R.id.segnalazioniList);
+        listView = getView().findViewById(R.id.tesistiList);
         richieste = getActivity().findViewById(R.id.richieste);
         tesisti = getActivity().findViewById(R.id.tesisti);
     }

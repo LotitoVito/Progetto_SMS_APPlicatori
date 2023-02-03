@@ -31,7 +31,7 @@ import it.uniba.dib.sms222329.database.RelatoreDatabase;
 import it.uniba.dib.sms222329.database.UtenteRegistratoDatabase;
 import it.uniba.dib.sms222329.fragment.adapter.CorsiDiStudiAdapter;
 
-public class SignUpRelatoreFragment extends Fragment {
+public class RegistraRelatoreFragment extends Fragment {
 
     //Variabili e Oggetti
     private Database db;
@@ -43,7 +43,7 @@ public class SignUpRelatoreFragment extends Fragment {
     private Spinner universita;
     private ListView corsi;
 
-    public SignUpRelatoreFragment(UtenteRegistrato accountGenerale) {
+    public RegistraRelatoreFragment(UtenteRegistrato accountGenerale) {
         this.accountGenerale = accountGenerale;
     }
 

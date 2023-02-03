@@ -3,10 +3,6 @@ package it.uniba.dib.sms222329.fragment;
 import android.database.Cursor;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +19,9 @@ import java.util.List;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
-import it.uniba.dib.sms222329.classi.ListaTesi;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.database.Database;
-import it.uniba.dib.sms222329.fragment.relatore.GestioneTesiFragment;
-import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
-import it.uniba.dib.sms222329.fragment.relatore.TesiFragment;
+import it.uniba.dib.sms222329.fragment.relatore.ListaTesiFragment;
 
 public class TesiFilterFragment extends BottomSheetDialogFragment {
 
@@ -90,7 +83,7 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
             query = AddToQueryOrderType(query, ordinaAscendente);
 
             this.dismiss();
-            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.content2, new TesiFragment(relatoreLoggato, query));
+            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.content2, new ListaTesiFragment(relatoreLoggato, query));
         });
     }
 

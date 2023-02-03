@@ -1,8 +1,5 @@
 package it.uniba.dib.sms222329.fragment.relatore;
 
-import android.content.Context;
-import android.content.UriMatcher;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.autofill.AutofillValue;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,7 +25,7 @@ import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.TesiDatabase;
 
-public class GestioneTesiFragment extends Fragment {
+public class CreaModificaTesiFragment extends Fragment {
 
     //Variabili e Oggetti
     private boolean operazioneModifica;
@@ -47,14 +43,14 @@ public class GestioneTesiFragment extends Fragment {
     private SwitchMaterial statoDisponibilita;
     private Button salva;
 
-    public GestioneTesiFragment(){}
+    public CreaModificaTesiFragment(){}
 
-    public GestioneTesiFragment(Relatore relatoreLoggato) {
+    public CreaModificaTesiFragment(Relatore relatoreLoggato) {
         this.operazioneModifica = false;
         this.relatoreLoggato = relatoreLoggato;
     }
 
-    public GestioneTesiFragment(Tesi tesi, Relatore relatoreLoggato) {
+    public CreaModificaTesiFragment(Tesi tesi, Relatore relatoreLoggato) {
         this.tesi = tesi;
         this.operazioneModifica = true;
         this.relatoreLoggato = relatoreLoggato;
@@ -93,7 +89,7 @@ public class GestioneTesiFragment extends Fragment {
                         Integer.parseInt(tempistiche.getText().toString().trim()), Float.parseFloat(media.getText().toString().trim()),
                         Integer.parseInt(esamiMancanti.getText().toString().trim()), capacitaRichiesta.getText().toString().trim(), db)){
                     Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
-                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new TesiFragment());
+                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ListaTesiFragment());
                 } else{
                     Toast.makeText(getActivity().getApplicationContext(), "Modifica fallita", Toast.LENGTH_SHORT).show();
                 }
@@ -110,7 +106,7 @@ public class GestioneTesiFragment extends Fragment {
 
                     if (TesiDatabase.RegistrazioneTesi(tesi, db)) {
                         Toast.makeText(getActivity().getApplicationContext(), "Tesi registrata con successo", Toast.LENGTH_SHORT).show();
-                        Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new TesiFragment());
+                        Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ListaTesiFragment());
                     } else {
                         Toast.makeText(getActivity().getApplicationContext(), "Registrazione fallita", Toast.LENGTH_SHORT).show();
                     }

@@ -1,7 +1,6 @@
 package it.uniba.dib.sms222329.fragment.signUp;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -24,7 +23,7 @@ import it.uniba.dib.sms222329.database.CoRelatoreDatabase;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.UtenteRegistratoDatabase;
 
-public class SignUpCoRelatoreFragment extends Fragment {
+public class RegistraCoRelatoreFragment extends Fragment {
 
     //Variabili e Oggetti
     private Database db;
@@ -34,7 +33,7 @@ public class SignUpCoRelatoreFragment extends Fragment {
     private Button registerButton;
     private TextInputEditText organizzaione;
 
-    public SignUpCoRelatoreFragment(UtenteRegistrato accountGenerale) {
+    public RegistraCoRelatoreFragment(UtenteRegistrato accountGenerale) {
         this.accountGenerale = accountGenerale;
     }
 

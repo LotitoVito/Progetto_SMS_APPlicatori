@@ -18,7 +18,7 @@ import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.fragment.VisualizzaTesiFragment;
-import it.uniba.dib.sms222329.fragment.relatore.GestioneTesiFragment;
+import it.uniba.dib.sms222329.fragment.relatore.CreaModificaTesiFragment;
 
 public class ListaTesiAdapter extends BaseAdapter {
 
@@ -83,7 +83,7 @@ public class ListaTesiAdapter extends BaseAdapter {
             editButton.setVisibility(View.GONE);
         }
 
-        editButton.setOnClickListener(view1 -> Utility.replaceFragment( this.fragmentManager, R.id.container, new GestioneTesiFragment(this.tesi.get(i), this.relatoreLoggato)));
+        editButton.setOnClickListener(view1 -> Utility.replaceFragment( this.fragmentManager, R.id.container, new CreaModificaTesiFragment(this.tesi.get(i), this.relatoreLoggato)));
 
         //Detail Button
         Button detailButton = convertView.findViewById(R.id.visualizza);

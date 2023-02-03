@@ -3,13 +3,10 @@ package it.uniba.dib.sms222329.activities;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
-import it.uniba.dib.sms222329.database.Database;
-import it.uniba.dib.sms222329.fragment.signUp.SignUpFragment;
+import it.uniba.dib.sms222329.fragment.signUp.RegistraFragment;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -17,7 +14,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        Utility.replaceFragment(getSupportFragmentManager(), R.id.signUpcontainer, new SignUpFragment());
+        Utility.replaceFragment(getSupportFragmentManager(), R.id.signUpcontainer, new RegistraFragment());
     }
 
     @Override

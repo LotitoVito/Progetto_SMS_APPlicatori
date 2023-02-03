@@ -19,7 +19,6 @@ import java.util.List;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
-import it.uniba.dib.sms222329.classi.ListaTesi;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.database.Database;
@@ -27,7 +26,7 @@ import it.uniba.dib.sms222329.database.ListaTesiDatabase;
 import it.uniba.dib.sms222329.fragment.TesiFilterFragment;
 import it.uniba.dib.sms222329.fragment.adapter.ListaTesiAdapter;
 
-public class TesiFragment extends Fragment {
+public class ListaTesiFragment extends Fragment {
 
     //Variabili e Oggetti
     private Relatore relatoreLoggato;
@@ -41,14 +40,14 @@ public class TesiFragment extends Fragment {
     private ListView listView;
     private SearchView barraRicerca;
 
-    public TesiFragment(){}
+    public ListaTesiFragment(){}
 
-    public TesiFragment(Relatore relatoreLoggato) {
+    public ListaTesiFragment(Relatore relatoreLoggato) {
         this.relatoreLoggato = relatoreLoggato;
         this.queryFiltri = "SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_RELATOREID + "=" + relatoreLoggato.getIdRelatore() + ";";
     }
 
-    public TesiFragment(Relatore relatoreLoggato, String queryFiltri) {
+    public ListaTesiFragment(Relatore relatoreLoggato, String queryFiltri) {
         this.relatoreLoggato = relatoreLoggato;
         this.queryFiltri = queryFiltri;
     }
@@ -75,7 +74,7 @@ public class TesiFragment extends Fragment {
         RefreshList();
 
         addButton.setOnClickListener(view1 -> {
-            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new GestioneTesiFragment(relatoreLoggato));
+            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new CreaModificaTesiFragment(relatoreLoggato));
         });
 
         filtra.setOnClickListener(view1 -> {

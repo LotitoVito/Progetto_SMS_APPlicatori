@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 
 import it.uniba.dib.sms222329.R;
 
-public class TesiFragment extends Fragment {
+public class TesiTesistaFragment extends Fragment {
 
-    public TesiFragment() {
+    public TesiTesistaFragment() {
     }
 
     @Override
