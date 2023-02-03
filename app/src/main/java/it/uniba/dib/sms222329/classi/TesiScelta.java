@@ -21,6 +21,11 @@ public class TesiScelta extends Tesi{
         this.riassunto = riassunto;
     }
 
+    public TesiScelta(int idTesi, int idTesista) {
+        super(idTesi);
+        this.idTesista = idTesista;
+    }
+
     public int getIdTesiScelta() {
         return idTesiScelta;
     }

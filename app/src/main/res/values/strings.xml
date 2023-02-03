@@ -105,6 +105,8 @@
     <string name="riorganizza">Cambia data riceviemento</string>
     <string name="orario">Inserisci ora</string>
     <string name="seleziona_data">Inserisci data</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

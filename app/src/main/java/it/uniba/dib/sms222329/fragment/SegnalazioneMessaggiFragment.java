@@ -28,7 +28,6 @@ public class SegnalazioneMessaggiFragment extends Fragment {
     private Database db;
     private int idChat;
     private Relatore relatoreLoggato;
-    private Tesista tesistaLoggato;
 
     //View Items
     private ListView listView;
@@ -75,7 +74,7 @@ public class SegnalazioneMessaggiFragment extends Fragment {
 
     private void refreshChat(){
         List<SegnalazioneMessaggio> listaSegnalazioni = ListaSegnalazioniMessaggiDatabase.ListaMessaggi(db, this.idChat);
-        ListaSegnalazioniMessaggiAdapter adapterLista = new ListaSegnalazioniMessaggiAdapter(getActivity().getApplicationContext(), listaSegnalazioni);
+        ListaSegnalazioniMessaggiAdapter adapterLista = new ListaSegnalazioniMessaggiAdapter(getActivity().getApplicationContext(), listaSegnalazioni, relatoreLoggato.getIdUtente());
         listView.setAdapter(adapterLista);
     }
 }

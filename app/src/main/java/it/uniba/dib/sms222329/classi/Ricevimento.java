@@ -6,11 +6,15 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 
+import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.RicevimentoDatabase;
+
 public class Ricevimento {
 
     public static final int ACCETTATO = 1;
-    public static final int IN_ATTESA = 2;
-    public static final int RIFIUTATO = 3;
+    public static final int RIFIUTATO = 2;
+    public static final int IN_ATTESA_RELATORE = 3;
+    public static final int IN_ATTESA_TESISTA = 4;
 
     private int idRicevimento;
     private LocalDate data;
@@ -82,4 +86,14 @@ public class Ricevimento {
     public String getMessaggio() {return messaggio;}
 
     public void setMessaggio(String messaggio) {this.messaggio = messaggio;}
+
+    public boolean ModificaRicevimento(Database db, LocalDate data, LocalTime orario){
+        this.data = data;
+        this.orario = orario;
+
+        if(RicevimentoDatabase.ModificaRicevimento(db, this)){
+            return true;
+        }
+        return false;
+    }
 }

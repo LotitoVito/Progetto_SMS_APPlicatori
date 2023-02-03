@@ -7,60 +7,80 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
+import it.uniba.dib.sms222329.classi.Ricevimento;
+import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.RicevimentoDatabase;
+import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RichiestaRicevimentoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RichiestaRicevimentoFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    //Variabili e Oggetti
+    private Database db;
+    private Ricevimento richiesta;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //View Items
+    private TextView argomento;
+    private TextView taskRicevimento;
+    private TextView dataRicevimento;
+    private Button accetta;
+    private Button rifiuta;
 
-    public RichiestaRicevimentoFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RichiestaRicevimentoFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RichiestaRicevimentoFragment newInstance(String param1, String param2) {
-        RichiestaRicevimentoFragment fragment = new RichiestaRicevimentoFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public RichiestaRicevimentoFragment(Ricevimento richiesta) {
+        this.richiesta = richiesta;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_richiesta_ricevimento, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Init();
+        SetTextAll();
+
+        accetta.setOnClickListener(view -> {
+            if(RicevimentoDatabase.AccettaRicevimento(db, richiesta)){
+                Toast.makeText(getActivity().getApplicationContext(), "Ricevimento accettato", Toast.LENGTH_SHORT).show();
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new HomeFragment());
+            }else{
+                Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        rifiuta.setOnClickListener(view -> {
+            if(RicevimentoDatabase.RifiutaRicevimento(db, richiesta)){
+                Toast.makeText(getActivity().getApplicationContext(), "Ricevimento rifiutato", Toast.LENGTH_SHORT).show();
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new HomeFragment());
+            } else{
+                Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //Fare modifica
+    }
+
+    private void Init() {
+        db = new Database(getActivity().getApplicationContext());
+        argomento = getView().findViewById(R.id.argomento);
+        taskRicevimento = getView().findViewById(R.id.task_ricevimento);
+        dataRicevimento = getView().findViewById(R.id.data);
+        accetta = getView().findViewById(R.id.accetta);
+        rifiuta = getView().findViewById(R.id.rifiuta);
+    }
+
+    private void SetTextAll() {
+        //da fare
     }
 }

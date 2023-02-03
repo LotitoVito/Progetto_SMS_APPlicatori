@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import it.uniba.dib.sms222329.classi.Ricevimento;
 import it.uniba.dib.sms222329.classi.RichiestaTesi;
 
 
@@ -423,7 +424,7 @@ public class Database extends SQLiteOpenHelper {
         cvRicevimenti.put(RICEVIMENTI_TASKID, 1);
         cvRicevimenti.put(RICEVIMENTI_DATA, "2023-02-04");
         cvRicevimenti.put(RICEVIMENTI_ORARIO, "16:50");
-        cvRicevimenti.put(RICEVIMENTI_ACCETTAZIONE, 1);
+        cvRicevimenti.put(RICEVIMENTI_ACCETTAZIONE, Ricevimento.IN_ATTESA_RELATORE);
         cvRicevimenti.put(RICEVIMENTI_ARGOMENTO, "A");
         cvRicevimenti.put(RICEVIMENTI_MESSAGGIO, "A");
         db.insert(RICEVIMENTI, null, cvRicevimenti);
@@ -445,14 +446,14 @@ public class Database extends SQLiteOpenHelper {
         db.insert(RICHIESTA, null, cvRichieste);
 
         cvRichieste.put(RICHIESTA_TESIID, 1);
-        cvRichieste.put(RICHIESTA_TESISTAID, 3);
+        cvRichieste.put(RICHIESTA_TESISTAID, 2);
         cvRichieste.put(RICHIESTA_MESSAGGIO, "abbbbaaa");
         cvRichieste.put(RICHIESTA_CAPACITASTUDENTE, "C");
         cvRichieste.put(RICHIESTA_ACCETTATA, RichiestaTesi.IN_ATTESA);
         db.insert(RICHIESTA, null, cvRichieste);
 
         //TesiScelte
-        ContentValues cvTesiScelte = new ContentValues();
+        /*ContentValues cvTesiScelte = new ContentValues();
         cvTesiScelte.put(TESISCELTA_TESIID, 1);
         cvTesiScelte.put(TESISCELTA_TESISTAID, 1);
         cvTesiScelte.put(TESISCELTA_CORELATOREID, 1);
@@ -461,6 +462,6 @@ public class Database extends SQLiteOpenHelper {
         cvTesiScelte.put(TESISCELTA_TESIID, 2);
         cvTesiScelte.put(TESISCELTA_TESISTAID, 2);
         cvTesiScelte.put(TESISCELTA_CORELATOREID, 1);
-        db.insert(TESISCELTA, null, cvTesiScelte);
+        db.insert(TESISCELTA, null, cvTesiScelte);*/
     }
 }

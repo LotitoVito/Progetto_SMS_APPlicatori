@@ -79,11 +79,21 @@ public class RichiestaTesi {
         this.risposta = risposta;
     }
 
-    public boolean RispostaRichiestaTesi(int accettata, String risposta, Database db){
-        this.accettata = accettata;
+    public boolean AccettaRichiestaTesi(String risposta, Database db){
+        this.accettata = ACCETTATO;
         this.risposta = risposta;
 
-        if(RichiestaTesiDatabase.RispostaRichiestaTesi(this, db)){
+        if(RichiestaTesiDatabase.AccettaRichiestaTesi(this, db)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean RifiutaRichiestaTesi(String risposta, Database db){
+        this.accettata = RIFIUTATO;
+        this.risposta = risposta;
+
+        if(RichiestaTesiDatabase.RifiutaRichiestaTesi(this, db)){
             return true;
         }
         return false;

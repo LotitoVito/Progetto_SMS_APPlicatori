@@ -5,23 +5,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.fragment.app.FragmentManager;
 
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Ricevimento;
+import it.uniba.dib.sms222329.fragment.RichiestaRicevimentoFragment;
 
 public class ListaRicevimentiAdapter extends BaseAdapter {
 
     //Variabili e Oggetti
     private List<Ricevimento> ricevimenti;
     private LayoutInflater inflater;
+    private FragmentManager manager;
 
-    public ListaRicevimentiAdapter(Context context, List<Ricevimento> ricevimenti) {
+    public ListaRicevimentiAdapter(Context context, List<Ricevimento> ricevimenti, FragmentManager manager) {
         this.ricevimenti = ricevimenti;
         this.inflater = LayoutInflater.from(context);
+        this.manager = manager;
     }
 
     @Override
@@ -57,11 +63,30 @@ public class ListaRicevimentiAdapter extends BaseAdapter {
         TextView stato = convertView.findViewById(R.id.sottotitolo);
         String disponibilita = "";
         if (ricevimenti.get(i).getAccettazione()==Ricevimento.ACCETTATO){
-            disponibilita = "Disponibile";
-        } else if (ricevimenti.get(i).getAccettazione()==Ricevimento.IN_ATTESA){
-            disponibilita = "In Attesa";
+            disponibilita = "Accettato";
+        } else if (ricevimenti.get(i).getAccettazione()==Ricevimento.RIFIUTATO) {
+            disponibilita = "Rifiutato";
+        } else if (ricevimenti.get(i).getAccettazione()==Ricevimento.IN_ATTESA_RELATORE){
+            disponibilita = "In attesa della risposta del relatore";
+        } else if (ricevimenti.get(i).getAccettazione()==Ricevimento.IN_ATTESA_TESISTA){
+            disponibilita = "In attesa della risposta del tesista";
         }
         stato.setText(disponibilita);
+
+        //EditButton
+        Button modifica = convertView.findViewById(R.id.modifica);
+        if(ricevimenti.get(i).getAccettazione()==Ricevimento.ACCETTATO || ricevimenti.get(i).getAccettazione()==Ricevimento.IN_ATTESA_TESISTA || ricevimenti.get(i).getAccettazione()==Ricevimento.RIFIUTATO){
+            modifica.setVisibility(View.GONE);
+        }
+        modifica.setOnClickListener(view -> {
+            Utility.replaceFragment(manager, R.id.container, new RichiestaRicevimentoFragment(ricevimenti.get(i)));
+        });
+
+        //DetailButton
+        Button dettagli = convertView.findViewById(R.id.visualizza);
+        dettagli.setOnClickListener(view -> {
+            //Utility.replaceFragment(manager, R.id.container, new );
+        });
 
         return convertView;
     }

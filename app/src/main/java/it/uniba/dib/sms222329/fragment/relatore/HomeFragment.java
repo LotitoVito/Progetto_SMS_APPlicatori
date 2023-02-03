@@ -127,7 +127,7 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
 
     private void RefreshList(){
         List<Ricevimento> lista = ListaRicevimentiDatabase.ListaRicevimenti(db, CalendarUtils.selectedDate.toString());
-        ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista);
+        ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
         listaRicevimenti.setAdapter(adapter);
     }
 }

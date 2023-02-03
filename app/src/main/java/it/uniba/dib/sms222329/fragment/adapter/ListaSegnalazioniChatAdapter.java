@@ -61,9 +61,8 @@ public class ListaSegnalazioniChatAdapter extends BaseAdapter {
         TextView oggettoSegnalazione = convertView.findViewById(R.id.descrizione);
         oggettoSegnalazione.setText(segnalazioni.get(i).getOggetto());
 
+        //Apri chat
         LinearLayout item = convertView.findViewById(R.id.segnalazione);
-
-        // Set up a click listener for the button
         item.setOnClickListener(view1 -> {
             Utility.replaceFragment(this.fragmentManager, R.id.container, new SegnalazioneMessaggiFragment(segnalazioni.get(i).getIdSegnalazioneChat(), relatoreLoggato));
         });

@@ -15,7 +15,7 @@ public class RicevimentoDatabase {
         richiestaCv.put(Database.RICEVIMENTI_ORARIO, String.valueOf(richiesta.getOrario()));
         richiestaCv.put(Database.RICEVIMENTI_ARGOMENTO, richiesta.getArgomento());
         richiestaCv.put(Database.RICEVIMENTI_TASKID, richiesta.getIdTask());
-        richiestaCv.put(Database.RICEVIMENTI_ACCETTAZIONE, 2);
+        richiestaCv.put(Database.RICEVIMENTI_ACCETTAZIONE, Ricevimento.IN_ATTESA_RELATORE);
         richiestaCv.put(Database.RICEVIMENTI_MESSAGGIO, richiesta.getMessaggio());
 
         long insertRichiesta = db.insert(Database.RICEVIMENTI, null, richiestaCv);
@@ -29,7 +29,7 @@ public class RicevimentoDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues ricevimentoCv = new ContentValues();
 
-        ricevimentoCv.put(Database.RICEVIMENTI_ACCETTAZIONE, 1);
+        ricevimentoCv.put(Database.RICEVIMENTI_ACCETTAZIONE, Ricevimento.ACCETTATO);
 
         long updateRicevimento = db.update(Database.RICEVIMENTI, ricevimentoCv, Database.RICEVIMENTI_ID +" = '"+ ricevimento.getIdRicevimento() +"';", null);
         if(updateRicevimento != -1){
@@ -42,7 +42,7 @@ public class RicevimentoDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues ricevimentoCv = new ContentValues();
 
-        ricevimentoCv.put(Database.RICEVIMENTI_ACCETTAZIONE, 0);
+        ricevimentoCv.put(Database.RICEVIMENTI_ACCETTAZIONE, Ricevimento.RIFIUTATO);
 
         long updateRicevimento = db.update(Database.RICEVIMENTI, ricevimentoCv, Database.RICEVIMENTI_ID +" = '"+ ricevimento.getIdRicevimento() +"';", null);
         if(updateRicevimento != -1){
@@ -57,7 +57,7 @@ public class RicevimentoDatabase {
 
         ricevimentoCv.put(Database.RICEVIMENTI_DATA, String.valueOf(ricevimento.getData()));
         ricevimentoCv.put(Database.RICEVIMENTI_ORARIO, String.valueOf(ricevimento.getOrario()));
-        ricevimentoCv.put(Database.RICEVIMENTI_ACCETTAZIONE, 2);
+        ricevimentoCv.put(Database.RICEVIMENTI_ACCETTAZIONE, Ricevimento.IN_ATTESA_TESISTA);
 
         long updateRicevimento = db.update(Database.RICEVIMENTI, ricevimentoCv, Database.RICEVIMENTI_ID +" = '"+ ricevimento.getIdRicevimento() +"';", null);
         if(updateRicevimento != -1){

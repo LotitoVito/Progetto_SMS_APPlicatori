@@ -26,6 +26,10 @@ public class Tesi {
 
     public Tesi() {}
 
+    public Tesi(int idTesi) {
+        this.idTesi = idTesi;
+    }
+
     public Tesi(int id, String titolo, String argomenti, int tempistiche, float mediaVotiMinima, int esamiNecessari,
                 String capacitaRichieste, boolean statoDisponibilita, int numeroVisualizzazioni, int idRelatore) {
         this.idTesi = id;
