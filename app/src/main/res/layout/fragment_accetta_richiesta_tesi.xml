@@ -5,6 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".fragment.relatore.AccettaRichiestaTesiFragment">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -146,6 +150,43 @@
             android:layout_weight="2"
             android:layout_marginBottom="16dp"/>
 
+        <androidx.constraintlayout.utils.widget.MotionLabel
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/messaggio" />
+
+        <TextView
+            android:id="@+id/messaggio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:layout_marginBottom="8dp"
+            />
+
+        <androidx.constraintlayout.utils.widget.MotionLabel
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/risposta"
+            android:layout_marginBottom="8dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/opzionale"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/risposta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                tools:ignore="TextContrastCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -175,5 +216,7 @@
 
 
     </LinearLayout>
+
+    </ScrollView>
 
 </FrameLayout>

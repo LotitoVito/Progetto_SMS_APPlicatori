@@ -96,5 +96,11 @@
     <string name="richiedi_ora">BOOK NOW</string>
     <string name="tesi">Thesis</string>
 
+    <string name="descrizione">Descrizione</string>
+    <string name="data_consegna">dd/m/y</string>
+    <string name="messaggio">Messaggio</string>
+    <string name="risposta">Risposta</string>
+    <string name="opzionale">*Opzionale</string>
+
 
 </resources>
