@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.RichiestaRicevimentoFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:minHeight="250dp"
+        android:elevation="16dp"
+        android:weightSum="10"
+        tools:ignore="UselessParent">
+
+        <TextView
+            android:id="@+id/titoloTesi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/richiesta_ricevimento"
+            android:textColor="@color/primaryColor"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:id="@+id/argomento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Messaggio scritto dallo studente"
+            android:textSize="16sp"
+            android:layout_weight="2"/>
+
+        <androidx.constraintlayout.utils.widget.MotionLabel
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/task" />
+
+        <TextView
+            android:id="@+id/task_ricevimento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Task a cui il messaggio fa riferimento"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            />
+
+
+        <androidx.constraintlayout.utils.widget.MotionLabel
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/data_proposta" />
+
+        <TextView
+            android:id="@+id/data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lunedì 5 febbraio 2022 ore 09:00"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:id="@+id/riorganizza"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/riorganizza"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:clickable="true"
+            android:textColor="@color/primaryColor"
+            android:textStyle="bold"
+            />
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/accetta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/accetta"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"/>
+
+            <Button
+                android:id="@+id/rifiuta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rifiuta"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/red"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</FrameLayout>
