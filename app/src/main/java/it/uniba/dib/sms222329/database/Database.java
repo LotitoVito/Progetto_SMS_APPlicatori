@@ -93,7 +93,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String RICHIESTA = "richiesta";
     public static final String RICHIESTA_ID = "id";
     public static final String RICHIESTA_MESSAGGIO = "messaggio";
-    private static final String RICHIESTA_CAPACITASTUDENTE = "capacita_studente";
+    public static final String RICHIESTA_CAPACITASTUDENTE = "capacita_studente";
     public static final String RICHIESTA_TESIID = "tesi_id";
     public static final String RICHIESTA_TESISTAID = "tesista_id";
     public static final String RICHIESTA_ACCETTATA = "accettata";

@@ -21,9 +21,9 @@ public class ListaSegnalazioniChatDatabase {
         while(cursore.moveToNext()){
             SegnalazioneChat segnalazioneChatEstratta = new SegnalazioneChat();
 
-            segnalazioneChatEstratta.setIdSegnalazioneChat(cursore.getInt(0));
-            segnalazioneChatEstratta.setOggetto(cursore.getString(1));
-            segnalazioneChatEstratta.setIdTesi(cursore.getInt(2));
+            segnalazioneChatEstratta.setIdSegnalazioneChat(cursore.getInt(cursore.getColumnIndexOrThrow(Database.SEGNALAZIONECHAT_ID)));
+            segnalazioneChatEstratta.setOggetto(cursore.getString(cursore.getColumnIndexOrThrow(Database.SEGNALAZIONECHAT_OGGETTO)));
+            segnalazioneChatEstratta.setIdTesi(cursore.getInt(cursore.getColumnIndexOrThrow(Database.SEGNALAZIONECHAT_TESISCELTAID)));
 
             /*Log.d("Segnalazione ID", String.valueOf(segnalazioneChatEstratta.getIdSegnalazioneChat()));
             Log.d("Segnalazione Oggetto", segnalazioneChatEstratta.getOggetto());

@@ -18,7 +18,7 @@ public class TesistaDatabase {
         Cursor idUtente = dbClass.RicercaDato("SELECT " + Database.UTENTI_ID + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + " = '" + tesista.getEmail() + "';");
         idUtente.moveToNext();
 
-        cvTesista.put(Database.TESISTA_UTENTEID, idUtente.getString(0));
+        cvTesista.put(Database.TESISTA_UTENTEID, idUtente.getString(idUtente.getColumnIndexOrThrow(Database.UTENTI_ID)));
         cvTesista.put(Database.TESISTA_MATRICOLA, tesista.getMatricola());
         cvTesista.put(Database.TESISTA_MEDIAVOTI, tesista.getMedia());
         cvTesista.put(Database.TESISTA_ESAMIMANCANTI, tesista.getNumeroEsamiMancanti());
@@ -74,17 +74,17 @@ public class TesistaDatabase {
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();
 
-        TesistaLog.setIdUtente(cursore.getInt(0));
-        TesistaLog.setIdTesista(cursore.getInt(1));
-        TesistaLog.setMatricola(cursore.getString(2));
-        TesistaLog.setNome(cursore.getString(3));
-        TesistaLog.setCognome(cursore.getString(4));
-        TesistaLog.setEmail(cursore.getString(5));
-        TesistaLog.setPassword(cursore.getString(6));
-        TesistaLog.setMedia(cursore.getInt(7));
-        TesistaLog.setNumeroEsamiMancanti(cursore.getInt(8));
-        TesistaLog.setIdUniversitaCorso(cursore.getInt(9));
-        TesistaLog.setCodiceFiscale(cursore.getString(10));
+        TesistaLog.setIdUtente(cursore.getInt(cursore.getColumnIndexOrThrow(Database.UTENTI_ID)));
+        TesistaLog.setIdTesista(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISTA_ID)));
+        TesistaLog.setMatricola(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESISTA_MATRICOLA)));
+        TesistaLog.setNome(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
+        TesistaLog.setCognome(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)));
+        TesistaLog.setEmail(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
+        TesistaLog.setPassword(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_PASSWORD)));
+        TesistaLog.setMedia(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISTA_MEDIAVOTI)));
+        TesistaLog.setNumeroEsamiMancanti(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISTA_ESAMIMANCANTI)));
+        TesistaLog.setIdUniversitaCorso(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISTA_UNIVERSITACORSOID)));
+        TesistaLog.setCodiceFiscale(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_CODICEFISCALE)));
 
         return TesistaLog;
     }

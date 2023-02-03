@@ -23,12 +23,12 @@ public class ListaSegnalazioniMessaggiDatabase {
         while (cursore.moveToNext()) {
             SegnalazioneMessaggio messaggioEstratto = new SegnalazioneMessaggio();
 
-            messaggioEstratto.setIdMessaggio(cursore.getInt(0));
-            messaggioEstratto.setMessaggio(cursore.getString(1));
-            LocalDateTime timestamp = LocalDateTime.parse(cursore.getString(2), Utility.convertFromStringDateTime);
+            messaggioEstratto.setIdMessaggio(cursore.getInt(cursore.getColumnIndexOrThrow(Database.MESSAGGISEGNALAZIONE_ID)));
+            messaggioEstratto.setMessaggio(cursore.getString(cursore.getColumnIndexOrThrow(Database.MESSAGGISEGNALAZIONE_MESSAGGIO)));
+            LocalDateTime timestamp = LocalDateTime.parse(cursore.getString(cursore.getColumnIndexOrThrow(Database.MESSAGGISEGNALAZIONE_TIMESTAMP)), Utility.convertFromStringDateTime);
             messaggioEstratto.setTimestamp(timestamp);
-            messaggioEstratto.setIdMittente(cursore.getInt(3));
-            messaggioEstratto.setIdSegnalazioneChat(cursore.getInt(4));
+            messaggioEstratto.setIdMittente(cursore.getInt(cursore.getColumnIndexOrThrow(Database.MESSAGGISEGNALAZIONE_UTENTEID)));
+            messaggioEstratto.setIdSegnalazioneChat(cursore.getInt(cursore.getColumnIndexOrThrow(Database.MESSAGGISEGNALAZIONE_SEGNALAZIONEID)));
 
             listaMessaggiSegnalazione.add(messaggioEstratto);
 

@@ -16,7 +16,7 @@ public class CoRelatoreDatabase {
         Cursor idUtente = dbClass.RicercaDato("SELECT " + Database.UTENTI_ID + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + " = '" + corelatore.getEmail() + "';");
         idUtente.moveToNext();
 
-        cvCoRelatore.put(Database.CORELATORE_UTENTEID, idUtente.getString(0));
+        cvCoRelatore.put(Database.CORELATORE_UTENTEID, idUtente.getString(idUtente.getColumnIndexOrThrow(Database.UTENTI_ID)));
         cvCoRelatore.put(Database.CORELATORE_ORGANIZZAZIONE, corelatore.getOrganizzazione());
 
         try{
@@ -64,14 +64,14 @@ public class CoRelatoreDatabase {
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();
 
-        CorelatoreLog.setIdUtente(cursore.getInt(0));
-        CorelatoreLog.setIdCorelatore(cursore.getInt(1));
-        CorelatoreLog.setNome(cursore.getString(2));
-        CorelatoreLog.setCognome(cursore.getString(3));
-        CorelatoreLog.setEmail(cursore.getString(4));
-        CorelatoreLog.setPassword(cursore.getString(5));
-        CorelatoreLog.setOrganizzazione(cursore.getString(6));
-        CorelatoreLog.setCodiceFiscale(cursore.getString(7));
+        CorelatoreLog.setIdUtente(cursore.getInt(cursore.getColumnIndexOrThrow(Database.UTENTI_ID)));
+        CorelatoreLog.setIdCorelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.CORELATORE_ID)));
+        CorelatoreLog.setNome(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
+        CorelatoreLog.setCognome(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)));
+        CorelatoreLog.setEmail(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
+        CorelatoreLog.setPassword(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_PASSWORD)));
+        CorelatoreLog.setOrganizzazione(cursore.getString(cursore.getColumnIndexOrThrow(Database.CORELATORE_ORGANIZZAZIONE)));
+        CorelatoreLog.setCodiceFiscale(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_CODICEFISCALE)));
 
         return CorelatoreLog;
     }

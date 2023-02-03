@@ -149,7 +149,7 @@ public class UtenteLoggato extends AppCompatActivity {
             Database db = new Database(this);
             Cursor cursor = db.RicercaDato("SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_ID + "=" + result.getContents() + ";");
             cursor.moveToNext();
-            String messaggio = cursor.getString(1) + "\n" + cursor.getString(2);
+            String messaggio = cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_TITOLO)) + "\n" + cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_ARGOMENTO));
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.tesi);
@@ -157,9 +157,16 @@ public class UtenteLoggato extends AppCompatActivity {
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    Tesi tesi = new Tesi(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),
-                            cursor.getFloat(4), cursor.getInt(5), cursor.getString(6), cursor.getInt(7)==1,
-                            cursor.getInt(8), cursor.getInt(9));
+                    Tesi tesi = new Tesi(cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_ID)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_TITOLO)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)),
+                            cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_TEMPISTICHE)),
+                            cursor.getFloat(cursor.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)),
+                            cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_SKILLRICHIESTE)),
+                            cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_STATO))==1,
+                            cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_VISUALIZZAZIONI)),
+                            cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_RELATOREID)));
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new VisualizzaTesiFragment(tesi));
                 }
             }).show();

@@ -85,7 +85,7 @@ public class UtenteRegistratoDatabase {
 
         if (cursore.getCount() != 0) {
             cursore.moveToNext();
-            account.setTipoUtente(cursore.getInt(0)); //nel select puoi farti restituire piu valori, mettendo 0 restituisce solom il primo valore della prima colonna, è come un array
+            account.setTipoUtente(cursore.getInt(cursore.getColumnIndexOrThrow(Database.UTENTI_RUOLOID))); //nel select puoi farti restituire piu valori, mettendo 0 restituisce solom il primo valore della prima colonna, è come un array
             return true;
         }
         return false;

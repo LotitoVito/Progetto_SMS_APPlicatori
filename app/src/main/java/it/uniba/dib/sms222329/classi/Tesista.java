@@ -1,16 +1,7 @@
 package it.uniba.dib.sms222329.classi;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-import android.widget.Toast;
-
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 import it.uniba.dib.sms222329.database.Database;
-import it.uniba.dib.sms222329.database.TesiDatabase;
 import it.uniba.dib.sms222329.database.TesistaDatabase;
 
 public class Tesista extends UtenteRegistrato {

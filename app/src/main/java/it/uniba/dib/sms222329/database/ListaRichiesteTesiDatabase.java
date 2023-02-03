@@ -21,13 +21,13 @@ public class ListaRichiesteTesiDatabase {
         while (cursore.moveToNext()) {
             RichiestaTesi richiestaTesi = new RichiestaTesi();
 
-            richiestaTesi.setIdRichiesta(cursore.getInt(0));
-            richiestaTesi.setMessaggio(cursore.getString(1));
-            richiestaTesi.setCapacitàStudente(cursore.getString(2));
-            richiestaTesi.setIdTesi(cursore.getInt(3));
-            richiestaTesi.setIdTesista(cursore.getInt(4));
-            richiestaTesi.setAccettata(cursore.getInt(5));
-            richiestaTesi.setRisposta(cursore.getString(6));
+            richiestaTesi.setIdRichiesta(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICHIESTA_ID)));
+            richiestaTesi.setMessaggio(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICHIESTA_MESSAGGIO)));
+            richiestaTesi.setCapacitàStudente(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICHIESTA_CAPACITASTUDENTE)));
+            richiestaTesi.setIdTesi(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICHIESTA_TESIID)));
+            richiestaTesi.setIdTesista(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICHIESTA_TESISTAID)));
+            richiestaTesi.setAccettata(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICHIESTA_ACCETTATA)));
+            richiestaTesi.setRisposta(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICHIESTA_RISPOSTA)));
 
             listaRichiesteTesi.add(richiestaTesi);
 

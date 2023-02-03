@@ -19,7 +19,7 @@ public class RelatoreDatabase {
         Cursor idUtente = dbClass.RicercaDato("SELECT " + Database.UTENTI_ID + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + " = '" + relatore.getEmail() + "';");
         idUtente.moveToNext();
 
-        cvRelatore.put(Database.RELATORE_UTENTEID, idUtente.getString(0));
+        cvRelatore.put(Database.RELATORE_UTENTEID, idUtente.getString(idUtente.getColumnIndexOrThrow(Database.UTENTI_ID)));
         cvRelatore.put(Database.RELATORE_MATRICOLA, relatore.getMatricola());
 
         try{
@@ -31,7 +31,7 @@ public class RelatoreDatabase {
                 idRelatore.moveToNext();
 
                 for(int i=0; i<relatore.getCorsiRelatore().size(); i++){
-                    cvCorsiRelatore.put(Database.CORSIRELATORE_RELATOREID, idRelatore.getString(0));
+                    cvCorsiRelatore.put(Database.CORSIRELATORE_RELATOREID, idRelatore.getString(idRelatore.getColumnIndexOrThrow(Database.RELATORE_ID)));
                     cvCorsiRelatore.put(Database.CORSIRELATORE_UNIVERSITACORSOID, relatore.getCorsiRelatore().get(i));
 
                     long insertCorsiRelatore = db.insert(Database.CORSIRELATORE, null, cvCorsiRelatore);
@@ -95,20 +95,20 @@ public class RelatoreDatabase {
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();
 
-        relatoreLog.setIdUtente(cursore.getInt(0));
-        relatoreLog.setIdRelatore(cursore.getInt(1));
-        relatoreLog.setMatricola(cursore.getString(2));
-        relatoreLog.setNome(cursore.getString(3));
-        relatoreLog.setCognome(cursore.getString(4));
-        relatoreLog.setEmail(cursore.getString(5));
-        relatoreLog.setPassword(cursore.getString(6));
-        relatoreLog.setCodiceFiscale(cursore.getString(7));
+        relatoreLog.setIdUtente(cursore.getInt(cursore.getColumnIndexOrThrow(Database.UTENTI_ID)));
+        relatoreLog.setIdRelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RELATORE_ID)));
+        relatoreLog.setMatricola(cursore.getString(cursore.getColumnIndexOrThrow(Database.RELATORE_MATRICOLA)));
+        relatoreLog.setNome(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
+        relatoreLog.setCognome(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)));
+        relatoreLog.setEmail(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
+        relatoreLog.setPassword(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_PASSWORD)));
+        relatoreLog.setCodiceFiscale(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_CODICEFISCALE)));
 
         query = "SELECT " + Database.CORSIRELATORE_UNIVERSITACORSOID + " FROM " + Database.CORSIRELATORE + " WHERE " + Database.CORSIRELATORE_RELATOREID + " = '" + relatoreLog.getIdRelatore() + "';";
         cursore = db.rawQuery(query, null);
         ArrayList<Integer> lista = new ArrayList<>();
         while(cursore.moveToNext()){
-            lista.add(cursore.getInt(0));
+            lista.add(cursore.getInt(cursore.getColumnIndexOrThrow(Database.CORSIRELATORE_UNIVERSITACORSOID)));
         }
         relatoreLog.setCorsiRelatore(lista);
 

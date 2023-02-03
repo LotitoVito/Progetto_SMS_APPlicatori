@@ -25,15 +25,15 @@ public class ListaRicevimentiDatabase {
         while (cursore.moveToNext()) {
             Ricevimento ricevimentoEstratto = new Ricevimento();
 
-            ricevimentoEstratto.setIdRicevimento(cursore.getInt(0));
-            LocalDate data = LocalDate.parse(cursore.getString(1), Utility.convertFromStringDate);
+            ricevimentoEstratto.setIdRicevimento(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_ID)));
+            LocalDate data = LocalDate.parse(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_DATA)), Utility.convertFromStringDate);
             ricevimentoEstratto.setData(data);
-            LocalTime orario = LocalTime.parse(cursore.getString(2));
+            LocalTime orario = LocalTime.parse(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_ORARIO)));
             ricevimentoEstratto.setOrario(orario);
-            ricevimentoEstratto.setArgomento(cursore.getString(3));
-            ricevimentoEstratto.setIdTask(cursore.getInt(4));
-            ricevimentoEstratto.setAccettazione(cursore.getInt(5));
-            ricevimentoEstratto.setMessaggio(cursore.getString(6));
+            ricevimentoEstratto.setArgomento(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_ARGOMENTO)));
+            ricevimentoEstratto.setIdTask(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_TASKID)));
+            ricevimentoEstratto.setAccettazione(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_ACCETTAZIONE)));
+            ricevimentoEstratto.setMessaggio(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_MESSAGGIO)));
 
             /*Log.d("Ricevimento ID", String.valueOf(ricevimentoEstratto.getIdRicevimento()));
             Log.d("Ricevimento data", String.valueOf(ricevimentoEstratto.getData()));
@@ -61,15 +61,15 @@ public class ListaRicevimentiDatabase {
         while (cursore.moveToNext()) {
             Ricevimento ricevimentoEstratto = new Ricevimento();
 
-            ricevimentoEstratto.setIdRicevimento(cursore.getInt(0));
-            LocalDate data = LocalDate.parse(cursore.getString(1), Utility.convertFromStringDate);
+            ricevimentoEstratto.setIdRicevimento(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_ID)));
+            LocalDate data = LocalDate.parse(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_DATA)), Utility.convertFromStringDate);
             ricevimentoEstratto.setData(data);
-            LocalTime orario = LocalTime.parse(cursore.getString(2));
+            LocalTime orario = LocalTime.parse(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_ORARIO)));
             ricevimentoEstratto.setOrario(orario);
-            ricevimentoEstratto.setArgomento(cursore.getString(3));
-            ricevimentoEstratto.setIdTask(cursore.getInt(4));
-            ricevimentoEstratto.setAccettazione(cursore.getInt(5));
-            ricevimentoEstratto.setMessaggio(cursore.getString(6));
+            ricevimentoEstratto.setArgomento(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_ARGOMENTO)));
+            ricevimentoEstratto.setIdTask(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_TASKID)));
+            ricevimentoEstratto.setAccettazione(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_ACCETTAZIONE)));
+            ricevimentoEstratto.setMessaggio(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_MESSAGGIO)));
 
             /*Log.d("Ricevimento ID", String.valueOf(ricevimentoEstratto.getIdRicevimento()));
             Log.d("Ricevimento data", String.valueOf(ricevimentoEstratto.getData()));

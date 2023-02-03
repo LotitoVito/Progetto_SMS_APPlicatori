@@ -21,13 +21,13 @@ public class ListaTesiScelteDatabase {
         while (cursore.moveToNext()) {
             TesiScelta tesiSceltaEstratta = new TesiScelta();
 
-            tesiSceltaEstratta.setIdTesiScelta(cursore.getInt(0));
-            //tesiSceltaEstratta.setDataPubblicazione(cursore.getString(1));
-            tesiSceltaEstratta.setRiassunto(cursore.getString(2));
+            tesiSceltaEstratta.setIdTesiScelta(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_ID)));
+            //tesiSceltaEstratta.setDataPubblicazione(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESISCELTA_DATAPUBBLICAZIONE)));
+            tesiSceltaEstratta.setRiassunto(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESISCELTA_ABSTRACT)));
             //tesiSceltaEstratta.setDownload(cursore.getBlob(3));
-            tesiSceltaEstratta.setIdTesi(cursore.getInt(4));
-            tesiSceltaEstratta.setIdCorelatore(cursore.getInt(5));
-            tesiSceltaEstratta.setIdTesista(cursore.getInt(6));
+            tesiSceltaEstratta.setIdTesi(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_TESIID)));
+            tesiSceltaEstratta.setIdCorelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_CORELATOREID)));
+            tesiSceltaEstratta.setIdTesista(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_TESISTAID)));
 
             listaTesiScelte.add(tesiSceltaEstratta);
         }

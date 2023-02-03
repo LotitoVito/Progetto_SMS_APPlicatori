@@ -21,13 +21,13 @@ public class ListaTaskDatabase {
         while(cursore.moveToNext()){
             Task taskEstratto = new Task();
 
-            taskEstratto.setIdTask(cursore.getInt(0));
-            taskEstratto.setDescrizione(cursore.getString(1));
-            //taskEstratto.setDataInizio(cursore.getDATA(2));
-            //taskEstratto.setDataFine(cursore.getDATA(3));
-            taskEstratto.setLinkMateriale(cursore.getString(4));
-            taskEstratto.setStato(cursore.getInt(5));
-            taskEstratto.setIdTesiScelta(cursore.getInt(6));
+            taskEstratto.setIdTask(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TASK_ID)));
+            taskEstratto.setDescrizione(cursore.getString(cursore.getColumnIndexOrThrow(Database.TASK_DESCRIZIONE)));
+            //taskEstratto.setDataInizio(cursore.getDATA(cursore.getColumnIndexOrThrow(Database.TASK_DATAINIZIO)));
+            //taskEstratto.setDataFine(cursore.getDATA(cursore.getColumnIndexOrThrow(Database.TASK_DATAFINE)));
+            taskEstratto.setLinkMateriale(cursore.getString(cursore.getColumnIndexOrThrow(Database.TASK_LINKMATERIALE)));
+            taskEstratto.setStato(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TASK_STATO)));
+            taskEstratto.setIdTesiScelta(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TASK_TESISCELTAID)));
 
             /*Log.d("Task ID", String.valueOf(taskEstratto.getIdTask()));
             Log.d("Task descrizione", taskEstratto.getDescrizione());

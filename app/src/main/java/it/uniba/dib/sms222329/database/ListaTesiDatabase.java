@@ -21,16 +21,16 @@ public class ListaTesiDatabase {
         while(cursore.moveToNext()){
             Tesi tesiEstratta = new Tesi();
 
-            tesiEstratta.setIdTesi(cursore.getInt(0));
-            tesiEstratta.setTitolo(cursore.getString(1));
-            tesiEstratta.setArgomenti(cursore.getString(2));
-            tesiEstratta.setTempistiche(cursore.getInt(3));
-            tesiEstratta.setMediaVotiMinima(cursore.getFloat(4));
-            tesiEstratta.setEsamiMancantiNecessari(cursore.getInt(5));
-            tesiEstratta.setCapacitaRichieste(cursore.getString(6));
-            tesiEstratta.setStatoDisponibilita(cursore.getInt(7) != 0);
-            tesiEstratta.setNumeroVisualizzazioni(cursore.getInt(8));
-            tesiEstratta.setIdRelatore(cursore.getInt(9));
+            tesiEstratta.setIdTesi(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_ID)));
+            tesiEstratta.setTitolo(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESI_TITOLO)));
+            tesiEstratta.setArgomenti(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)));
+            tesiEstratta.setTempistiche(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_TEMPISTICHE)));
+            tesiEstratta.setMediaVotiMinima(cursore.getFloat(cursore.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)));
+            tesiEstratta.setEsamiMancantiNecessari(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)));
+            tesiEstratta.setCapacitaRichieste(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESI_SKILLRICHIESTE)));
+            tesiEstratta.setStatoDisponibilita(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_STATO)) != 0);
+            tesiEstratta.setNumeroVisualizzazioni(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_VISUALIZZAZIONI)));
+            tesiEstratta.setIdRelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_RELATOREID)));
 
             /*Log.d("Tesi ID", String.valueOf(tesiEstratta.getId()));
             Log.d("tesi Titolo", tesiEstratta.getTitolo());
@@ -60,16 +60,16 @@ public class ListaTesiDatabase {
         while(cursore.moveToNext()) {
             Tesi tesiEstratta = new Tesi();
 
-            tesiEstratta.setIdTesi(cursore.getInt(0));
-            tesiEstratta.setTitolo(cursore.getString(1));
-            tesiEstratta.setArgomenti(cursore.getString(2));
-            tesiEstratta.setTempistiche(cursore.getInt(3));
-            tesiEstratta.setMediaVotiMinima(cursore.getFloat(4));
-            tesiEstratta.setEsamiMancantiNecessari(cursore.getInt(5));
-            tesiEstratta.setCapacitaRichieste(cursore.getString(6));
-            tesiEstratta.setStatoDisponibilita(cursore.getInt(7) != 0);
-            tesiEstratta.setNumeroVisualizzazioni(cursore.getInt(8));
-            tesiEstratta.setIdRelatore(cursore.getInt(9));
+            tesiEstratta.setIdTesi(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_ID)));
+            tesiEstratta.setTitolo(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESI_TITOLO)));
+            tesiEstratta.setArgomenti(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)));
+            tesiEstratta.setTempistiche(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_TEMPISTICHE)));
+            tesiEstratta.setMediaVotiMinima(cursore.getFloat(cursore.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)));
+            tesiEstratta.setEsamiMancantiNecessari(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)));
+            tesiEstratta.setCapacitaRichieste(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESI_SKILLRICHIESTE)));
+            tesiEstratta.setStatoDisponibilita(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_STATO)) != 0);
+            tesiEstratta.setNumeroVisualizzazioni(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_VISUALIZZAZIONI)));
+            tesiEstratta.setIdRelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_RELATOREID)));
 
             listaTesiEstratte.add(tesiEstratta);
         }
