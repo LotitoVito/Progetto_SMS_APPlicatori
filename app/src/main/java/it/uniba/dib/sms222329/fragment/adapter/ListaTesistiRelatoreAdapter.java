@@ -5,22 +5,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.fragment.app.FragmentManager;
 
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.TesiScelta;
+import it.uniba.dib.sms222329.fragment.TesistaRelatoreFragment;
 
-public class ListaTesiScelteAdapter extends BaseAdapter {
+public class ListaTesistiRelatoreAdapter extends BaseAdapter {
 
     //Variabili e Oggetti
     private List<TesiScelta> tesiScelte;
     private LayoutInflater inflater;
+    private FragmentManager manager;
 
-    public ListaTesiScelteAdapter(Context context, List<TesiScelta> tesiScelte) {
+    public ListaTesistiRelatoreAdapter(Context context, List<TesiScelta> tesiScelte, FragmentManager manager) {
         this.tesiScelte = tesiScelte;
         this.inflater = LayoutInflater.from(context);
+        this.manager = manager;
     }
 
     @Override
@@ -52,6 +59,15 @@ public class ListaTesiScelteAdapter extends BaseAdapter {
         TextView matricola = convertView.findViewById(R.id.descrizione);
         matricola.setText(String.valueOf(tesiScelte.get(i).getIdTesi()));
 
+        //EditButton
+        Button modifica = convertView.findViewById(R.id.modifica);
+        modifica.setVisibility(View.GONE);
+
+        //DetailButton
+        Button dettagli = convertView.findViewById(R.id.visualizza);
+        dettagli.setOnClickListener(view -> {
+            Utility.replaceFragment(manager, R.id.container, new TesistaRelatoreFragment(tesiScelte.get(i)));
+        });
         return convertView;
     }
 

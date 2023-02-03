@@ -1,13 +1,11 @@
 package it.uniba.dib.sms222329.fragment.relatore;
 
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +20,8 @@ import it.uniba.dib.sms222329.classi.TesiScelta;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.ListaRichiesteTesiDatabase;
 import it.uniba.dib.sms222329.database.ListaTesiScelteDatabase;
-import it.uniba.dib.sms222329.database.RichiestaTesiDatabase;
 import it.uniba.dib.sms222329.fragment.adapter.ListaRichiesteAdapter;
-import it.uniba.dib.sms222329.fragment.adapter.ListaTesiScelteAdapter;
+import it.uniba.dib.sms222329.fragment.adapter.ListaTesistiRelatoreAdapter;
 
 
 public class TesistiRelatoreFragment extends Fragment {
@@ -100,7 +97,7 @@ public class TesistiRelatoreFragment extends Fragment {
 
     private void CaricaListaTesisti(){
         List<TesiScelta> lista = ListaTesiScelteDatabase.ListaTesiScelteDatabase(db);
-        ListaTesiScelteAdapter adapter = new ListaTesiScelteAdapter(getActivity().getApplicationContext(), lista);
+        ListaTesistiRelatoreAdapter adapter = new ListaTesistiRelatoreAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
         listView.setAdapter(adapter);
     }
 }

@@ -5,6 +5,7 @@ import java.sql.Date;
 public class Task {
 
     private int idTask;
+    private String titolo;
     private String descrizione;
     private Date dataInizio;
     private Date dataFine;

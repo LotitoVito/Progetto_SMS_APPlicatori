@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.TesiTesistaFragment">
+    tools:context=".fragment.TesistaRelatoreFragment">
 
 
     <ScrollView
@@ -18,34 +18,32 @@
             android:padding="8dp">
 
 
-
             <TextView
                 android:id="@+id/nomeStudente"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/studente"
-                android:textSize="24sp"
-                android:textColor="@color/primaryColor" />
+                android:textColor="@color/primaryColor"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/titoloTesi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Titolo tesi richiesta"
                 android:textColor="@color/primaryColor"
                 android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/argomentoTesi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Descrizione tesi"
-                android:textSize="16sp"
+                android:layout_marginBottom="8dp"
                 android:layout_weight="2"
-                android:layout_marginBottom="8dp"/>
+                android:text="Descrizione tesi"
+                android:textSize="16sp" />
 
             <androidx.constraintlayout.utils.widget.MotionLabel
                 android:layout_width="wrap_content"
@@ -53,14 +51,13 @@
                 android:text="@string/argomenti" />
 
             <TextView
-                android:id="@+id/nome"
+                android:id="@+id/riassunto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="abstract tesi"
-                android:textSize="18sp"
-                android:layout_weight="1"
                 android:layout_marginBottom="8dp"
-                />
+                android:layout_weight="1"
+                android:text="abstract tesi"
+                android:textSize="18sp" />
 
 
             <androidx.constraintlayout.utils.widget.MotionLabel
@@ -72,11 +69,10 @@
                 android:id="@+id/tempistiche"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description"
-                android:textSize="18sp"
-                android:layout_weight="1"
                 android:layout_marginBottom="8dp"
-                />
+                android:layout_weight="1"
+                android:text="Description"
+                android:textSize="18sp" />
 
             <androidx.constraintlayout.utils.widget.MotionLabel
                 android:layout_width="wrap_content"
@@ -88,29 +84,29 @@
                 android:id="@+id/esamiMancanti"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="studente/richiesti"
-                android:textSize="16sp"
+                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
-                android:layout_marginBottom="8dp" />
+                android:text="studente/richiesti"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:orientation="horizontal"
-                android:weightSum="2"
-                android:layout_marginBottom="8dp" >
+                android:weightSum="2">
 
                 <androidx.constraintlayout.utils.widget.MotionLabel
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/capacitaRichiesta"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:text="@string/capacitaRichiesta" />
 
                 <androidx.constraintlayout.utils.widget.MotionLabel
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/skillStudente"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:text="@string/skillStudente" />
 
 
             </LinearLayout>
@@ -118,28 +114,27 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:orientation="horizontal"
-                android:weightSum="2"
-                android:layout_marginBottom="16dp" >
+                android:weightSum="2">
 
                 <TextView
                     android:id="@+id/capacitaRichiesta"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Skill required"
-                    android:textSize="16sp"
-                    android:layout_weight="1"/>
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/capacitaEffettive"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Student skills"
-                    android:textSize="16sp"
-                    android:layout_weight="1"/>
+                    android:textSize="16sp" />
 
             </LinearLayout>
-
 
 
             <androidx.constraintlayout.utils.widget.MotionLabel
@@ -148,13 +143,13 @@
                 android:text="@string/data_prevista" />
 
             <TextView
-                android:id="@+id/media"
+                android:id="@+id/dataConsegna"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="data consegna"
-                android:textSize="16sp"
+                android:layout_marginBottom="16dp"
                 android:layout_weight="2"
-                android:layout_marginBottom="16dp"/>
+                android:text="data consegna"
+                android:textSize="16sp" />
 
             <androidx.constraintlayout.utils.widget.MotionLabel
                 android:layout_width="wrap_content"
@@ -165,40 +160,39 @@
                 android:id="@+id/corelatore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="nome"
-                android:textSize="16sp"
+                android:layout_marginBottom="16dp"
                 android:layout_weight="2"
-                android:layout_marginBottom="16dp"/>
+                android:text="nome"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/email_corelatore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="email"
-                android:textSize="16sp"
+                android:layout_marginBottom="16dp"
                 android:layout_weight="2"
-                android:layout_marginBottom="16dp"/>
+                android:text="email"
+                android:textSize="16sp" />
 
 
-                <Button
-                    android:id="@+id/aggiungi_corelatore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/aggiungi_relatore"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="16dp"
-                    android:visibility="gone"/>
+            <Button
+                android:id="@+id/aggiungi_corelatore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/aggiungi_relatore"
+                android:visibility="gone" />
 
-                <Button
-                    android:id="@+id/rimuovi_corelatore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/elimina"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@color/red"
-                    android:layout_marginBottom="16dp"
-                    />
+            <Button
+                android:id="@+id/rimuovi_corelatore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/red"
+                android:text="@string/elimina" />
 
 
             <TextView
@@ -207,11 +201,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:clickable="true"
+                android:gravity="left|center"
                 android:minHeight="48dp"
                 android:text="@string/crea_task"
                 android:textColor="@color/primaryColor"
                 android:textSize="16sp"
-                android:gravity="left|center"
                 android:textStyle="bold" />
 
             <TextView
@@ -220,41 +214,39 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:clickable="true"
+                android:gravity="left|center"
                 android:minHeight="48dp"
                 android:text="@string/visualizza_task"
                 android:textColor="@color/primaryColor"
                 android:textSize="16sp"
-                android:gravity="left|center"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="bottom"
                 android:orientation="horizontal"
-                android:weightSum="2"
-                android:gravity="bottom">
+                android:weightSum="2">
 
                 <Button
                     android:id="@+id/scarica"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/scarica_tesi"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:layout_marginEnd="8dp"/>
+                    android:text="@string/scarica_tesi" />
 
                 <Button
                     android:id="@+id/carica"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/carica_tesi"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/zxing_possible_result_points"
-                    android:layout_weight="1"/>
+                    android:text="@string/carica_tesi" />
 
             </LinearLayout>
-
-
 
 
         </LinearLayout>

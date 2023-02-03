@@ -249,7 +249,7 @@ public class Database extends SQLiteOpenHelper {
                         TESISCELTA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         TESISCELTA_DATAPUBBLICAZIONE + " DATE," +
                         TESISCELTA_ABSTRACT + " VARCHAR(255)," +
-                        TESISCELTA_DOWNLOAD + " VARCHAR(255)," +
+                        TESISCELTA_DOWNLOAD + " BLOB," +
                         TESISCELTA_TESIID + " INT NOT NULL," +
                         TESISCELTA_CORELATOREID + " INT," +
                         TESISCELTA_TESISTAID + " INT NOT NULL UNIQUE," +

@@ -1,8 +1,6 @@
 package it.uniba.dib.sms222329.fragment;
 
-import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,12 +10,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
@@ -50,7 +46,7 @@ public class CreaRicevimentoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        data = getActivity().findViewById(R.id.data);
+        data = getActivity().findViewById(R.id.data1);
         ora = getActivity().findViewById(R.id.ora);
 
         data.setOnClickListener(view12 -> {
@@ -80,10 +76,6 @@ public class CreaRicevimentoFragment extends Fragment {
                     selection -> {
                         ora.setText(materialTimePicker.getHour()+":"+materialTimePicker.getMinute());
                     });
-
         });
-
-
-
     }
 }

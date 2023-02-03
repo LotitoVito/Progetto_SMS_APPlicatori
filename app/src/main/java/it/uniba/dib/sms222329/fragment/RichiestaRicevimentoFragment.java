@@ -32,6 +32,7 @@ public class RichiestaRicevimentoFragment extends Fragment {
     private TextView dataRicevimento;
     private Button accetta;
     private Button rifiuta;
+    private TextView cambiaRicevimento;
 
     public RichiestaRicevimentoFragment(Ricevimento richiesta) {
         this.richiesta = richiesta;
@@ -68,7 +69,9 @@ public class RichiestaRicevimentoFragment extends Fragment {
             }
         });
 
-        //Fare modifica
+        cambiaRicevimento.setOnClickListener(view -> {
+            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new CreaRicevimentoFragment());
+        });
     }
 
     private void Init() {
@@ -78,6 +81,7 @@ public class RichiestaRicevimentoFragment extends Fragment {
         dataRicevimento = getView().findViewById(R.id.data);
         accetta = getView().findViewById(R.id.accetta);
         rifiuta = getView().findViewById(R.id.rifiuta);
+        cambiaRicevimento = getView().findViewById(R.id.riorganizza);
     }
 
     private void SetTextAll() {

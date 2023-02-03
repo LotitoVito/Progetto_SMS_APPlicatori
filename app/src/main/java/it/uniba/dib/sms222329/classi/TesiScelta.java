@@ -1,19 +1,20 @@
 package it.uniba.dib.sms222329.classi;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class TesiScelta extends Tesi{
 
     private int idTesiScelta;
     private int idTesista;
     private int idCorelatore;
-    private Date dataPubblicazione;
+    private byte[] file;
+    private LocalDate dataPubblicazione;
     private String riassunto;
 
     public TesiScelta() {}
 
-    public TesiScelta(Tesi tesi, int idTesiScelta, int idTesista, int idCorelatore, Date dataPubblicazione, String riassunto) {
-        super(tesi.getIdTesi(), tesi.getTitolo(), tesi.getArgomenti(), tesi.getIdRelatore());
+    public TesiScelta(int idTesi, int idTesiScelta, int idTesista, int idCorelatore, byte[] file, LocalDate dataPubblicazione, String riassunto) {
+        super(idTesi);
         this.idTesiScelta = idTesiScelta;
         this.idTesista = idTesista;
         this.idCorelatore = idCorelatore;
@@ -50,11 +51,15 @@ public class TesiScelta extends Tesi{
         this.idCorelatore = idCorelatore;
     }
 
-    public Date getDataPubblicazione() {
+    public byte[] getFile() {return file;}
+
+    public void setFile(byte[] file) {this.file = file;}
+
+    public LocalDate getDataPubblicazione() {
         return dataPubblicazione;
     }
 
-    public void setDataPubblicazione(Date dataPubblicazione) {this.dataPubblicazione = dataPubblicazione;}
+    public void setDataPubblicazione(LocalDate dataPubblicazione) {this.dataPubblicazione = dataPubblicazione;}
 
     public String getRiassunto() {
         return riassunto;
