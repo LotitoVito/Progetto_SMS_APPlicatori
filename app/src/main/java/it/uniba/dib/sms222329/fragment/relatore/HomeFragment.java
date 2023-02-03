@@ -41,7 +41,6 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
     private Database db;
 
     //View Items
-    private LocalDate selectedDate;
     private ListView listaRicevimenti;
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
@@ -78,7 +77,6 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         super.onResume();
 
         CalendarUtils.selectedDate = LocalDate.now();
-        selectedDate = CalendarUtils.selectedDate;
         Init();
         setWeekView();
         RefreshList();
@@ -122,16 +120,13 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         if(date != null)
         {
             CalendarUtils.selectedDate = date;
-            selectedDate = CalendarUtils.selectedDate;
-
             RefreshList();
             setWeekView();
         }
     }
 
     private void RefreshList(){
-        Log.d("test", selectedDate.toString());
-        List<Ricevimento> lista = ListaRicevimentiDatabase.ListaRicevimenti(db, selectedDate.toString());
+        List<Ricevimento> lista = ListaRicevimentiDatabase.ListaRicevimenti(db, CalendarUtils.selectedDate.toString());
         ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista);
         listaRicevimenti.setAdapter(adapter);
     }

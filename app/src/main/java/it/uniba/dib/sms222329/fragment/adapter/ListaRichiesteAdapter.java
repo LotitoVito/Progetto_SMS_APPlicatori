@@ -20,6 +20,7 @@ import it.uniba.dib.sms222329.fragment.relatore.AccettaRichiestaTesiFragment;
 
 public class ListaRichiesteAdapter extends BaseAdapter {
 
+    //Variabili e Oggetti
     private List<RichiestaTesi> richieste;
     private LayoutInflater inflater;
     private FragmentManager manager;

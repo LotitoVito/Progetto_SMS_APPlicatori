@@ -12,52 +12,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import it.uniba.dib.sms222329.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SegnalazioniFilterFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SegnalazioniFilterFragment extends BottomSheetDialogFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public SegnalazioniFilterFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SegnalazioniFilterFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SegnalazioniFilterFragment newInstance(String param1, String param2) {
-        SegnalazioniFilterFragment fragment = new SegnalazioniFilterFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    public SegnalazioniFilterFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -72,16 +72,14 @@ public class TesiFragment extends Fragment {
         super.onViewCreated(view, savedIstanceState);
 
         Init();
+        RefreshList();
 
-        // Set up a click listener for the button
         addButton.setOnClickListener(view1 -> {
             Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new GestioneTesiFragment(relatoreLoggato));
         });
 
         filtra.setOnClickListener(view1 -> {
-            // Create a new instance of the bottom sheet fragment
             TesiFilterFragment bottomSheet = new TesiFilterFragment(relatoreLoggato);
-            // Show the bottom sheet
             bottomSheet.show(getActivity().getSupportFragmentManager(), bottomSheet.getTag());
         });
 
@@ -103,8 +101,6 @@ public class TesiFragment extends Fragment {
                 return true;
             }
         });
-
-        RefreshList();
     }
 
     private void Init() {

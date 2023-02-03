@@ -19,6 +19,7 @@ import it.uniba.dib.sms222329.fragment.SegnalazioneMessaggiFragment;
 
 public class ListaSegnalazioniChatAdapter extends BaseAdapter {
 
+    //Variabili e Oggetti
     private List<SegnalazioneChat> segnalazioni;
     private LayoutInflater inflater;
     private FragmentManager fragmentManager;
@@ -52,14 +53,13 @@ public class ListaSegnalazioniChatAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.generic_item, viewGroup, false);
         }
 
+        //Tesista
         TextView idSegnalazione = convertView.findViewById(R.id.titolo);
-        idSegnalazione.setText(String.valueOf(segnalazioni.get(i).getIdSegnalazioneChat()));
+        idSegnalazione.setText(String.valueOf(segnalazioni.get(i).getIdTesi()));
 
+        //Oggetto
         TextView oggettoSegnalazione = convertView.findViewById(R.id.descrizione);
         oggettoSegnalazione.setText(segnalazioni.get(i).getOggetto());
-
-        TextView idTesiScleta = convertView.findViewById(R.id.sottotitolo);
-        idTesiScleta.setText(String.valueOf(segnalazioni.get(i).getIdTesi()));
 
         LinearLayout item = convertView.findViewById(R.id.segnalazione);
 

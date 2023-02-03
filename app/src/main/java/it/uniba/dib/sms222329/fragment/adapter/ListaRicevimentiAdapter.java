@@ -15,6 +15,7 @@ import it.uniba.dib.sms222329.classi.Ricevimento;
 
 public class ListaRicevimentiAdapter extends BaseAdapter {
 
+    //Variabili e Oggetti
     private List<Ricevimento> ricevimenti;
     private LayoutInflater inflater;
 

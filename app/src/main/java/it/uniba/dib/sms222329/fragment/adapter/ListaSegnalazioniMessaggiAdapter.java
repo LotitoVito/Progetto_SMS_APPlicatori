@@ -16,6 +16,7 @@ import it.uniba.dib.sms222329.classi.SegnalazioneMessaggio;
 
 public class ListaSegnalazioniMessaggiAdapter extends BaseAdapter {
 
+    //Variabili e Oggetti
     private List<SegnalazioneMessaggio> messaggi;
     private LayoutInflater inflater;
 

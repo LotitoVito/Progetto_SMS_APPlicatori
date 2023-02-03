@@ -22,6 +22,7 @@ import it.uniba.dib.sms222329.fragment.relatore.GestioneTesiFragment;
 
 public class ListaTesiAdapter extends BaseAdapter {
 
+    //variabili e Oggetti
     private List<Tesi> tesi;
     private ArrayList<Tesi> copiaRicerca;
     private LayoutInflater inflater;
@@ -60,34 +61,35 @@ public class ListaTesiAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.generic_item_with_buttons, viewGroup, false);
         }
 
+        //Titolo
         TextView titolo = convertView.findViewById(R.id.titolo);
         titolo.setText(tesi.get(i).getTitolo());
 
+        //Argomento
         TextView argomento = convertView.findViewById(R.id.descrizione);
         argomento.setText(tesi.get(i).getArgomenti());
 
+        //Stato
         TextView statoTesi = convertView.findViewById(R.id.sottotitolo);
         String disponibilita = "";
         if (tesi.get(i).getStatoDisponibilita()) disponibilita = "Disponibile";
         else disponibilita = "Non Disponibile";
         statoTesi.setText(disponibilita);
 
+        //Edit Button
         Button editButton = convertView.findViewById(R.id.modifica);
 
         if(tesi.get(i).getIdRelatore() != relatoreLoggato.getIdRelatore()){
             editButton.setVisibility(View.GONE);
         }
 
-        // Set up a click listener for the button
         editButton.setOnClickListener(view1 -> Utility.replaceFragment( this.fragmentManager, R.id.container, new GestioneTesiFragment(this.tesi.get(i), this.relatoreLoggato)));
 
+        //Detail Button
         Button detailButton = convertView.findViewById(R.id.visualizza);
 
-        // Set up a click listener for the button
         detailButton.setOnClickListener(view1 -> {
-            // Create a new instance of the bottom sheet fragment
             VisualizzaTesiFragment bottomSheet = new VisualizzaTesiFragment(tesi.get(i));
-            // Show the bottom sheet
             bottomSheet.show(this.fragmentManager, bottomSheet.getTag());
         });
 

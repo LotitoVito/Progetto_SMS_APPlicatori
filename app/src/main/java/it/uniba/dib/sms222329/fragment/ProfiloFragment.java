@@ -26,26 +26,31 @@ import it.uniba.dib.sms222329.fragment.signUp.ModificaProfiloStudenteFragment;
 
 public class ProfiloFragment extends Fragment {
 
+    //Variabili e Oggetti
     private Database db;
     private Relatore relatoreLoggato;
     private CoRelatore corelatoreLoggato;
     private Tesista tesistaLoggato;
     private int ruolo;
 
-    public ProfiloFragment(Database db, int ruolo, Relatore relatoreLoggato) {
-        this.db = db;
+    //View Items
+    private TextView nome;
+    private TextView cognome;
+    private TextView codiceFiscale;
+    private TextView email;
+    private TextView ruoloTv;
+
+    public ProfiloFragment(int ruolo, Relatore relatoreLoggato) {
         this.ruolo = ruolo;
         this.relatoreLoggato = relatoreLoggato;
     }
 
-    public ProfiloFragment(Database db, int ruolo, CoRelatore corelatoreLoggato) {
-        this.db = db;
+    public ProfiloFragment(int ruolo, CoRelatore corelatoreLoggato) {
         this.ruolo = ruolo;
         this.corelatoreLoggato = corelatoreLoggato;
     }
 
-    public ProfiloFragment(Database db, int ruolo, Tesista tesistaLoggato) {
-        this.db = db;
+    public ProfiloFragment(int ruolo, Tesista tesistaLoggato) {
         this.ruolo = ruolo;
         this.tesistaLoggato = tesistaLoggato;
     }
@@ -59,13 +64,14 @@ public class ProfiloFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profilo, container, false);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        Init();
 
         if (ruolo == Utility.TESISTA){
             SetView(tesistaLoggato, ruolo);
@@ -78,32 +84,35 @@ public class ProfiloFragment extends Fragment {
         Button button = getView().findViewById(R.id.modificaProfilo);
         button.setOnClickListener( view -> {
             if(ruolo == Utility.TESISTA){
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ModificaProfiloStudenteFragment(db, tesistaLoggato));
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ModificaProfiloStudenteFragment(tesistaLoggato));
             } else if (ruolo == Utility.RELATORE){
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ModificaProfiloRelatoreFragment(db, relatoreLoggato));
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ModificaProfiloRelatoreFragment(relatoreLoggato));
             }else if(ruolo == Utility.CORELATORE){
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ModificaProfiloCorelatoreFragment(db, corelatoreLoggato));
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ModificaProfiloCorelatoreFragment(corelatoreLoggato));
             }
         });
     }
 
-    private void SetView(UtenteRegistrato utente, int ruoloLoggato){
-        TextView nome = getView().findViewById(R.id.tv_name);
-        TextView cognome = getView().findViewById(R.id.tv_surname);
-        TextView codiceFiscale = getView().findViewById(R.id.tv_tax_id);
-        TextView email = getView().findViewById(R.id.tv_email);
-        TextView ruolo = getView().findViewById(R.id.tv_role);
+    private void Init() {
+        db = new Database(getActivity().getApplicationContext());
+        nome = getView().findViewById(R.id.tv_name);
+        cognome = getView().findViewById(R.id.tv_surname);
+        codiceFiscale = getView().findViewById(R.id.tv_tax_id);
+        email = getView().findViewById(R.id.tv_email);
+        ruoloTv = getView().findViewById(R.id.tv_role);
+    }
 
+    private void SetView(UtenteRegistrato utente, int ruoloLoggato){
         nome.setText(utente.getNome());
         cognome.setText(utente.getCognome());
         codiceFiscale.setText(utente.getCodiceFiscale());
         email.setText(utente.getEmail());
         if(ruoloLoggato == Utility.TESISTA){
-            ruolo.setText("Tesista");
+            ruoloTv.setText("Tesista");
         } else if (ruoloLoggato == Utility.RELATORE){
-            ruolo.setText("Relatore");
+            ruoloTv.setText("Relatore");
         }else if(ruoloLoggato == Utility.CORELATORE){
-            ruolo.setText("Corelatore");
+            ruoloTv.setText("Corelatore");
         }
     }
 }

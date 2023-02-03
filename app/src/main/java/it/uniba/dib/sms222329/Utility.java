@@ -1,9 +1,12 @@
 package it.uniba.dib.sms222329;
 
+import android.view.autofill.AutofillValue;
 import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.time.format.DateTimeFormatter;
 
@@ -31,5 +34,11 @@ public class Utility {
             return true;
         }
         return false;
+    }
+
+    public static void fillIfEmpty(EditText campo, String value){
+        if(campo.getText().toString().trim().matches("")){
+            campo.autofill(AutofillValue.forText(value));
+        }
     }
 }

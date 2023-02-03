@@ -112,11 +112,11 @@ public class UtenteLoggato extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.navigation_profile:
                 if(utenteLoggato.getTipoUtente() == Utility.TESISTA){
-                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment(db, utenteLoggato.getTipoUtente(), tesistaLoggato));
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment(utenteLoggato.getTipoUtente(), tesistaLoggato));
                 } else if (utenteLoggato.getTipoUtente() == Utility.RELATORE){
-                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment(db, utenteLoggato.getTipoUtente(), relatoreLoggato));
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment(utenteLoggato.getTipoUtente(), relatoreLoggato));
                 }else if(utenteLoggato.getTipoUtente() == Utility.CORELATORE){
-                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment(db, utenteLoggato.getTipoUtente(), coRelatoreLoggato));
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment(utenteLoggato.getTipoUtente(), coRelatoreLoggato));
                 }
                 setTitle(R.string.title_profile);
                 return true;

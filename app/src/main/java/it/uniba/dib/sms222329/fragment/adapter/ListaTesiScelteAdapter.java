@@ -14,6 +14,7 @@ import it.uniba.dib.sms222329.classi.TesiScelta;
 
 public class ListaTesiScelteAdapter extends BaseAdapter {
 
+    //Variabili e Oggetti
     private List<TesiScelta> tesiScelte;
     private LayoutInflater inflater;
 

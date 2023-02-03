@@ -25,19 +25,15 @@ import it.uniba.dib.sms222329.activities.MainActivity;
 
 public class ImpostazioniFragment extends Fragment {
 
+    //Variabili e Oggetti
+    private SwitchMaterial toggleDarkMode;
+    private MaterialButton logOut;
 
-    public ImpostazioniFragment() {
-        // Required empty public constructor
-    }
-
-
-    SwitchMaterial toggleDarkMode;
-    MaterialButton logOut;
+    public ImpostazioniFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_impostazioni, container, false);
 
         toggleDarkMode = view.findViewById(R.id.toggle_dark_mode);
@@ -79,6 +75,5 @@ public class ImpostazioniFragment extends Fragment {
         super.onStop();
         saveDarkModePref(toggleDarkMode.isChecked());
     }
-
 
 }

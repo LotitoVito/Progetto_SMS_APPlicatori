@@ -9,12 +9,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.activities.MainActivity;
 import it.uniba.dib.sms222329.classi.CoRelatore;
 import it.uniba.dib.sms222329.classi.UtenteRegistrato;
@@ -23,11 +25,16 @@ import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.UtenteRegistratoDatabase;
 
 public class SignUpCoRelatoreFragment extends Fragment {
-    Database db;
-    UtenteRegistrato accountGenerale;
 
-    public SignUpCoRelatoreFragment(Database db, UtenteRegistrato accountGenerale) {
-        this.db = db;
+    //Variabili e Oggetti
+    private Database db;
+    private UtenteRegistrato accountGenerale;
+
+    //View Items
+    private Button registerButton;
+    private TextInputEditText organizzaione;
+
+    public SignUpCoRelatoreFragment(UtenteRegistrato accountGenerale) {
         this.accountGenerale = accountGenerale;
     }
 
@@ -41,34 +48,35 @@ public class SignUpCoRelatoreFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        View registerButton = getActivity().findViewById(R.id.Signupbutton);
-        TextInputEditText organizzaione = getActivity().findViewById(R.id.organizzazione);
-
+        Init();
         registerButton.setOnClickListener(view -> {
-
-            if(!isEmptyTextbox(organizzaione)){
+            if(!isEmpty(organizzaione)){
                 CoRelatore account = new CoRelatore(accountGenerale.getNome(), accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(),
                         accountGenerale.getEmail(), accountGenerale.getPassword(), 3, organizzaione.getText().toString().trim());
-
                 if(UtenteRegistratoDatabase.RegistrazioneUtente(account, db) && CoRelatoreDatabase.RegistrazioneCoRelatore(account, db)){
                     Intent mainActivity = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                     startActivity(mainActivity);
                 } else{
                     Toast.makeText(getActivity().getApplicationContext(), "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
                 }
-
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private boolean isEmptyTextbox(EditText textbox){
-        if(textbox.getText().toString().trim().compareTo("")==0){
+    private void Init(){
+        db = new Database(getActivity().getApplicationContext());
+        registerButton = getActivity().findViewById(R.id.Signupbutton);
+        organizzaione = getActivity().findViewById(R.id.organizzazione);
+    }
+
+    private boolean isEmpty(EditText textbox){
+        boolean risultato = false;
+        if(Utility.isEmptyTextbox(textbox)){
+            risultato = true;
             textbox.setError("Obbligatorio");
-            return true;
         }
-        textbox.setError(null);
-        return false;
+        return risultato;
     }
 }

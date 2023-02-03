@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.autofill.AutofillValue;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -21,17 +22,33 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.List;
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.activities.MainActivity;
 import it.uniba.dib.sms222329.classi.Tesista;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.TesistaDatabase;
+import it.uniba.dib.sms222329.fragment.ProfiloFragment;
 
 public class ModificaProfiloStudenteFragment extends Fragment {
+
+    //Variabili e Oggetti
     private Database db;
     private Tesista tesista;
 
-    public ModificaProfiloStudenteFragment(Database db, Tesista tesistaLoggato) {
-        this.db = db;
+    //View Items
+    private EditText nome;
+    private EditText cognome;
+    private EditText mail;
+    private EditText password;
+    private EditText codFisc;
+    private EditText matricola;
+    private TextInputEditText media;
+    private TextInputEditText numeroEsamiMancanti;
+    private Spinner spinnerUniversita;
+    private Spinner spinnerCorsoStudi;
+    private Button registerButton;
+
+    public ModificaProfiloStudenteFragment(Tesista tesistaLoggato) {
         this.tesista = tesistaLoggato;
     }
 
@@ -45,51 +62,13 @@ public class ModificaProfiloStudenteFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        //Crea lo spinner
-        String query = "SELECT " + Database.UNIVERSITA_NOME + " FROM " + Database.UNIVERSITA + ";";
-        String queryValoreRegistrato = "SELECT u." + Database.UNIVERSITA_NOME + " " +
-                "FROM " + Database.UNIVERSITACORSO + " uc , " + Database.UNIVERSITA + " u " +
-                "WHERE uc." + Database.UNIVERSITACORSO_UNIVERSITAID + "=u." + Database.UNIVERSITA_ID + " AND uc." + Database.UNIVERSITACORSO_ID + " = '"+ tesista.getIdUniversitaCorso() +"';";
-        spinnerCreate(R.id.universita, query, queryValoreRegistrato);
-
-        //Reference agli elementi dell'interfaccia
-        EditText nome = getActivity().findViewById(R.id.nome);
-        EditText cognome = getActivity().findViewById(R.id.cognome);
-        EditText mail = getActivity().findViewById(R.id.email);
-        EditText password = getActivity().findViewById(R.id.password);
-        EditText codFisc = getActivity().findViewById(R.id.codiceFiscale);
-        EditText matricola = getActivity().findViewById(R.id.matricola);
-        TextInputEditText media = getActivity().findViewById(R.id.media);
-        TextInputEditText numeroEsamiMancanti = getActivity().findViewById(R.id.esamiMancanti);
-        Spinner spinnerUniversita = getActivity().findViewById(R.id.universita);
-        Spinner spinnerCorsoStudi = getActivity().findViewById(R.id.corsiDiStudio);
-        View registerButton = getActivity().findViewById(R.id.conferma);
-
-        //Carica come suggerimenti i valori attuali del profilo
-        nome.setHint(tesista.getNome());
-        cognome.setHint(tesista.getCognome());
-        mail.setHint(tesista.getEmail());
-        password.setHint(tesista.getPassword());
-        codFisc.setHint(tesista.getCodiceFiscale());
-        matricola.setHint(tesista.getMatricola());
-        media.setHint(String.valueOf(tesista.getMedia()));
-        numeroEsamiMancanti.setHint(String.valueOf(tesista.getNumeroEsamiMancanti()));
-
-        //Gestisci gli spinner
+        Init();
+        SetHintAll();
         GestisciSpinner(spinnerUniversita);
 
         registerButton.setOnClickListener(view -> {
-            //Riempie i campi non modificati con i valori esistenti
-            fillIfEmpty(nome, tesista.getNome());
-            fillIfEmpty(cognome, tesista.getCognome());
-            fillIfEmpty(mail, tesista.getEmail());
-            fillIfEmpty(password, tesista.getPassword());
-            fillIfEmpty(codFisc, tesista.getCodiceFiscale());
-            fillIfEmpty(matricola, tesista.getMatricola());
-            fillIfEmpty(media, String.valueOf(tesista.getMedia()));
-            fillIfEmpty(numeroEsamiMancanti, String.valueOf(tesista.getNumeroEsamiMancanti()));
+            FillAllEmpty();
 
-            //Recupera id coppia UniversitaCorso
             String idUniversita = RecuperaIdSpinner(spinnerUniversita, Database.UNIVERSITA);
             String idCorsoStudio = RecuperaIdSpinner(spinnerCorsoStudi,Database.CORSOSTUDI);
             int corso= RecuperaUniversitaCorso(idUniversita, idCorsoStudio);
@@ -101,16 +80,57 @@ public class ModificaProfiloStudenteFragment extends Fragment {
                     Integer.parseInt(numeroEsamiMancanti.getText().toString()),
                     codFisc.getText().toString(), corso, db)){
                 Toast.makeText(getActivity().getApplicationContext(),"modifica riuscita",Toast.LENGTH_SHORT).show();
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ProfiloFragment(Utility.TESISTA, tesista));
             }
         });
     }
 
-    private void spinnerCreate(int idSpinner, String queryValori, String queryValoriRegistrati){
-        Spinner spinner = getView().findViewById(idSpinner);
+    private void Init() {
+        nome = getActivity().findViewById(R.id.nome);
+        cognome = getActivity().findViewById(R.id.cognome);
+        mail = getActivity().findViewById(R.id.email);
+        password = getActivity().findViewById(R.id.password);
+        codFisc = getActivity().findViewById(R.id.codiceFiscale);
+        matricola = getActivity().findViewById(R.id.matricola);
+        media = getActivity().findViewById(R.id.media);
+        numeroEsamiMancanti = getActivity().findViewById(R.id.esamiMancanti);
+        spinnerUniversita = getActivity().findViewById(R.id.universita);
+        spinnerCorsoStudi = getActivity().findViewById(R.id.corsiDiStudio);
+        registerButton = getActivity().findViewById(R.id.conferma);
 
+        String queryValori = "SELECT " + Database.UNIVERSITA_NOME + " FROM " + Database.UNIVERSITA + ";";
+        String queryValoreRegistrato = "SELECT u." + Database.UNIVERSITA_NOME + " " +
+                "FROM " + Database.UNIVERSITACORSO + " uc , " + Database.UNIVERSITA + " u " +
+                "WHERE uc." + Database.UNIVERSITACORSO_UNIVERSITAID + "=u." + Database.UNIVERSITA_ID + " AND uc." + Database.UNIVERSITACORSO_ID + " = '"+ tesista.getIdUniversitaCorso() +"';";
+        spinnerCreate(spinnerUniversita, queryValori, queryValoreRegistrato);
+    }
+
+    private void SetHintAll(){
+        nome.setHint(tesista.getNome());
+        cognome.setHint(tesista.getCognome());
+        mail.setHint(tesista.getEmail());
+        password.setHint(tesista.getPassword());
+        codFisc.setHint(tesista.getCodiceFiscale());
+        matricola.setHint(tesista.getMatricola());
+        media.setHint(String.valueOf(tesista.getMedia()));
+        numeroEsamiMancanti.setHint(String.valueOf(tesista.getNumeroEsamiMancanti()));
+    }
+
+    private void FillAllEmpty(){
+        Utility.fillIfEmpty(nome, tesista.getNome());
+        Utility.fillIfEmpty(cognome, tesista.getCognome());
+        Utility.fillIfEmpty(mail, tesista.getEmail());
+        Utility.fillIfEmpty(password, tesista.getPassword());
+        Utility.fillIfEmpty(codFisc, tesista.getCodiceFiscale());
+        Utility.fillIfEmpty(matricola, tesista.getMatricola());
+        Utility.fillIfEmpty(media, String.valueOf(tesista.getMedia()));
+        Utility.fillIfEmpty(numeroEsamiMancanti, String.valueOf(tesista.getNumeroEsamiMancanti()));
+    }
+
+
+    private void spinnerCreate(Spinner spinner, String queryValori, String queryValoriRegistrati){
+        //Carica i nomi
         Cursor cursor = db.getReadableDatabase().rawQuery(queryValori,null);
-
-        // Create an array of strings using the data from the Cursor
         List<String> items = new ArrayList<>();
         while (cursor.moveToNext()) {
             String item = cursor.getString(0);
@@ -118,10 +138,12 @@ public class ModificaProfiloStudenteFragment extends Fragment {
         }
         cursor.close();
 
+        //Adapter
         ArrayAdapter<String> adapter = new ArrayAdapter(getActivity().getApplicationContext(),android.R.layout.simple_spinner_item,items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+        //Setta valori originali
         SettaValoreSpinnerRegistrato(spinner, queryValoriRegistrati, adapter);
     }
 
@@ -143,7 +165,7 @@ public class ModificaProfiloStudenteFragment extends Fragment {
         Cursor idCursor;
         idCursor = db.RicercaDato("SELECT " + Database.UNIVERSITACORSO_ID + " FROM " + Database.UNIVERSITACORSO + " WHERE " + Database.UNIVERSITACORSO_UNIVERSITAID + " = '"+ idUniversita +"' AND " + Database.UNIVERSITACORSO_CORSOID + " = '"+ idCorso +"';");
         idCursor.moveToNext();
-        return idCursor.getInt(0);
+        return idCursor.getInt(idCursor.getColumnIndexOrThrow(Database.UNIVERSITACORSO_ID));
     }
 
     private void GestisciSpinner(Spinner spinner){
@@ -152,17 +174,19 @@ public class ModificaProfiloStudenteFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String idUniversita = RecuperaIdSpinner(spinner, Database.UNIVERSITA);
 
+                //Recupera id dei corsi dell'universita scelta
                 Cursor risultato = db.RicercaDato("SELECT " + Database.UNIVERSITACORSO_CORSOID + " FROM " + Database.UNIVERSITACORSO + " WHERE " + Database.UNIVERSITACORSO_UNIVERSITAID + " = '"+ idUniversita +"';");
                 List<String> idRisultati = new ArrayList<>();
                 while(risultato.moveToNext()){
-                    idRisultati.add(risultato.getString(0));
+                    idRisultati.add(risultato.getString(risultato.getColumnIndexOrThrow(Database.UNIVERSITACORSO_CORSOID)));
                 }
 
+                //Crea lo spinner dei corsi studio
                 String query = "SELECT " + Database.CORSOSTUDI_NOME + " FROM " + Database.CORSOSTUDI + " WHERE " + Database.CORSOSTUDI_ID + " IN (" + idRisultati.toString().replace("[", "").replace("]", "") + ");";
                 String queryValoreRegistrato = "SELECT cs." + Database.CORSOSTUDI_NOME + " " +
                         "FROM " + Database.UNIVERSITACORSO + " uc , " + Database.CORSOSTUDI + " cs " +
                         "WHERE uc." + Database.UNIVERSITACORSO_CORSOID + "=cs." + Database.CORSOSTUDI_ID + " AND uc." + Database.UNIVERSITACORSO_ID + " = '"+ tesista.getIdUniversitaCorso() +"';";
-                spinnerCreate(R.id.corsiDiStudio, query, queryValoreRegistrato);
+                spinnerCreate(spinnerCorsoStudi, query, queryValoreRegistrato);
             }
 
             @Override
@@ -170,12 +194,5 @@ public class ModificaProfiloStudenteFragment extends Fragment {
                 // Do nothing
             }
         });
-    }
-
-    //Riempie il campo con il valore nel caso sia vuoto
-    private void fillIfEmpty(EditText campo, String value){
-        if(campo.getText().toString().matches("")){
-            campo.autofill(AutofillValue.forText(value));
-        }
     }
 }

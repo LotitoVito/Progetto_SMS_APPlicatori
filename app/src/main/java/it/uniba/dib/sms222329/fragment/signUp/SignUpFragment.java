@@ -24,10 +24,19 @@ import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 import it.uniba.dib.sms222329.database.Database;
 
 public class SignUpFragment extends Fragment {
+
+    //Variabili e Oggetti
     private Database db;
 
-    public SignUpFragment() {
-    }
+    //View Items
+    private TextInputEditText nome;
+    private TextInputEditText cognome;
+    private TextInputEditText codiceFiscale;
+    private TextInputEditText email;
+    private TextInputEditText password;
+    private Button button;
+
+    public SignUpFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,26 +48,14 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        db = new Database(getActivity().getApplicationContext());
-        Button button = view.findViewById(R.id.next_button);
-        TextInputEditText nome = getActivity().findViewById(R.id.nome);
-        TextInputEditText cognome = getActivity().findViewById(R.id.cognome);
-        TextInputEditText codiceFiscale = getActivity().findViewById(R.id.codiceFiscale);
-        TextInputEditText email = getActivity().findViewById(R.id.email);
-        TextInputEditText password = getActivity().findViewById(R.id.password);
-
+        Init();
         button.setOnClickListener(v -> {
-
-            if(CheckEmpty(nome, cognome, codiceFiscale, email, password)){
+            if(!IsEmpty(nome, cognome, codiceFiscale, email, password)){
             UtenteRegistrato account = new UtenteRegistrato(nome.getText().toString().trim(), cognome.getText().toString().trim(),
                     codiceFiscale.getText().toString().trim(), email.getText().toString().trim(), password.getText().toString().trim());
-
                 if (!db.VerificaDatoEsistente("SELECT " + Database.UTENTI_CODICEFISCALE + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_CODICEFISCALE + " = '" + account.getCodiceFiscale() + "';")){
-
                     if (!db.VerificaDatoEsistente("SELECT " + Database.UTENTI_EMAIL + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + " = '" + account.getEmail() + "';")) {
-
                         loadNextFragment(account);
-
                     } else {
                         Toast.makeText(getActivity().getApplicationContext(), "Email già esistente", Toast.LENGTH_SHORT).show();
                     }
@@ -76,42 +73,57 @@ public class SignUpFragment extends Fragment {
         int checkedId = radioGroup.getCheckedRadioButtonId();
             switch (checkedId) {
                 case R.id.radio_button_1:
-                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new SignUpStudentFragment(db, account));
+                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new SignUpStudentFragment(account));
                     break;
                 case R.id.radio_button_2:
-                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new SignUpRelatoreFragment(db, account));
+                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new SignUpRelatoreFragment(account));
                     break;
                 case R.id.radio_button_3:
-                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new SignUpCoRelatoreFragment(db, account));
+                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.signUpcontainer, new SignUpCoRelatoreFragment(account));
                     break;
             }
 
     }
 
-    private boolean CheckEmpty(EditText nome, EditText cognome, EditText codiceFiscale, EditText email, EditText password){
-        boolean risultato = true;
+    private void Init(){
+        db = new Database(getActivity().getApplicationContext());
+        button = getView().findViewById(R.id.next_button);
+        nome = getActivity().findViewById(R.id.nome);
+        cognome = getActivity().findViewById(R.id.cognome);
+        codiceFiscale = getActivity().findViewById(R.id.codiceFiscale);
+        email = getActivity().findViewById(R.id.email);
+        password = getActivity().findViewById(R.id.password);
+    }
 
-        if(isEmptyTextbox(nome)){
-            risultato = false;
+    private boolean IsEmpty(EditText nome, EditText cognome, EditText codiceFiscale, EditText email, EditText password){
+        boolean risultato = false;
+
+        if(Utility.isEmptyTextbox(nome)){
+            risultato = true;
+            nome.setError("Obbligatorio");
         }
-        if(isEmptyTextbox(cognome)){
-            risultato = false;
+        if(Utility.isEmptyTextbox(cognome)){
+            risultato = true;
+            cognome.setError("Obbligatorio");
         }
-        if(isEmptyTextbox(codiceFiscale)){
-            risultato = false;
+        if(Utility.isEmptyTextbox(codiceFiscale)){
+            risultato = true;
+            codiceFiscale.setError("Obbligatorio");
         }
-        if(isEmptyTextbox(email)){
-            risultato = false;
+        if(Utility.isEmptyTextbox(email)){
+            risultato = true;
+            email.setError("Obbligatorio");
         }
-        if(isEmptyTextbox(password)){
-            risultato = false;
+        if(Utility.isEmptyTextbox(password)){
+            risultato = true;
+            password.setError("Obbligatorio");
         }
         return risultato;
     }
 
     private boolean isEmptyTextbox(EditText textbox){
         if(textbox.getText().toString().trim().compareTo("")==0){
-            textbox.setError("Obbligatorio");
+
             return true;
         }
         textbox.setError(null);

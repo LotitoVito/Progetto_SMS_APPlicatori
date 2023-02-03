@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222329.fragment.relatore;
 
 import android.content.Context;
+import android.content.UriMatcher;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 
@@ -22,18 +23,31 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.TesiDatabase;
 
 public class GestioneTesiFragment extends Fragment {
-    boolean operazioneModifica;
-    Tesi tesi;
-    Relatore relatoreLoggato;
 
-    public GestioneTesiFragment(){
-    }
+    //Variabili e Oggetti
+    private boolean operazioneModifica;
+    private Tesi tesi;
+    private Relatore relatoreLoggato;
+    private Database db;
+
+    //View Items
+    private TextInputEditText titolo;
+    private TextInputEditText argomenti;
+    private TextInputEditText tempistiche;
+    private TextInputEditText esamiMancanti;
+    private TextInputEditText capacitaRichiesta;
+    private TextInputEditText media;
+    private SwitchMaterial statoDisponibilita;
+    private Button salva;
+
+    public GestioneTesiFragment(){}
 
     public GestioneTesiFragment(Relatore relatoreLoggato) {
         this.operazioneModifica = false;
@@ -67,58 +81,38 @@ public class GestioneTesiFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Context context = getActivity().getApplicationContext();
-        Database db = new Database(context);
-        TextInputEditText titolo = getView().findViewById(R.id.titoloTesi);
-        TextInputEditText argomenti = getView().findViewById(R.id.argomenti_edit_text);
-        TextInputEditText tempistiche = getView().findViewById(R.id.tempistiche_edit_text);
-        TextInputEditText esamiMancanti = getView().findViewById(R.id.esamiMancanti);
-        TextInputEditText capacitaRichiesta = getView().findViewById(R.id.capacitaRichiesta);
-        TextInputEditText media = getView().findViewById(R.id.media_edit_text);
-        SwitchMaterial statoDisponibilita = getView().findViewById(R.id.disponibilita);
-        Button salva = getView().findViewById(R.id.add);
+
+        Init();
 
         if(operazioneModifica){
 
-            titolo.setHint(tesi.getTitolo());
-            argomenti.setHint(tesi.getArgomenti());
-            tempistiche.setHint(String.valueOf(tesi.getTempistiche()));
-            esamiMancanti.setHint(String.valueOf(tesi.getEsamiMancantiNecessari()));
-            capacitaRichiesta.setHint(tesi.getCapacitaRichieste());
-            media.setHint(String.valueOf(tesi.getMediaVotiMinima()));
-            statoDisponibilita.setChecked(tesi.getStatoDisponibilita());
-
+            SetAllHint();
             salva.setOnClickListener(view -> {
-                fillIfEmpty(titolo, tesi.getTitolo());
-                fillIfEmpty(argomenti, tesi.getArgomenti());
-                fillIfEmpty(tempistiche, String.valueOf(tesi.getTempistiche()));
-                fillIfEmpty(esamiMancanti, String.valueOf(tesi.getEsamiMancantiNecessari()));
-                fillIfEmpty(capacitaRichiesta, tesi.getCapacitaRichieste());
-                fillIfEmpty(media, String.valueOf(tesi.getMediaVotiMinima()));
-
+                FillAllEmpty();
                 if(tesi.ModificaTesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(), statoDisponibilita.isChecked(),
                         Integer.parseInt(tempistiche.getText().toString().trim()), Float.parseFloat(media.getText().toString().trim()),
                         Integer.parseInt(esamiMancanti.getText().toString().trim()), capacitaRichiesta.getText().toString().trim(), db)){
-                    Toast.makeText(context, "Successo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
+                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new TesiFragment());
                 } else{
-                    Toast.makeText(context, "Modifica fallita", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Modifica fallita", Toast.LENGTH_SHORT).show();
                 }
             });
 
         } else{
 
             salva.setOnClickListener(view -> {
-
-                if(CheckEmpty(titolo, argomenti, tempistiche, media, esamiMancanti, capacitaRichiesta)) {
+                if(IsEmpty(titolo, argomenti, tempistiche, media, esamiMancanti, capacitaRichiesta)) {
                 Tesi tesi = new Tesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(),
                         statoDisponibilita.isChecked(), relatoreLoggato.getIdRelatore(), Integer.parseInt(tempistiche.getText().toString().trim()),
                         Integer.parseInt(media.getText().toString().trim()), Integer.parseInt(esamiMancanti.getText().toString().trim()),
                         capacitaRichiesta.getText().toString().trim());
 
                     if (TesiDatabase.RegistrazioneTesi(tesi, db)) {
-                        Toast.makeText(context, "Successo", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), "Tesi registrata con successo", Toast.LENGTH_SHORT).show();
+                        Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new TesiFragment());
                     } else {
-                        Toast.makeText(context, "Registrazione fallita", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), "Registrazione fallita", Toast.LENGTH_SHORT).show();
                     }
 
                 }else{
@@ -129,42 +123,65 @@ public class GestioneTesiFragment extends Fragment {
         }
     }
 
-    private void fillIfEmpty(TextInputEditText campo, String value){
-        if(campo.getText().toString().trim().matches("")){
-            campo.autofill(AutofillValue.forText(value));
-        }
+    private void Init(){
+        db = new Database(getActivity().getApplicationContext());
+        titolo = getView().findViewById(R.id.titoloTesi);
+        argomenti = getView().findViewById(R.id.argomenti_edit_text);
+        tempistiche = getView().findViewById(R.id.tempistiche_edit_text);
+        esamiMancanti = getView().findViewById(R.id.esamiMancanti);
+        capacitaRichiesta = getView().findViewById(R.id.capacitaRichiesta);
+        media = getView().findViewById(R.id.media_edit_text);
+        statoDisponibilita = getView().findViewById(R.id.disponibilita);
+        salva = getView().findViewById(R.id.add);
     }
 
-    private boolean CheckEmpty(EditText titolo, EditText argomenti, EditText tempistiche, EditText media, EditText esamiMancanti, EditText capacitaRichiesta){
-        boolean risultato = true;
+    private void SetAllHint(){
+        titolo.setHint(tesi.getTitolo());
+        argomenti.setHint(tesi.getArgomenti());
+        tempistiche.setHint(String.valueOf(tesi.getTempistiche()));
+        esamiMancanti.setHint(String.valueOf(tesi.getEsamiMancantiNecessari()));
+        capacitaRichiesta.setHint(tesi.getCapacitaRichieste());
+        media.setHint(String.valueOf(tesi.getMediaVotiMinima()));
+        statoDisponibilita.setChecked(tesi.getStatoDisponibilita());
+    }
 
-        if(isEmptyTextbox(titolo)){
-            risultato = false;
+    private void FillAllEmpty(){
+        Utility.fillIfEmpty(titolo, tesi.getTitolo());
+        Utility.fillIfEmpty(argomenti, tesi.getArgomenti());
+        Utility.fillIfEmpty(tempistiche, String.valueOf(tesi.getTempistiche()));
+        Utility.fillIfEmpty(esamiMancanti, String.valueOf(tesi.getEsamiMancantiNecessari()));
+        Utility.fillIfEmpty(capacitaRichiesta, tesi.getCapacitaRichieste());
+        Utility.fillIfEmpty(media, String.valueOf(tesi.getMediaVotiMinima()));
+    }
+
+    private boolean IsEmpty(EditText titolo, EditText argomenti, EditText tempistiche, EditText media, EditText esamiMancanti, EditText capacitaRichiesta){
+        boolean risultato = false;
+
+        if(Utility.isEmptyTextbox(titolo)){
+            risultato = true;
+            titolo.setError("Obbligatorio");
         }
-        if(isEmptyTextbox(argomenti)){
-            risultato = false;
+        if(Utility.isEmptyTextbox(argomenti)){
+            risultato = true;
+            argomenti.setError("Obbligatorio");
         }
-        if(isEmptyTextbox(tempistiche)){
-            risultato = false;
+        if(Utility.isEmptyTextbox(tempistiche)){
+            risultato = true;
+            tempistiche.setError("Obbligatorio");
         }
-        if(isEmptyTextbox(media)){
-            risultato = false;
+        if(Utility.isEmptyTextbox(media)){
+            risultato = true;
+            media.setError("Obbligatorio");
         }
-        if(isEmptyTextbox(esamiMancanti)){
-            risultato = false;
+        if(Utility.isEmptyTextbox(esamiMancanti)){
+            risultato = true;
+            esamiMancanti.setError("Obbligatorio");
         }
-        if(isEmptyTextbox(capacitaRichiesta)){
-            risultato = false;
+        if(Utility.isEmptyTextbox(capacitaRichiesta)){
+            risultato = true;
+            capacitaRichiesta.setError("Obbligatorio");
         }
         return risultato;
     }
 
-    private boolean isEmptyTextbox(EditText textbox){
-        if(textbox.getText().toString().trim().compareTo("")==0){
-            textbox.setError("Obbligatorio");
-            return true;
-        }
-        textbox.setError(null);
-        return false;
-    }
 }

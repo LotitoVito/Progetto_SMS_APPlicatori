@@ -32,7 +32,19 @@ import it.uniba.dib.sms222329.fragment.relatore.TesiFragment;
 
 public class TesiFilterFragment extends BottomSheetDialogFragment {
 
+    //Variabili e Oggetti
     private Relatore relatoreLoggato;
+
+    //View Items
+    private EditText relatore;
+    private EditText argomento;
+    private EditText tempistiche;
+    private EditText media;
+    private EditText numeroEsamiMancanti;
+    private SwitchMaterial disponibilita;
+    private Spinner campoOrdinamento;
+    private SwitchMaterial ordinaAscendente;
+    private Button avviaRicerca;
 
     public TesiFilterFragment(Relatore relatoreLoggato) {
         this.relatoreLoggato = relatoreLoggato;
@@ -48,21 +60,8 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
     public void onResume() {
         super.onResume();
 
-        EditText relatore = getView().findViewById(R.id.relatore);
-        EditText argomento = getView().findViewById(R.id.argomento);
-        EditText tempistiche = getView().findViewById(R.id.tempistiche);
-        EditText media = getView().findViewById(R.id.media);
-        EditText numeroEsamiMancanti = getView().findViewById(R.id.numeroEsamiMancanti);
-        SwitchMaterial disponibilita = getView().findViewById(R.id.disponibilita);
-        Spinner campoOrdinamento = getView().findViewById(R.id.ordinaper);
-        SwitchMaterial ordinaAscendente = getView().findViewById(R.id.ordina);
-        Button avviaRicerca = getView().findViewById(R.id.avviaRicerca); //ok
-        spinnerCreate(campoOrdinamento); //ordinaper
-
-        if(relatoreLoggato != null){
-            relatore.setText(String.valueOf(relatoreLoggato.getIdRelatore()), EditText.BufferType.EDITABLE);
-        }
-        disponibilita.setChecked(true);
+        Init();
+        spinnerCreate(campoOrdinamento);
 
         avviaRicerca.setOnClickListener(view -> {
             Database db = new Database(getActivity().getApplicationContext());
@@ -95,6 +94,22 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
         });
     }
 
+    private void Init() {
+        relatore = getView().findViewById(R.id.relatore);
+        argomento = getView().findViewById(R.id.argomento);
+        tempistiche = getView().findViewById(R.id.tempistiche);
+        media = getView().findViewById(R.id.media);
+        numeroEsamiMancanti = getView().findViewById(R.id.numeroEsamiMancanti);
+        disponibilita = getView().findViewById(R.id.disponibilita);
+        campoOrdinamento = getView().findViewById(R.id.ordinaper);
+        ordinaAscendente = getView().findViewById(R.id.ordina);
+        avviaRicerca = getView().findViewById(R.id.avviaRicerca); //ok
+
+        if(relatoreLoggato != null){
+            relatore.setText(String.valueOf(relatoreLoggato.getIdRelatore()), EditText.BufferType.EDITABLE);
+        }
+        disponibilita.setChecked(true);
+    }
 
 
     private void spinnerCreate(Spinner spinner){

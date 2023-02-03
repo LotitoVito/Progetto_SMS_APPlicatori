@@ -24,13 +24,13 @@ import it.uniba.dib.sms222329.fragment.adapter.ListaSegnalazioniMessaggiAdapter;
 
 public class SegnalazioneMessaggiFragment extends Fragment {
 
-    //Oggetti
+    //Variabili e Oggetti
+    private Database db;
     private int idChat;
     private Relatore relatoreLoggato;
     private Tesista tesistaLoggato;
 
     //View Items
-    private Database db;
     private ListView listView;
 
     public SegnalazioneMessaggiFragment(int idChat, Relatore relatoreLoggato) {
@@ -49,9 +49,7 @@ public class SegnalazioneMessaggiFragment extends Fragment {
         super.onResume();
 
         InitViewItems();
-
         refreshChat();
-
         ImageButton sendMessage = getView().findViewById(R.id.send_button);
         EditText messaggio = getView().findViewById(R.id.chat_input);
         sendMessage.setOnClickListener(view -> {

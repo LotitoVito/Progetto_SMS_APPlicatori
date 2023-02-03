@@ -31,6 +31,17 @@ public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
     private Tesi tesi;
     private Database db;
 
+    //View Items
+    private TextView titolo;
+    private TextView argomento;
+    private TextView tempistiche;
+    private TextView esamiMancanti;
+    private TextView capacitaRichiesta;
+    private TextView media;
+    private SwitchMaterial disponibilita;
+    private ImageView qrCode;
+    private Button share;
+
     public  VisualizzaTesiFragment(){}
     public VisualizzaTesiFragment(Tesi tesi) {
         this.tesi = tesi;
@@ -44,7 +55,6 @@ public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_visualizza_tesi, container, false);
     }
 
@@ -52,27 +62,9 @@ public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
     public void onResume() {
         super.onResume();
 
-        db = new Database(getActivity().getApplicationContext());
-
-        TextView titolo = getView().findViewById(R.id.titoloTesi);
-        TextView argomento = getView().findViewById(R.id.argomentoTesi);
-        TextView tempistiche = getView().findViewById(R.id.tempistiche);
-        TextView esamiMancanti = getView().findViewById(R.id.esamiMancanti);
-        TextView capacitaRichiesta = getView().findViewById(R.id.capacitaRichiesta);
-        TextView media = getView().findViewById(R.id.media);
-        SwitchMaterial disponibilita = getView().findViewById(R.id.disponibilita);
-        ImageView qrCode = getView().findViewById(R.id.qrCode);
-        Button share = getView().findViewById(R.id.condividi);
-
-        titolo.setText(tesi.getTitolo());
-        argomento.setText(tesi.getArgomenti());
-        tempistiche.setText(String.valueOf(tesi.getTempistiche()));
-        esamiMancanti.setText(String.valueOf(tesi.getEsamiMancantiNecessari()));
-        capacitaRichiesta.setText(tesi.getCapacitaRichieste());
-        media.setText(String.valueOf(tesi.getMediaVotiMinima()));
-        disponibilita.setChecked(tesi.getStatoDisponibilita());
-        qrCode.setImageBitmap(tesi.QRGenerator());
-
+        Init();
+        SetTextAll();
+        tesi.incrementaVisualizzazioni(db);
         share.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
@@ -84,14 +76,35 @@ public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
             } else{
                 sub += "\nDisponibile";
             }
-            Database db = new Database(getActivity().getApplicationContext());
             Cursor cursor = db.RicercaDato("SELECT " + Database.RELATORE_MATRICOLA + " FROM " + Database.RELATORE + ";");
             cursor.moveToNext();
-            sub += "\nMatricola Relatore: " + cursor.getString(0);
+            sub += "\nMatricola Relatore: " + cursor.getString(cursor.getColumnIndexOrThrow(Database.RELATORE_MATRICOLA));
             intent.putExtra(Intent.EXTRA_TEXT, sub);
             startActivity(Intent.createChooser(intent, "Condividi con:"));
         });
+    }
 
-        tesi.incrementaVisualizzazioni(db);
+    private void Init() {
+        db = new Database(getActivity().getApplicationContext());
+        titolo = getView().findViewById(R.id.titoloTesi);
+        argomento = getView().findViewById(R.id.argomentoTesi);
+        tempistiche = getView().findViewById(R.id.tempistiche);
+        esamiMancanti = getView().findViewById(R.id.esamiMancanti);
+        capacitaRichiesta = getView().findViewById(R.id.capacitaRichiesta);
+        media = getView().findViewById(R.id.media);
+        disponibilita = getView().findViewById(R.id.disponibilita);
+        qrCode = getView().findViewById(R.id.qrCode);
+        share = getView().findViewById(R.id.condividi);
+    }
+
+    private void SetTextAll(){
+        titolo.setText(tesi.getTitolo());
+        argomento.setText(tesi.getArgomenti());
+        tempistiche.setText(String.valueOf(tesi.getTempistiche()));
+        esamiMancanti.setText(String.valueOf(tesi.getEsamiMancantiNecessari()));
+        capacitaRichiesta.setText(tesi.getCapacitaRichieste());
+        media.setText(String.valueOf(tesi.getMediaVotiMinima()));
+        disponibilita.setChecked(tesi.getStatoDisponibilita());
+        qrCode.setImageBitmap(tesi.QRGenerator());
     }
 }

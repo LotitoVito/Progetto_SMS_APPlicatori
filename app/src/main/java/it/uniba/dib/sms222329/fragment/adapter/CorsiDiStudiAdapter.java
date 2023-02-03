@@ -18,17 +18,19 @@ import it.uniba.dib.sms222329.database.Database;
 
 public class CorsiDiStudiAdapter extends BaseAdapter {
 
+    //Variabili e Oggetti
     private List<String> corsi;
     private Context context;
     private LayoutInflater inflater;
     private Relatore relatore;
     private boolean modifica;
-    private boolean oldCheckBox;
+    private boolean oldCheckBox;        //Serve per capire se settare attive le checkbox dei corsi già registrati
 
     public CorsiDiStudiAdapter(Context context, List<String> corsi) {
         this.corsi = corsi;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
+        this.modifica = false;
     }
 
     public CorsiDiStudiAdapter(Context context, List<String> corsi, Relatore relatore, boolean oldCheckBox) {
@@ -64,12 +66,13 @@ public class CorsiDiStudiAdapter extends BaseAdapter {
         CheckBox checkBox = convertView.findViewById(R.id.checkbox);
         checkBox.setText(corsi.get(i));
 
+        //Se è un'operazione di modifica e devo settare i corsi registrati attivi
         if(this.modifica && this.oldCheckBox){
             Database db = new Database(this.context);
             for(int j=0; j<relatore.getCorsiRelatore().size(); j++){
                 Cursor cursor = db.getReadableDatabase().rawQuery("SELECT cs." + Database.CORSOSTUDI_NOME + " FROM " + Database.CORSOSTUDI + " cs, " + Database.UNIVERSITACORSO + " uc WHERE uc." + Database.UNIVERSITACORSO_CORSOID + " = cs." + Database.CORSOSTUDI_ID + " AND uc." + Database.UNIVERSITACORSO_ID + "='"+ relatore.getCorsiRelatore().get(j) +"';", null);
                 while(cursor.moveToNext()){
-                    if(checkBox.getText().toString().trim().compareTo(cursor.getString(0))==0){
+                    if(checkBox.getText().toString().compareTo(cursor.getString(cursor.getColumnIndexOrThrow(Database.CORSOSTUDI_NOME)))==0){
                         checkBox.setChecked(true);
                         break;
                     }

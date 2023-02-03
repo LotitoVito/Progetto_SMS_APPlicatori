@@ -18,22 +18,38 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.RelatoreDatabase;
+import it.uniba.dib.sms222329.fragment.ProfiloFragment;
 import it.uniba.dib.sms222329.fragment.adapter.CorsiDiStudiAdapter;
 
 public class  ModificaProfiloRelatoreFragment extends Fragment {
+
+    //Variabili e Oggetti
     private Database db;
     private Relatore relatoreLoggato;
     private String oldSpinnerName;
 
-    public ModificaProfiloRelatoreFragment(Database db, Relatore relatoreLoggato) {
-        this.db = db;
+    //View Items
+    private EditText nome;
+    private EditText cognome;
+    private EditText mail;
+    private EditText password;
+    private EditText codFisc;
+    private EditText matricola;
+    private Spinner universita;
+    private ListView corsiStudio;
+    private Button conferma;
+
+    public ModificaProfiloRelatoreFragment(Relatore relatoreLoggato) {
         this.relatoreLoggato = relatoreLoggato;
     }
 
@@ -47,42 +63,15 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        //Crea lo spinner
-        String query = "SELECT " + Database.UNIVERSITA_NOME + " FROM " + Database.UNIVERSITA + ";";
-        spinnerCreate(R.id.universita, query);
-
-        //Reference agli elementi dell'interfaccia
-        EditText nome = getView().findViewById(R.id.nome);
-        EditText cognome = getView().findViewById(R.id.cognome);
-        EditText mail = getView().findViewById(R.id.email);
-        EditText password = getView().findViewById(R.id.password);
-        EditText codFisc = getView().findViewById(R.id.codiceFiscale);
-        EditText matricola = getView().findViewById(R.id.matricola);
-        Spinner universita = getView().findViewById(R.id.universita);
-        Button conferma = getView().findViewById(R.id.conferma);
-
-        //Carica come suggerimenti i valori attuali del profilo
-        nome.setHint(relatoreLoggato.getNome());
-        cognome.setHint(relatoreLoggato.getCognome());
-        mail.setHint(relatoreLoggato.getEmail());
-        password.setHint(relatoreLoggato.getPassword());
-        codFisc.setHint(relatoreLoggato.getCodiceFiscale());
-        matricola.setHint(relatoreLoggato.getMatricola());
-
-        //Gestisce lo spinner in caso di cambi
+        Init();
+        SetHintAll();
         GestisciSpinner(universita);
 
         conferma.setOnClickListener(view -> {
-            //Riempie i campi non modificati con i valori esistenti
-            fillIfEmpty(nome, relatoreLoggato.getNome());
-            fillIfEmpty(cognome, relatoreLoggato.getCognome());
-            fillIfEmpty(mail, relatoreLoggato.getEmail());
-            fillIfEmpty(password, relatoreLoggato.getPassword());
-            fillIfEmpty(codFisc, relatoreLoggato.getCodiceFiscale());
-            fillIfEmpty(matricola, relatoreLoggato.getMatricola());
+            FillAllEmpty();
 
             //Recupera gli id dei corsi dei relatori
-            String idUniversita = RecuperaIdSpinner(universita,Database.UNIVERSITA);
+            String idUniversita = RecuperaIdUniversita();
             List idCorsiSelezionati = RecuperaIdCorsi();
             ArrayList<Integer> corsiRelatore = RecuperaUniversitaCorso(idUniversita,idCorsiSelezionati);
 
@@ -90,54 +79,88 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
             if (relatoreLoggato.modRelatore(matricola.getText().toString().trim(),nome.getText().toString().trim(),
                     cognome.getText().toString().trim(), codFisc.getText().toString().trim(),mail.getText().toString().trim(),
                     password.getText().toString().trim(), corsiRelatore, db)) {
-                Toast.makeText(getActivity().getApplicationContext(),"modifica riuscita",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(),"Modificata effettuata con successo",Toast.LENGTH_SHORT).show();
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ProfiloFragment(Utility.RELATORE ,relatoreLoggato));
             }
         });
     }
 
-    private void spinnerCreate(int idSpinner, String query){
-        Spinner spinner = getView().findViewById(idSpinner);
+    private void Init(){
+        db = new Database(getActivity().getApplicationContext());
+        nome = getView().findViewById(R.id.nome);
+        cognome = getView().findViewById(R.id.cognome);
+        mail = getView().findViewById(R.id.email);
+        password = getView().findViewById(R.id.password);
+        codFisc = getView().findViewById(R.id.codiceFiscale);
+        matricola = getView().findViewById(R.id.matricola);
+        universita = getView().findViewById(R.id.universita);
+        corsiStudio = getView().findViewById(R.id.corsiDiStudio);
+        conferma = getView().findViewById(R.id.conferma);
 
+        spinnerCreate();
+    }
+
+    private void SetHintAll(){
+        nome.setHint(relatoreLoggato.getNome());
+        cognome.setHint(relatoreLoggato.getCognome());
+        mail.setHint(relatoreLoggato.getEmail());
+        password.setHint(relatoreLoggato.getPassword());
+        codFisc.setHint(relatoreLoggato.getCodiceFiscale());
+        matricola.setHint(relatoreLoggato.getMatricola());
+    }
+
+    private void FillAllEmpty(){
+        Utility.fillIfEmpty(nome, relatoreLoggato.getNome());
+        Utility.fillIfEmpty(cognome, relatoreLoggato.getCognome());
+        Utility.fillIfEmpty(mail, relatoreLoggato.getEmail());
+        Utility.fillIfEmpty(password, relatoreLoggato.getPassword());
+        Utility.fillIfEmpty(codFisc, relatoreLoggato.getCodiceFiscale());
+        Utility.fillIfEmpty(matricola, relatoreLoggato.getMatricola());
+    }
+
+    private void spinnerCreate(){
+        //Carica Elementi
+        String query = "SELECT " + Database.UNIVERSITA_NOME + " FROM " + Database.UNIVERSITA + ";";
         Cursor cursor = db.getReadableDatabase().rawQuery(query, null);
         List<String> items = new ArrayList<>();
         while (cursor.moveToNext()) {
-            String item = cursor.getString(0);
+            String item = cursor.getString(cursor.getColumnIndexOrThrow(Database.UNIVERSITA_NOME));
             items.add(item);
         }
         cursor.close();
 
+        //Adapter Spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        universita.setAdapter(adapter);
 
         //Setta selezionata l'univerisità di cui il relatore fa parte
         cursor = db.RicercaDato("SELECT u." + Database.UNIVERSITA_NOME + " " +
                 "FROM " + Database.UNIVERSITACORSO + " uc , " + Database.UNIVERSITA + " u " +
                 "WHERE uc." + Database.UNIVERSITACORSO_UNIVERSITAID + "=u." + Database.UNIVERSITA_ID + " AND uc." + Database.UNIVERSITACORSO_ID + " = '"+ relatoreLoggato.getCorsiRelatore().get(0) +"';");
         if(cursor.moveToNext()){
-            spinner.setSelection(adapter.getPosition(cursor.getString(0)));
-            oldSpinnerName = spinner.getSelectedItem().toString();
+            universita.setSelection(adapter.getPosition(cursor.getString(0)));
+            oldSpinnerName = universita.getSelectedItem().toString();
         }
     }
 
-    private String RecuperaIdSpinner(Spinner spinner, String tabella){
+    private String RecuperaIdUniversita(){
         Cursor idCursor;
-        idCursor = db.RicercaDato("SELECT id FROM "+ tabella +" WHERE nome = '"+ spinner.getSelectedItem().toString() +"';");
+        idCursor = db.RicercaDato("SELECT " + Database.UNIVERSITA_ID + " FROM "+ Database.UNIVERSITA +" WHERE nome = '"+ universita.getSelectedItem().toString() +"';");
         idCursor.moveToNext();
-        return idCursor.getString(0);
+        return idCursor.getString(idCursor.getColumnIndexOrThrow(Database.UNIVERSITA_ID));
     }
 
     private List RecuperaIdCorsi(){
-        ListView listView = getActivity().findViewById(R.id.corsiDiStudio);
         List<String> idCorsiSelezionati = new ArrayList<>();
 
-        for (int i = 0; i < listView.getChildCount(); i++) {
-            CheckBox checkBox = listView.getChildAt(i).findViewById(R.id.checkbox);
+        for (int i = 0; i < corsiStudio.getChildCount(); i++) {
+            CheckBox checkBox = corsiStudio.getChildAt(i).findViewById(R.id.checkbox);
+            String query = "SELECT " + Database.CORSOSTUDI_ID + " FROM " + Database.CORSOSTUDI +" WHERE " + Database.CORSOSTUDI_NOME + " LIKE '"+ checkBox.getText() +"';";
             if (checkBox.isChecked()) {
-                String query = "SELECT " + Database.CORSOSTUDI_ID + " FROM " + Database.CORSOSTUDI +" WHERE " + Database.CORSOSTUDI_NOME + " LIKE '"+ checkBox.getText() +"';";
                 Cursor risultati = db.RicercaDato(query);
                 risultati.moveToNext();
-                idCorsiSelezionati.add(risultati.getString(0));
+                idCorsiSelezionati.add(risultati.getString(risultati.getColumnIndexOrThrow(Database.CORSOSTUDI_ID)));
             }
         }
 
@@ -150,7 +173,7 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
         for(int i=0; i< idCorsiSelezionati.size(); i++){
             idCursor = db.RicercaDato("SELECT " + Database.UNIVERSITACORSO_ID + " FROM " + Database.UNIVERSITACORSO + " WHERE " + Database.UNIVERSITACORSO_UNIVERSITAID + " = '"+ idUniversita +"' AND " + Database.UNIVERSITACORSO_CORSOID + " = '"+ idCorsiSelezionati.get(i) +"';");
             idCursor.moveToNext();
-            corsiRelatore.add(idCursor.getInt(0));
+            corsiRelatore.add(idCursor.getInt(idCursor.getColumnIndexOrThrow(Database.UNIVERSITACORSO_ID)));
         }
         return corsiRelatore;
     }
@@ -159,19 +182,18 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String idUniversita = RecuperaIdSpinner(spinner, Database.UNIVERSITA);
+                String idUniversita = RecuperaIdUniversita();
 
+                //Recupero id di corsi dell'uni selezionata
                 Cursor risultato = db.RicercaDato("SELECT " + Database.UNIVERSITACORSO_CORSOID + " FROM " + Database.UNIVERSITACORSO + " WHERE " + Database.UNIVERSITACORSO_UNIVERSITAID + " = '"+ idUniversita +"';");
                 List<String> idRisultati = new ArrayList<>();
                 while(risultato.moveToNext()){
-                    idRisultati.add(risultato.getString(0));
+                    idRisultati.add(risultato.getString(risultato.getColumnIndexOrThrow(Database.UNIVERSITACORSO_CORSOID)));
                 }
 
+                //Recupero i nomi dei corsi dagli id
                 String query = "SELECT " + Database.CORSOSTUDI_NOME + " FROM " + Database.CORSOSTUDI + " WHERE " + Database.CORSOSTUDI_ID + " IN (" + idRisultati.toString().replace("[", "").replace("]", "") + ");";
-                // Query the database for the data
                 Cursor cursor = db.getReadableDatabase().rawQuery(query, null);
-
-                // Create an array of strings using the data from the Cursor
                 List<String> corsi = new ArrayList<>();
                 while (cursor.moveToNext()) {
                     String item = cursor.getString(0);
@@ -179,6 +201,7 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
                 }
                 cursor.close();
 
+                //Verifico se il nome dello spinner è quello già registrato dal relatore
                 boolean oldCheckBox;
                 if(spinner.getSelectedItem().toString().compareTo(oldSpinnerName)==0){
                     oldCheckBox = true;
@@ -186,9 +209,9 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
                     oldCheckBox = false;
                 }
 
-                ListView listView = getActivity().findViewById(R.id.corsiDiStudio);
+                //Setto adapter corsi
                 CorsiDiStudiAdapter adapter = new CorsiDiStudiAdapter(getActivity().getApplicationContext(), corsi, relatoreLoggato, oldCheckBox);
-                listView.setAdapter(adapter);
+                corsiStudio.setAdapter(adapter);
             }
 
             @Override
@@ -196,12 +219,5 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
                 // Do nothing
             }
         });
-    }
-
-    //Riempie il campo con il valore nel caso sia vuoto
-    private void fillIfEmpty(EditText campo, String value){
-        if(campo.getText().toString().matches("")){
-            campo.autofill(AutofillValue.forText(value));
-        }
     }
 }

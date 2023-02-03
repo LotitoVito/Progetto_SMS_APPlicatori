@@ -49,7 +49,7 @@ public class TesistiRelatoreFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initViewItems();
+        Init();
 
         View u_richieste = getActivity().findViewById(R.id.u_richieste);
         View u_tesisti = getActivity().findViewById(R.id.u_tesisti);
@@ -85,7 +85,7 @@ public class TesistiRelatoreFragment extends Fragment {
 
     }
 
-    private void initViewItems(){
+    private void Init(){
         db = new Database(getActivity().getApplicationContext());
         listView = getView().findViewById(R.id.segnalazioniList);
         richieste = getActivity().findViewById(R.id.richieste);
