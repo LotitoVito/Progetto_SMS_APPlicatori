@@ -1,9 +1,20 @@
 package it.uniba.dib.sms222329.fragment.task;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.PackageManagerCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +24,8 @@ import android.widget.Toast;
 
 import com.google.android.material.slider.RangeSlider;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.io.File;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
@@ -27,6 +40,7 @@ public class CreaTaskFragment extends Fragment {
     //Variabili e Oggetti
     private Database db;
     private TesiScelta tesiScelta;
+    private File file;
 
     //View Items
     private TextInputEditText titoloTask;
@@ -60,10 +74,6 @@ public class CreaTaskFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
             }
         });
-
-        caricaMateriale.setOnClickListener(view -> {
-            //todo
-        });
     }
 
     private void Init() {
@@ -73,5 +83,74 @@ public class CreaTaskFragment extends Fragment {
         materiale = getView().findViewById(R.id.materiale_nome);
         caricaMateriale = getView().findViewById(R.id.carica_materiale);
         creaTask = getView().findViewById(R.id.salva_task);
+
+        caricaMateriale.setVisibility(View.GONE);
+    }
+
+    //fixare
+    private boolean CheckStorage(){
+        if(isExternalStorageAvailable() && isExternalStorageReadOnly()){
+            if (CheckPermessi()){
+                return true;
+            } else{
+                Toast.makeText(getActivity().getApplicationContext(), "Permessi bloccati", Toast.LENGTH_SHORT).show();
+            }
+        } else{
+            Toast.makeText(getActivity().getApplicationContext(), "Non è possibile accedere ai file", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
+
+    private boolean CheckPermessi(){
+        if(ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission_group.STORAGE) != PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission_group.STORAGE)){
+                return false;
+            } else {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission_group.STORAGE}, Utility.PERMESSO_STORAGE);
+                if(ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission_group.STORAGE) != PackageManager.PERMISSION_GRANTED){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private static boolean isExternalStorageAvailable() {
+        String extStorageState = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(extStorageState)) {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean isExternalStorageReadOnly() {
+        String extStorageState = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(extStorageState)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 10 && resultCode == RESULT_OK && data != null){
+            Uri uri = data.getData();
+            String path = uri.getPath();
+            file = new File(path);
+        }
+    }
+
+    private void ScegliFile() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        try {
+            startActivityForResult(Intent.createChooser(intent, "Seleziona un file"), 10);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

@@ -1,18 +1,32 @@
 package it.uniba.dib.sms222329.fragment.task;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.slider.RangeSlider;
+
+import java.io.File;
+import java.nio.file.Paths;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
@@ -21,6 +35,7 @@ import it.uniba.dib.sms222329.classi.Task;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.TaskDatabase;
 import it.uniba.dib.sms222329.fragment.CreaRicevimentoFragment;
+import it.uniba.dib.sms222329.fragment.relatore.TesistaRelatoreFragment;
 
 public class ModificaTaskFragment extends Fragment {
 
@@ -34,7 +49,7 @@ public class ModificaTaskFragment extends Fragment {
     private TextView dateInizioFine;
     private RangeSlider sliderStato;
     private TextView testoStato;
-    private TextView materiale;
+    private ImageView materiale;
     private Button scaricaMateriale;
     private Button caricaMateriale;
     private TextView creaRicevimento;
@@ -76,6 +91,12 @@ public class ModificaTaskFragment extends Fragment {
                 }
             }
         });
+
+        caricaMateriale.setOnClickListener(view -> {
+            if(Utility.CheckStorage(getActivity())){
+                ScegliFile();
+            }
+        });
     }
 
     private void Init() {
@@ -99,12 +120,43 @@ public class ModificaTaskFragment extends Fragment {
         descrizioneTask.setText(task.getDescrizione());
         dateInizioFine.setText(task.getDataInizio() + " - " + task.getDataFine());
         testoStato.setText(String.valueOf(task.getStato()));
-        materiale.setText(String.valueOf(task.getLinkMateriale()));
+        //materiale.setText(String.valueOf(task.getLinkMateriale()));
     }
 
     private void CheckFilesButton(){
         if(task.getLinkMateriale() == null){
             scaricaMateriale.setVisibility(View.GONE);
+        }
+    }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 10 && resultCode == RESULT_OK && data != null){
+            Uri uri = data.getData();
+            String path = uri.getPath();
+            File file = new File(path);
+
+            if(TaskDatabase.CaricaFile(db, file, task.getIdTask())){
+                Toast.makeText(getActivity().getApplicationContext(), "Caricamento avvenuto con successo", Toast.LENGTH_SHORT).show();
+            } else{
+                Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void ScegliFile() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        try {
+            startActivityForResult(Intent.createChooser(intent, "Seleziona un file"), 10);
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

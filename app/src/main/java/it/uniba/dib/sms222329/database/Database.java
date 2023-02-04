@@ -281,7 +281,7 @@ public class Database extends SQLiteOpenHelper {
                         TASK_DESCRIZIONE + " VARCHAR(255) NOT NULL," +
                         TASK_DATAINIZIO + " DATE NOT NULL," +
                         TASK_DATAFINE + " DATE NOT NULL," +
-                        TASK_LINKMATERIALE + " VARCHAR(255)," +
+                        TASK_LINKMATERIALE + " BLOB," +
                         TASK_STATO + " VARCHAR(255) NOT NULL," +
                         TASK_TESISCELTAID + " INT NOT NULL," +
                         "FOREIGN KEY (" + TASK_TESISCELTAID + ") REFERENCES " + TESISCELTA + "(" + TESISCELTA_ID + ") ON DELETE CASCADE);";

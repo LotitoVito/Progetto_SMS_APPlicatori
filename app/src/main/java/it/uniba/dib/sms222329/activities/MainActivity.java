@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        super.onResume();
         View signInButton = findViewById(R.id.signInButton);
 
         signInButton.setOnClickListener(view -> {
@@ -51,6 +52,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(signUp);
         });
 
-        super.onResume();
+
     }
 }
