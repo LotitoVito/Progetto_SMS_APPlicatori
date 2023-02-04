@@ -1,21 +1,28 @@
 package it.uniba.dib.sms222329.classi;
 
-import java.sql.Date;
+import java.time.LocalDate;
+
+import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.TaskDatabase;
 
 public class Task {
+
+    public static final int ASSEGNATO = 1;
+    public static final int IN_COMPLEMAMENTO = 2;
+    public static final int COMPLETATO = 3;
 
     private int idTask;
     private String titolo;
     private String descrizione;
-    private Date dataInizio;
-    private Date dataFine;
-    private String linkMateriale;
+    private LocalDate dataInizio;
+    private LocalDate dataFine;
+    private byte[] linkMateriale;
     private int stato;
     private int idTesiScelta;
 
     public Task(){}
 
-    public Task(int idTask, String titolo, String descrizione, Date dataInizio, Date dataFine, String linkMateriale, int stato, int idTesiScelta) {
+    public Task(int idTask, String titolo, String descrizione, LocalDate dataInizio, LocalDate dataFine, byte[] linkMateriale, int stato, int idTesiScelta) {
         this.idTask = idTask;
         this.titolo = titolo;
         this.descrizione = descrizione;
@@ -23,6 +30,15 @@ public class Task {
         this.dataFine = dataFine;
         this.linkMateriale = linkMateriale;
         this.stato = stato;
+        this.idTesiScelta = idTesiScelta;
+    }
+
+    public Task(String titolo, String descrizione, byte[] linkMateriale, int idTesiScelta) {
+        this.titolo = titolo;
+        this.descrizione = descrizione;
+        this.dataInizio = LocalDate.now();
+        this.linkMateriale = linkMateriale;
+        this.stato = ASSEGNATO;
         this.idTesiScelta = idTesiScelta;
     }
 
@@ -46,27 +62,27 @@ public class Task {
         this.descrizione = descrizione;
     }
 
-    public Date getDataInizio() {
+    public LocalDate getDataInizio() {
         return dataInizio;
     }
 
-    public void setDataInizio(Date dataInizio) {
+    public void setDataInizio(LocalDate dataInizio) {
         this.dataInizio = dataInizio;
     }
 
-    public Date getDataFine() {
+    public LocalDate getDataFine() {
         return dataFine;
     }
 
-    public void setDataFine(Date dataFine) {
+    public void setDataFine(LocalDate dataFine) {
         this.dataFine = dataFine;
     }
 
-    public String getLinkMateriale() {
+    public byte[] getLinkMateriale() {
         return linkMateriale;
     }
 
-    public void setLinkMateriale(String linkMateriale) {
+    public void setLinkMateriale(byte[] linkMateriale) {
         this.linkMateriale = linkMateriale;
     }
 
@@ -82,5 +98,31 @@ public class Task {
 
     public void setIdTesiScelta(int idTesiScelta) {
         this.idTesiScelta = idTesiScelta;
+    }
+
+    public boolean ModificaTask(String titolo, String descrizione, int stato, Database db){
+        this.titolo = titolo;
+        this.descrizione = descrizione;
+        this.stato = stato;
+        if(stato == COMPLETATO){
+            this.dataFine = LocalDate.now();
+        }
+
+        if(TaskDatabase.ModificaTask(db, this)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean ModificaTask(int stato, Database db){
+        this.stato = stato;
+        if(stato == COMPLETATO){
+            this.dataFine = LocalDate.now();
+        }
+
+        if(TaskDatabase.ModificaTask(db, this)){
+            return true;
+        }
+        return false;
     }
 }

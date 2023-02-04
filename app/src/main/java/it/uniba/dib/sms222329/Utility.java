@@ -10,15 +10,24 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.time.format.DateTimeFormatter;
 
+import it.uniba.dib.sms222329.classi.CoRelatore;
+import it.uniba.dib.sms222329.classi.Relatore;
+import it.uniba.dib.sms222329.classi.Tesista;
+
 public class Utility {
 
     public static final int TESISTA = 1;
     public static final int RELATORE = 2;
     public static final int CORELATORE = 3;
-    public static DateTimeFormatter convertFromStringDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    public static DateTimeFormatter convertFromStringDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    public static DateTimeFormatter showDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    public static DateTimeFormatter showDateTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    public static final DateTimeFormatter convertFromStringDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public static final DateTimeFormatter convertFromStringDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public static final DateTimeFormatter showDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    public static final DateTimeFormatter showDateTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+    public static Tesista tesistaLoggato;
+    public static Relatore relatoreLoggato;
+    public static CoRelatore coRelatoreLoggato;
+    public static int accountLoggato;
 
     private Utility() {}
 
@@ -40,5 +49,36 @@ public class Utility {
         if(campo.getText().toString().trim().matches("")){
             campo.autofill(AutofillValue.forText(value));
         }
+    }
+
+    public static Tesista getTesistaLoggato() {
+        return tesistaLoggato;
+    }
+
+    public static void setTesistaLoggato(Tesista tesistaLoggato) {
+        Utility.tesistaLoggato = tesistaLoggato;
+        Utility.accountLoggato = TESISTA;
+    }
+
+    public static Relatore getRelatoreLoggato() {
+        return relatoreLoggato;
+    }
+
+    public static void setRelatoreLoggato(Relatore relatoreLoggato) {
+        Utility.relatoreLoggato = relatoreLoggato;
+        Utility.accountLoggato = RELATORE;
+    }
+
+    public static CoRelatore getCoRelatoreLoggato() {
+        return coRelatoreLoggato;
+    }
+
+    public static void setCoRelatoreLoggato(CoRelatore coRelatoreLoggato) {
+        Utility.coRelatoreLoggato = coRelatoreLoggato;
+        Utility.accountLoggato = CORELATORE;
+    }
+
+    public static int getAccountLoggato() {
+        return accountLoggato;
     }
 }

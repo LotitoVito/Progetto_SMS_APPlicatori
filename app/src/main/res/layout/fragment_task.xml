@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.task.TaskFragment"
+    tools:context=".fragment.task.ListaTaskFragment"
     android:padding="8dp">
 
     <ListView

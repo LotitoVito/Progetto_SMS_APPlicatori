@@ -14,30 +14,33 @@ import java.util.List;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
+import it.uniba.dib.sms222329.classi.Task;
 import it.uniba.dib.sms222329.classi.TesiScelta;
 import it.uniba.dib.sms222329.fragment.relatore.TesistaRelatoreFragment;
+import it.uniba.dib.sms222329.fragment.task.DettagliTaskFragment;
+import it.uniba.dib.sms222329.fragment.task.ModificaTaskFragment;
 
-public class ListaTesistiRelatoreAdapter extends BaseAdapter {
+public class ListaTaskAdapter extends BaseAdapter {
 
     //Variabili e Oggetti
-    private List<TesiScelta> tesiScelte;
+    private List<Task> task;
     private LayoutInflater inflater;
     private FragmentManager manager;
 
-    public ListaTesistiRelatoreAdapter(Context context, List<TesiScelta> tesiScelte, FragmentManager manager) {
-        this.tesiScelte = tesiScelte;
+    public ListaTaskAdapter(Context context, List<Task> task, FragmentManager manager) {
+        this.task = task;
         this.inflater = LayoutInflater.from(context);
         this.manager = manager;
     }
 
     @Override
     public int getCount() {
-        return tesiScelte.size();
+        return task.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return tesiScelte.get(i);
+        return task.get(i);
     }
 
     @Override
@@ -51,30 +54,34 @@ public class ListaTesistiRelatoreAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.generic_item_with_buttons, viewGroup, false);
         }
 
-        //Tesista
-        TextView idTesista = convertView.findViewById(R.id.titolo);
-        idTesista.setText(String.valueOf(tesiScelte.get(i).getIdTesista())); //sostituisci con nome
+        //Titolo
+        TextView titolo = convertView.findViewById(R.id.titolo);
+        titolo.setText(String.valueOf(task.get(i).getTitolo()));
 
-        //Tesi
-        TextView matricola = convertView.findViewById(R.id.descrizione);
-        matricola.setText(String.valueOf(tesiScelte.get(i).getIdTesi()));
+        //Data Inizio
+        TextView dataInizio = convertView.findViewById(R.id.descrizione);
+        dataInizio.setText("Data Assegnazione: " + task.get(i).getDataInizio());
 
-        //Data pubblicazione
-        TextView dataPubblicazione = convertView.findViewById(R.id.sottotitolo);
-        if(tesiScelte.get(i).getDataPubblicazione() != null){
-            dataPubblicazione.setText(String.valueOf(tesiScelte.get(i).getDataPubblicazione()));
-        } else {
-            dataPubblicazione.setVisibility(View.GONE);
+        //Stato
+        TextView stato = convertView.findViewById(R.id.sottotitolo);
+        if(task.get(i).getStato() == Task.ASSEGNATO){
+            stato.setText("Assegnato");
+        } else if(task.get(i).getStato() == Task.IN_COMPLEMAMENTO){
+            stato.setText("In completamento");
+        } else if(task.get(i).getStato() == Task.COMPLETATO){
+            stato.setText("Completata");
         }
 
         //EditButton
         Button modifica = convertView.findViewById(R.id.modifica);
-        modifica.setVisibility(View.GONE);
+        modifica.setOnClickListener(view -> {
+            Utility.replaceFragment(manager, R.id.container, new ModificaTaskFragment(task.get(i)));
+        });
 
         //DetailButton
         Button dettagli = convertView.findViewById(R.id.visualizza);
         dettagli.setOnClickListener(view -> {
-            Utility.replaceFragment(manager, R.id.container, new TesistaRelatoreFragment(tesiScelte.get(i)));
+            Utility.replaceFragment(manager, R.id.container, new DettagliTaskFragment(task.get(i)));
         });
 
         return convertView;

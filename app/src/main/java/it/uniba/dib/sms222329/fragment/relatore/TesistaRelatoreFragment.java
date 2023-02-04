@@ -11,7 +11,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.TesiScelta;
+import it.uniba.dib.sms222329.fragment.task.CreaTaskFragment;
+import it.uniba.dib.sms222329.fragment.task.ListaTaskFragment;
 
 public class TesistaRelatoreFragment extends Fragment {
 
@@ -54,6 +57,29 @@ public class TesistaRelatoreFragment extends Fragment {
         Init();
         SetTextAll();
 
+        aggiungiCorelatore.setOnClickListener(view -> {
+
+        });
+
+        rimuoviCorelatore.setOnClickListener(view -> {
+
+        });
+
+        creaTask.setOnClickListener(view -> {
+            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new CreaTaskFragment(tesiScelta));
+        });
+
+        mostraTask.setOnClickListener(view -> {
+            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ListaTaskFragment(tesiScelta));
+        });
+
+        scaricaTesi.setOnClickListener(view -> {
+
+        });
+
+        caricaTesi.setOnClickListener(view -> {
+
+        });
     }
 
     private void Init() {

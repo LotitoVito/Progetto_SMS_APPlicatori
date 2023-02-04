@@ -30,19 +30,19 @@ public class ListaClassificaTask {
             taskEstratto.setDescrizione(cursore.getString(1));
             //taskEstratto.setDataInizio(cursore.getDATA(2));
             //taskEstratto.setDataFine(cursore.getDATA(3));
-            taskEstratto.setLinkMateriale(cursore.getString(4));
+            taskEstratto.setLinkMateriale(cursore.getBlob(4));
             taskEstratto.setStato(cursore.getInt(5));
             taskEstratto.setIdTesiScelta(cursore.getInt(6));
 
 
-                                /*Log.d("Task ID", String.valueOf(taskEstratto.getIdTask()));
-                                Log.d("Task descrizione", taskEstratto.getDescrizione());
-                                Log.d("Task inizio data", String.valueOf(taskEstratto.getDataInizio()));
-                                Log.d("Task fine data", String.valueOf(taskEstratto.getDataFine()));
-                                Log.d("Task link materiale", taskEstratto.getLinkMateriale());
-                                Log.d("Task stato", String.valueOf(taskEstratto.getStato()));
-                                Log.d("Task id tesi scelta", String.valueOf(taskEstratto.getIdTesiScelta()));
-                                Log.d("Tesi NNNNNNNNNNNNNNNNNNNNN", "\n\n\n\n");*/
+            /*Log.d("Task ID", String.valueOf(taskEstratto.getIdTask()));
+            Log.d("Task descrizione", taskEstratto.getDescrizione());
+            Log.d("Task inizio data", String.valueOf(taskEstratto.getDataInizio()));
+            Log.d("Task fine data", String.valueOf(taskEstratto.getDataFine()));
+            Log.d("Task link materiale", taskEstratto.getLinkMateriale());
+            Log.d("Task stato", String.valueOf(taskEstratto.getStato()));
+            Log.d("Task id tesi scelta", String.valueOf(taskEstratto.getIdTesiScelta()));
+            Log.d("Tesi NNNNNNNNNNNNNNNNNNNNN", "\n\n\n\n");*/
 
             listaTaskEstratti.add(taskEstratto);
 
@@ -70,7 +70,7 @@ public class ListaClassificaTask {
             taskEstratto.setDescrizione(cursore.getString(1));
             //taskEstratto.setDataInizio(cursore.getDATA(2));
             //taskEstratto.setDataFine(cursore.getDATA(3));
-            taskEstratto.setLinkMateriale(cursore.getString(4));
+            //taskEstratto.setLinkMateriale(cursore.getString(4));
             taskEstratto.setStato(cursore.getInt(5));
             taskEstratto.setIdTesiScelta(cursore.getInt(6));
 
@@ -95,7 +95,7 @@ public class ListaClassificaTask {
             taskEstratto.setDescrizione(cursore.getString(1));
             //taskEstratto.setDataInizio(cursore.getDATA(2));
             //taskEstratto.setDataFine(cursore.getDATA(3));
-            taskEstratto.setLinkMateriale(cursore.getString(4));
+            //taskEstratto.setLinkMateriale(cursore.getString(4));
             taskEstratto.setStato(cursore.getInt(5));
             taskEstratto.setIdTesiScelta(cursore.getInt(6));
 
@@ -123,7 +123,7 @@ public class ListaClassificaTask {
             taskEstratto.setDescrizione(cursore.getString(1));
             //taskEstratto.setDataInizio(cursore.getDATA(2));
             //taskEstratto.setDataFine(cursore.getDATA(3));
-            taskEstratto.setLinkMateriale(cursore.getString(4));
+            //taskEstratto.setLinkMateriale(cursore.getString(4));
             taskEstratto.setStato(cursore.getInt(5));
             taskEstratto.setIdTesiScelta(cursore.getInt(6));
 

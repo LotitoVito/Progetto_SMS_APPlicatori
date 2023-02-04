@@ -38,9 +38,10 @@ public class LoggedActivity extends AppCompatActivity {
     //Variabili e Oggetti
     private Database db = new Database(this);
     private UtenteRegistrato utenteLoggato;
-    private Tesista tesistaLoggato;
-    private Relatore relatoreLoggato;
-    private CoRelatore coRelatoreLoggato;
+    public static Tesista tesistaLoggato;
+    public static Relatore relatoreLoggato;
+    public static CoRelatore coRelatoreLoggato;
+    public static int accountLoggato;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +53,17 @@ public class LoggedActivity extends AppCompatActivity {
         try{
             if(utenteLoggato.getTipoUtente() == Utility.TESISTA){ //tesista
                 tesistaLoggato = TesistaDatabase.IstanziaTesista(utenteLoggato, db);
+                accountLoggato = Utility.TESISTA;
             }
             else if (utenteLoggato.getTipoUtente() == Utility.RELATORE){ //relatore
                 relatoreLoggato = RelatoreDatabase.IstanziaRelatore(utenteLoggato, db);
+                accountLoggato = Utility.RELATORE;
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment(relatoreLoggato));
                 setBottomNavigation(new ListaTesiFragment(relatoreLoggato), new SegnalazioneChatFragment(relatoreLoggato), new HomeFragment(relatoreLoggato), new TesistiRelatoreFragment());
             }
             else if (utenteLoggato.getTipoUtente() == Utility.CORELATORE){ //corelatore
                 coRelatoreLoggato = CoRelatoreDatabase.IstanziaCoRelatore(utenteLoggato, db);
+                accountLoggato = Utility.CORELATORE;
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -173,4 +177,7 @@ public class LoggedActivity extends AppCompatActivity {
         }
     });
 
+    public int getAccountLoggato(){
+        return accountLoggato;
+    }
 }
