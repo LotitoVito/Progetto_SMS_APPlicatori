@@ -30,7 +30,6 @@ public class ListaRicevimentiDatabase {
             ricevimentoEstratto.setData(data);
             LocalTime orario = LocalTime.parse(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_ORARIO)));
             ricevimentoEstratto.setOrario(orario);
-            ricevimentoEstratto.setArgomento(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_ARGOMENTO)));
             ricevimentoEstratto.setIdTask(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_TASKID)));
             ricevimentoEstratto.setAccettazione(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_ACCETTAZIONE)));
             ricevimentoEstratto.setMessaggio(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_MESSAGGIO)));
@@ -66,7 +65,6 @@ public class ListaRicevimentiDatabase {
             ricevimentoEstratto.setData(data);
             LocalTime orario = LocalTime.parse(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_ORARIO)));
             ricevimentoEstratto.setOrario(orario);
-            ricevimentoEstratto.setArgomento(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_ARGOMENTO)));
             ricevimentoEstratto.setIdTask(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_TASKID)));
             ricevimentoEstratto.setAccettazione(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_ACCETTAZIONE)));
             ricevimentoEstratto.setMessaggio(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICEVIMENTI_MESSAGGIO)));

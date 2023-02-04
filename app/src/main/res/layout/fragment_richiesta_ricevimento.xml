@@ -27,7 +27,7 @@
             />
 
         <TextView
-            android:id="@+id/argomento"
+            android:id="@+id/messaggio_tesista"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Messaggio scritto dallo studente"

@@ -13,7 +13,6 @@ public class RicevimentoDatabase {
 
         richiestaCv.put(Database.RICEVIMENTI_DATA, String.valueOf(richiesta.getData()));
         richiestaCv.put(Database.RICEVIMENTI_ORARIO, String.valueOf(richiesta.getOrario()));
-        richiestaCv.put(Database.RICEVIMENTI_ARGOMENTO, richiesta.getArgomento());
         richiestaCv.put(Database.RICEVIMENTI_TASKID, richiesta.getIdTask());
         richiestaCv.put(Database.RICEVIMENTI_ACCETTAZIONE, Ricevimento.IN_ATTESA_RELATORE);
         richiestaCv.put(Database.RICEVIMENTI_MESSAGGIO, richiesta.getMessaggio());

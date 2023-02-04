@@ -16,6 +16,7 @@ import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Ricevimento;
 import it.uniba.dib.sms222329.fragment.RichiestaRicevimentoFragment;
+import it.uniba.dib.sms222329.fragment.VisualizzaRicevimentoFragment;
 
 public class ListaRicevimentiAdapter extends BaseAdapter {
 
@@ -75,6 +76,7 @@ public class ListaRicevimentiAdapter extends BaseAdapter {
 
         //EditButton
         Button modifica = convertView.findViewById(R.id.modifica);
+        modifica.setText("Rispondi");
         if(ricevimenti.get(i).getAccettazione()==Ricevimento.ACCETTATO || ricevimenti.get(i).getAccettazione()==Ricevimento.IN_ATTESA_TESISTA || ricevimenti.get(i).getAccettazione()==Ricevimento.RIFIUTATO){
             modifica.setVisibility(View.GONE);
         }
@@ -85,7 +87,7 @@ public class ListaRicevimentiAdapter extends BaseAdapter {
         //DetailButton
         Button dettagli = convertView.findViewById(R.id.visualizza);
         dettagli.setOnClickListener(view -> {
-            //Utility.replaceFragment(manager, R.id.container, new );
+            Utility.replaceFragment(manager, R.id.container, new VisualizzaRicevimentoFragment(ricevimenti.get(i)));
         });
 
         return convertView;

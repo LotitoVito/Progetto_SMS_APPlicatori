@@ -19,27 +19,24 @@ public class Ricevimento {
     private int idRicevimento;
     private LocalDate data;
     private LocalTime orario;
-    private String argomento;
     private int idTask;
     private int accettazione;
     private String messaggio;
 
     public Ricevimento(){}
 
-    public Ricevimento(int idRicevimento, LocalTime orario, LocalDate data, String argomento, int idTask, int accettazione, String messaggio) {
+    public Ricevimento(int idRicevimento, LocalTime orario, LocalDate data, int idTask, int accettazione, String messaggio) {
         this.idRicevimento = idRicevimento;
         this.orario = orario;
         this.data = data;
-        this.argomento = argomento;
         this.idTask = idTask;
         this.accettazione = accettazione;
         this.messaggio = messaggio;
     }
 
-    public Ricevimento(LocalDate data, LocalTime orario, String argomento, int idTask, int accettazione, String messaggio) {
+    public Ricevimento(LocalDate data, LocalTime orario, int idTask, int accettazione, String messaggio) {
         this.data = data;
         this.orario = orario;
-        this.argomento = argomento;
         this.idTask = idTask;
         this.accettazione = accettazione;
         this.messaggio = messaggio;
@@ -62,14 +59,6 @@ public class Ricevimento {
     public LocalTime getOrario() {return orario;}
 
     public void setOrario(LocalTime orario) {this.orario = orario;}
-
-    public String getArgomento() {
-        return argomento;
-    }
-
-    public void setArgomento(String argomento) {
-        this.argomento = argomento;
-    }
 
     public int getIdTask() {
         return idTask;

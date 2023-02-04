@@ -15,8 +15,9 @@ public class Task {
 
     public Task(){}
 
-    public Task(int idTask, String descrizione, Date dataInizio, Date dataFine, String linkMateriale, int stato, int idTesiScelta) {
+    public Task(int idTask, String titolo, String descrizione, Date dataInizio, Date dataFine, String linkMateriale, int stato, int idTesiScelta) {
         this.idTask = idTask;
+        this.titolo = titolo;
         this.descrizione = descrizione;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
@@ -32,6 +33,10 @@ public class Task {
     public void setIdTask(int idTask) {
         this.idTask = idTask;
     }
+
+    public String getTitolo() {return titolo;}
+
+    public void setTitolo(String titolo) {this.titolo = titolo;}
 
     public String getDescrizione() {
         return descrizione;

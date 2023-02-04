@@ -127,6 +127,7 @@ public class Database extends SQLiteOpenHelper {
     //Tabella Task
     public static final String TASK = "task";
     public static final String TASK_ID = "id";
+    public static final String TASK_TITOLO = "titolo";
     public static final String TASK_DESCRIZIONE = "descrizione";
     public static final String TASK_DATAINIZIO = "data_inizio";
     public static final String TASK_DATAFINE = "data_fine";
@@ -139,7 +140,6 @@ public class Database extends SQLiteOpenHelper {
     public static final String RICEVIMENTI_ID = "id";
     public static final String RICEVIMENTI_DATA = "data";
     public static final String RICEVIMENTI_ORARIO = "orario";
-    public static final String RICEVIMENTI_ARGOMENTO = "argomento";
     public static final String RICEVIMENTI_TASKID = "task_id";
     public static final String RICEVIMENTI_ACCETTAZIONE = "accettazione";
     public static final String RICEVIMENTI_MESSAGGIO = "messaggio";
@@ -277,6 +277,7 @@ public class Database extends SQLiteOpenHelper {
         //Task
         createTable =   "CREATE TABLE " + TASK + " (" +
                         TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        TASK_TITOLO +" VARCHAR(255) NOT NULL," +
                         TASK_DESCRIZIONE + " VARCHAR(255) NOT NULL," +
                         TASK_DATAINIZIO + " DATE NOT NULL," +
                         TASK_DATAFINE + " DATE NOT NULL," +
@@ -290,7 +291,6 @@ public class Database extends SQLiteOpenHelper {
                         RICEVIMENTI_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         RICEVIMENTI_DATA + " DATE NOT NULL," +
                         RICEVIMENTI_ORARIO + " TIME NOT NULL," +
-                        RICEVIMENTI_ARGOMENTO + " VARCHAR(255) NOT NULL," +
                         RICEVIMENTI_TASKID + " INT NOT NULL," +
                         RICEVIMENTI_ACCETTAZIONE + " INT NOT NULL," +
                         RICEVIMENTI_MESSAGGIO + "  VARCHAR(255)," +
@@ -425,7 +425,6 @@ public class Database extends SQLiteOpenHelper {
         cvRicevimenti.put(RICEVIMENTI_DATA, "2023-02-04");
         cvRicevimenti.put(RICEVIMENTI_ORARIO, "16:50");
         cvRicevimenti.put(RICEVIMENTI_ACCETTAZIONE, Ricevimento.IN_ATTESA_RELATORE);
-        cvRicevimenti.put(RICEVIMENTI_ARGOMENTO, "A");
         cvRicevimenti.put(RICEVIMENTI_MESSAGGIO, "A");
         db.insert(RICEVIMENTI, null, cvRicevimenti);
 

@@ -11,6 +11,7 @@ public class TaskDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues taskCv = new ContentValues();
 
+        taskCv.put(Database.TASK_TITOLO, task.getTitolo());
         taskCv.put(Database.TASK_DESCRIZIONE, task.getDescrizione());
         taskCv.put(Database.TASK_DATAINIZIO, String.valueOf(task.getDataInizio()));
         taskCv.put(Database.TASK_DATAFINE, String.valueOf(task.getDataFine()));

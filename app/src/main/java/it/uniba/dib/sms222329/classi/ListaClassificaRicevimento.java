@@ -35,7 +35,6 @@ public class ListaClassificaRicevimento {
             Log.d("test", cursore.getString(2));
             LocalTime orario = LocalTime.parse(cursore.getString(2));
             ricevimentoEstratto.setOrario(orario);
-            ricevimentoEstratto.setArgomento(cursore.getString(3));
             ricevimentoEstratto.setIdTask(cursore.getInt(4));
             ricevimentoEstratto.setAccettazione(cursore.getInt(5));
             ricevimentoEstratto.setMessaggio(cursore.getString(6));
@@ -75,7 +74,6 @@ public class ListaClassificaRicevimento {
             ricevimentoEstratto.setIdRicevimento(cursore.getInt(0));
             //ricevimentoEstratto.setData(cursore.getInt(1));
             //ricevimentoEstratto.setOrario(cursore.getInt(2));
-            ricevimentoEstratto.setArgomento(cursore.getString(3));
             ricevimentoEstratto.setIdTask(cursore.getInt(4));
             ricevimentoEstratto.setAccettazione(cursore.getInt(5));
             ricevimentoEstratto.setMessaggio(cursore.getString(6));
@@ -89,7 +87,7 @@ public class ListaClassificaRicevimento {
     //ordina per argomento
     public ArrayList<Ricevimento> OrdinaPerArgomento(Database dbClass) {
         SQLiteDatabase db = dbClass.getReadableDatabase();
-        String query = "SELECT * FROM " + Database.RICEVIMENTI + " ORDER BY " + Database.RICEVIMENTI_ARGOMENTO + ";";
+        String query = "SELECT * FROM " + Database.RICEVIMENTI + ";";
         Cursor cursore = db.rawQuery(query, null);
 
         ArrayList<Ricevimento> listaRicevimentiEstratti = new ArrayList<Ricevimento>();
@@ -102,7 +100,6 @@ public class ListaClassificaRicevimento {
             //ricevimentoEstratto.setData(data);
             Time orario = new Time(cursore.getLong(2)*4);
             //ricevimentoEstratto.setOrario(orario);
-            ricevimentoEstratto.setArgomento(cursore.getString(3));
             ricevimentoEstratto.setIdTask(cursore.getInt(4));
             ricevimentoEstratto.setAccettazione(cursore.getInt(5));
             ricevimentoEstratto.setMessaggio(cursore.getString(6));

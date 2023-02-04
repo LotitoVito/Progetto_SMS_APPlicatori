@@ -53,10 +53,10 @@
             android:layout_marginBottom="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/data1"
+                android:id="@+id/data_richiesta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:enabled="false"
+                android:enabled="true"
                 android:allowClickWhenDisabled="true"
                 android:inputType="text"
                 tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
@@ -70,10 +70,10 @@
             android:layout_marginBottom="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ora"
+                android:id="@+id/ora_richiesta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:enabled="false"
+                android:enabled="true"
                 android:allowClickWhenDisabled="true"
                 android:inputType="text"
                 tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
@@ -82,7 +82,7 @@
 
 
             <Button
-                android:id="@+id/accetta"
+                android:id="@+id/invia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/invia"

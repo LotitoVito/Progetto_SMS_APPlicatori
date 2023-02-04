@@ -22,6 +22,7 @@ public class ListaTaskDatabase {
             Task taskEstratto = new Task();
 
             taskEstratto.setIdTask(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TASK_ID)));
+            taskEstratto.setTitolo(cursore.getString(cursore.getColumnIndexOrThrow(Database.TASK_TITOLO)));
             taskEstratto.setDescrizione(cursore.getString(cursore.getColumnIndexOrThrow(Database.TASK_DESCRIZIONE)));
             //taskEstratto.setDataInizio(cursore.getDATA(cursore.getColumnIndexOrThrow(Database.TASK_DATAINIZIO)));
             //taskEstratto.setDataFine(cursore.getDATA(cursore.getColumnIndexOrThrow(Database.TASK_DATAFINE)));
