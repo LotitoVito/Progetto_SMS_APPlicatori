@@ -3,6 +3,7 @@ package it.uniba.dib.sms222329.fragment;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,7 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
 
         avviaRicerca.setOnClickListener(view -> {
             Database db = new Database(getActivity().getApplicationContext());
-            String query = "SELECT * FROM " + Database.TESI + " WHERE";
+            String query = "SELECT * FROM " + Database.TESI + " WHERE ";
 
             //Filtri
             if(!isEmptyTextbox(relatore)){
@@ -83,6 +84,7 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
             query = AddToQueryOrderType(query, ordinaAscendente);
 
             this.dismiss();
+            Log.d("test", query);
             Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.content2, new ListaTesiFragment(relatoreLoggato, query));
         });
     }
@@ -99,7 +101,7 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
         avviaRicerca = getView().findViewById(R.id.avviaRicerca); //ok
 
         if(relatoreLoggato != null){
-            relatore.setText(String.valueOf(relatoreLoggato.getIdRelatore()), EditText.BufferType.EDITABLE);
+            relatore.setText(String.valueOf(relatoreLoggato.getMatricola()), EditText.BufferType.EDITABLE);
         }
         disponibilita.setChecked(true);
     }
@@ -131,11 +133,15 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
     }
 
     private String AddToQueryRelatore(String query, EditText relatore, Database db){
-        Cursor cursor = db.RicercaDato("SELECT " + Database.RELATORE_ID + " FROM " + Database.RELATORE +
-                " WHERE " + Database.RELATORE_MATRICOLA + "=" + relatore.getText().toString() + ";");
-        cursor.moveToNext();
+        try {
+            Cursor cursor = db.RicercaDato("SELECT " + Database.RELATORE_ID + " FROM " + Database.RELATORE +
+                    " WHERE " + Database.RELATORE_MATRICOLA + "=" + relatore.getText().toString() + ";");
+            cursor.moveToNext();
 
-        query += " " + Database.TESI_RELATOREID + "=" + cursor.getInt(0) + " AND";
+            query += " " + Database.TESI_RELATOREID + "=" + cursor.getInt(0) + " AND";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return query;
     }
 

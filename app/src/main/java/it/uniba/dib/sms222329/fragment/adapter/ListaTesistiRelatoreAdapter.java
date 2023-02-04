@@ -15,7 +15,7 @@ import java.util.List;
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.TesiScelta;
-import it.uniba.dib.sms222329.fragment.TesistaRelatoreFragment;
+import it.uniba.dib.sms222329.fragment.relatore.TesistaRelatoreFragment;
 
 public class ListaTesistiRelatoreAdapter extends BaseAdapter {
 
@@ -59,6 +59,12 @@ public class ListaTesistiRelatoreAdapter extends BaseAdapter {
         TextView matricola = convertView.findViewById(R.id.descrizione);
         matricola.setText(String.valueOf(tesiScelte.get(i).getIdTesi()));
 
+        //Data pubblicazione
+        TextView dataPubblicazione = convertView.findViewById(R.id.sottotitolo);
+        if(tesiScelte.get(i).getDataPubblicazione() != null){
+            dataPubblicazione.setText(String.valueOf(tesiScelte.get(i).getDataPubblicazione()));
+        }
+
         //EditButton
         Button modifica = convertView.findViewById(R.id.modifica);
         modifica.setVisibility(View.GONE);
@@ -68,7 +74,7 @@ public class ListaTesistiRelatoreAdapter extends BaseAdapter {
         dettagli.setOnClickListener(view -> {
             Utility.replaceFragment(manager, R.id.container, new TesistaRelatoreFragment(tesiScelte.get(i)));
         });
+
         return convertView;
     }
-
 }

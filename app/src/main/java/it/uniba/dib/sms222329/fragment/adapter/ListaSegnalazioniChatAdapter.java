@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
@@ -60,6 +62,10 @@ public class ListaSegnalazioniChatAdapter extends BaseAdapter {
         //Oggetto
         TextView oggettoSegnalazione = convertView.findViewById(R.id.descrizione);
         oggettoSegnalazione.setText(segnalazioni.get(i).getOggetto());
+
+        //Terza riga
+        TextView riga = convertView.findViewById(R.id.sottotitolo);
+        riga.setVisibility(View.GONE);
 
         //Apri chat
         LinearLayout item = convertView.findViewById(R.id.segnalazione);

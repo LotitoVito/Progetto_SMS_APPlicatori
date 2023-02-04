@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222329.fragment;
+package it.uniba.dib.sms222329.fragment.relatore;
 
 import android.os.Bundle;
 
@@ -85,6 +85,6 @@ public class TesistaRelatoreFragment extends Fragment {
     }
 
     private void SetTextAll(){
-        //DA FARE
+        //da fare
     }
 }

@@ -27,8 +27,8 @@
         android:id="@+id/sottotitolo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Maggiori dettagli: qui vanno altre informazioni"
         android:textSize="14sp"
-        android:textStyle="italic"
-        android:text="Maggiori dettagli: qui vanno altre informazioni"/>
+        android:textStyle="italic" />
 
 </LinearLayout>

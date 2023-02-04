@@ -48,19 +48,24 @@ public class ListaSegnalazioniMessaggiAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.message_item, viewGroup, false);
         }
 
+        //Messaggio Inviato e Ricevuto
+        TextView inviato = convertView.findViewById(R.id.messaggio_inviato);
+        TextView ricevuto = convertView.findViewById(R.id.messaggio_ricevuto);
+
+        if(messaggi.get(i).getIdMittente()==idUtenteLoggato){
+            inviato.setVisibility(View.VISIBLE);
+            ricevuto.setVisibility(View.GONE);
+            inviato.setText(messaggi.get(i).getMessaggio());
+        } else {
+            inviato.setVisibility(View.GONE);
+            ricevuto.setVisibility(View.VISIBLE);
+            ricevuto.setText(messaggi.get(i).getMessaggio());
+        }
+
         //Timestamp
         /*TextView timestamp = convertView.findViewById(R.id.sottotitolo);
         LocalDateTime timestampValue = messaggi.get(i).getTimestamp();
         timestamp.setText(String.valueOf(timestampValue.format(Utility.showDateTime)));*/
-
-        //Messaggio Inviato e Ricevuto
-        TextView inviato = convertView.findViewById(R.id.messaggio_inviato);
-        TextView ricevuto = convertView.findViewById(R.id.messaggio_ricevuto);
-        if(messaggi.get(i).getIdMittente()==idUtenteLoggato){
-            inviato.setText(messaggi.get(i).getMessaggio());
-        } else {
-            ricevuto.setText(messaggi.get(i).getMessaggio());
-        }
 
         return convertView;
     }
