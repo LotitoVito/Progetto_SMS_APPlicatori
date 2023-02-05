@@ -3,12 +3,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.GuestTesiFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
+        android:id="@+id/content2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/buttonGuest" />
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:queryHint="@string/cerca"
+                app:iconifiedByDefault="false"
+                android:background="@drawable/circle_border"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/filtra"
+            app:drawableEndCompat="@drawable/ic_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="center"
+            android:clickable="true"
+            android:minHeight="48dp"
+            android:text="@string/filtra"
+            android:textColor="@color/primaryColor"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/tesiList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/generic_item_not_editable"
+            />
+
+    </LinearLayout>
+
 
 </FrameLayout>

@@ -5,10 +5,247 @@
     android:layout_height="match_parent"
     tools:context=".fragment.tesista.MiaTesiFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:minHeight="400dp"
+        android:elevation="16dp"
+        tools:ignore="UselessParent">
+
+    <LinearLayout
+        android:id="@+id/richieste"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/tesisti" />
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/richieste"
+            android:gravity="center"
+            android:textColor="@color/primaryColor"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+
+
+        <ListView
+            android:id="@+id/tesistiList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            tools:listitem="@layout/generic_item"
+            />
+
+
+
+    </LinearLayout>
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent"
+        android:id="@+id/mia_tesi"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/nomeRelatore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/relatore"
+                android:textColor="@color/primaryColor"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/titoloTesi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Titolo tesi richiesta"
+                android:textColor="@color/primaryColor"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/argomentoTesi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="2"
+                android:text="Descrizione tesi"
+                android:textSize="16sp" />
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/ab_tesi" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/ab_tesi"
+                android:layout_marginBottom="16dp" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ab_tesi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    tools:ignore="TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/tempistiche" />
+
+            <TextView
+                android:id="@+id/tempistiche"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:text="Description"
+                android:textSize="18sp" />
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/numero_esami_mancanti" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/numero_esami_mancanti"
+                android:layout_marginBottom="16dp" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email_co"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    tools:ignore="TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/data_prevista" />
+
+            <TextView
+                android:id="@+id/dataConsegna"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_weight="2"
+                android:text="data consegna"
+                android:textSize="16sp" />
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/co_relatore" />
+
+            <TextView
+                android:id="@+id/corelatore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_weight="2"
+                android:text="nome"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/email_corelatore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_weight="2"
+                android:text="email"
+                android:textSize="16sp" />
+
+
+
+                <TextView
+                    android:id="@+id/visualizza_task"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:clickable="true"
+                    android:minHeight="48dp"
+                    android:gravity="center"
+                    android:text="@string/visualizza_task"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/tesi" />
+
+            <TextView
+                android:id="@+id/ultimo_caricamento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="2"
+                android:text="Caricata da Nome Relatore: 15 febbraio 2022"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/scarica"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/scarica_tesi" />
+
+                <Button
+                    android:id="@+id/carica"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/zxing_possible_result_points"
+                    android:text="@string/carica_tesi" />
+
+            </LinearLayout>
+            <Button
+                android:id="@+id/salva_modifica"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:layout_marginTop="8dp"
+                android:text="@string/salva" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 
 </FrameLayout>

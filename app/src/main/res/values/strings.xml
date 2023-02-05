@@ -107,6 +107,9 @@
     <string name="seleziona_data">Select date</string>
     <string name="crea_segnalazione">Create issue</string>
     <string name="mythesis">My thesis</string>
+    <string name="richiesta_tesi">Thesis</string>
+    <string name="ab_tesi">Abstract</string>
+    <string name="descrivi_skill">Describe your skills</string>
 
 
 </resources>

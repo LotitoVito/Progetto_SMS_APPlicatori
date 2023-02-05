@@ -67,14 +67,14 @@
             android:id="@+id/riorganizza"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/riorganizza"
-            android:textSize="18sp"
             android:layout_weight="1"
-            android:gravity="end"
             android:clickable="true"
+            android:gravity="end|center"
+            android:minHeight="48dp"
+            android:text="@string/riorganizza"
             android:textColor="@color/primaryColor"
-            android:textStyle="bold"
-            />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
 
 
