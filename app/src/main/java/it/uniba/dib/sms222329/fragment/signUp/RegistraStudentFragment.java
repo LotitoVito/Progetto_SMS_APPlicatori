@@ -85,6 +85,7 @@ public class RegistraStudentFragment extends Fragment {
     }
 
     private void Init() {
+        db = new Database(getActivity().getApplicationContext());
         registerButton = getActivity().findViewById(R.id.Signupbutton);
         matricola = getActivity().findViewById(R.id.matricola);
         media = getActivity().findViewById(R.id.media);

@@ -93,7 +93,7 @@ public class CreaModificaTesiFragment extends Fragment {
         } else{
 
             salva.setOnClickListener(view -> {
-                if(IsEmpty(titolo, argomenti, tempistiche, media, esamiMancanti, capacitaRichiesta)) {
+                if(!IsEmpty(titolo, argomenti, tempistiche, media, esamiMancanti, capacitaRichiesta)) {
                 Tesi tesi = new Tesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(),
                         statoDisponibilita.isChecked(), Utility.relatoreLoggato.getIdRelatore(), Integer.parseInt(tempistiche.getText().toString().trim()),
                         Integer.parseInt(media.getText().toString().trim()), Integer.parseInt(esamiMancanti.getText().toString().trim()),

@@ -97,10 +97,10 @@ public class ListaTesiAdapter extends BaseAdapter {
     public void filter(String ricerca){
         ricerca = ricerca.toLowerCase(Locale.getDefault());
         tesi.clear();
-        if (ricerca.length()==0){
+        if (ricerca.length()==0 && copiaRicerca != null){
             tesi.addAll(copiaRicerca);
         }
-        else {
+        else if (copiaRicerca != null){
             for (Tesi tesi : copiaRicerca){
                 if (tesi.getTitolo().toLowerCase(Locale.getDefault())
                         .contains(ricerca)){

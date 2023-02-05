@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import androidx.activity.result.ActivityResultLauncher;
@@ -32,6 +33,7 @@ import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
 import it.uniba.dib.sms222329.fragment.relatore.SegnalazioneChatFragment;
 import it.uniba.dib.sms222329.fragment.relatore.ListaTesiFragment;
 import it.uniba.dib.sms222329.fragment.relatore.TesistiRelatoreFragment;
+import it.uniba.dib.sms222329.fragment.tesista.TesiSceltaTesistaFragment;
 
 public class LoggedActivity extends AppCompatActivity {
 
@@ -47,27 +49,25 @@ public class LoggedActivity extends AppCompatActivity {
         utenteLoggato = (UtenteRegistrato) getIntent().getSerializableExtra("utentePassato");
 
         try{
-            if(utenteLoggato.getTipoUtente() == Utility.TESISTA){ //tesista
+            if(utenteLoggato.getTipoUtente() == Utility.TESISTA){
                 Utility.tesistaLoggato = TesistaDatabase.IstanziaTesista(utenteLoggato, db);
                 Utility.accountLoggato = Utility.TESISTA;
             }
-            else if (utenteLoggato.getTipoUtente() == Utility.RELATORE){ //relatore
+            else if (utenteLoggato.getTipoUtente() == Utility.RELATORE){
                 Utility.relatoreLoggato = RelatoreDatabase.IstanziaRelatore(utenteLoggato, db);
                 Utility.accountLoggato = Utility.RELATORE;
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment());
                 setBottomNavigation(new ListaTesiFragment(), new SegnalazioneChatFragment(), new HomeFragment(), new TesistiRelatoreFragment());
             }
-            else if (utenteLoggato.getTipoUtente() == Utility.CORELATORE){ //corelatore
+            else if (utenteLoggato.getTipoUtente() == Utility.CORELATORE){
                 Utility.coRelatoreLoggato = CoRelatoreDatabase.IstanziaCoRelatore(utenteLoggato, db);
                 Utility.accountLoggato = Utility.CORELATORE;
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        
     }
 
-    @SuppressLint("NonConstantResourceId")
     private void setBottomNavigation(Fragment thesisFragment, Fragment messagesFragment, Fragment homeFragment, Fragment studentFragment) {
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
 

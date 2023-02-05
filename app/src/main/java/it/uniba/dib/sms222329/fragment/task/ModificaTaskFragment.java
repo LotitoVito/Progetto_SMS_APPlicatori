@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.utils.widget.MotionLabel;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -27,6 +28,7 @@ import com.google.android.material.slider.RangeSlider;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.List;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
@@ -49,11 +51,12 @@ public class ModificaTaskFragment extends Fragment {
     private TextView dateInizioFine;
     private RangeSlider sliderStato;
     private TextView testoStato;
-    private ImageView materiale;
+    private TextView materiale;
     private Button scaricaMateriale;
     private Button caricaMateriale;
     private TextView creaRicevimento;
     private Button modificaTask;
+    private MotionLabel label;
 
     public ModificaTaskFragment(Task task) {
         this.task = task;
@@ -62,7 +65,6 @@ public class ModificaTaskFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dettagli_task, container, false);
     }
 
@@ -111,16 +113,31 @@ public class ModificaTaskFragment extends Fragment {
         caricaMateriale = getView().findViewById(R.id.carica_materiale);
         creaRicevimento = getView().findViewById(R.id.crea_ricevimento);
         modificaTask = getView().findViewById(R.id.modifica_task);
+        label = getView().findViewById(R.id.label_ricevimento);
 
         creaRicevimento.setVisibility(View.GONE);
+        label.setVisibility(View.GONE);
     }
 
     private void SetTextAll() {
         titoloTask.setText(task.getTitolo());
         descrizioneTask.setText(task.getDescrizione());
-        dateInizioFine.setText(task.getDataInizio() + " - " + task.getDataFine());
-        testoStato.setText(String.valueOf(task.getStato()));
-        //materiale.setText(String.valueOf(task.getLinkMateriale()));
+
+        if(task.getDataFine() != null){
+            dateInizioFine.setText("Data inizio: " + task.getDataInizio() + " - Data fine: " + task.getDataFine());
+        } else{
+            dateInizioFine.setText("Data inizio: " + task.getDataInizio());
+        }
+
+        if(task.getStato() == Task.ASSEGNATO){
+            testoStato.setText("Assegnato");
+        } else if(task.getStato() == Task.IN_COMPLEMAMENTO){
+            testoStato.setText("In completamento");
+        } else if(task.getStato() == Task.COMPLETATO){
+            testoStato.setText("Completato");
+        }
+
+        materiale.setText(String.valueOf(task.getLinkMateriale()));
     }
 
     private void CheckFilesButton(){
@@ -128,8 +145,6 @@ public class ModificaTaskFragment extends Fragment {
             scaricaMateriale.setVisibility(View.GONE);
         }
     }
-
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

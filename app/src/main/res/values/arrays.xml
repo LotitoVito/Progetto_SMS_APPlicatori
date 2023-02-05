@@ -3,9 +3,7 @@
 
     <array name="range_slider">
         <item>0.0</item>
-        <item>25.0</item>
         <item>50.0</item>
-        <item>75.0</item>
         <item>100.0</item>
     </array>
 

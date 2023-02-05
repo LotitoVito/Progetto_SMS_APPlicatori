@@ -74,6 +74,7 @@ public class ModificaProfiloCorelatoreFragment extends Fragment {
     }
 
     private void Init() {
+        db = new Database(getActivity().getApplicationContext());
         nome = getActivity().findViewById(R.id.nome);
         cognome = getActivity().findViewById(R.id.cognome);
         mail = getActivity().findViewById(R.id.email);

@@ -27,7 +27,6 @@ import it.uniba.dib.sms222329.fragment.signUp.ModificaProfiloStudenteFragment;
 public class ProfiloFragment extends Fragment {
 
     //Variabili e Oggetti
-    private Database db;
 
     //View Items
     private TextView nome;
@@ -76,7 +75,6 @@ public class ProfiloFragment extends Fragment {
     }
 
     private void Init() {
-        db = new Database(getActivity().getApplicationContext());
         nome = getView().findViewById(R.id.tv_name);
         cognome = getView().findViewById(R.id.tv_surname);
         codiceFiscale = getView().findViewById(R.id.tv_tax_id);

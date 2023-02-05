@@ -84,14 +84,12 @@
                 android:valueTo="100.0"
                 app:values="@array/range_slider"
                 android:stepSize="25.0"
-
                 />
 
             <TextView
                 android:id="@+id/stato"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="STATO TASK"
                 android:textSize="18sp"
                 android:layout_weight="1"
                 android:layout_marginBottom="8dp"
@@ -105,7 +103,7 @@
                 android:layout_height="match_parent"
                 android:text="@string/materiale" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/materiale_nome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -148,6 +146,7 @@
 
 
             <androidx.constraintlayout.utils.widget.MotionLabel
+                android:id="@+id/label_ricevimento"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/richiedi"

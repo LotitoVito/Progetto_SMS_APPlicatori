@@ -13,6 +13,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.utils.widget.MotionLabel;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
@@ -51,11 +52,12 @@ public class DettagliTaskFragment extends Fragment {
     private TextView dateInizioFine;
     private RangeSlider sliderStato;
     private TextView testoStato;
-    private ImageView materiale;
+    private TextView materiale;
     private Button scaricaMateriale;
     private Button caricaMateriale;
     private TextView creaRicevimento;
     private Button modificaTask;
+    private MotionLabel label;
 
     public DettagliTaskFragment(Task task) {
         this.task = task;
@@ -81,12 +83,8 @@ public class DettagliTaskFragment extends Fragment {
 
         scaricaMateriale.setOnClickListener(view -> {
             if(Utility.CheckStorage(getActivity())){
-                Cursor cursor = db.RicercaDato("SELECT " + Database.TASK_LINKMATERIALE + " FROM " + Database.TASK + " WHERE " + Database.TASK_ID + "=" + task.getIdTask() + ";");
-                cursor.moveToFirst();
-                byte[] blob = cursor.getBlob(0);
-                Bitmap bitmap = BitmapFactory.decodeByteArray(blob, 0, blob.length);
-                materiale.setImageBitmap(bitmap);
-                /*try{
+                /*Cursor cursor = db.RicercaDato("SELECT " + Database.TASK_LINKMATERIALE + " FROM " + Database.TASK + " WHERE " + Database.TASK_ID + "=" + task.getIdTask() + ";");
+                try{
                     File file = new File("/sdcard/a.png");
                     file.createNewFile();
                     file.setWritable(true);
@@ -123,11 +121,12 @@ public class DettagliTaskFragment extends Fragment {
         caricaMateriale = getView().findViewById(R.id.carica_materiale);
         creaRicevimento = getView().findViewById(R.id.crea_ricevimento);
         modificaTask = getView().findViewById(R.id.modifica_task);
+        label = getView().findViewById(R.id.label_ricevimento);
 
-        sliderStato.setVisibility(View.GONE);
         caricaMateriale.setVisibility(View.GONE);
         modificaTask.setVisibility(View.GONE);
         if(Utility.accountLoggato == Utility.RELATORE){
+            label.setVisibility(View.GONE);
             creaRicevimento.setVisibility(View.GONE);
         }
     }
@@ -135,9 +134,22 @@ public class DettagliTaskFragment extends Fragment {
     private void SetTextAll() {
         titoloTask.setText(task.getTitolo());
         descrizioneTask.setText(task.getDescrizione());
-        dateInizioFine.setText(task.getDataInizio() + " - " + task.getDataFine());
-        testoStato.setText(String.valueOf(task.getStato()));
-        //materiale.setText(String.valueOf(task.getLinkMateriale()));
+
+        if(task.getDataFine() != null){
+            dateInizioFine.setText("Data inizio: " + task.getDataInizio() + " - Data fine: " + task.getDataFine());
+        } else{
+            dateInizioFine.setText("Data inizio: " + task.getDataInizio());
+        }
+
+        /*if(task.getStato() == Task.ASSEGNATO){
+            testoStato.setText("Assegnato");
+        } else if(task.getStato() == Task.IN_COMPLEMAMENTO){
+            testoStato.setText("In completamento");
+        } else if(task.getStato() == Task.COMPLETATO){
+            testoStato.setText("Completato");
+        }*/
+
+        materiale.setText(String.valueOf(task.getLinkMateriale()));
     }
 
 }

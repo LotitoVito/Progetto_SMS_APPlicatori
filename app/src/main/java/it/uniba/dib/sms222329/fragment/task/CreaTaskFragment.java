@@ -83,8 +83,6 @@ public class CreaTaskFragment extends Fragment {
         materiale = getView().findViewById(R.id.materiale_nome);
         caricaMateriale = getView().findViewById(R.id.carica_materiale);
         creaTask = getView().findViewById(R.id.salva_task);
-
-        caricaMateriale.setVisibility(View.GONE);
     }
 
     //fixare
