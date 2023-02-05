@@ -42,22 +42,6 @@
             <androidx.constraintlayout.utils.widget.MotionLabel
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@string/suggerimenti" />
-
-            <TextView
-                android:id="@+id/suggerimenti"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="descrizione"
-                android:textSize="18sp"
-                android:layout_weight="1"
-                android:layout_marginBottom="16dp"
-                />
-
-
-            <androidx.constraintlayout.utils.widget.MotionLabel
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:text="@string/data_prevista" />
 
             <TextView
@@ -116,22 +100,13 @@
                 />
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                android:gravity="bottom"
-                android:layout_marginBottom="16dp" >
-
                 <Button
                     android:id="@+id/scarica_materiale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/carica_materiale"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp"/>
+                    />
 
                 <Button
                     android:id="@+id/carica_materiale"
@@ -140,9 +115,8 @@
                     android:text="@string/scarica_materiale"
                     android:layout_gravity="center"
                     android:backgroundTint="@color/zxing_possible_result_points"
-                    android:layout_weight="1"/>
-
-            </LinearLayout>
+                    android:layout_marginBottom="8dp"
+                    />
 
 
             <androidx.constraintlayout.utils.widget.MotionLabel
@@ -170,8 +144,9 @@
                 android:id="@+id/modifica_task"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/modifica"
+                android:text="@string/salva"
                 android:layout_gravity="center" />
         </LinearLayout>
+
     </ScrollView>
 </FrameLayout>

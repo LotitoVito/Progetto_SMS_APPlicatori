@@ -175,15 +175,29 @@
                 android:textSize="16sp" />
 
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"
+                android:layout_marginBottom="16dp" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email_co"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    tools:ignore="TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Button
                 android:id="@+id/aggiungi_corelatore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="16dp"
                 android:text="@string/aggiungi_relatore"
-                android:visibility="gone" />
+                />
 
             <Button
                 android:id="@+id/rimuovi_corelatore"
@@ -195,33 +209,46 @@
                 android:text="@string/elimina" />
 
 
-            <TextView
-                android:id="@+id/crea_task"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:clickable="true"
-                android:gravity="left|center"
-                android:minHeight="48dp"
-                android:text="@string/crea_task"
-                android:textColor="@color/primaryColor"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/visualizza_task"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:clickable="true"
-                android:gravity="left|center"
-                android:minHeight="48dp"
-                android:text="@string/visualizza_task"
-                android:textColor="@color/primaryColor"
-                android:textSize="16sp"
-                android:textStyle="bold" />
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/crea_task"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:clickable="true"
+                    android:minHeight="48dp"
+                    android:text="@string/crea_task"
+                    android:gravity="center"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/visualizza_task"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:clickable="true"
+                    android:minHeight="48dp"
+                    android:gravity="center"
+                    android:text="@string/visualizza_task"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"/>
+
+
+
+            </LinearLayout>
+
+                <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom"

@@ -22,7 +22,7 @@
                 android:id="@+id/motionLabel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Nuova Task" />
+                android:text="@string/task" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -79,15 +79,6 @@
                 android:labelFor="@id/slider"
                 />
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                android:gravity="bottom"
-                android:layout_marginBottom="16dp" >
-
                 <Button
                     android:id="@+id/carica_materiale"
                     android:layout_width="wrap_content"
@@ -96,8 +87,6 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/zxing_possible_result_points"
                     android:text="@string/scarica_materiale" />
-
-            </LinearLayout>
 
 
             <Button

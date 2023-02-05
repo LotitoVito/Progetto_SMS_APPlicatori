@@ -106,6 +106,7 @@
     <string name="riorganizza">Cambia data riceviemento</string>
     <string name="orario">Inserisci ora</string>
     <string name="seleziona_data">Inserisci data</string>
+    <string name="crea_segnalazione">Crea segnalazione</string>
 
 
 </resources>

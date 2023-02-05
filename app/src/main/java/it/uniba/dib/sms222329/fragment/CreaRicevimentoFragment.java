@@ -125,9 +125,10 @@ public class CreaRicevimentoFragment extends Fragment {
 
         if(Utility.accountLoggato==Utility.RELATORE){
             messaggio.setVisibility(View.GONE);
+            data.setText(String.valueOf(richiesta.getData()));
+            ora.setText(String.valueOf(richiesta.getOrario()));
         }
 
-        data.setText(String.valueOf(richiesta.getData()));
-        ora.setText(String.valueOf(richiesta.getOrario()));
+
     }
 }
