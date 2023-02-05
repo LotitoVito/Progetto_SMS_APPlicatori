@@ -26,6 +26,7 @@ import it.uniba.dib.sms222329.database.CoRelatoreDatabase;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.RelatoreDatabase;
 import it.uniba.dib.sms222329.database.TesistaDatabase;
+import it.uniba.dib.sms222329.fragment.GuestTesiFragment;
 import it.uniba.dib.sms222329.fragment.ImpostazioniFragment;
 import it.uniba.dib.sms222329.fragment.ProfiloFragment;
 import it.uniba.dib.sms222329.fragment.VisualizzaTesiFragment;
@@ -33,13 +34,15 @@ import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
 import it.uniba.dib.sms222329.fragment.relatore.SegnalazioneChatFragment;
 import it.uniba.dib.sms222329.fragment.relatore.ListaTesiFragment;
 import it.uniba.dib.sms222329.fragment.relatore.TesistiRelatoreFragment;
+import it.uniba.dib.sms222329.fragment.tesista.MiaTesiFragment;
 import it.uniba.dib.sms222329.fragment.tesista.TesiSceltaTesistaFragment;
 
 public class LoggedActivity extends AppCompatActivity {
 
     //Variabili e Oggetti
     private Database db = new Database(this);
-    private UtenteRegistrato utenteLoggato;
+    public static UtenteRegistrato utenteLoggato;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,8 @@ public class LoggedActivity extends AppCompatActivity {
             if(utenteLoggato.getTipoUtente() == Utility.TESISTA){
                 Utility.tesistaLoggato = TesistaDatabase.IstanziaTesista(utenteLoggato, db);
                 Utility.accountLoggato = Utility.TESISTA;
+                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment());
+                setBottomNavigation(new ListaTesiFragment(), new SegnalazioneChatFragment(), new HomeFragment(), new MiaTesiFragment());
             }
             else if (utenteLoggato.getTipoUtente() == Utility.RELATORE){
                 Utility.relatoreLoggato = RelatoreDatabase.IstanziaRelatore(utenteLoggato, db);
@@ -62,6 +67,11 @@ public class LoggedActivity extends AppCompatActivity {
             else if (utenteLoggato.getTipoUtente() == Utility.CORELATORE){
                 Utility.coRelatoreLoggato = CoRelatoreDatabase.IstanziaCoRelatore(utenteLoggato, db);
                 Utility.accountLoggato = Utility.CORELATORE;
+                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment());
+                setBottomNavigation(new ListaTesiFragment(), new SegnalazioneChatFragment(), new HomeFragment(), new TesistiRelatoreFragment());
+            }else if(utenteLoggato.getEmail().compareTo("guest")==0) {
+                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new GuestTesiFragment());
+                setGuestBottomNavigation(new GuestTesiFragment());
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -69,7 +79,13 @@ public class LoggedActivity extends AppCompatActivity {
     }
 
     private void setBottomNavigation(Fragment thesisFragment, Fragment messagesFragment, Fragment homeFragment, Fragment studentFragment) {
-        BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
+
+        bottomNavigationView = findViewById(R.id.navigation);
+
+        if(utenteLoggato.getTipoUtente() == Utility.TESISTA) {
+           bottomNavigationView.getMenu().clear();
+           bottomNavigationView.inflateMenu(R.menu.nav_student);
+        }
 
         // Set a listener for item selection
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -90,6 +106,30 @@ public class LoggedActivity extends AppCompatActivity {
                 case R.id.navigation_student:
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, studentFragment);
                     setTitle(R.string.mystudent);
+                    if(utenteLoggato.getTipoUtente() == Utility.TESISTA) setTitle(R.string.mythesis);
+                    return true;
+                case R.id.navigation_camera:
+                    scanQR();
+                    return true;
+            }
+            return false;
+        });
+
+    }
+
+    private void setGuestBottomNavigation(Fragment thesisFragment) {
+        bottomNavigationView = findViewById(R.id.navigation);
+
+        bottomNavigationView.getMenu().clear();
+        bottomNavigationView.inflateMenu(R.menu.nav_guest);
+
+        // Set a listener for item selection
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            // Handle item selection
+            switch (item.getItemId()) {
+                case R.id.navigation_thesis:
+                   Utility.replaceFragment(getSupportFragmentManager(), R.id.container, thesisFragment);
+                    setTitle(R.string.tesi);
                     return true;
                 case R.id.navigation_camera:
                     scanQR();

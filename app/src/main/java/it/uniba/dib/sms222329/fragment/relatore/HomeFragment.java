@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
+import it.uniba.dib.sms222329.activities.LoggedActivity;
 import it.uniba.dib.sms222329.classi.ListaClassificaRicevimento;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Ricevimento;

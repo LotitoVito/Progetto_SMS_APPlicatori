@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_thesis"
+        android:icon="@drawable/ic_baseline_school_24"
+        android:title="@string/title_thesis" />
+
+    <item
+        android:id="@+id/navigation_messages"
+        android:icon="@drawable/ic_messages"
+        android:title="@string/segnalazioni" />
+
+    <item
+        android:id="@+id/navigation_student"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/mythesis" />
+
+    <item
+        android:id="@+id/navigation_camera"
+        android:icon="@drawable/ic_camera"
+        android:title="@string/scanQr" />
+</menu>

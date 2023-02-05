@@ -17,6 +17,7 @@ import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.ListaClassificaRicevimento;
 import it.uniba.dib.sms222329.classi.ListaTesi;
 import it.uniba.dib.sms222329.classi.Tesi;
+import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 import it.uniba.dib.sms222329.database.Database;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(view -> {
             Intent signUp = new Intent(getApplicationContext(), SignUpActivity.class);
             startActivity(signUp);
+        });
+
+        View signAsGuestButton = findViewById(R.id.signAsGuestButton);
+        signAsGuestButton.setOnClickListener(view -> {
+            UtenteRegistrato Utente = new UtenteRegistrato("guest", "guest");
+            Intent guest = new Intent(getApplicationContext(), LoggedActivity.class);
+            guest.putExtra("utentePassato", Utente);
+            startActivity(guest);
         });
 
 
