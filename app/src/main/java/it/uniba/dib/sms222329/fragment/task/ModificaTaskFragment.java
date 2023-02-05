@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -24,16 +25,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.slider.RangeSlider;
+import com.google.android.material.slider.Slider;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.activities.LoggedActivity;
 import it.uniba.dib.sms222329.classi.Task;
+import it.uniba.dib.sms222329.classi.TesiScelta;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.TaskDatabase;
 import it.uniba.dib.sms222329.fragment.CreaRicevimentoFragment;
@@ -44,19 +51,19 @@ public class ModificaTaskFragment extends Fragment {
     //Variabili e Oggetti
     private Database db;
     private Task task;
+    private TesiScelta tesiScelta;
+    private LocalDate dataSelezionata;
+    private File file;
 
     //View Items
-    private TextView titoloTask;
-    private TextView descrizioneTask;
-    private TextView dateInizioFine;
-    private RangeSlider sliderStato;
+    private TextInputEditText titoloTask;
+    private TextInputEditText descrizioneTask;
+    private TextInputEditText dataFine;
+    private Slider sliderStato;
     private TextView testoStato;
     private TextView materiale;
-    private Button scaricaMateriale;
     private Button caricaMateriale;
-    private TextView creaRicevimento;
     private Button modificaTask;
-    private MotionLabel label;
 
     public ModificaTaskFragment(Task task) {
         this.task = task;
@@ -65,7 +72,7 @@ public class ModificaTaskFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_dettagli_task, container, false);
+        return inflater.inflate(R.layout.fragment_crea_task, container, false);
     }
 
     @Override
@@ -73,12 +80,41 @@ public class ModificaTaskFragment extends Fragment {
         super.onResume();
 
         Init();
-        SetTextAll();
-        CheckFilesButton();
+
+        dataFine.setOnClickListener(view1 -> {
+            MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
+            materialDateBuilder.setTitleText("SELECT A DATE");
+            final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
+
+            materialDatePicker.show(getActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+
+            materialDatePicker.addOnPositiveButtonClickListener(selection -> {
+                dataFine.setText(materialDatePicker.getHeaderText());
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis((Long) selection);
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                dataSelezionata  = LocalDate.parse(format.format(calendar.getTime()));
+            });
+        });
+
+        sliderStato.addOnChangeListener((slider, value, fromUser) -> {
+            if(value==0){
+                testoStato.setText("Assegnato");
+            } else if(value==25){
+                testoStato.setText("Iniziato");
+            } else if(value==50){
+                testoStato.setText("In completamento");
+            } else if(value==75){
+                testoStato.setText("In revisione");
+            } else if(value==100){
+                testoStato.setText("Completato");
+            }
+        });
 
         modificaTask.setOnClickListener(view -> {
             if(Utility.accountLoggato == Utility.RELATORE){
-                if(task.ModificaTask(titoloTask.getText().toString(), descrizioneTask.getText().toString(), 0, db)){        //settare slider
+                if(task.ModificaTask(titoloTask.getText().toString(), descrizioneTask.getText().toString(), dataSelezionata,  0, db)){        //settare slider
                     Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
@@ -105,44 +141,31 @@ public class ModificaTaskFragment extends Fragment {
         db = new Database(getActivity().getApplicationContext());
         titoloTask = getView().findViewById(R.id.titolo_task);
         descrizioneTask = getView().findViewById(R.id.descrizione_task);
-        dateInizioFine = getView().findViewById(R.id.date_inizio_fine);
+        dataFine = getView().findViewById(R.id.data_fine);
         sliderStato = getView().findViewById(R.id.slider);
         testoStato = getView().findViewById(R.id.stato);
         materiale = getView().findViewById(R.id.materiale_nome);
-        scaricaMateriale = getView().findViewById(R.id.scarica_materiale);
         caricaMateriale = getView().findViewById(R.id.carica_materiale);
-        creaRicevimento = getView().findViewById(R.id.crea_ricevimento);
-        modificaTask = getView().findViewById(R.id.modifica_task);
-        label = getView().findViewById(R.id.label_ricevimento);
+        modificaTask = getView().findViewById(R.id.salva_task);
 
-        creaRicevimento.setVisibility(View.GONE);
-        label.setVisibility(View.GONE);
-    }
-
-    private void SetTextAll() {
-        titoloTask.setText(task.getTitolo());
-        descrizioneTask.setText(task.getDescrizione());
-
-        if(task.getDataFine() != null){
-            dateInizioFine.setText("Data inizio: " + task.getDataInizio() + " - Data fine: " + task.getDataFine());
-        } else{
-            dateInizioFine.setText("Data inizio: " + task.getDataInizio());
+        if(Utility.accountLoggato == Utility.TESISTA){
+            titoloTask.setVisibility(View.GONE);
+            descrizioneTask.setVisibility(View.GONE);
+            dataFine.setVisibility(View.GONE);
         }
 
-        if(task.getStato() == Task.ASSEGNATO){
+        sliderStato.setValue((float) (25.0 * task.getStato()));
+
+        if(sliderStato.getValue()==0){
             testoStato.setText("Assegnato");
-        } else if(task.getStato() == Task.IN_COMPLEMAMENTO){
+        } else if(sliderStato.getValue()==25){
+            testoStato.setText("Iniziato");
+        } else if(sliderStato.getValue()==50){
             testoStato.setText("In completamento");
-        } else if(task.getStato() == Task.COMPLETATO){
+        } else if(sliderStato.getValue()==75){
+            testoStato.setText("In revisione");
+        } else if(sliderStato.getValue()==100){
             testoStato.setText("Completato");
-        }
-
-        materiale.setText(String.valueOf(task.getLinkMateriale()));
-    }
-
-    private void CheckFilesButton(){
-        if(task.getLinkMateriale() == null){
-            scaricaMateriale.setVisibility(View.GONE);
         }
     }
 

@@ -44,8 +44,8 @@ public class TaskDatabase {
 
         taskCv.put(Database.TASK_TITOLO, task.getTitolo());
         taskCv.put(Database.TASK_DESCRIZIONE, task.getDescrizione());
-        taskCv.put(Database.TASK_STATO, task.getStato());
         taskCv.put(Database.TASK_DATAFINE, String.valueOf(task.getDataFine()));
+        taskCv.put(Database.TASK_STATO, task.getStato());
 
         long updateTask = db.update(Database.TASK, taskCv, Database.TASK_ID + "=" + task.getIdTask(), null);
         if(updateTask != -1){
