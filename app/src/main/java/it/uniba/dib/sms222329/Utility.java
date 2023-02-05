@@ -33,7 +33,7 @@ public class Utility {
     public static final DateTimeFormatter convertFromStringDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public static final DateTimeFormatter convertFromStringDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public static final DateTimeFormatter showDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    public static final DateTimeFormatter showDateTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    public static final DateTimeFormatter showDateTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     public static final int PERMESSO_STORAGE = 1;
 
     public static Tesista tesistaLoggato;

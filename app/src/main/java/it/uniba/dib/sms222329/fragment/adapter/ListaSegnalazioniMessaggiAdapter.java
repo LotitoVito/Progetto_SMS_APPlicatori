@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.time.LocalDateTime;
@@ -49,23 +50,26 @@ public class ListaSegnalazioniMessaggiAdapter extends BaseAdapter {
         }
 
         //Messaggio Inviato e Ricevuto
-        TextView inviato = convertView.findViewById(R.id.messaggio_inviato);
-        TextView ricevuto = convertView.findViewById(R.id.messaggio_ricevuto);
+        LinearLayout inviato = convertView.findViewById(R.id.messaggio_inviato);
+        TextView messaggioInviato = convertView.findViewById(R.id.testo_inviato);
+        TextView timestampInviato = convertView.findViewById(R.id.timestamp_inviato);
+        LinearLayout ricevuto = convertView.findViewById(R.id.messaggio_ricevuto);
+        TextView messaggioRicevuto = convertView.findViewById(R.id.testo_ricevuto);
+        TextView timestampRicevuto = convertView.findViewById(R.id.timestamp_ricevuto);
 
         if(messaggi.get(i).getIdMittente()==idUtenteLoggato){
             inviato.setVisibility(View.VISIBLE);
             ricevuto.setVisibility(View.GONE);
-            inviato.setText(messaggi.get(i).getMessaggio());
+            messaggioInviato.setText(messaggi.get(i).getMessaggio());
+            LocalDateTime timestampValue = messaggi.get(i).getTimestamp();
+            timestampInviato.setText(String.valueOf(timestampValue.format(Utility.showDateTime)));
         } else {
             inviato.setVisibility(View.GONE);
             ricevuto.setVisibility(View.VISIBLE);
-            ricevuto.setText(messaggi.get(i).getMessaggio());
+            messaggioRicevuto.setText(messaggi.get(i).getMessaggio());
+            LocalDateTime timestampValue = messaggi.get(i).getTimestamp();
+            timestampRicevuto.setText(String.valueOf(timestampValue.format(Utility.showDateTime)));
         }
-
-        //Timestamp
-        /*TextView timestamp = convertView.findViewById(R.id.sottotitolo);
-        LocalDateTime timestampValue = messaggi.get(i).getTimestamp();
-        timestamp.setText(String.valueOf(timestampValue.format(Utility.showDateTime)));*/
 
         return convertView;
     }

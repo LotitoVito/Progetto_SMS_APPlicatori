@@ -33,6 +33,7 @@ public class ListaTesiScelteDatabase {
             tesiSceltaEstratta.setFile(cursore.getBlob(cursore.getColumnIndexOrThrow(Database.TESISCELTA_DOWNLOAD)));
             tesiSceltaEstratta.setIdTesi(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_TESIID)));
             tesiSceltaEstratta.setIdCorelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_CORELATOREID)));
+            tesiSceltaEstratta.setStatoCorelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_STATOCORELATORE)));
             tesiSceltaEstratta.setIdTesista(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_TESISTAID)));
 
             listaTesiScelte.add(tesiSceltaEstratta);

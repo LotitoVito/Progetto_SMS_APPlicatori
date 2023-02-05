@@ -109,6 +109,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String TESISCELTA_TESIID = "tesi_id";
     public static final String TESISCELTA_CORELATOREID = "corelatore_id";
     public static final String TESISCELTA_TESISTAID = "tesista_id";
+    public static final String TESISCELTA_STATOCORELATORE = "stato_corelatore";
 
     //Tabella SegnalazioneChat
     public static final String SEGNALAZIONECHAT = "segnalazioneChat";
@@ -252,6 +253,7 @@ public class Database extends SQLiteOpenHelper {
                         TESISCELTA_DOWNLOAD + " BLOB," +
                         TESISCELTA_TESIID + " INT NOT NULL," +
                         TESISCELTA_CORELATOREID + " INT," +
+                        TESISCELTA_STATOCORELATORE + " INT," +
                         TESISCELTA_TESISTAID + " INT NOT NULL UNIQUE," +
                         "FOREIGN KEY (" + TESISCELTA_TESIID + ") REFERENCES " + TESI + "(" + TESI_ID + ") ON DELETE CASCADE," +
                         "FOREIGN KEY (" + TESISCELTA_CORELATOREID + ") REFERENCES " + CORELATORE + "(" + CORELATORE_ID + ")," +
