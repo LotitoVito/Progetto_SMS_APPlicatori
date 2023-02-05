@@ -29,14 +29,12 @@ public class SegnalazioneChatFragment extends Fragment {
 
     //Variabili e Oggetti
     private Database db;
-    private Relatore relatoreLoggato;
 
     //View Items
     private ListView listView;
     private TextView filtra;
 
-    public SegnalazioneChatFragment(Relatore relatoreLoggato) {
-        this.relatoreLoggato = relatoreLoggato;
+    public SegnalazioneChatFragment() {
     }
 
     @Override
@@ -72,7 +70,7 @@ public class SegnalazioneChatFragment extends Fragment {
 
     private void RefreshList(){
         List<SegnalazioneChat> lista = ListaSegnalazioniChatDatabase.ListaSegnalazioniChat(db);
-        ListaSegnalazioniChatAdapter adapterLista = new ListaSegnalazioniChatAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager(), relatoreLoggato);
+        ListaSegnalazioniChatAdapter adapterLista = new ListaSegnalazioniChatAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
         listView.setAdapter(adapterLista);
     }
 }

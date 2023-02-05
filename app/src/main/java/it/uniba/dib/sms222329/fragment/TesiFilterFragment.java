@@ -27,7 +27,6 @@ import it.uniba.dib.sms222329.fragment.relatore.ListaTesiFragment;
 public class TesiFilterFragment extends BottomSheetDialogFragment {
 
     //Variabili e Oggetti
-    private Relatore relatoreLoggato;
 
     //View Items
     private EditText relatore;
@@ -40,9 +39,7 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
     private SwitchMaterial ordinaAscendente;
     private Button avviaRicerca;
 
-    public TesiFilterFragment(Relatore relatoreLoggato) {
-        this.relatoreLoggato = relatoreLoggato;
-    }
+    public TesiFilterFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,7 +82,7 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
 
             this.dismiss();
             Log.d("test", query);
-            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.content2, new ListaTesiFragment(relatoreLoggato, query));
+            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.content2, new ListaTesiFragment(query));
         });
     }
 
@@ -100,8 +97,8 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
         ordinaAscendente = getView().findViewById(R.id.ordina);
         avviaRicerca = getView().findViewById(R.id.avviaRicerca); //ok
 
-        if(relatoreLoggato != null){
-            relatore.setText(String.valueOf(relatoreLoggato.getMatricola()), EditText.BufferType.EDITABLE);
+        if(Utility.accountLoggato == Utility.RELATORE){
+            relatore.setText(String.valueOf(Utility.relatoreLoggato.getMatricola()), EditText.BufferType.EDITABLE);
         }
         disponibilita.setChecked(true);
     }

@@ -35,7 +35,6 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
 
     //Variabili e Oggetti
     private Database db;
-    private Relatore relatoreLoggato;
     private String oldSpinnerName;
 
     //View Items
@@ -49,8 +48,7 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
     private ListView corsiStudio;
     private Button conferma;
 
-    public ModificaProfiloRelatoreFragment(Relatore relatoreLoggato) {
-        this.relatoreLoggato = relatoreLoggato;
+    public ModificaProfiloRelatoreFragment() {
     }
 
     @Override
@@ -76,11 +74,11 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
             ArrayList<Integer> corsiRelatore = RecuperaUniversitaCorso(idUniversita,idCorsiSelezionati);
 
             //Modifica
-            if (relatoreLoggato.modRelatore(matricola.getText().toString().trim(),nome.getText().toString().trim(),
+            if (Utility.relatoreLoggato.modRelatore(matricola.getText().toString().trim(),nome.getText().toString().trim(),
                     cognome.getText().toString().trim(), codFisc.getText().toString().trim(),mail.getText().toString().trim(),
                     password.getText().toString().trim(), corsiRelatore, db)) {
                 Toast.makeText(getActivity().getApplicationContext(),"Modificata effettuata con successo",Toast.LENGTH_SHORT).show();
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ProfiloFragment(Utility.RELATORE ,relatoreLoggato));
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ProfiloFragment());
             }
         });
     }
@@ -101,21 +99,21 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
     }
 
     private void SetHintAll(){
-        nome.setHint(relatoreLoggato.getNome());
-        cognome.setHint(relatoreLoggato.getCognome());
-        mail.setHint(relatoreLoggato.getEmail());
-        password.setHint(relatoreLoggato.getPassword());
-        codFisc.setHint(relatoreLoggato.getCodiceFiscale());
-        matricola.setHint(relatoreLoggato.getMatricola());
+        nome.setHint(Utility.relatoreLoggato.getNome());
+        cognome.setHint(Utility.relatoreLoggato.getCognome());
+        mail.setHint(Utility.relatoreLoggato.getEmail());
+        password.setHint(Utility.relatoreLoggato.getPassword());
+        codFisc.setHint(Utility.relatoreLoggato.getCodiceFiscale());
+        matricola.setHint(Utility.relatoreLoggato.getMatricola());
     }
 
     private void FillAllEmpty(){
-        Utility.fillIfEmpty(nome, relatoreLoggato.getNome());
-        Utility.fillIfEmpty(cognome, relatoreLoggato.getCognome());
-        Utility.fillIfEmpty(mail, relatoreLoggato.getEmail());
-        Utility.fillIfEmpty(password, relatoreLoggato.getPassword());
-        Utility.fillIfEmpty(codFisc, relatoreLoggato.getCodiceFiscale());
-        Utility.fillIfEmpty(matricola, relatoreLoggato.getMatricola());
+        Utility.fillIfEmpty(nome, Utility.relatoreLoggato.getNome());
+        Utility.fillIfEmpty(cognome, Utility.relatoreLoggato.getCognome());
+        Utility.fillIfEmpty(mail, Utility.relatoreLoggato.getEmail());
+        Utility.fillIfEmpty(password, Utility.relatoreLoggato.getPassword());
+        Utility.fillIfEmpty(codFisc, Utility.relatoreLoggato.getCodiceFiscale());
+        Utility.fillIfEmpty(matricola, Utility.relatoreLoggato.getMatricola());
     }
 
     private void spinnerCreate(){
@@ -137,7 +135,7 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
         //Setta selezionata l'univerisità di cui il relatore fa parte
         cursor = db.RicercaDato("SELECT u." + Database.UNIVERSITA_NOME + " " +
                 "FROM " + Database.UNIVERSITACORSO + " uc , " + Database.UNIVERSITA + " u " +
-                "WHERE uc." + Database.UNIVERSITACORSO_UNIVERSITAID + "=u." + Database.UNIVERSITA_ID + " AND uc." + Database.UNIVERSITACORSO_ID + " = '"+ relatoreLoggato.getCorsiRelatore().get(0) +"';");
+                "WHERE uc." + Database.UNIVERSITACORSO_UNIVERSITAID + "=u." + Database.UNIVERSITA_ID + " AND uc." + Database.UNIVERSITACORSO_ID + " = '"+ Utility.relatoreLoggato.getCorsiRelatore().get(0) +"';");
         if(cursor.moveToNext()){
             universita.setSelection(adapter.getPosition(cursor.getString(0)));
             oldSpinnerName = universita.getSelectedItem().toString();
@@ -210,7 +208,7 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
                 }
 
                 //Setto adapter corsi
-                CorsiDiStudiAdapter adapter = new CorsiDiStudiAdapter(getActivity().getApplicationContext(), corsi, relatoreLoggato, oldCheckBox);
+                CorsiDiStudiAdapter adapter = new CorsiDiStudiAdapter(getActivity().getApplicationContext(), corsi, oldCheckBox);
                 corsiStudio.setAdapter(adapter);
             }
 

@@ -70,7 +70,7 @@ public class RichiestaRicevimentoFragment extends Fragment {
         });
 
         cambiaRicevimento.setOnClickListener(view -> {
-            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new CreaRicevimentoFragment(richiesta, Utility.RELATORE));
+            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new CreaRicevimentoFragment(richiesta));
         });
     }
 

@@ -127,7 +127,7 @@ public class DettagliTaskFragment extends Fragment {
         sliderStato.setVisibility(View.GONE);
         caricaMateriale.setVisibility(View.GONE);
         modificaTask.setVisibility(View.GONE);
-        if(LoggedActivity.accountLoggato == Utility.RELATORE){
+        if(Utility.accountLoggato == Utility.RELATORE){
             creaRicevimento.setVisibility(View.GONE);
         }
     }

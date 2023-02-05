@@ -33,7 +33,6 @@ public class ModificaProfiloStudenteFragment extends Fragment {
 
     //Variabili e Oggetti
     private Database db;
-    private Tesista tesista;
 
     //View Items
     private EditText nome;
@@ -48,8 +47,7 @@ public class ModificaProfiloStudenteFragment extends Fragment {
     private Spinner spinnerCorsoStudi;
     private Button registerButton;
 
-    public ModificaProfiloStudenteFragment(Tesista tesistaLoggato) {
-        this.tesista = tesistaLoggato;
+    public ModificaProfiloStudenteFragment() {
     }
 
     @Override
@@ -74,13 +72,13 @@ public class ModificaProfiloStudenteFragment extends Fragment {
             int corso= RecuperaUniversitaCorso(idUniversita, idCorsoStudio);
 
             //Modifica
-            if (tesista.modTesista(matricola.getText().toString(), nome.getText().toString(),
+            if (Utility.tesistaLoggato.modTesista(matricola.getText().toString(), nome.getText().toString(),
                     cognome.getText().toString(), mail.getText().toString(),
                     password.getText().toString(),Float.parseFloat(media.getText().toString()),
                     Integer.parseInt(numeroEsamiMancanti.getText().toString()),
                     codFisc.getText().toString(), corso, db)){
                 Toast.makeText(getActivity().getApplicationContext(),"modifica riuscita",Toast.LENGTH_SHORT).show();
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ProfiloFragment(Utility.TESISTA, tesista));
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ProfiloFragment());
             }
         });
     }
@@ -101,30 +99,30 @@ public class ModificaProfiloStudenteFragment extends Fragment {
         String queryValori = "SELECT " + Database.UNIVERSITA_NOME + " FROM " + Database.UNIVERSITA + ";";
         String queryValoreRegistrato = "SELECT u." + Database.UNIVERSITA_NOME + " " +
                 "FROM " + Database.UNIVERSITACORSO + " uc , " + Database.UNIVERSITA + " u " +
-                "WHERE uc." + Database.UNIVERSITACORSO_UNIVERSITAID + "=u." + Database.UNIVERSITA_ID + " AND uc." + Database.UNIVERSITACORSO_ID + " = '"+ tesista.getIdUniversitaCorso() +"';";
+                "WHERE uc." + Database.UNIVERSITACORSO_UNIVERSITAID + "=u." + Database.UNIVERSITA_ID + " AND uc." + Database.UNIVERSITACORSO_ID + " = '"+ Utility.tesistaLoggato.getIdUniversitaCorso() +"';";
         spinnerCreate(spinnerUniversita, queryValori, queryValoreRegistrato);
     }
 
     private void SetHintAll(){
-        nome.setHint(tesista.getNome());
-        cognome.setHint(tesista.getCognome());
-        mail.setHint(tesista.getEmail());
-        password.setHint(tesista.getPassword());
-        codFisc.setHint(tesista.getCodiceFiscale());
-        matricola.setHint(tesista.getMatricola());
-        media.setHint(String.valueOf(tesista.getMedia()));
-        numeroEsamiMancanti.setHint(String.valueOf(tesista.getNumeroEsamiMancanti()));
+        nome.setHint(Utility.tesistaLoggato.getNome());
+        cognome.setHint(Utility.tesistaLoggato.getCognome());
+        mail.setHint(Utility.tesistaLoggato.getEmail());
+        password.setHint(Utility.tesistaLoggato.getPassword());
+        codFisc.setHint(Utility.tesistaLoggato.getCodiceFiscale());
+        matricola.setHint(Utility.tesistaLoggato.getMatricola());
+        media.setHint(String.valueOf(Utility.tesistaLoggato.getMedia()));
+        numeroEsamiMancanti.setHint(String.valueOf(Utility.tesistaLoggato.getNumeroEsamiMancanti()));
     }
 
     private void FillAllEmpty(){
-        Utility.fillIfEmpty(nome, tesista.getNome());
-        Utility.fillIfEmpty(cognome, tesista.getCognome());
-        Utility.fillIfEmpty(mail, tesista.getEmail());
-        Utility.fillIfEmpty(password, tesista.getPassword());
-        Utility.fillIfEmpty(codFisc, tesista.getCodiceFiscale());
-        Utility.fillIfEmpty(matricola, tesista.getMatricola());
-        Utility.fillIfEmpty(media, String.valueOf(tesista.getMedia()));
-        Utility.fillIfEmpty(numeroEsamiMancanti, String.valueOf(tesista.getNumeroEsamiMancanti()));
+        Utility.fillIfEmpty(nome, Utility.tesistaLoggato.getNome());
+        Utility.fillIfEmpty(cognome, Utility.tesistaLoggato.getCognome());
+        Utility.fillIfEmpty(mail, Utility.tesistaLoggato.getEmail());
+        Utility.fillIfEmpty(password, Utility.tesistaLoggato.getPassword());
+        Utility.fillIfEmpty(codFisc, Utility.tesistaLoggato.getCodiceFiscale());
+        Utility.fillIfEmpty(matricola, Utility.tesistaLoggato.getMatricola());
+        Utility.fillIfEmpty(media, String.valueOf(Utility.tesistaLoggato.getMedia()));
+        Utility.fillIfEmpty(numeroEsamiMancanti, String.valueOf(Utility.tesistaLoggato.getNumeroEsamiMancanti()));
     }
 
 
@@ -185,7 +183,7 @@ public class ModificaProfiloStudenteFragment extends Fragment {
                 String query = "SELECT " + Database.CORSOSTUDI_NOME + " FROM " + Database.CORSOSTUDI + " WHERE " + Database.CORSOSTUDI_ID + " IN (" + idRisultati.toString().replace("[", "").replace("]", "") + ");";
                 String queryValoreRegistrato = "SELECT cs." + Database.CORSOSTUDI_NOME + " " +
                         "FROM " + Database.UNIVERSITACORSO + " uc , " + Database.CORSOSTUDI + " cs " +
-                        "WHERE uc." + Database.UNIVERSITACORSO_CORSOID + "=cs." + Database.CORSOSTUDI_ID + " AND uc." + Database.UNIVERSITACORSO_ID + " = '"+ tesista.getIdUniversitaCorso() +"';";
+                        "WHERE uc." + Database.UNIVERSITACORSO_CORSOID + "=cs." + Database.CORSOSTUDI_ID + " AND uc." + Database.UNIVERSITACORSO_ID + " = '"+ Utility.tesistaLoggato.getIdUniversitaCorso() +"';";
                 spinnerCreate(spinnerCorsoStudi, query, queryValoreRegistrato);
             }
 

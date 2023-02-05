@@ -37,7 +37,6 @@ public class CreaRicevimentoFragment extends Fragment {
     //Variabili e Oggetti
     private Database db;
     private Ricevimento richiesta;
-    private int tipoUtente;
     private LocalDate dataSelezionata;
     private LocalTime orarioSelezionato;
 
@@ -49,9 +48,8 @@ public class CreaRicevimentoFragment extends Fragment {
 
     public CreaRicevimentoFragment() {}
 
-    public CreaRicevimentoFragment(Ricevimento richiesta, int tipoUtente) {
+    public CreaRicevimentoFragment(Ricevimento richiesta) {
         this.richiesta = richiesta;
-        this.tipoUtente = tipoUtente;
     }
 
     @Override
@@ -125,7 +123,7 @@ public class CreaRicevimentoFragment extends Fragment {
         ora = getView().findViewById(R.id.ora_richiesta);
         invia = getView().findViewById(R.id.invia);
 
-        if(tipoUtente==Utility.RELATORE){
+        if(Utility.accountLoggato==Utility.RELATORE){
             messaggio.setVisibility(View.GONE);
         }
 

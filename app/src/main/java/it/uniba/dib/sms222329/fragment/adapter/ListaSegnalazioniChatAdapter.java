@@ -25,13 +25,11 @@ public class ListaSegnalazioniChatAdapter extends BaseAdapter {
     private List<SegnalazioneChat> segnalazioni;
     private LayoutInflater inflater;
     private FragmentManager fragmentManager;
-    private Relatore relatoreLoggato;
 
-    public ListaSegnalazioniChatAdapter(Context context, List<SegnalazioneChat> segnalazioni, FragmentManager fragmentManager, Relatore relatoreLoggato) {
+    public ListaSegnalazioniChatAdapter(Context context, List<SegnalazioneChat> segnalazioni, FragmentManager fragmentManager) {
         this.segnalazioni = segnalazioni;
         this.inflater = LayoutInflater.from(context);
         this.fragmentManager = fragmentManager;
-        this.relatoreLoggato = relatoreLoggato;
     }
 
     @Override
@@ -70,7 +68,7 @@ public class ListaSegnalazioniChatAdapter extends BaseAdapter {
         //Apri chat
         LinearLayout item = convertView.findViewById(R.id.segnalazione);
         item.setOnClickListener(view1 -> {
-            Utility.replaceFragment(this.fragmentManager, R.id.container, new SegnalazioneMessaggiFragment(segnalazioni.get(i).getIdSegnalazioneChat(), relatoreLoggato));
+            Utility.replaceFragment(this.fragmentManager, R.id.container, new SegnalazioneMessaggiFragment(segnalazioni.get(i).getIdSegnalazioneChat()));
         });
 
         return convertView;

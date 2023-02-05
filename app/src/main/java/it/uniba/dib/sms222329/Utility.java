@@ -63,38 +63,6 @@ public class Utility {
         }
     }
 
-    public static Tesista getTesistaLoggato() {
-        return tesistaLoggato;
-    }
-
-    public static void setTesistaLoggato(Tesista tesistaLoggato) {
-        Utility.tesistaLoggato = tesistaLoggato;
-        Utility.accountLoggato = TESISTA;
-    }
-
-    public static Relatore getRelatoreLoggato() {
-        return relatoreLoggato;
-    }
-
-    public static void setRelatoreLoggato(Relatore relatoreLoggato) {
-        Utility.relatoreLoggato = relatoreLoggato;
-        Utility.accountLoggato = RELATORE;
-    }
-
-    public static CoRelatore getCoRelatoreLoggato() {
-        return coRelatoreLoggato;
-    }
-
-    public static void setCoRelatoreLoggato(CoRelatore coRelatoreLoggato) {
-        Utility.coRelatoreLoggato = coRelatoreLoggato;
-        Utility.accountLoggato = CORELATORE;
-    }
-
-    public static int getAccountLoggato() {
-        return accountLoggato;
-    }
-
-
     //fixare
     public static boolean CheckStorage(Activity activity){
         if(isExternalStorageAvailable() && !isExternalStorageReadOnly()){

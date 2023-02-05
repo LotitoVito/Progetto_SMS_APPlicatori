@@ -30,7 +30,6 @@ public class CreaModificaTesiFragment extends Fragment {
     //Variabili e Oggetti
     private boolean operazioneModifica;
     private Tesi tesi;
-    private Relatore relatoreLoggato;
     private Database db;
 
     //View Items
@@ -43,17 +42,13 @@ public class CreaModificaTesiFragment extends Fragment {
     private SwitchMaterial statoDisponibilita;
     private Button salva;
 
-    public CreaModificaTesiFragment(){}
-
-    public CreaModificaTesiFragment(Relatore relatoreLoggato) {
+    public CreaModificaTesiFragment() {
         this.operazioneModifica = false;
-        this.relatoreLoggato = relatoreLoggato;
     }
 
-    public CreaModificaTesiFragment(Tesi tesi, Relatore relatoreLoggato) {
+    public CreaModificaTesiFragment(Tesi tesi) {
         this.tesi = tesi;
         this.operazioneModifica = true;
-        this.relatoreLoggato = relatoreLoggato;
     }
 
     @Override
@@ -100,7 +95,7 @@ public class CreaModificaTesiFragment extends Fragment {
             salva.setOnClickListener(view -> {
                 if(IsEmpty(titolo, argomenti, tempistiche, media, esamiMancanti, capacitaRichiesta)) {
                 Tesi tesi = new Tesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(),
-                        statoDisponibilita.isChecked(), relatoreLoggato.getIdRelatore(), Integer.parseInt(tempistiche.getText().toString().trim()),
+                        statoDisponibilita.isChecked(), Utility.relatoreLoggato.getIdRelatore(), Integer.parseInt(tempistiche.getText().toString().trim()),
                         Integer.parseInt(media.getText().toString().trim()), Integer.parseInt(esamiMancanti.getText().toString().trim()),
                         capacitaRichiesta.getText().toString().trim());
 

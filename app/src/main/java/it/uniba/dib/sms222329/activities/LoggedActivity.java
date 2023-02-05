@@ -38,10 +38,6 @@ public class LoggedActivity extends AppCompatActivity {
     //Variabili e Oggetti
     private Database db = new Database(this);
     private UtenteRegistrato utenteLoggato;
-    public static Tesista tesistaLoggato;
-    public static Relatore relatoreLoggato;
-    public static CoRelatore coRelatoreLoggato;
-    public static int accountLoggato;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,18 +48,18 @@ public class LoggedActivity extends AppCompatActivity {
 
         try{
             if(utenteLoggato.getTipoUtente() == Utility.TESISTA){ //tesista
-                tesistaLoggato = TesistaDatabase.IstanziaTesista(utenteLoggato, db);
-                accountLoggato = Utility.TESISTA;
+                Utility.tesistaLoggato = TesistaDatabase.IstanziaTesista(utenteLoggato, db);
+                Utility.accountLoggato = Utility.TESISTA;
             }
             else if (utenteLoggato.getTipoUtente() == Utility.RELATORE){ //relatore
-                relatoreLoggato = RelatoreDatabase.IstanziaRelatore(utenteLoggato, db);
-                accountLoggato = Utility.RELATORE;
-                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment(relatoreLoggato));
-                setBottomNavigation(new ListaTesiFragment(relatoreLoggato), new SegnalazioneChatFragment(relatoreLoggato), new HomeFragment(relatoreLoggato), new TesistiRelatoreFragment());
+                Utility.relatoreLoggato = RelatoreDatabase.IstanziaRelatore(utenteLoggato, db);
+                Utility.accountLoggato = Utility.RELATORE;
+                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment());
+                setBottomNavigation(new ListaTesiFragment(), new SegnalazioneChatFragment(), new HomeFragment(), new TesistiRelatoreFragment());
             }
             else if (utenteLoggato.getTipoUtente() == Utility.CORELATORE){ //corelatore
-                coRelatoreLoggato = CoRelatoreDatabase.IstanziaCoRelatore(utenteLoggato, db);
-                accountLoggato = Utility.CORELATORE;
+                Utility.coRelatoreLoggato = CoRelatoreDatabase.IstanziaCoRelatore(utenteLoggato, db);
+                Utility.accountLoggato = Utility.CORELATORE;
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -116,11 +112,11 @@ public class LoggedActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.navigation_profile:
                 if(utenteLoggato.getTipoUtente() == Utility.TESISTA){
-                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment(utenteLoggato.getTipoUtente(), tesistaLoggato));
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment());
                 } else if (utenteLoggato.getTipoUtente() == Utility.RELATORE){
-                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment(utenteLoggato.getTipoUtente(), relatoreLoggato));
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment());
                 }else if(utenteLoggato.getTipoUtente() == Utility.CORELATORE){
-                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment(utenteLoggato.getTipoUtente(), coRelatoreLoggato));
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment());
                 }
                 setTitle(R.string.title_profile);
                 return true;
@@ -176,8 +172,4 @@ public class LoggedActivity extends AppCompatActivity {
             }).show();
         }
     });
-
-    public int getAccountLoggato(){
-        return accountLoggato;
-    }
 }

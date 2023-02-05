@@ -29,7 +29,6 @@ import it.uniba.dib.sms222329.fragment.adapter.ListaTesiAdapter;
 public class ListaTesiFragment extends Fragment {
 
     //Variabili e Oggetti
-    private Relatore relatoreLoggato;
     private Database db;
     private ListaTesiAdapter adapterLista;
 
@@ -40,15 +39,11 @@ public class ListaTesiFragment extends Fragment {
     private ListView listView;
     private SearchView barraRicerca;
 
-    public ListaTesiFragment(){}
-
-    public ListaTesiFragment(Relatore relatoreLoggato) {
-        this.relatoreLoggato = relatoreLoggato;
-        this.queryFiltri = "SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_RELATOREID + "=" + relatoreLoggato.getIdRelatore() + ";";
+    public ListaTesiFragment() {
+        this.queryFiltri = "SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_RELATOREID + "=" + Utility.relatoreLoggato.getIdRelatore() + ";";
     }
 
-    public ListaTesiFragment(Relatore relatoreLoggato, String queryFiltri) {
-        this.relatoreLoggato = relatoreLoggato;
+    public ListaTesiFragment(String queryFiltri) {
         this.queryFiltri = queryFiltri;
     }
 
@@ -74,11 +69,11 @@ public class ListaTesiFragment extends Fragment {
         RefreshList();
 
         addButton.setOnClickListener(view1 -> {
-            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new CreaModificaTesiFragment(relatoreLoggato));
+            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new CreaModificaTesiFragment());
         });
 
         filtra.setOnClickListener(view1 -> {
-            TesiFilterFragment bottomSheet = new TesiFilterFragment(relatoreLoggato);
+            TesiFilterFragment bottomSheet = new TesiFilterFragment();
             bottomSheet.show(getActivity().getSupportFragmentManager(), bottomSheet.getTag());
         });
 
@@ -113,7 +108,7 @@ public class ListaTesiFragment extends Fragment {
 
     private void RefreshList(){
         List<Tesi> listaTesi = ListaTesiDatabase.ListaTesi(queryFiltri, db);
-        adapterLista = new ListaTesiAdapter(getActivity().getApplicationContext(), listaTesi, getActivity().getSupportFragmentManager(), relatoreLoggato);
+        adapterLista = new ListaTesiAdapter(getActivity().getApplicationContext(), listaTesi, getActivity().getSupportFragmentManager());
         listView.setAdapter(adapterLista);
     }
 }

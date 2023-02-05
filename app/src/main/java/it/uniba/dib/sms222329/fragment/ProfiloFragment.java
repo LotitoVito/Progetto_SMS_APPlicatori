@@ -28,10 +28,6 @@ public class ProfiloFragment extends Fragment {
 
     //Variabili e Oggetti
     private Database db;
-    private Relatore relatoreLoggato;
-    private CoRelatore corelatoreLoggato;
-    private Tesista tesistaLoggato;
-    private int ruolo;
 
     //View Items
     private TextView nome;
@@ -40,21 +36,7 @@ public class ProfiloFragment extends Fragment {
     private TextView email;
     private TextView ruoloTv;
 
-    public ProfiloFragment(int ruolo, Relatore relatoreLoggato) {
-        this.ruolo = ruolo;
-        this.relatoreLoggato = relatoreLoggato;
-    }
-
-    public ProfiloFragment(int ruolo, CoRelatore corelatoreLoggato) {
-        this.ruolo = ruolo;
-        this.corelatoreLoggato = corelatoreLoggato;
-    }
-
-    public ProfiloFragment(int ruolo, Tesista tesistaLoggato) {
-        this.ruolo = ruolo;
-        this.tesistaLoggato = tesistaLoggato;
-    }
-
+    public ProfiloFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,22 +55,22 @@ public class ProfiloFragment extends Fragment {
 
         Init();
 
-        if (ruolo == Utility.TESISTA){
-            SetView(tesistaLoggato, ruolo);
-        } else if (ruolo == Utility.RELATORE){
-            SetView(relatoreLoggato, ruolo);
-        } else if (ruolo == Utility.CORELATORE){
-            SetView(corelatoreLoggato, ruolo);
+        if (Utility.accountLoggato == Utility.TESISTA){
+            SetView(Utility.tesistaLoggato, Utility.accountLoggato);
+        } else if (Utility.accountLoggato == Utility.RELATORE){
+            SetView(Utility.relatoreLoggato, Utility.accountLoggato);
+        } else if (Utility.accountLoggato == Utility.CORELATORE){
+            SetView(Utility.coRelatoreLoggato, Utility.accountLoggato);
         }
 
         Button button = getView().findViewById(R.id.modificaProfilo);
         button.setOnClickListener( view -> {
-            if(ruolo == Utility.TESISTA){
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ModificaProfiloStudenteFragment(tesistaLoggato));
-            } else if (ruolo == Utility.RELATORE){
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ModificaProfiloRelatoreFragment(relatoreLoggato));
-            }else if(ruolo == Utility.CORELATORE){
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ModificaProfiloCorelatoreFragment(corelatoreLoggato));
+            if(Utility.accountLoggato == Utility.TESISTA){
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ModificaProfiloStudenteFragment());
+            } else if (Utility.accountLoggato == Utility.RELATORE){
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ModificaProfiloRelatoreFragment());
+            }else if(Utility.accountLoggato == Utility.CORELATORE){
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ModificaProfiloCorelatoreFragment());
             }
         });
     }

@@ -11,9 +11,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.journeyapps.barcodescanner.Util;
+
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.SegnalazioneMessaggio;
 import it.uniba.dib.sms222329.classi.Tesista;
@@ -27,14 +30,12 @@ public class SegnalazioneMessaggiFragment extends Fragment {
     //Variabili e Oggetti
     private Database db;
     private int idChat;
-    private Relatore relatoreLoggato;
 
     //View Items
     private ListView listView;
 
-    public SegnalazioneMessaggiFragment(int idChat, Relatore relatoreLoggato) {
+    public SegnalazioneMessaggiFragment(int idChat) {
         this.idChat = idChat;
-        this.relatoreLoggato = relatoreLoggato;
     }
 
     @Override
@@ -53,7 +54,12 @@ public class SegnalazioneMessaggiFragment extends Fragment {
         EditText messaggio = getView().findViewById(R.id.chat_input);
         sendMessage.setOnClickListener(view -> {
             if(!isEmptyTextbox(messaggio)){
-                SegnalazioneMessaggio messaggioOggetto = new SegnalazioneMessaggio(idChat, messaggio.getText().toString(), relatoreLoggato.getIdUtente());
+                SegnalazioneMessaggio messaggioOggetto = null;
+                if(Utility.accountLoggato == Utility.RELATORE) {
+                    messaggioOggetto = new SegnalazioneMessaggio(idChat, messaggio.getText().toString(), Utility.relatoreLoggato.getIdUtente());
+                } else if(Utility.accountLoggato == Utility.TESISTA){
+                    messaggioOggetto = new SegnalazioneMessaggio(idChat, messaggio.getText().toString(), Utility.tesistaLoggato.getIdUtente());
+                }
                 SegnalazioneDatabase.MessaggioChat(db, messaggioOggetto);
                 refreshChat();
             }
@@ -74,7 +80,12 @@ public class SegnalazioneMessaggiFragment extends Fragment {
 
     private void refreshChat(){
         List<SegnalazioneMessaggio> listaSegnalazioni = ListaSegnalazioniMessaggiDatabase.ListaMessaggi(db, this.idChat);
-        ListaSegnalazioniMessaggiAdapter adapterLista = new ListaSegnalazioniMessaggiAdapter(getActivity().getApplicationContext(), listaSegnalazioni, relatoreLoggato.getIdUtente());
+        ListaSegnalazioniMessaggiAdapter adapterLista = null;
+        if(Utility.accountLoggato == Utility.RELATORE){
+            adapterLista = new ListaSegnalazioniMessaggiAdapter(getActivity().getApplicationContext(), listaSegnalazioni, Utility.relatoreLoggato.getIdUtente());
+        } else if(Utility.accountLoggato == Utility.TESISTA){
+            adapterLista = new ListaSegnalazioniMessaggiAdapter(getActivity().getApplicationContext(), listaSegnalazioni, Utility.tesistaLoggato.getIdUtente());
+        }
         listView.setAdapter(adapterLista);
     }
 }

@@ -27,9 +27,8 @@ public class ListaTesiAdapter extends BaseAdapter {
     private ArrayList<Tesi> copiaRicerca;
     private LayoutInflater inflater;
     private FragmentManager fragmentManager;
-    private Relatore relatoreLoggato;
 
-    public ListaTesiAdapter(Context context, List<Tesi> tesi, FragmentManager fragmentManager, Relatore relatoreLoggato) {
+    public ListaTesiAdapter(Context context, List<Tesi> tesi, FragmentManager fragmentManager) {
         this.tesi = tesi;
         if(tesi.size()!=0){
             this.copiaRicerca = new ArrayList<Tesi>();
@@ -37,7 +36,6 @@ public class ListaTesiAdapter extends BaseAdapter {
         }
         this.inflater = LayoutInflater.from(context);
         this.fragmentManager = fragmentManager;
-        this.relatoreLoggato = relatoreLoggato;
     }
 
     @Override
@@ -79,11 +77,11 @@ public class ListaTesiAdapter extends BaseAdapter {
         //Edit Button
         Button editButton = convertView.findViewById(R.id.modifica);
 
-        if(tesi.get(i).getIdRelatore() != relatoreLoggato.getIdRelatore()){
+        if(tesi.get(i).getIdRelatore() != Utility.relatoreLoggato.getIdRelatore()){
             editButton.setVisibility(View.GONE);
         }
 
-        editButton.setOnClickListener(view1 -> Utility.replaceFragment( this.fragmentManager, R.id.container, new CreaModificaTesiFragment(this.tesi.get(i), this.relatoreLoggato)));
+        editButton.setOnClickListener(view1 -> Utility.replaceFragment( this.fragmentManager, R.id.container, new CreaModificaTesiFragment(this.tesi.get(i))));
 
         //Detail Button
         Button detailButton = convertView.findViewById(R.id.visualizza);

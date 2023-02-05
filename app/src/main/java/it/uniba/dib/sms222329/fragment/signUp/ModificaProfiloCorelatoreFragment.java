@@ -27,7 +27,6 @@ public class ModificaProfiloCorelatoreFragment extends Fragment {
 
     //Variabili e Oggetti
     private Database db;
-    private CoRelatore corelatore;
 
     //View Items
     private TextInputEditText nome;
@@ -38,8 +37,7 @@ public class ModificaProfiloCorelatoreFragment extends Fragment {
     private TextInputEditText org;
     private Button editButton;
 
-    public ModificaProfiloCorelatoreFragment(CoRelatore corelatoreLoggato) {
-        this.corelatore = corelatoreLoggato;
+    public ModificaProfiloCorelatoreFragment() {
     }
 
     @Override
@@ -58,21 +56,21 @@ public class ModificaProfiloCorelatoreFragment extends Fragment {
         editButton.setOnClickListener(view -> {
             FillAllEmpty();
 
-            if (corelatore.modCoRelatore(nome.getText().toString(), cognome.getText().toString(), mail.getText().toString(),
+            if (Utility.coRelatoreLoggato.modCoRelatore(nome.getText().toString(), cognome.getText().toString(), mail.getText().toString(),
                     password.getText().toString(), codFisc.getText().toString(), org.getText().toString(), db)){
                 Toast.makeText(getActivity().getApplicationContext(),"Modifica effettuata con successo",Toast.LENGTH_SHORT).show();
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ProfiloFragment(Utility.CORELATORE, corelatore));
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ProfiloFragment());
             }
         });
     }
 
     private void SetAllHint() {
-        nome.setHint(corelatore.getNome());
-        cognome.setHint(corelatore.getCognome());
-        mail.setHint(corelatore.getEmail());
-        password.setHint(corelatore.getPassword());
-        codFisc.setHint(corelatore.getCodiceFiscale());
-        org.setHint(corelatore.getOrganizzazione());
+        nome.setHint(Utility.coRelatoreLoggato.getNome());
+        cognome.setHint(Utility.coRelatoreLoggato.getCognome());
+        mail.setHint(Utility.coRelatoreLoggato.getEmail());
+        password.setHint(Utility.coRelatoreLoggato.getPassword());
+        codFisc.setHint(Utility.coRelatoreLoggato.getCodiceFiscale());
+        org.setHint(Utility.coRelatoreLoggato.getOrganizzazione());
     }
 
     private void Init() {
@@ -86,11 +84,11 @@ public class ModificaProfiloCorelatoreFragment extends Fragment {
     }
 
     private void FillAllEmpty(){
-        Utility.fillIfEmpty(nome, corelatore.getNome());
-        Utility.fillIfEmpty(cognome, corelatore.getCognome());
-        Utility.fillIfEmpty(mail, corelatore.getEmail());
-        Utility.fillIfEmpty(password, corelatore.getPassword());
-        Utility.fillIfEmpty(codFisc, corelatore.getCodiceFiscale());
-        Utility.fillIfEmpty(org, corelatore.getOrganizzazione());
+        Utility.fillIfEmpty(nome, Utility.coRelatoreLoggato.getNome());
+        Utility.fillIfEmpty(cognome, Utility.coRelatoreLoggato.getCognome());
+        Utility.fillIfEmpty(mail, Utility.coRelatoreLoggato.getEmail());
+        Utility.fillIfEmpty(password, Utility.coRelatoreLoggato.getPassword());
+        Utility.fillIfEmpty(codFisc, Utility.coRelatoreLoggato.getCodiceFiscale());
+        Utility.fillIfEmpty(org, Utility.coRelatoreLoggato.getOrganizzazione());
     }
 }

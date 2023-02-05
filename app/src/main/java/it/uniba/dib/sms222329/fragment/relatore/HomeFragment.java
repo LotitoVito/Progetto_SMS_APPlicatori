@@ -37,7 +37,6 @@ import it.uniba.dib.sms222329.fragment.calendario.CalendarUtils;
 public class HomeFragment extends Fragment implements CalendarAdapter.OnItemListener {
 
     //Variabili e Oggetto
-    private Relatore RelatoreLoggato;
     private Database db;
 
     //View Items
@@ -48,10 +47,6 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
     private Button nextWeek;
 
     public  HomeFragment(){}
-
-    public HomeFragment(Relatore relatore) {
-        this.RelatoreLoggato = relatore;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

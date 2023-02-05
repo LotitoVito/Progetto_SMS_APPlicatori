@@ -75,7 +75,7 @@ public class ModificaTaskFragment extends Fragment {
         CheckFilesButton();
 
         modificaTask.setOnClickListener(view -> {
-            if(LoggedActivity.accountLoggato == Utility.RELATORE){
+            if(Utility.accountLoggato == Utility.RELATORE){
                 if(task.ModificaTask(titoloTask.getText().toString(), descrizioneTask.getText().toString(), 0, db)){        //settare slider
                     Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
                 } else {
@@ -83,7 +83,7 @@ public class ModificaTaskFragment extends Fragment {
                 }
             }
 
-            if(LoggedActivity.accountLoggato == Utility.TESISTA){
+            if(Utility.accountLoggato == Utility.TESISTA){
                 if(task.ModificaTask(0, db)){        //settare slider
                     Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
                 } else {
