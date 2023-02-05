@@ -1,24 +1,32 @@
 package it.uniba.dib.sms222329.fragment.relatore;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.TesiScelta;
+import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.TesiSceltaDatabase;
 import it.uniba.dib.sms222329.fragment.task.CreaTaskFragment;
 import it.uniba.dib.sms222329.fragment.task.ListaTaskFragment;
 
 public class TesistaRelatoreFragment extends Fragment {
 
     //Variabili e Oggetti
+    private Database db;
     private TesiScelta tesiScelta;
 
     //View Items
@@ -33,6 +41,7 @@ public class TesistaRelatoreFragment extends Fragment {
     private TextView dataConsegna;
     private TextView corelatore;
     private TextView emailCorelatore;
+    private TextInputEditText richiestaCorelatore;
     private Button aggiungiCorelatore;
     private Button rimuoviCorelatore;
     private TextView creaTask;
@@ -58,11 +67,23 @@ public class TesistaRelatoreFragment extends Fragment {
         SetTextAll();
 
         aggiungiCorelatore.setOnClickListener(view -> {
-
+            if(db.VerificaDatoEsistente("SELECT " + Database.UTENTI_EMAIL + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + "='" + richiestaCorelatore.getText().toString().trim() + "';")){
+                if(tesiScelta.AggiungiCorelatore(db, richiestaCorelatore.getText().toString().trim())){
+                    Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Il corelatore inserito non esiste o errore imprevisto", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "Il corelatore inserito non esiste", Toast.LENGTH_SHORT).show();
+            }
         });
 
         rimuoviCorelatore.setOnClickListener(view -> {
-
+            if(tesiScelta.RimuoviCorelatore(db)){
+                Toast.makeText(getActivity().getApplicationContext(), "Corelatore rimosso con successo", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+            }
         });
 
         creaTask.setOnClickListener(view -> {
@@ -83,6 +104,7 @@ public class TesistaRelatoreFragment extends Fragment {
     }
 
     private void Init() {
+        db = new Database(getActivity().getApplicationContext());
         tesista = getView().findViewById(R.id.nomeStudente);
         titoloTesi = getView().findViewById(R.id.titoloTesi);
         argomentoTesi = getView().findViewById(R.id.argomentoTesi);
@@ -94,6 +116,7 @@ public class TesistaRelatoreFragment extends Fragment {
         dataConsegna = getView().findViewById(R.id.dataConsegna);
         corelatore = getView().findViewById(R.id.corelatore);
         emailCorelatore = getView().findViewById(R.id.email_corelatore);
+        richiestaCorelatore = getView().findViewById(R.id.email_co);
         aggiungiCorelatore = getView().findViewById(R.id.aggiungi_corelatore);
         rimuoviCorelatore = getView().findViewById(R.id.rimuovi_corelatore);
         creaTask = getView().findViewById(R.id.crea_task);
@@ -101,9 +124,10 @@ public class TesistaRelatoreFragment extends Fragment {
         scaricaTesi = getView().findViewById(R.id.scarica);
         caricaTesi = getView().findViewById(R.id.carica);
 
-        if(tesiScelta.getIdCorelatore() != 0){
+        if(tesiScelta.getStatoCorelatore() == TesiScelta.ACCETTATO || tesiScelta.getStatoCorelatore() == TesiScelta.IN_ATTESA){
             aggiungiCorelatore.setVisibility(View.GONE);
             rimuoviCorelatore.setVisibility(View.VISIBLE);
+            richiestaCorelatore.setVisibility(View.GONE);
         } else{
             aggiungiCorelatore.setVisibility(View.VISIBLE);
             rimuoviCorelatore.setVisibility(View.GONE);
@@ -111,6 +135,21 @@ public class TesistaRelatoreFragment extends Fragment {
     }
 
     private void SetTextAll(){
-        //da fare
+
+
+        //Corelatore
+        Cursor cursore = db.RicercaDato("SELECT " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + " FROM " + Database.CORELATORE + " c, " + Database.UTENTI + " u " +
+                "WHERE u." + Database.UTENTI_ID + "=c." + Database.CORELATORE_UTENTEID + " AND c." + Database.CORELATORE_ID + "=" + tesiScelta.getIdCorelatore() + ";");
+        cursore.moveToFirst();
+        if(tesiScelta.getStatoCorelatore()==TesiScelta.ACCETTATO){
+            corelatore.setText(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
+            emailCorelatore.setText(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
+        } else if(tesiScelta.getStatoCorelatore()==TesiScelta.IN_ATTESA) {
+            corelatore.setText("In attesa di approvazione");
+            emailCorelatore.setText(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
+        } else {
+            corelatore.setVisibility(View.GONE);
+            emailCorelatore.setVisibility(View.GONE);
+        }
     }
 }
