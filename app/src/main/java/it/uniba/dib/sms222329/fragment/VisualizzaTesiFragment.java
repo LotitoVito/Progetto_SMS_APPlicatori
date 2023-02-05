@@ -19,7 +19,10 @@ import android.widget.TextView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
+import org.w3c.dom.Text;
+
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.TesiDatabase;
@@ -41,6 +44,7 @@ public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
     private SwitchMaterial disponibilita;
     private ImageView qrCode;
     private Button share;
+    private TextView creaSegnalazione;
 
     public  VisualizzaTesiFragment(){}
     public VisualizzaTesiFragment(Tesi tesi) {
@@ -82,6 +86,11 @@ public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
             intent.putExtra(Intent.EXTRA_TEXT, sub);
             startActivity(Intent.createChooser(intent, "Condividi con:"));
         });
+
+        creaSegnalazione.setOnClickListener(view -> {
+            this.dismiss();
+            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new CreaSegnalazioneFragment(tesi));
+        });
     }
 
     private void Init() {
@@ -95,6 +104,7 @@ public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
         disponibilita = getView().findViewById(R.id.disponibilita);
         qrCode = getView().findViewById(R.id.qrCode);
         share = getView().findViewById(R.id.condividi);
+        creaSegnalazione = getView().findViewById(R.id.crea_segnalazione);
     }
 
     private void SetTextAll(){

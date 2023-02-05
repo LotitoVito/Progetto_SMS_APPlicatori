@@ -43,11 +43,22 @@ public class Utility {
 
     private Utility() {}
 
+    public static void Clear(){
+        Utility.tesistaLoggato = null;
+        Utility.relatoreLoggato = null;
+        Utility.coRelatoreLoggato = null;
+        Utility.accountLoggato = -1;
+    }
+
     public static void replaceFragment(FragmentManager fragmentManager, int containerId, Fragment fragment) {
         fragmentManager.beginTransaction()
                 .replace(containerId, fragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public static void closeFragment(Activity activity){
+        activity.onBackPressed();
     }
 
     public static boolean isEmptyTextbox(EditText textbox){

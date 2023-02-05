@@ -48,6 +48,7 @@ public class LoggedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_utente_loggato);
+        bottomNavigationView = findViewById(R.id.navigation);
 
         utenteLoggato = (UtenteRegistrato) getIntent().getSerializableExtra("utentePassato");
 
@@ -69,7 +70,8 @@ public class LoggedActivity extends AppCompatActivity {
                 Utility.accountLoggato = Utility.CORELATORE;
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment());
                 setBottomNavigation(new ListaTesiFragment(), new SegnalazioneChatFragment(), new HomeFragment(), new TesistiRelatoreFragment());
-            }else if(utenteLoggato.getEmail().compareTo("guest")==0) {
+            }
+            else if(utenteLoggato.getEmail().compareTo("guest")==0) {
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new GuestTesiFragment());
                 setGuestBottomNavigation(new GuestTesiFragment());
             }
@@ -80,18 +82,21 @@ public class LoggedActivity extends AppCompatActivity {
 
     private void setBottomNavigation(Fragment thesisFragment, Fragment messagesFragment, Fragment homeFragment, Fragment studentFragment) {
 
-        bottomNavigationView = findViewById(R.id.navigation);
+        Log.d("test", "a");
 
-        if(utenteLoggato.getTipoUtente() == Utility.TESISTA) {
+        if(Utility.accountLoggato == Utility.TESISTA) {
            bottomNavigationView.getMenu().clear();
            bottomNavigationView.inflateMenu(R.menu.nav_student);
+            Log.d("test", "b");
         }
 
         // Set a listener for item selection
         bottomNavigationView.setOnItemSelectedListener(item -> {
+            Log.d("test", "e");
             // Handle item selection
             switch (item.getItemId()) {
                 case R.id.navigation_thesis:
+                    Log.d("test", "c");
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, thesisFragment);
                     setTitle(R.string.tesi);
                     return true;
@@ -114,7 +119,7 @@ public class LoggedActivity extends AppCompatActivity {
             }
             return false;
         });
-
+        Log.d("test", "d");
     }
 
     private void setGuestBottomNavigation(Fragment thesisFragment) {

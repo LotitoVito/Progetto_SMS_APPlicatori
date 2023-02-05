@@ -16,8 +16,10 @@ public class RichiestaTesiDatabase {
         ContentValues cvRichiesta = new ContentValues();
 
         cvRichiesta.put(Database.RICHIESTA_MESSAGGIO, richiesta.getMessaggio());
+        cvRichiesta.put(Database.RICHIESTA_CAPACITASTUDENTE, richiesta.getCapacitàStudente());
         cvRichiesta.put(Database.RICHIESTA_TESIID, richiesta.getIdTesi());
         cvRichiesta.put(Database.RICHIESTA_TESISTAID, richiesta.getIdTesista());
+        cvRichiesta.put(Database.RICHIESTA_ACCETTATA, richiesta.getAccettata());
 
         long insertRichiesta = db.insert(Database.RICHIESTA, null, cvRichiesta);
         if(insertRichiesta != -1){

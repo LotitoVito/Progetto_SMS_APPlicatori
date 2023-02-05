@@ -1,5 +1,6 @@
 package it.uniba.dib.sms222329.fragment.tesista;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,60 +8,82 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
+import it.uniba.dib.sms222329.classi.RichiestaTesi;
+import it.uniba.dib.sms222329.classi.Tesi;
+import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.RichiestaTesiDatabase;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RichiestaTesiFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class RichiestaTesiFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    //Variabili e Oggetti
+    private Database db;
+    private Tesi tesi;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //View Items
+    private TextView titoloTesi;
+    private TextView argomentoTesi;
+    private TextView tempistiche;
+    private TextView relatore;
+    private TextInputEditText messaggio;
+    private TextInputEditText capacitaTesista;
+    private Button invia;
 
-    public RichiestaTesiFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RichiestaTesiFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RichiestaTesiFragment newInstance(String param1, String param2) {
-        RichiestaTesiFragment fragment = new RichiestaTesiFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public RichiestaTesiFragment(Tesi tesi) {
+        this.tesi = tesi;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_richiesta_tesi, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Init();
+        SetTextAll();
+
+        invia.setOnClickListener(view -> {
+            RichiestaTesi richiesta = new RichiestaTesi(messaggio.getText().toString().trim(), capacitaTesista.getText().toString().trim(),
+                    tesi.getIdTesi(), Utility.tesistaLoggato.getIdTesista());
+            if(RichiestaTesiDatabase.RichiestaTesi(richiesta, db)){
+                Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
+                Utility.closeFragment(getActivity());
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void Init() {
+        db = new Database(getActivity().getApplicationContext());
+        titoloTesi = getView().findViewById(R.id.titoloTesi);
+        argomentoTesi = getView().findViewById(R.id.argomentoTesi);
+        tempistiche = getView().findViewById(R.id.tempistiche);
+        relatore = getView().findViewById(R.id.nome_relatore);
+        messaggio = getView().findViewById(R.id.messaggio);
+        capacitaTesista = getView().findViewById(R.id.skill_richieste);
+        invia = getView().findViewById(R.id.invia);
+    }
+
+    private void SetTextAll(){
+        titoloTesi.setText(tesi.getTitolo());
+        argomentoTesi.setText(tesi.getArgomenti());
+        tempistiche.setText("Mesi: " + tesi.getTempistiche());
+        Cursor cursor = db.RicercaDato("SELECT " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + " FROM " + Database.UTENTI + " u, " + Database.RELATORE + " r " +
+                "WHERE u." + Database.UTENTI_ID + "=r." + Database.RELATORE_UTENTEID + " AND r." + Database.RELATORE_ID + "=" + tesi.getIdRelatore() + ";" );
+        cursor.moveToFirst();
+        relatore.setText(cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_NOME)));
     }
 }

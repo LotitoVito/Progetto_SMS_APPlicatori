@@ -26,7 +26,7 @@ public class SegnalazioneDatabase {
 
             messaggioCv.put(Database.MESSAGGISEGNALAZIONE_MESSAGGIO, messaggio.getMessaggio());
             messaggioCv.put(Database.MESSAGGISEGNALAZIONE_UTENTEID, messaggio.getIdMittente());
-            messaggioCv.put(Database.MESSAGGISEGNALAZIONE_SEGNALAZIONEID, cursor.getInt(cursor.getColumnIndexOrThrow(Database.SEGNALAZIONECHAT_ID)));
+            messaggioCv.put(Database.MESSAGGISEGNALAZIONE_SEGNALAZIONEID, cursor.getInt(0));
 
             long insertMessaggio = db.insert(Database.MESSAGGISEGNALAZIONE, null, messaggioCv);
             if(insertMessaggio != -1){

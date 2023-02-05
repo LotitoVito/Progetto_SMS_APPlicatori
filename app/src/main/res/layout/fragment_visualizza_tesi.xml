@@ -100,7 +100,7 @@
             android:textSize="16sp"/>
 
         <TextView
-            android:id="@+id/label_ricevimento"
+            android:id="@+id/crea_segnalazione"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textSize="24sp"

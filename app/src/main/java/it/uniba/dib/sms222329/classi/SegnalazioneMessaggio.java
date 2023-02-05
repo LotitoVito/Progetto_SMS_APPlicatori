@@ -26,6 +26,11 @@ public class SegnalazioneMessaggio extends SegnalazioneChat {
         this.idMittente = idMittente;
     }
 
+    public SegnalazioneMessaggio(String messaggio, int idMittente) {
+        this.messaggio = messaggio;
+        this.idMittente = idMittente;
+    }
+
     public int getIdMessaggio() {
         return idMessaggio;
     }
