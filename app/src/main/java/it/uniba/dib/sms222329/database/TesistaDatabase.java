@@ -67,14 +67,14 @@ public class TesistaDatabase {
     public static Tesista IstanziaTesista(UtenteRegistrato account, Database dbClass){
         Tesista TesistaLog = new Tesista();
 
-        String query =  "SELECT u." + Database.UTENTI_ID + ", t." + Database.TESISTA_ID + ", " + Database.TESISTA_MATRICOLA + ", " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + ", " + Database.UTENTI_PASSWORD + ", " + Database.TESISTA_MEDIAVOTI + ", " + Database.TESISTA_ESAMIMANCANTI + ", " + Database.TESISTA_UNIVERSITACORSOID + ", " + Database.UTENTI_CODICEFISCALE + " " +
+        String query =  "SELECT t." + Database.TESISTA_UTENTEID + ", t." + Database.TESISTA_ID + ", " + Database.TESISTA_MATRICOLA + ", " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + ", " + Database.UTENTI_PASSWORD + ", " + Database.TESISTA_MEDIAVOTI + ", " + Database.TESISTA_ESAMIMANCANTI + ", " + Database.TESISTA_UNIVERSITACORSOID + ", " + Database.UTENTI_CODICEFISCALE + " " +
                         "FROM " + Database.UTENTI + " u, " + Database.TESISTA + " t " +
                         "WHERE u." + Database.UTENTI_ID + "=t." + Database.TESISTA_UTENTEID + " AND " + Database.UTENTI_EMAIL + " = '" + account.getEmail() + "';";
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();
 
-        TesistaLog.setIdUtente(cursore.getInt(cursore.getColumnIndexOrThrow(Database.UTENTI_ID)));
+        TesistaLog.setIdUtente(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISTA_UTENTEID)));
         TesistaLog.setIdTesista(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISTA_ID)));
         TesistaLog.setMatricola(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESISTA_MATRICOLA)));
         TesistaLog.setNome(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_NOME)));

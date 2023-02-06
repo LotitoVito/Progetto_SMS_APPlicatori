@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import androidx.activity.result.ActivityResultLauncher;
@@ -49,18 +50,21 @@ public class LoggedActivity extends AppCompatActivity {
             if(utenteLoggato.getTipoUtente() == Utility.TESISTA){
                 Utility.tesistaLoggato = TesistaDatabase.IstanziaTesista(utenteLoggato, db);
                 Utility.accountLoggato = Utility.TESISTA;
+                Log.d("test", String.valueOf(Utility.tesistaLoggato.getIdUtente()));
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment());
                 setBottomNavigation(new ListaTesiFragment(), new SegnalazioneChatFragment(), new HomeFragment(), new MiaTesiFragment());
             }
             else if (utenteLoggato.getTipoUtente() == Utility.RELATORE){
                 Utility.relatoreLoggato = RelatoreDatabase.IstanziaRelatore(utenteLoggato, db);
                 Utility.accountLoggato = Utility.RELATORE;
+                Log.d("test", String.valueOf(Utility.relatoreLoggato.getIdUtente()));
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment());
                 setBottomNavigation(new ListaTesiFragment(), new SegnalazioneChatFragment(), new HomeFragment(), new TesistiRelatoreFragment());
             }
             else if (utenteLoggato.getTipoUtente() == Utility.CORELATORE){
                 Utility.coRelatoreLoggato = CoRelatoreDatabase.IstanziaCoRelatore(utenteLoggato, db);
                 Utility.accountLoggato = Utility.CORELATORE;
+                Log.d("test", String.valueOf(Utility.coRelatoreLoggato.getIdUtente()));
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment());
                 setBottomNavigation(new ListaTesiFragment(), new SegnalazioneChatFragment(), new HomeFragment(), new TesistiRelatoreFragment());
             }
@@ -71,6 +75,9 @@ public class LoggedActivity extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+
+
     }
 
     private void setBottomNavigation(Fragment thesisFragment, Fragment messagesFragment, Fragment homeFragment, Fragment studentFragment) {

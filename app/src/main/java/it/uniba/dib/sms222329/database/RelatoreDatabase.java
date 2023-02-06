@@ -3,6 +3,7 @@ package it.uniba.dib.sms222329.database;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,14 +89,14 @@ public class RelatoreDatabase {
     public static Relatore IstanziaRelatore(UtenteRegistrato account, Database dbClass){
         Relatore relatoreLog = new Relatore();
 
-        String query =  "SELECT u." + Database.UTENTI_ID + ", r." + Database.RELATORE_ID + ", " + Database.RELATORE_MATRICOLA + ", " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + ", " + Database.UTENTI_PASSWORD + ", " + Database.UTENTI_CODICEFISCALE + " " +
+        String query =  "SELECT r." + Database.RELATORE_UTENTEID + ", r." + Database.RELATORE_ID + ", " + Database.RELATORE_MATRICOLA + ", " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + ", " + Database.UTENTI_PASSWORD + ", " + Database.UTENTI_CODICEFISCALE + " " +
                         "FROM " + Database.UTENTI + " u, " + Database.RELATORE + " r " +
-                        "WHERE u." + Database.UTENTI_ID + "=r." + Database.RELATORE_UTENTEID + " AND " + Database.UTENTI_EMAIL + " = '" + account.getEmail() + "';";
+                        "WHERE u." + Database.UTENTI_ID + "=r." + Database.RELATORE_UTENTEID + ";";
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();
 
-        relatoreLog.setIdUtente(cursore.getInt(cursore.getColumnIndexOrThrow(Database.UTENTI_ID)));
+        relatoreLog.setIdUtente(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RELATORE_UTENTEID)));
         relatoreLog.setIdRelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RELATORE_ID)));
         relatoreLog.setMatricola(cursore.getString(cursore.getColumnIndexOrThrow(Database.RELATORE_MATRICOLA)));
         relatoreLog.setNome(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_NOME)));

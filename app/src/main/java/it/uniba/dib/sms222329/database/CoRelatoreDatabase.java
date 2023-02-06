@@ -57,14 +57,14 @@ public class CoRelatoreDatabase {
     public static CoRelatore IstanziaCoRelatore(UtenteRegistrato account, Database dbClass){
         CoRelatore CorelatoreLog = new CoRelatore();
 
-        String query =  "SELECT u." + Database.UTENTI_ID + ", c." + Database.CORELATORE_ID + ", " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + ", " + Database.UTENTI_PASSWORD + ", " + Database.CORELATORE_ORGANIZZAZIONE + ", " + Database.UTENTI_CODICEFISCALE + " " +
+        String query =  "SELECT c." + Database.CORELATORE_UTENTEID + ", c." + Database.CORELATORE_ID + ", " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + ", " + Database.UTENTI_PASSWORD + ", " + Database.CORELATORE_ORGANIZZAZIONE + ", " + Database.UTENTI_CODICEFISCALE + " " +
                         "FROM " + Database.UTENTI + " u, " + Database.CORELATORE + " c " +
                         "WHERE u." + Database.UTENTI_ID + "=c." + Database.CORELATORE_UTENTEID + " AND " + Database.UTENTI_EMAIL + " = '" + account.getEmail() + "';";
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();
 
-        CorelatoreLog.setIdUtente(cursore.getInt(cursore.getColumnIndexOrThrow(Database.UTENTI_ID)));
+        CorelatoreLog.setIdUtente(cursore.getInt(cursore.getColumnIndexOrThrow(Database.CORELATORE_UTENTEID)));
         CorelatoreLog.setIdCorelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.CORELATORE_ID)));
         CorelatoreLog.setNome(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
         CorelatoreLog.setCognome(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)));
