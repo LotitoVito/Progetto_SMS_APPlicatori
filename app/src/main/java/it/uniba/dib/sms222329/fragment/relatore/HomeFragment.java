@@ -59,13 +59,6 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_relatore, container, false);
-
-        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.navigation);
-        int selectedItemId = bottomNavigationView.getSelectedItemId();
-        if(selectedItemId != R.id.navigation_home) {
-            bottomNavigationView.getMenu().findItem(R.id.navigation_home).setChecked(true);
-        }
-
         return view;
     }
 

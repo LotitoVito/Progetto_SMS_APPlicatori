@@ -19,7 +19,7 @@
     <item
         android:id="@+id/navigation_student"
         android:icon="@drawable/ic_profile"
-        android:title="@string/mystudent" />
+        android:title="@string/mythesis" />
 
     <item
         android:id="@+id/navigation_camera"

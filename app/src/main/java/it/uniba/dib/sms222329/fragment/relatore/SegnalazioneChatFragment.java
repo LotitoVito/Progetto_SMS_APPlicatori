@@ -40,11 +40,6 @@ public class SegnalazioneChatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.navigation);
-        int selectedItemId = bottomNavigationView.getSelectedItemId();
-        if(selectedItemId != R.id.navigation_messages) {
-            bottomNavigationView.getMenu().findItem(R.id.navigation_messages).setChecked(true);
-        }
 
         return inflater.inflate(R.layout.fragment_segnalazione_chat_relatore, container, false);
     }

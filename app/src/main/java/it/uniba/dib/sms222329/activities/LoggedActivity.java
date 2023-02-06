@@ -69,7 +69,8 @@ public class LoggedActivity extends AppCompatActivity {
                 Utility.accountLoggato = Utility.CORELATORE;
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment());
                 setBottomNavigation(new ListaTesiFragment(), new SegnalazioneChatFragment(), new HomeFragment(), new TesistiRelatoreFragment());
-            }else if(utenteLoggato.getEmail().compareTo("guest")==0) {
+            }
+            else if(utenteLoggato.getEmail().compareTo("guest")==0) {
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new GuestTesiFragment());
                 setGuestBottomNavigation(new GuestTesiFragment());
             }
@@ -82,10 +83,7 @@ public class LoggedActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.navigation);
 
-        if(utenteLoggato.getTipoUtente() == Utility.TESISTA) {
-           bottomNavigationView.getMenu().clear();
-           bottomNavigationView.inflateMenu(R.menu.nav_student);
-        }
+        bottomNavigationView.inflateMenu(R.menu.navigation);
 
         // Set a listener for item selection
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -106,7 +104,6 @@ public class LoggedActivity extends AppCompatActivity {
                 case R.id.navigation_student:
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, studentFragment);
                     setTitle(R.string.mystudent);
-                    if(utenteLoggato.getTipoUtente() == Utility.TESISTA) setTitle(R.string.mythesis);
                     return true;
                 case R.id.navigation_camera:
                     scanQR();
@@ -114,9 +111,7 @@ public class LoggedActivity extends AppCompatActivity {
             }
             return false;
         });
-
     }
-
     private void setGuestBottomNavigation(Fragment thesisFragment) {
         bottomNavigationView = findViewById(R.id.navigation);
 
