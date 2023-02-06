@@ -59,7 +59,7 @@ public class TesiSceltaDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues tesiSceltaCv = new ContentValues();
 
-        tesiSceltaCv.put(Database.TESISCELTA_CORELATOREID, tesi.getStatoCorelatore());
+        tesiSceltaCv.put(Database.TESISCELTA_STATOCORELATORE, tesi.getStatoCorelatore());
 
         long updateTesiScelta = db.update(Database.TESISCELTA, tesiSceltaCv, Database.TESISCELTA_ID + "=" + tesi.getIdTesiScelta(), null);
         if(updateTesiScelta != -1){
@@ -72,7 +72,7 @@ public class TesiSceltaDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues tesiSceltaCv = new ContentValues();
 
-        tesiSceltaCv.put(Database.TESISCELTA_CORELATOREID, tesi.getStatoCorelatore());
+        tesiSceltaCv.put(Database.TESISCELTA_STATOCORELATORE, tesi.getStatoCorelatore());
 
         long updateTesiScelta = db.update(Database.TESISCELTA, tesiSceltaCv, Database.TESISCELTA_ID + "=" + tesi.getIdTesiScelta(), null);
         if(updateTesiScelta != -1){

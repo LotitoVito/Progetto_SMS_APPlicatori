@@ -2,6 +2,7 @@ package it.uniba.dib.sms222329.classi;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.time.LocalDate;
@@ -91,6 +92,8 @@ public class TesiScelta extends Tesi{
         Cursor cursore = dbClass.RicercaDato("SELECT c." + Database.CORELATORE_ID + " FROM " + Database.CORELATORE + " c, " + Database.UTENTI + " u " +
                 "WHERE c." + Database.CORELATORE_UTENTEID + "=u." + Database.UTENTI_ID + " AND " + Database.UTENTI_EMAIL + "='" + emailCorelatore + "';");
         cursore.moveToFirst();
+
+        Log.d("test", String.valueOf(cursore.getInt(cursore.getColumnIndexOrThrow(Database.CORELATORE_ID))));
 
         try{
             this.idCorelatore = cursore.getInt(cursore.getColumnIndexOrThrow(Database.CORELATORE_ID));

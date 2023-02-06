@@ -25,11 +25,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Ricevimento;
+import it.uniba.dib.sms222329.classi.Task;
 import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.database.RicevimentoDatabase;
 import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
 
 public class CreaRicevimentoFragment extends Fragment {
@@ -37,6 +40,7 @@ public class CreaRicevimentoFragment extends Fragment {
     //Variabili e Oggetti
     private Database db;
     private Ricevimento richiesta;
+    private Task task;
     private LocalDate dataSelezionata;
     private LocalTime orarioSelezionato;
 
@@ -46,7 +50,9 @@ public class CreaRicevimentoFragment extends Fragment {
     private EditText ora;
     private Button invia;
 
-    public CreaRicevimentoFragment() {}
+    public CreaRicevimentoFragment(Task task) {
+        this.task = task;
+    }
 
     public CreaRicevimentoFragment(Ricevimento richiesta) {
         this.richiesta = richiesta;
@@ -104,11 +110,21 @@ public class CreaRicevimentoFragment extends Fragment {
 
         invia.setOnClickListener(view1 -> {
             if(LocalDate.now().compareTo(dataSelezionata) < 0){
-                if(richiesta.ModificaRicevimento(db, dataSelezionata, orarioSelezionato)){
-                    Toast.makeText(getActivity().getApplicationContext(), "Risposta inviata con successo", Toast.LENGTH_SHORT).show();
-                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new HomeFragment());
+                if (richiesta != null) {
+                    if(richiesta.ModificaRicevimento(db, dataSelezionata, orarioSelezionato)){
+                        Toast.makeText(getActivity().getApplicationContext(), "Risposta inviata con successo", Toast.LENGTH_SHORT).show();
+                        Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new HomeFragment());
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                    Ricevimento richiesta = new Ricevimento(dataSelezionata, orarioSelezionato, task.getIdTask(), Ricevimento.IN_ATTESA_RELATORE, messaggio.getText().toString().trim());
+                    if(RicevimentoDatabase.RichiestaRicevimento(db, richiesta)){
+                        Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
+                        Utility.closeFragment(getActivity());
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                    }
                 }
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), "La data scelta è uguale o inferiore ad oggi", Toast.LENGTH_SHORT).show();
@@ -128,7 +144,5 @@ public class CreaRicevimentoFragment extends Fragment {
             data.setText(String.valueOf(richiesta.getData()));
             ora.setText(String.valueOf(richiesta.getOrario()));
         }
-
-
     }
 }

@@ -27,6 +27,7 @@ import it.uniba.dib.sms222329.classi.Tesista;
 
 public class Utility {
 
+    public static final int GUEST = 0;
     public static final int TESISTA = 1;
     public static final int RELATORE = 2;
     public static final int CORELATORE = 3;

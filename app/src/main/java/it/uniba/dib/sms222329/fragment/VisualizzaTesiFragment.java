@@ -105,6 +105,10 @@ public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
         qrCode = getView().findViewById(R.id.qrCode);
         share = getView().findViewById(R.id.condividi);
         creaSegnalazione = getView().findViewById(R.id.crea_segnalazione);
+
+        if(Utility.accountLoggato == Utility.GUEST){
+            creaSegnalazione.setVisibility(View.GONE);
+        }
     }
 
     private void SetTextAll(){

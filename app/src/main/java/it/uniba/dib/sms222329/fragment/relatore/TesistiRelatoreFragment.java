@@ -29,11 +29,15 @@ public class TesistiRelatoreFragment extends Fragment {
 
     //Variabili e Oggetti
     private Database db;
+    private int defaultColor;
+    private int u_defaultColor;
 
     //View Items
     private ListView listView;
     private TextView richieste;
     private TextView tesisti;
+    private View u_richieste;
+    private  View u_tesisti;
 
     public TesistiRelatoreFragment() {}
 
@@ -49,35 +53,42 @@ public class TesistiRelatoreFragment extends Fragment {
 
         Init();
 
-        View u_richieste = getActivity().findViewById(R.id.u_richieste);
-        View u_tesisti = getActivity().findViewById(R.id.u_tesisti);
+        u_richieste = getActivity().findViewById(R.id.u_richieste);
+        u_tesisti = getActivity().findViewById(R.id.u_tesisti);
 
-        int defaultColor = richieste.getTextColors().getDefaultColor();
-        int u_defaultColor = view.getDrawingCacheBackgroundColor();
+        defaultColor = richieste.getTextColors().getDefaultColor();
+        u_defaultColor = view.getDrawingCacheBackgroundColor();
 
         richieste.setTextColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
         u_richieste.setBackgroundColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
-        CaricaListaRichieste();
+
+        if(Utility.accountLoggato == Utility.RELATORE){
+            CaricaListaRichiesteRelatore();
+        } else {
+            CaricaListaRichiesteCorelatore();
+        }
 
         richieste.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tesisti.setTextColor(defaultColor);
-                richieste.setTextColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
-                u_richieste.setBackgroundColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
-                u_tesisti.setBackgroundColor(u_defaultColor);
-                CaricaListaRichieste();
+                SettaRichieste();
+                if(Utility.accountLoggato == Utility.RELATORE){
+                    CaricaListaRichiesteRelatore();
+                } else {
+                    CaricaListaRichiesteCorelatore();
+                }
             }
         });
 
         tesisti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tesisti.setTextColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
-                richieste.setTextColor(defaultColor);
-                u_tesisti.setBackgroundColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
-                u_richieste.setBackgroundColor(u_defaultColor);
-                CaricaListaTesisti();
+                SettaTesisti();
+                if(Utility.accountLoggato == Utility.RELATORE) {
+                    CaricaListaTesistiRelatore();
+                } else {
+                    CaricaListaTesistiCorelatore();
+                }
             }
         });
 
@@ -90,15 +101,41 @@ public class TesistiRelatoreFragment extends Fragment {
         tesisti = getActivity().findViewById(R.id.tesisti);
     }
 
-    private void CaricaListaRichieste(){
+    private void CaricaListaRichiesteRelatore(){
         List<RichiestaTesi> lista = ListaRichiesteTesiDatabase.ListaRichiesteTesiRelatore(db, Utility.relatoreLoggato.getIdRelatore());
         ListaRichiesteAdapter adapter = new ListaRichiesteAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
         listView.setAdapter(adapter);
     }
 
-    private void CaricaListaTesisti(){
+    private void CaricaListaRichiesteCorelatore(){
+        List<TesiScelta> lista = ListaTesiScelteDatabase.ListaRichiesteTesiCorelatore(db, Utility.coRelatoreLoggato.getIdCorelatore());
+        ListaTesistiRelatoreAdapter adapter = new ListaTesistiRelatoreAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager(), true);
+        listView.setAdapter(adapter);
+    }
+
+    private void CaricaListaTesistiRelatore(){
         List<TesiScelta> lista = ListaTesiScelteDatabase.ListaTesiScelteDatabase(db);
         ListaTesistiRelatoreAdapter adapter = new ListaTesistiRelatoreAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
         listView.setAdapter(adapter);
+    }
+
+    private void CaricaListaTesistiCorelatore(){
+        List<TesiScelta> lista = ListaTesiScelteDatabase.ListaTesistiCorelatore(db, Utility.coRelatoreLoggato.getIdCorelatore());
+        ListaTesistiRelatoreAdapter adapter = new ListaTesistiRelatoreAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+        listView.setAdapter(adapter);
+    }
+
+    private void SettaRichieste(){
+        tesisti.setTextColor(defaultColor);
+        richieste.setTextColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
+        u_richieste.setBackgroundColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
+        u_tesisti.setBackgroundColor(u_defaultColor);
+    }
+
+    private void SettaTesisti(){
+        tesisti.setTextColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
+        richieste.setTextColor(defaultColor);
+        u_tesisti.setBackgroundColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
+        u_richieste.setBackgroundColor(u_defaultColor);
     }
 }

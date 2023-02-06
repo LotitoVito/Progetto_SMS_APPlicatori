@@ -80,7 +80,7 @@ public class DettagliTaskFragment extends Fragment {
         SetTextAll();
 
         creaRicevimento.setOnClickListener(view -> {
-            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new CreaRicevimentoFragment());
+            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new CreaRicevimentoFragment(task));
         });
 
         scaricaMateriale.setOnClickListener(view -> {
@@ -127,13 +127,19 @@ public class DettagliTaskFragment extends Fragment {
 
         caricaMateriale.setVisibility(View.GONE);
         modificaTask.setVisibility(View.GONE);
-        if(Utility.accountLoggato == Utility.RELATORE){
+        if(Utility.accountLoggato == Utility.RELATORE || Utility.accountLoggato == Utility.CORELATORE){
             label.setVisibility(View.GONE);
             creaRicevimento.setVisibility(View.GONE);
         }
 
         sliderStato.setValue((float) (25.0 * task.getStato()));
         sliderStato.setEnabled(false);
+    }
+
+    private void SetTextAll() {
+        titoloTask.setText(task.getTitolo());
+        descrizioneTask.setText(task.getDescrizione());
+        dateInizioFine.setText("Data inizio: " + task.getDataInizio() + " - Data fine: " + task.getDataFine());
 
         if(sliderStato.getValue()==0){
             testoStato.setText("Assegnato");
@@ -146,25 +152,6 @@ public class DettagliTaskFragment extends Fragment {
         } else if(sliderStato.getValue()==100){
             testoStato.setText("Completato");
         }
-    }
-
-    private void SetTextAll() {
-        titoloTask.setText(task.getTitolo());
-        descrizioneTask.setText(task.getDescrizione());
-
-        if(task.getDataFine() != null){
-            dateInizioFine.setText("Data inizio: " + task.getDataInizio() + " - Data fine: " + task.getDataFine());
-        } else{
-            dateInizioFine.setText("Data inizio: " + task.getDataInizio());
-        }
-
-        /*if(task.getStato() == Task.ASSEGNATO){
-            testoStato.setText("Assegnato");
-        } else if(task.getStato() == Task.IN_COMPLEMAMENTO){
-            testoStato.setText("In completamento");
-        } else if(task.getStato() == Task.COMPLETATO){
-            testoStato.setText("Completato");
-        }*/
 
         materiale.setText(String.valueOf(task.getLinkMateriale()));
     }
