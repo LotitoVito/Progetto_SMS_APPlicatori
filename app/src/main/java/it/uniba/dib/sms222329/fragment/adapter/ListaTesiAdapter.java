@@ -2,6 +2,7 @@ package it.uniba.dib.sms222329.fragment.adapter;
 
 import androidx.fragment.app.FragmentManager;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.fragment.VisualizzaTesiFragment;
 import it.uniba.dib.sms222329.fragment.relatore.CreaModificaTesiFragment;
+import it.uniba.dib.sms222329.fragment.tesista.RichiestaTesiFragment;
 
 public class ListaTesiAdapter extends BaseAdapter {
 
@@ -77,11 +79,18 @@ public class ListaTesiAdapter extends BaseAdapter {
         //Edit Button
         Button editButton = convertView.findViewById(R.id.modifica);
 
-        if(tesi.get(i).getIdRelatore() != Utility.relatoreLoggato.getIdRelatore()){
+        if(Utility.accountLoggato == Utility.TESISTA){
+            editButton.setText("Richiedi");
+            editButton.setOnClickListener(view -> {
+                Utility.replaceFragment(this.fragmentManager, R.id.container, new RichiestaTesiFragment(tesi.get(i)));
+            });
+        } else if (Utility.accountLoggato == Utility.RELATORE && tesi.get(i).getIdRelatore() == Utility.relatoreLoggato.getIdRelatore()){
+            editButton.setOnClickListener(view ->{
+                Utility.replaceFragment( this.fragmentManager, R.id.container, new CreaModificaTesiFragment(this.tesi.get(i)));
+            });
+        } else {
             editButton.setVisibility(View.GONE);
         }
-
-        editButton.setOnClickListener(view1 -> Utility.replaceFragment( this.fragmentManager, R.id.container, new CreaModificaTesiFragment(this.tesi.get(i))));
 
         //Detail Button
         Button detailButton = convertView.findViewById(R.id.visualizza);

@@ -31,7 +31,7 @@
                 android:layout_marginBottom="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/nome_task"
+                    android:id="@+id/titolo_task"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -68,7 +68,7 @@
                 android:layout_marginBottom="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/data_richiesta"
+                    android:id="@+id/data_fine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
@@ -82,18 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/orario"
-                android:layout_marginBottom="16dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ora_richiesta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:allowClickWhenDisabled="true"
-                    android:inputType="text"
-                    tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginBottom="16dp"/>
 
             <androidx.constraintlayout.utils.widget.MotionLabel
                 android:layout_width="wrap_content"
@@ -101,7 +90,7 @@
                 android:text="@string/stato" />
 
 
-            <com.google.android.material.slider.RangeSlider
+            <com.google.android.material.slider.Slider
                 android:id="@+id/slider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,7 +100,16 @@
                 android:stepSize="25.0"
                 />
 
-
+            <TextView
+                android:id="@+id/stato"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:labelFor="@id/slider"
+                />
 
             <androidx.constraintlayout.utils.widget.MotionLabel
                 android:layout_width="wrap_content"

@@ -66,10 +66,14 @@ public class ListaTaskAdapter extends BaseAdapter {
         TextView stato = convertView.findViewById(R.id.sottotitolo);
         if(task.get(i).getStato() == Task.ASSEGNATO){
             stato.setText("Assegnato");
+        } else if(task.get(i).getStato() == Task.INIZIATO){
+            stato.setText("Iniziato");
         } else if(task.get(i).getStato() == Task.IN_COMPLEMAMENTO){
             stato.setText("In completamento");
+        } else if(task.get(i).getStato() == Task.IN_REVISIONE){
+            stato.setText("In revisione");
         } else if(task.get(i).getStato() == Task.COMPLETATO){
-            stato.setText("Completata");
+            stato.setText("Completato");
         }
 
         //EditButton

@@ -7,9 +7,11 @@ import it.uniba.dib.sms222329.database.TaskDatabase;
 
 public class Task {
 
-    public static final int ASSEGNATO = 1;
+    public static final int ASSEGNATO = 0;
+    public static final int INIZIATO = 1;
     public static final int IN_COMPLEMAMENTO = 2;
-    public static final int COMPLETATO = 3;
+    public static final int IN_REVISIONE = 3;
+    public static final int COMPLETATO = 4;
 
     private int idTask;
     private String titolo;
@@ -33,10 +35,11 @@ public class Task {
         this.idTesiScelta = idTesiScelta;
     }
 
-    public Task(String titolo, String descrizione, byte[] linkMateriale, int idTesiScelta) {
+    public Task(String titolo, String descrizione, LocalDate dataFine, byte[] linkMateriale, int idTesiScelta) {
         this.titolo = titolo;
         this.descrizione = descrizione;
         this.dataInizio = LocalDate.now();
+        this.dataFine = dataFine;
         this.linkMateriale = linkMateriale;
         this.stato = ASSEGNATO;
         this.idTesiScelta = idTesiScelta;
@@ -100,13 +103,11 @@ public class Task {
         this.idTesiScelta = idTesiScelta;
     }
 
-    public boolean ModificaTask(String titolo, String descrizione, int stato, Database db){
+    public boolean ModificaTask(String titolo, String descrizione, LocalDate dataFine, int stato, Database db){
         this.titolo = titolo;
         this.descrizione = descrizione;
+        this.dataFine = dataFine;
         this.stato = stato;
-        if(stato == COMPLETATO){
-            this.dataFine = LocalDate.now();
-        }
 
         if(TaskDatabase.ModificaTask(db, this)){
             return true;
@@ -116,9 +117,6 @@ public class Task {
 
     public boolean ModificaTask(int stato, Database db){
         this.stato = stato;
-        if(stato == COMPLETATO){
-            this.dataFine = LocalDate.now();
-        }
 
         if(TaskDatabase.ModificaTask(db, this)){
             return true;

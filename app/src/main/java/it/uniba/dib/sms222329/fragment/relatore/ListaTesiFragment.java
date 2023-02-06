@@ -40,7 +40,11 @@ public class ListaTesiFragment extends Fragment {
     private SearchView barraRicerca;
 
     public ListaTesiFragment() {
-        this.queryFiltri = "SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_RELATOREID + "=" + Utility.relatoreLoggato.getIdRelatore() + ";";
+        if(Utility.accountLoggato == Utility.RELATORE){
+            this.queryFiltri = "SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_RELATOREID + "=" + Utility.relatoreLoggato.getIdRelatore() + ";";
+        } else {
+            this.queryFiltri = "SELECT * FROM " + Database.TESI + ";";
+        }
     }
 
     public ListaTesiFragment(String queryFiltri) {
@@ -103,7 +107,11 @@ public class ListaTesiFragment extends Fragment {
         filtra = getView().findViewById(R.id.filtra);
         listView = getActivity().findViewById(R.id.tesiList);
         barraRicerca = getView().findViewById(R.id.search_view);
+
         barraRicerca.setQueryHint("Inserisci il titolo della tesi");
+        if(Utility.accountLoggato == Utility.TESISTA){
+            addButton.setVisibility(View.GONE);
+        }
     }
 
     private void RefreshList(){

@@ -34,20 +34,6 @@
             android:text="Descrizione tesi"
             android:textSize="16sp" />
 
-        <androidx.constraintlayout.utils.widget.MotionLabel
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/argomenti" />
-
-        <TextView
-            android:id="@+id/riassunto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:text="abstract tesi"
-            android:textSize="18sp" />
-
 
         <androidx.constraintlayout.utils.widget.MotionLabel
             android:layout_width="wrap_content"
@@ -112,11 +98,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
-
-
-
-
         <Button
             android:id="@+id/invia"
             android:layout_width="wrap_content"
@@ -125,8 +106,6 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:layout_marginEnd="8dp"/>
-
-
     </LinearLayout>
 
 </FrameLayout>

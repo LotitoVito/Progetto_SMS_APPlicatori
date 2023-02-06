@@ -17,6 +17,7 @@ import androidx.constraintlayout.utils.widget.MotionLabel;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.slider.RangeSlider;
+import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
@@ -50,7 +52,7 @@ public class DettagliTaskFragment extends Fragment {
     private TextView titoloTask;
     private TextView descrizioneTask;
     private TextView dateInizioFine;
-    private RangeSlider sliderStato;
+    private Slider sliderStato;
     private TextView testoStato;
     private TextView materiale;
     private Button scaricaMateriale;
@@ -128,6 +130,21 @@ public class DettagliTaskFragment extends Fragment {
         if(Utility.accountLoggato == Utility.RELATORE){
             label.setVisibility(View.GONE);
             creaRicevimento.setVisibility(View.GONE);
+        }
+
+        sliderStato.setValue((float) (25.0 * task.getStato()));
+        sliderStato.setEnabled(false);
+
+        if(sliderStato.getValue()==0){
+            testoStato.setText("Assegnato");
+        } else if(sliderStato.getValue()==25){
+            testoStato.setText("Iniziato");
+        } else if(sliderStato.getValue()==50){
+            testoStato.setText("In completamento");
+        } else if(sliderStato.getValue()==75){
+            testoStato.setText("In revisione");
+        } else if(sliderStato.getValue()==100){
+            testoStato.setText("Completato");
         }
     }
 

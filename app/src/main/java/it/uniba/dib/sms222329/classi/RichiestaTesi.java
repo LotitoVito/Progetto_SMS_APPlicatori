@@ -17,6 +17,8 @@ public class RichiestaTesi {
     private int accettata;
     private String risposta;
 
+    public RichiestaTesi(){}
+
     public RichiestaTesi(int idRichiesta, String messaggio, String capacitàStudente, int idTesi, int idTesista, int accettata, String risposta) {
         this.idRichiesta = idRichiesta;
         this.messaggio = messaggio;
@@ -27,7 +29,13 @@ public class RichiestaTesi {
         this.risposta = risposta;
     }
 
-    public RichiestaTesi(){}
+    public RichiestaTesi(String messaggio, String capacitàStudente, int idTesi, int idTesista) {
+        this.messaggio = messaggio;
+        this.capacitàStudente = capacitàStudente;
+        this.idTesi = idTesi;
+        this.idTesista = idTesista;
+        this.accettata = IN_ATTESA;
+    }
 
     public int getIdRichiesta() {
         return idRichiesta;
