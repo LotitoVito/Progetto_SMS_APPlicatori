@@ -64,6 +64,7 @@ public class ModificaTaskFragment extends Fragment {
     private TextView materiale;
     private Button caricaMateriale;
     private Button modificaTask;
+    private MotionLabel labelDataFine;
 
     public ModificaTaskFragment(Task task) {
         this.task = task;
@@ -114,7 +115,7 @@ public class ModificaTaskFragment extends Fragment {
 
         modificaTask.setOnClickListener(view -> {
             if(Utility.accountLoggato == Utility.RELATORE){
-                if(task.ModificaTask(titoloTask.getText().toString(), descrizioneTask.getText().toString(), dataSelezionata,  0, db)){        //settare slider
+                if(task.ModificaTask(titoloTask.getText().toString(), descrizioneTask.getText().toString(), dataSelezionata, (int) (sliderStato.getValue()/25), db)){        //settare slider
                     Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
@@ -122,7 +123,7 @@ public class ModificaTaskFragment extends Fragment {
             }
 
             if(Utility.accountLoggato == Utility.TESISTA){
-                if(task.ModificaTask(0, db)){        //settare slider
+                if(task.ModificaTask((int) (sliderStato.getValue()/25), db)){        //settare slider
                     Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
@@ -147,10 +148,12 @@ public class ModificaTaskFragment extends Fragment {
         materiale = getView().findViewById(R.id.materiale_nome);
         caricaMateriale = getView().findViewById(R.id.carica_materiale);
         modificaTask = getView().findViewById(R.id.salva_task);
+        labelDataFine = getView().findViewById(R.id.label_data_fine);
 
         if(Utility.accountLoggato == Utility.TESISTA){
             titoloTask.setVisibility(View.GONE);
             descrizioneTask.setVisibility(View.GONE);
+            labelDataFine.setVisibility(View.GONE);
             dataFine.setVisibility(View.GONE);
         }
 

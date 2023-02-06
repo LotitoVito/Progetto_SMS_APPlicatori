@@ -3,10 +3,13 @@ package it.uniba.dib.sms222329.database;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.RichiestaTesi;
+import it.uniba.dib.sms222329.classi.TesiScelta;
 
 public class ListaRichiesteTesiDatabase {
 

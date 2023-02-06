@@ -23,11 +23,18 @@ public class ListaTesistiRelatoreAdapter extends BaseAdapter {
     private List<TesiScelta> tesiScelte;
     private LayoutInflater inflater;
     private FragmentManager manager;
+    private boolean richiesta;
 
     public ListaTesistiRelatoreAdapter(Context context, List<TesiScelta> tesiScelte, FragmentManager manager) {
         this.tesiScelte = tesiScelte;
         this.inflater = LayoutInflater.from(context);
         this.manager = manager;
+    }
+    public ListaTesistiRelatoreAdapter(Context context, List<TesiScelta> tesiScelte, FragmentManager manager, boolean richiesta) {
+        this.tesiScelte = tesiScelte;
+        this.inflater = LayoutInflater.from(context);
+        this.manager = manager;
+        this.richiesta = richiesta;
     }
 
     @Override
@@ -56,15 +63,22 @@ public class ListaTesistiRelatoreAdapter extends BaseAdapter {
         idTesista.setText(String.valueOf(tesiScelte.get(i).getIdTesista())); //sostituisci con nome
 
         //Tesi
-        TextView matricola = convertView.findViewById(R.id.descrizione);
-        matricola.setText(String.valueOf(tesiScelte.get(i).getIdTesi()));
+        TextView tesi = convertView.findViewById(R.id.descrizione);
+        tesi.setText(String.valueOf(tesiScelte.get(i).getIdTesi()));
 
-        //Data pubblicazione
-        TextView dataPubblicazione = convertView.findViewById(R.id.sottotitolo);
-        if(tesiScelte.get(i).getDataPubblicazione() != null){
-            dataPubblicazione.setText(String.valueOf(tesiScelte.get(i).getDataPubblicazione()));
+
+        if(Utility.accountLoggato == Utility.RELATORE){
+            //Data pubblicazione
+            TextView dataPubblicazione = convertView.findViewById(R.id.sottotitolo);
+            if(tesiScelte.get(i).getDataPubblicazione() != null){
+                dataPubblicazione.setText(String.valueOf(tesiScelte.get(i).getDataPubblicazione()));
+            } else {
+                dataPubblicazione.setVisibility(View.GONE);
+            }
         } else {
-            dataPubblicazione.setVisibility(View.GONE);
+            //Relatore
+            TextView relatore = convertView.findViewById(R.id.sottotitolo);
+            relatore.setText("da fare");
         }
 
         //EditButton
@@ -74,7 +88,12 @@ public class ListaTesistiRelatoreAdapter extends BaseAdapter {
         //DetailButton
         Button dettagli = convertView.findViewById(R.id.visualizza);
         dettagli.setOnClickListener(view -> {
-            Utility.replaceFragment(manager, R.id.container, new TesistaRelatoreFragment(tesiScelte.get(i)));
+            if(Utility.accountLoggato == Utility.RELATORE){
+                Utility.replaceFragment(manager, R.id.container, new TesistaRelatoreFragment(tesiScelte.get(i)));
+            } else {
+                Utility.replaceFragment(manager, R.id.container, new TesistaRelatoreFragment(tesiScelte.get(i), richiesta));
+            }
+
         });
 
         return convertView;

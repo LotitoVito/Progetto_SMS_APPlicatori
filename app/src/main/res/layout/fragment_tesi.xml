@@ -152,6 +152,7 @@
                 android:textSize="16sp" />
 
             <androidx.constraintlayout.utils.widget.MotionLabel
+                android:id="@+id/label_corelatore"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/co_relatore" />

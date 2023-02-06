@@ -60,6 +60,10 @@ public class ListaTaskFragment extends Fragment {
         db = new Database(getActivity().getApplicationContext());
         listaTask = getView().findViewById(R.id.lista_task);
         creaTask = getView().findViewById(R.id.crea_task);
+
+        if (Utility.accountLoggato == Utility.TESISTA) {
+            creaTask.setVisibility(View.GONE);
+        }
     }
 
     private void RefreshList(){

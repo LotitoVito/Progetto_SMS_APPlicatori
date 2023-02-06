@@ -41,4 +41,36 @@ public class ListaTesiScelteDatabase {
         return listaTesiScelte;
     }
 
+    public static List<TesiScelta> ListaRichiesteTesiCorelatore(Database dbClass, int idCorelatore) {
+        String query = "SELECT * FROM " + Database.TESISCELTA + " " +
+                "WHERE " + Database.TESISCELTA_CORELATOREID + "=" + idCorelatore + " " +
+                "AND " + Database.TESISCELTA_STATOCORELATORE + "=" + TesiScelta.IN_ATTESA + ";";
+
+        SQLiteDatabase db = dbClass.getReadableDatabase();
+        Cursor cursore = db.rawQuery(query, null);
+
+        ArrayList<TesiScelta> listaRichieste = new ArrayList<TesiScelta>();
+
+        while (cursore.moveToNext()) {
+            TesiScelta richiestaTesi = new TesiScelta();
+
+            richiestaTesi.setIdTesiScelta(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_ID)));
+            richiestaTesi.setIdTesi(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_TESIID)));
+            richiestaTesi.setIdTesista(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_TESISTAID)));
+            richiestaTesi.setIdCorelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_CORELATOREID)));
+            richiestaTesi.setStatoCorelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_STATOCORELATORE)));
+            try{
+                LocalDate data = LocalDate.parse(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESISCELTA_DATAPUBBLICAZIONE)), Utility.convertFromStringDate);
+                richiestaTesi.setDataPubblicazione(data);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            richiestaTesi.setRiassunto(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESISCELTA_ABSTRACT)));
+
+            listaRichieste.add(richiestaTesi);
+
+        }
+        return listaRichieste;
+    }
+
 }

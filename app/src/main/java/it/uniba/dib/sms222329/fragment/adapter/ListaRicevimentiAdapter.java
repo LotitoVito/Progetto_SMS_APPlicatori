@@ -77,9 +77,13 @@ public class ListaRicevimentiAdapter extends BaseAdapter {
         //EditButton
         Button modifica = convertView.findViewById(R.id.modifica);
         modifica.setText("Rispondi");
-        if(ricevimenti.get(i).getAccettazione()==Ricevimento.ACCETTATO || ricevimenti.get(i).getAccettazione()==Ricevimento.IN_ATTESA_TESISTA || ricevimenti.get(i).getAccettazione()==Ricevimento.RIFIUTATO){
+        if(Utility.accountLoggato == Utility.CORELATORE ||
+                ricevimenti.get(i).getAccettazione()==Ricevimento.ACCETTATO || ricevimenti.get(i).getAccettazione()==Ricevimento.RIFIUTATO ||
+                (Utility.accountLoggato == Utility.TESISTA && ricevimenti.get(i).getAccettazione()==Ricevimento.IN_ATTESA_RELATORE) ||
+                (Utility.accountLoggato == Utility.RELATORE && ricevimenti.get(i).getAccettazione()==Ricevimento.IN_ATTESA_TESISTA)){
             modifica.setVisibility(View.GONE);
         }
+
         modifica.setOnClickListener(view -> {
             Utility.replaceFragment(manager, R.id.container, new RichiestaRicevimentoFragment(ricevimenti.get(i)));
         });

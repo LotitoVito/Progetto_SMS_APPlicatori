@@ -109,7 +109,7 @@ public class ListaTesiFragment extends Fragment {
         barraRicerca = getView().findViewById(R.id.search_view);
 
         barraRicerca.setQueryHint("Inserisci il titolo della tesi");
-        if(Utility.accountLoggato == Utility.TESISTA){
+        if(Utility.accountLoggato == Utility.TESISTA || Utility.accountLoggato == Utility.CORELATORE){
             addButton.setVisibility(View.GONE);
         }
     }

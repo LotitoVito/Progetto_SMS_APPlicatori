@@ -3,6 +3,7 @@ package it.uniba.dib.sms222329.fragment.relatore;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.constraintlayout.utils.widget.MotionLabel;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ public class TesistaRelatoreFragment extends Fragment {
     //Variabili e Oggetti
     private Database db;
     private TesiScelta tesiScelta;
+    private boolean richiesta;  //Usata per determinare se la view deve essere aprte come richiesta da accettare da parte del corelatore
 
     //View Items
     private TextView tesista;
@@ -48,9 +51,15 @@ public class TesistaRelatoreFragment extends Fragment {
     private TextView mostraTask;
     private Button scaricaTesi;
     private Button caricaTesi;
+    private MotionLabel labelCorelatore;
 
     public TesistaRelatoreFragment(TesiScelta tesiScelta) {
         this.tesiScelta = tesiScelta;
+    }
+
+    public TesistaRelatoreFragment(TesiScelta tesiScelta, boolean richiesta) {
+        this.tesiScelta = tesiScelta;
+        this.richiesta = richiesta;
     }
 
     @Override
@@ -67,22 +76,40 @@ public class TesistaRelatoreFragment extends Fragment {
         SetTextAll();
 
         aggiungiCorelatore.setOnClickListener(view -> {
-            if(db.VerificaDatoEsistente("SELECT " + Database.UTENTI_EMAIL + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + "='" + richiestaCorelatore.getText().toString().trim() + "';")){
-                if(tesiScelta.AggiungiCorelatore(db, richiestaCorelatore.getText().toString().trim())){
-                    Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
+            if(Utility.accountLoggato == Utility.CORELATORE){
+                if(tesiScelta.AccettaRichiesta(db)){
+                    Toast.makeText(getActivity().getApplicationContext(), "Richiesta accettata", Toast.LENGTH_SHORT).show();
+                    Utility.closeFragment(getActivity());
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Il corelatore inserito non esiste o errore imprevisto", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), " Operazione fallita", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(getActivity().getApplicationContext(), "Il corelatore inserito non esiste", Toast.LENGTH_SHORT).show();
+                if(db.VerificaDatoEsistente("SELECT " + Database.UTENTI_EMAIL + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + "='" + richiestaCorelatore.getText().toString().trim() + "';")){
+                    if(tesiScelta.AggiungiCorelatore(db, richiestaCorelatore.getText().toString().trim())){
+                        Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), "Il corelatore inserito non esiste o errore imprevisto", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Il corelatore inserito non esiste", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         rimuoviCorelatore.setOnClickListener(view -> {
-            if(tesiScelta.RimuoviCorelatore(db)){
-                Toast.makeText(getActivity().getApplicationContext(), "Corelatore rimosso con successo", Toast.LENGTH_SHORT).show();
+            if(Utility.accountLoggato == Utility.CORELATORE){
+                if(tesiScelta.RifiutaRichiesta(db)){
+                    Toast.makeText(getActivity().getApplicationContext(), "Richiesta rifiutata", Toast.LENGTH_SHORT).show();
+                    Utility.closeFragment(getActivity());
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                }
             } else {
-                Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                if(tesiScelta.RimuoviCorelatore(db)){
+                    Toast.makeText(getActivity().getApplicationContext(), "Corelatore rimosso con successo", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -123,33 +150,51 @@ public class TesistaRelatoreFragment extends Fragment {
         mostraTask = getView().findViewById(R.id.visualizza_task);
         scaricaTesi = getView().findViewById(R.id.scarica);
         caricaTesi = getView().findViewById(R.id.carica);
+        labelCorelatore = getView().findViewById(R.id.label_corelatore);
 
-        if(tesiScelta.getStatoCorelatore() == TesiScelta.ACCETTATO || tesiScelta.getStatoCorelatore() == TesiScelta.IN_ATTESA){
-            aggiungiCorelatore.setVisibility(View.GONE);
-            rimuoviCorelatore.setVisibility(View.VISIBLE);
+        if(Utility.accountLoggato != Utility.CORELATORE){
+            if(tesiScelta.getStatoCorelatore() == TesiScelta.ACCETTATO || tesiScelta.getStatoCorelatore() == TesiScelta.IN_ATTESA){
+                aggiungiCorelatore.setVisibility(View.GONE);
+                richiestaCorelatore.setVisibility(View.GONE);
+                rimuoviCorelatore.setVisibility(View.VISIBLE);
+            } else{
+                aggiungiCorelatore.setVisibility(View.VISIBLE);
+                rimuoviCorelatore.setVisibility(View.GONE);
+                corelatore.setVisibility(View.GONE);
+                emailCorelatore.setVisibility(View.GONE);
+            }
+        } else {
+            labelCorelatore.setVisibility(View.GONE);
+            corelatore.setVisibility(View.GONE);
+            emailCorelatore.setVisibility(View.GONE);
             richiestaCorelatore.setVisibility(View.GONE);
-        } else{
-            aggiungiCorelatore.setVisibility(View.VISIBLE);
-            rimuoviCorelatore.setVisibility(View.GONE);
+            if (richiesta) {
+                aggiungiCorelatore.setText("Accetta");
+                rimuoviCorelatore.setText("Rifiuta");
+                creaTask.setVisibility(View.GONE);
+                mostraTask.setVisibility(View.GONE);
+                scaricaTesi.setVisibility(View.GONE);
+                caricaTesi.setVisibility(View.GONE);
+            } else {
+                aggiungiCorelatore.setVisibility(View.GONE);
+                rimuoviCorelatore.setVisibility(View.GONE);
+            }
         }
     }
 
     private void SetTextAll(){
-
-
         //Corelatore
         Cursor cursore = db.RicercaDato("SELECT " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + " FROM " + Database.CORELATORE + " c, " + Database.UTENTI + " u " +
                 "WHERE u." + Database.UTENTI_ID + "=c." + Database.CORELATORE_UTENTEID + " AND c." + Database.CORELATORE_ID + "=" + tesiScelta.getIdCorelatore() + ";");
-        cursore.moveToFirst();
-        if(tesiScelta.getStatoCorelatore()==TesiScelta.ACCETTATO){
-            corelatore.setText(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
-            emailCorelatore.setText(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
-        } else if(tesiScelta.getStatoCorelatore()==TesiScelta.IN_ATTESA) {
-            corelatore.setText("In attesa di approvazione");
-            emailCorelatore.setText(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
-        } else {
-            corelatore.setVisibility(View.GONE);
-            emailCorelatore.setVisibility(View.GONE);
+        Log.d("test", String.valueOf(tesiScelta.getIdCorelatore()));
+        if(cursore.moveToFirst()){
+            if(tesiScelta.getStatoCorelatore()==TesiScelta.ACCETTATO){
+                corelatore.setText(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
+                emailCorelatore.setText(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
+            } else if(tesiScelta.getStatoCorelatore()==TesiScelta.IN_ATTESA) {
+                corelatore.setText("In attesa di approvazione");
+                emailCorelatore.setText(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
+            }
         }
     }
 }
