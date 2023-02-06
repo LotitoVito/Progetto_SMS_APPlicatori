@@ -127,7 +127,7 @@ public class DettagliTaskFragment extends Fragment {
 
         caricaMateriale.setVisibility(View.GONE);
         modificaTask.setVisibility(View.GONE);
-        if(Utility.accountLoggato == Utility.RELATORE){
+        if(Utility.accountLoggato == Utility.RELATORE || Utility.accountLoggato == Utility.CORELATORE){
             label.setVisibility(View.GONE);
             creaRicevimento.setVisibility(View.GONE);
         }

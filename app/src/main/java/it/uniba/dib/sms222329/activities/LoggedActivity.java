@@ -69,15 +69,13 @@ public class LoggedActivity extends AppCompatActivity {
                 setBottomNavigation(new ListaTesiFragment(), new SegnalazioneChatFragment(), new HomeFragment(), new TesistiRelatoreFragment());
             }
             else if(utenteLoggato.getEmail().compareTo("guest")==0) {
+                Utility.accountLoggato = Utility.GUEST;
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new GuestTesiFragment());
                 setGuestBottomNavigation(new GuestTesiFragment());
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
-
     }
 
     private void setBottomNavigation(Fragment thesisFragment, Fragment messagesFragment, Fragment homeFragment, Fragment studentFragment) {

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -34,6 +35,8 @@ public class SegnalazioneMessaggiFragment extends Fragment {
 
     //View Items
     private ListView listView;
+    private EditText messaggio;
+    private ImageButton sendMessage;
 
     public SegnalazioneMessaggiFragment(int idChat) {
         this.idChat = idChat;
@@ -49,10 +52,9 @@ public class SegnalazioneMessaggiFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        InitViewItems();
+        Init();
         refreshChat();
-        ImageButton sendMessage = getView().findViewById(R.id.send_button);
-        EditText messaggio = getView().findViewById(R.id.chat_input);
+
         sendMessage.setOnClickListener(view -> {
             if(!isEmptyTextbox(messaggio)){
                 SegnalazioneMessaggio messaggioOggetto = null;
@@ -60,6 +62,8 @@ public class SegnalazioneMessaggiFragment extends Fragment {
                     messaggioOggetto = new SegnalazioneMessaggio(idChat, messaggio.getText().toString(), Utility.relatoreLoggato.getIdUtente());
                 } else if(Utility.accountLoggato == Utility.TESISTA){
                     messaggioOggetto = new SegnalazioneMessaggio(idChat, messaggio.getText().toString(), Utility.tesistaLoggato.getIdUtente());
+                } else if(Utility.accountLoggato == Utility.CORELATORE){
+                    messaggioOggetto = new SegnalazioneMessaggio(idChat, messaggio.getText().toString(), Utility.coRelatoreLoggato.getIdUtente());
                 }
                 SegnalazioneDatabase.MessaggioChat(db, messaggioOggetto);
                 refreshChat();
@@ -74,9 +78,11 @@ public class SegnalazioneMessaggiFragment extends Fragment {
         return false;
     }
 
-    private void InitViewItems(){
+    private void Init(){
         db = new Database(getContext());
         listView = getView().findViewById(R.id.chat_list);
+        sendMessage = getView().findViewById(R.id.send_button);
+        messaggio = getView().findViewById(R.id.chat_input);
     }
 
     private void refreshChat(){
@@ -86,6 +92,8 @@ public class SegnalazioneMessaggiFragment extends Fragment {
             adapterLista = new ListaSegnalazioniMessaggiAdapter(getActivity().getApplicationContext(), listaSegnalazioni, Utility.relatoreLoggato.getIdUtente());
         } else if(Utility.accountLoggato == Utility.TESISTA){
             adapterLista = new ListaSegnalazioniMessaggiAdapter(getActivity().getApplicationContext(), listaSegnalazioni, Utility.tesistaLoggato.getIdUtente());
+        } else if(Utility.accountLoggato == Utility.CORELATORE){
+            adapterLista = new ListaSegnalazioniMessaggiAdapter(getActivity().getApplicationContext(), listaSegnalazioni, Utility.coRelatoreLoggato.getIdUtente());
         }
         listView.setAdapter(adapterLista);
     }

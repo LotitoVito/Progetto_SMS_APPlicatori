@@ -85,9 +85,9 @@ public class TesistiRelatoreFragment extends Fragment {
             public void onClick(View view) {
                 SettaTesisti();
                 if(Utility.accountLoggato == Utility.RELATORE) {
-                    CaricaListaTesisti();
+                    CaricaListaTesistiRelatore();
                 } else {
-
+                    CaricaListaTesistiCorelatore();
                 }
             }
         });
@@ -113,8 +113,14 @@ public class TesistiRelatoreFragment extends Fragment {
         listView.setAdapter(adapter);
     }
 
-    private void CaricaListaTesisti(){
+    private void CaricaListaTesistiRelatore(){
         List<TesiScelta> lista = ListaTesiScelteDatabase.ListaTesiScelteDatabase(db);
+        ListaTesistiRelatoreAdapter adapter = new ListaTesistiRelatoreAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+        listView.setAdapter(adapter);
+    }
+
+    private void CaricaListaTesistiCorelatore(){
+        List<TesiScelta> lista = ListaTesiScelteDatabase.ListaTesistiCorelatore(db, Utility.coRelatoreLoggato.getIdCorelatore());
         ListaTesistiRelatoreAdapter adapter = new ListaTesistiRelatoreAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
         listView.setAdapter(adapter);
     }

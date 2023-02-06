@@ -152,33 +152,12 @@ public class TesistaRelatoreFragment extends Fragment {
         caricaTesi = getView().findViewById(R.id.carica);
         labelCorelatore = getView().findViewById(R.id.label_corelatore);
 
-        if(Utility.accountLoggato != Utility.CORELATORE){
-            if(tesiScelta.getStatoCorelatore() == TesiScelta.ACCETTATO || tesiScelta.getStatoCorelatore() == TesiScelta.IN_ATTESA){
-                aggiungiCorelatore.setVisibility(View.GONE);
-                richiestaCorelatore.setVisibility(View.GONE);
-                rimuoviCorelatore.setVisibility(View.VISIBLE);
-            } else{
-                aggiungiCorelatore.setVisibility(View.VISIBLE);
-                rimuoviCorelatore.setVisibility(View.GONE);
-                corelatore.setVisibility(View.GONE);
-                emailCorelatore.setVisibility(View.GONE);
-            }
+        if (Utility.accountLoggato == Utility.GUEST){
+            SettaPerGuest();
+        } else if(Utility.accountLoggato != Utility.CORELATORE){
+            SettaPerCorelatore();
         } else {
-            labelCorelatore.setVisibility(View.GONE);
-            corelatore.setVisibility(View.GONE);
-            emailCorelatore.setVisibility(View.GONE);
-            richiestaCorelatore.setVisibility(View.GONE);
-            if (richiesta) {
-                aggiungiCorelatore.setText("Accetta");
-                rimuoviCorelatore.setText("Rifiuta");
-                creaTask.setVisibility(View.GONE);
-                mostraTask.setVisibility(View.GONE);
-                scaricaTesi.setVisibility(View.GONE);
-                caricaTesi.setVisibility(View.GONE);
-            } else {
-                aggiungiCorelatore.setVisibility(View.GONE);
-                rimuoviCorelatore.setVisibility(View.GONE);
-            }
+            SettaGenerale();
         }
     }
 
@@ -196,5 +175,45 @@ public class TesistaRelatoreFragment extends Fragment {
                 emailCorelatore.setText(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
             }
         }
+    }
+
+    private void SettaGenerale(){
+        if(tesiScelta.getStatoCorelatore() == TesiScelta.ACCETTATO || tesiScelta.getStatoCorelatore() == TesiScelta.IN_ATTESA){
+            aggiungiCorelatore.setVisibility(View.GONE);
+            richiestaCorelatore.setVisibility(View.GONE);
+            rimuoviCorelatore.setVisibility(View.VISIBLE);
+        } else{
+            aggiungiCorelatore.setVisibility(View.VISIBLE);
+            rimuoviCorelatore.setVisibility(View.GONE);
+            corelatore.setVisibility(View.GONE);
+            emailCorelatore.setVisibility(View.GONE);
+        }
+    }
+
+    private void SettaPerCorelatore(){
+        labelCorelatore.setVisibility(View.GONE);
+        corelatore.setVisibility(View.GONE);
+        emailCorelatore.setVisibility(View.GONE);
+        richiestaCorelatore.setVisibility(View.GONE);
+        if (richiesta) {
+            aggiungiCorelatore.setText("Accetta");
+            rimuoviCorelatore.setText("Rifiuta");
+            creaTask.setVisibility(View.GONE);
+            mostraTask.setVisibility(View.GONE);
+            scaricaTesi.setVisibility(View.GONE);
+            caricaTesi.setVisibility(View.GONE);
+        } else {
+            aggiungiCorelatore.setVisibility(View.GONE);
+            rimuoviCorelatore.setVisibility(View.GONE);
+        }
+    }
+
+    private void SettaPerGuest(){
+        richiestaCorelatore.setVisibility(View.GONE);
+        aggiungiCorelatore.setVisibility(View.GONE);
+        rimuoviCorelatore.setVisibility(View.GONE);
+        creaTask.setVisibility(View.GONE);
+        mostraTask.setVisibility(View.GONE);
+        caricaTesi.setVisibility(View.GONE);
     }
 }
