@@ -103,7 +103,7 @@ public class LoggedActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_student:
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, studentFragment);
-                    setTitle(R.string.mystudent);
+                    setTitle(R.string.mythesis);
                     return true;
                 case R.id.navigation_camera:
                     scanQR();
