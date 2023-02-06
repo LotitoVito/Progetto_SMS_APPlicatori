@@ -111,6 +111,7 @@
     <string name="richiesta_tesi">Richiedi tesi</string>
     <string name="ab_tesi">Abstract</string>
     <string name="descrivi_skill">Scrivi quali delle capacità richieste possiedi</string>
+    <string name="ultimo_caricamento">Ultimo caricamento</string>
 
 
 </resources>

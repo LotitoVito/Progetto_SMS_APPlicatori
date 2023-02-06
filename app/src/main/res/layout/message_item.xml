@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="300dp"
-            android:minWidth="100dp"
+            android:minWidth="150dp"
             android:textSize="18sp"
             android:layout_gravity="end"
             android:text="Ciao sono un messaggio e se divento troppo lungo mi adatto"
@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="300dp"
-            android:minWidth="100dp"
+            android:minWidth="150dp"
             android:textSize="18sp"
             android:text="Ciao sono un messaggio e se divento troppo lungo mi adatto
 Ciao sono un messaggio e se divento troppo lungo mi adatto"
@@ -78,6 +78,7 @@ Ciao sono un messaggio e se divento troppo lungo mi adatto"
             android:text="Lunedì 6 febbraio 2023 - 10:35"
             android:paddingBottom="8dp"
             android:paddingRight="8dp"
+            android:paddingLeft="24dp"
             android:textColor="@color/white"
             />
 

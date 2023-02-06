@@ -1,8 +1,19 @@
 package it.uniba.dib.sms222329.fragment.relatore;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -10,13 +21,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.security.interfaces.RSAKey;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
+import it.uniba.dib.sms222329.classi.FileUpload;
 import it.uniba.dib.sms222329.classi.TesiScelta;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.TesiSceltaDatabase;
@@ -41,6 +66,7 @@ public class TesistaRelatoreFragment extends Fragment {
     private TextView dataConsegna;
     private TextView corelatore;
     private TextView emailCorelatore;
+    private TextView tesiUpload;
     private TextInputEditText richiestaCorelatore;
     private Button aggiungiCorelatore;
     private Button rimuoviCorelatore;
@@ -48,9 +74,18 @@ public class TesistaRelatoreFragment extends Fragment {
     private TextView mostraTask;
     private Button scaricaTesi;
     private Button caricaTesi;
+    private StorageReference storageReference;
+    private DatabaseReference databaseReference;
 
     public TesistaRelatoreFragment(TesiScelta tesiScelta) {
         this.tesiScelta = tesiScelta;
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        storageReference = FirebaseStorage.getInstance().getReference();
     }
 
     @Override
@@ -99,9 +134,10 @@ public class TesistaRelatoreFragment extends Fragment {
         });
 
         caricaTesi.setOnClickListener(view -> {
-
+            caricaFile();
         });
     }
+
 
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
@@ -123,6 +159,8 @@ public class TesistaRelatoreFragment extends Fragment {
         mostraTask = getView().findViewById(R.id.visualizza_task);
         scaricaTesi = getView().findViewById(R.id.scarica);
         caricaTesi = getView().findViewById(R.id.carica);
+        tesiUpload = getView().findViewById(R.id.tesi_upload);
+
 
         if(tesiScelta.getStatoCorelatore() == TesiScelta.ACCETTATO || tesiScelta.getStatoCorelatore() == TesiScelta.IN_ATTESA){
             aggiungiCorelatore.setVisibility(View.GONE);
@@ -135,8 +173,6 @@ public class TesistaRelatoreFragment extends Fragment {
     }
 
     private void SetTextAll(){
-
-
         //Corelatore
         Cursor cursore = db.RicercaDato("SELECT " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + " FROM " + Database.CORELATORE + " c, " + Database.UTENTI + " u " +
                 "WHERE u." + Database.UTENTI_ID + "=c." + Database.CORELATORE_UTENTEID + " AND c." + Database.CORELATORE_ID + "=" + tesiScelta.getIdCorelatore() + ";");
@@ -151,5 +187,47 @@ public class TesistaRelatoreFragment extends Fragment {
             corelatore.setVisibility(View.GONE);
             emailCorelatore.setVisibility(View.GONE);
         }
+    }
+
+
+    private void caricaFile() {
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select PDF Files..."), 1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==1 && resultCode== RESULT_OK && data!= null && data.getData()!=null){
+            uploadFiles(data.getData());
+        }
+    }
+
+    private void uploadFiles(Uri data) {
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity().getApplicationContext());
+        progressDialog.setTitle("Uploading...");
+        progressDialog.show();
+
+        StorageReference reference = storageReference.child("Uploads/"+System.currentTimeMillis()+".pdf");
+        reference.putFile(data)
+                .addOnSuccessListener(taskSnapshot -> {
+                    Task<Uri> uriTask =taskSnapshot.getStorage().getDownloadUrl();
+                    while(!uriTask.isComplete());
+                    Uri url = uriTask.getResult();
+                    FileUpload file = new FileUpload(Utility.relatoreLoggato.getIdUtente(), Utility.relatoreLoggato.getNome(), url.toString(), LocalDate.now());
+                    tesiUpload.setText(file.toString());
+                    databaseReference.child(databaseReference.push().getKey()).setValue(file);
+
+                    Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
+                    progressDialog.dismiss();
+
+                }).addOnProgressListener(snapshot -> {
+                    double progress=(100.0* snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
+                    progressDialog.setMessage("Uploaded:"+(int)progress+"%");
+                });
+
     }
 }
