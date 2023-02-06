@@ -79,7 +79,7 @@ public class ListaTesiAdapter extends BaseAdapter {
         //Edit Button
         Button editButton = convertView.findViewById(R.id.modifica);
 
-        if(Utility.accountLoggato == Utility.TESISTA){
+        if(Utility.accountLoggato == Utility.TESISTA && tesi.get(i).getStatoDisponibilita() == Tesi.DISPONIBILE){
             editButton.setText("Richiedi");
             editButton.setOnClickListener(view -> {
                 Utility.replaceFragment(this.fragmentManager, R.id.container, new RichiestaTesiFragment(tesi.get(i)));

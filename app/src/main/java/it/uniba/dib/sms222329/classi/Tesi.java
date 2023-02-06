@@ -13,6 +13,9 @@ import it.uniba.dib.sms222329.database.TesiDatabase;
 
 public class Tesi {
 
+    public static final boolean DISPONIBILE = true;
+    public static final boolean NON_DISPONIBILE = false;
+
     private int idTesi;
     private String titolo;
     private String argomenti;

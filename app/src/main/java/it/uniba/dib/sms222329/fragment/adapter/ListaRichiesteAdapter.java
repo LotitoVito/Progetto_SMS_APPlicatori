@@ -17,6 +17,7 @@ import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Ricevimento;
 import it.uniba.dib.sms222329.classi.RichiestaTesi;
 import it.uniba.dib.sms222329.fragment.relatore.AccettaRichiestaTesiFragment;
+import it.uniba.dib.sms222329.fragment.tesista.DettagliRichiestaTesiFragment;
 
 public class ListaRichiesteAdapter extends BaseAdapter {
 
@@ -52,27 +53,52 @@ public class ListaRichiesteAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.generic_item_with_buttons, viewGroup, false);
         }
 
-        //Tesista
-        TextView tesista = convertView.findViewById(R.id.titolo);
-        tesista.setText(String.valueOf(richieste.get(i).getIdTesista()));    //Sostituire con nome e cognome Tesista
+        if(Utility.accountLoggato == Utility.RELATORE){
+            //Tesista
+            TextView tesista = convertView.findViewById(R.id.titolo);
+            tesista.setText(String.valueOf(richieste.get(i).getIdTesista()));    //Sostituire con nome e cognome Tesista
 
-        //Data e orario
-        TextView tesi = convertView.findViewById(R.id.descrizione);
-        tesi.setText(String.valueOf(richieste.get(i).getIdTesi()));
+            //Tesi
+            TextView tesi = convertView.findViewById(R.id.descrizione);
+            tesi.setText(String.valueOf(richieste.get(i).getIdTesi()));
 
-        //Stato
-        TextView messaggio = convertView.findViewById(R.id.sottotitolo);
-        messaggio.setText(richieste.get(i).getMessaggio());
+            //Messaggio
+            TextView messaggio = convertView.findViewById(R.id.sottotitolo);
+            messaggio.setText(richieste.get(i).getMessaggio());
 
-        //EditButton
-        Button modifica = convertView.findViewById(R.id.modifica);
-        modifica.setVisibility(View.GONE);
+            //EditButton
+            Button rispondi = convertView.findViewById(R.id.modifica);
+            rispondi.setText("Rispondi");
+            rispondi.setOnClickListener(view -> {
+                Utility.replaceFragment(manager, R.id.container, new AccettaRichiestaTesiFragment(richieste.get(i)));
+            });
 
-        //DetailsButton
-        Button dettagli = convertView.findViewById(R.id.visualizza);
-        dettagli.setOnClickListener(view -> {
-            Utility.replaceFragment(manager, R.id.container, new AccettaRichiestaTesiFragment(richieste.get(i)));
-        });
+            //DetailsButton
+            Button dettagli = convertView.findViewById(R.id.visualizza);
+            dettagli.setVisibility(View.GONE);
+        } else if(Utility.accountLoggato == Utility.TESISTA){
+            //Relatore
+            TextView tesista = convertView.findViewById(R.id.titolo);
+            tesista.setText(String.valueOf(richieste.get(i).getIdTesista()));
+
+            //Tesi
+            TextView tesi = convertView.findViewById(R.id.descrizione);
+            tesi.setText(String.valueOf(richieste.get(i).getIdTesi()));
+
+            //Stato
+            TextView messaggio = convertView.findViewById(R.id.sottotitolo);
+            messaggio.setText(richieste.get(i).getMessaggio());
+
+            //EditButton
+            Button modifica = convertView.findViewById(R.id.modifica);
+            modifica.setVisibility(View.GONE);
+
+            //DetailsButton
+            Button dettagli = convertView.findViewById(R.id.visualizza);
+            dettagli.setOnClickListener(view -> {
+                Utility.replaceFragment(manager, R.id.container, new DettagliRichiestaTesiFragment(richieste.get(i)));
+            });
+        }
 
         return convertView;
     }

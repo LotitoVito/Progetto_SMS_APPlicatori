@@ -322,7 +322,7 @@ public class Database extends SQLiteOpenHelper {
         //Popolamento tabella Universita-CorsiStudio
         PopolamentoUniCorsi(db);
         //Popolamento ricevimenti
-        Test(db);
+        //Test(db);
     }
 
     //Viene chiamato nel caso di aggiornamento della versione del database
@@ -454,7 +454,7 @@ public class Database extends SQLiteOpenHelper {
         db.insert(RICHIESTA, null, cvRichieste);
 
         //TesiScelte
-        /*ContentValues cvTesiScelte = new ContentValues();
+        ContentValues cvTesiScelte = new ContentValues();
         cvTesiScelte.put(TESISCELTA_TESIID, 1);
         cvTesiScelte.put(TESISCELTA_TESISTAID, 1);
         cvTesiScelte.put(TESISCELTA_CORELATOREID, 1);
@@ -463,6 +463,6 @@ public class Database extends SQLiteOpenHelper {
         cvTesiScelte.put(TESISCELTA_TESIID, 2);
         cvTesiScelte.put(TESISCELTA_TESISTAID, 2);
         cvTesiScelte.put(TESISCELTA_CORELATOREID, 1);
-        db.insert(TESISCELTA, null, cvTesiScelte);*/
+        db.insert(TESISCELTA, null, cvTesiScelte);
     }
 }

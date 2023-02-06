@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.RichiestaTesi;
 import it.uniba.dib.sms222329.classi.TesiScelta;
 import it.uniba.dib.sms222329.database.Database;
@@ -90,7 +91,7 @@ public class TesistiRelatoreFragment extends Fragment {
     }
 
     private void CaricaListaRichieste(){
-        List<RichiestaTesi> lista = ListaRichiesteTesiDatabase.ListaRichiesteTesi(db);
+        List<RichiestaTesi> lista = ListaRichiesteTesiDatabase.ListaRichiesteTesiRelatore(db, Utility.relatoreLoggato.getIdRelatore());
         ListaRichiesteAdapter adapter = new ListaRichiesteAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
         listView.setAdapter(adapter);
     }

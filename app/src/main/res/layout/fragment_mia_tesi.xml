@@ -19,7 +19,8 @@
         android:id="@+id/richieste"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="match_parent"
@@ -30,8 +31,6 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-
-
         <ListView
             android:id="@+id/tesistiList"
             android:layout_width="match_parent"
@@ -40,18 +39,13 @@
             tools:listitem="@layout/generic_item"
             />
 
-
-
     </LinearLayout>
-
-
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="UselessParent"
-        android:id="@+id/mia_tesi"
-        android:visibility="gone">
+        android:id="@+id/mia_tesi">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,26 +115,12 @@
                 android:text="Description"
                 android:textSize="18sp" />
 
-            <androidx.constraintlayout.utils.widget.MotionLabel
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/numero_esami_mancanti" />
-
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/numero_esami_mancanti"
-                android:layout_marginBottom="16dp" >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email_co"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    tools:ignore="TextContrastCheck" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginBottom="16dp" />
 
             <androidx.constraintlayout.utils.widget.MotionLabel
                 android:layout_width="wrap_content"
@@ -162,7 +142,7 @@
                 android:text="@string/co_relatore" />
 
             <TextView
-                android:id="@+id/corelatore"
+                android:id="@+id/nome_corelatore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -235,7 +215,7 @@
 
             </LinearLayout>
             <Button
-                android:id="@+id/salva_modifica"
+                android:id="@+id/salvaModifica"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

@@ -80,4 +80,18 @@ public class TesiSceltaDatabase {
         }
         return false;
     }
+
+    public static boolean ConsegnaTesiScelta(Database dbClass, TesiScelta tesi){
+        SQLiteDatabase db = dbClass.getWritableDatabase();
+        ContentValues tesiSceltaCv = new ContentValues();
+
+        tesiSceltaCv.put(Database.TESISCELTA_ABSTRACT, tesi.getRiassunto());
+        tesiSceltaCv.put(Database.TESISCELTA_DATAPUBBLICAZIONE, String.valueOf(tesi.getDataPubblicazione()));
+
+        long updateTesiScelta = db.update(Database.TESISCELTA, tesiSceltaCv, Database.TESISCELTA_ID + "=" + tesi.getIdTesiScelta(), null);
+        if(updateTesiScelta != -1){
+            return true;
+        }
+        return false;
+    }
 }

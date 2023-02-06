@@ -1,12 +1,10 @@
 package it.uniba.dib.sms222329.activities;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import androidx.activity.result.ActivityResultLauncher;
@@ -17,10 +15,7 @@ import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
-import it.uniba.dib.sms222329.classi.CoRelatore;
-import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Tesi;
-import it.uniba.dib.sms222329.classi.Tesista;
 import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 import it.uniba.dib.sms222329.database.CoRelatoreDatabase;
 import it.uniba.dib.sms222329.database.Database;
@@ -35,7 +30,6 @@ import it.uniba.dib.sms222329.fragment.relatore.SegnalazioneChatFragment;
 import it.uniba.dib.sms222329.fragment.relatore.ListaTesiFragment;
 import it.uniba.dib.sms222329.fragment.relatore.TesistiRelatoreFragment;
 import it.uniba.dib.sms222329.fragment.tesista.MiaTesiFragment;
-import it.uniba.dib.sms222329.fragment.tesista.TesiSceltaTesistaFragment;
 
 public class LoggedActivity extends AppCompatActivity {
 

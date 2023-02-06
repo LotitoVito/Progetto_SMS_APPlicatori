@@ -25,7 +25,7 @@ public class TesiScelta extends Tesi{
 
     public TesiScelta() {}
 
-    public TesiScelta(int idTesi, int idTesiScelta, int idTesista, int idCorelatore, int statoCorelatore, byte[] file, LocalDate dataPubblicazione, String riassunto) {
+    public TesiScelta(int idTesi, int idTesiScelta, int idTesista, int idCorelatore, int statoCorelatore, LocalDate dataPubblicazione, String riassunto) {
         super(idTesi);
         this.idTesiScelta = idTesiScelta;
         this.idTesista = idTesista;
@@ -129,6 +129,16 @@ public class TesiScelta extends Tesi{
         this.statoCorelatore = RIFIUTATO;
 
         if(TesiSceltaDatabase.RifiutaRichiesta(dbClass, this)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean ConsegnaTesiScelta(Database dbClass, String riassunto){
+        this.riassunto = riassunto;
+        this.dataPubblicazione = LocalDate.now();
+
+        if(TesiSceltaDatabase.ConsegnaTesiScelta(dbClass, this)){
             return true;
         }
         return false;

@@ -152,7 +152,7 @@
 
         <androidx.constraintlayout.utils.widget.MotionLabel
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/messaggio" />
 
         <TextView
@@ -170,6 +170,16 @@
             android:layout_height="match_parent"
             android:text="@string/risposta"
             android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/risposta_relatore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Risposta relatore"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:layout_marginBottom="8dp"
+            />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
