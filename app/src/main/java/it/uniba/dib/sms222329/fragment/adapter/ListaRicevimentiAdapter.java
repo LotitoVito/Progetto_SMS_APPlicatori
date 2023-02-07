@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222329.fragment.adapter;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,14 @@ import java.util.List;
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Ricevimento;
+import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.fragment.RichiestaRicevimentoFragment;
 import it.uniba.dib.sms222329.fragment.VisualizzaRicevimentoFragment;
 
 public class ListaRicevimentiAdapter extends BaseAdapter {
 
     //Variabili e Oggetti
+    private Context context;
     private List<Ricevimento> ricevimenti;
     private LayoutInflater inflater;
     private FragmentManager manager;
@@ -29,6 +32,7 @@ public class ListaRicevimentiAdapter extends BaseAdapter {
         this.ricevimenti = ricevimenti;
         this.inflater = LayoutInflater.from(context);
         this.manager = manager;
+        this.context = context;
     }
 
     @Override
@@ -51,10 +55,29 @@ public class ListaRicevimentiAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.generic_item_with_buttons, viewGroup, false);
         }
+        Database db = new Database(context);
 
-        //Tesista
-        TextView tesista = convertView.findViewById(R.id.titolo);
-        tesista.setText(String.valueOf(ricevimenti.get(i).getIdTask()));    //Sostituire con nome e cognome Tesista
+
+        if(Utility.accountLoggato != Utility.TESISTA){
+            //Tesista
+            TextView tesista = convertView.findViewById(R.id.titolo);
+            Cursor cursor = db.RicercaDato("SELECT u." + Database.UTENTI_COGNOME + ", u." + Database.UTENTI_NOME + " " +
+                    "FROM " + Database.RICEVIMENTI +" r, " + Database.TASK + " t, " + Database.TESISCELTA + " ts, " + Database.TESISTA + " te, " + Database.UTENTI + " u " +
+                    "WHERE r." + Database.RICEVIMENTI_TASKID + "=t." + Database.TASK_ID + " AND t." + Database.TASK_TESISCELTAID + "=ts." + Database.TESISCELTA_ID + " AND ts." + Database.TESISCELTA_TESISTAID + "=te." + Database.TESISTA_ID + " AND te." + Database.TESISTA_UTENTEID + "=u." + Database.UTENTI_ID + " " +
+                    "AND r." + Database.RICEVIMENTI_ID + "=" + ricevimenti.get(i).getIdRicevimento() + ";");
+            cursor.moveToFirst();
+            tesista.setText(cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_NOME)));
+        } else {
+            //Task
+            TextView task = convertView.findViewById(R.id.titolo);
+            Cursor cursor = db.RicercaDato("SELECT t." + Database.TASK_TITOLO + " " +
+                    "FROM " + Database.RICEVIMENTI + " r, " + Database.TASK + " t " +
+                    "WHERE r." + Database.RICEVIMENTI_TASKID + "=t." + Database.TASK_ID + " " +
+                    "AND " + Database.RICEVIMENTI_TASKID + "=" + ricevimenti.get(i).getIdTask() + ";");
+            cursor.moveToFirst();
+            task.setText(cursor.getString(cursor.getColumnIndexOrThrow(Database.TASK_TITOLO)));
+        }
+
 
         //Data e orario
         TextView dataOrario = convertView.findViewById(R.id.descrizione);

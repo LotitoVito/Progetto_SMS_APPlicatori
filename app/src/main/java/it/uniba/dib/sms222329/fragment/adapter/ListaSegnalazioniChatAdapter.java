@@ -2,6 +2,7 @@ package it.uniba.dib.sms222329.fragment.adapter;
 
 import androidx.fragment.app.FragmentManager;
 import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.SegnalazioneChat;
+import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.fragment.SegnalazioneMessaggiFragment;
 
 public class ListaSegnalazioniChatAdapter extends BaseAdapter {
@@ -25,11 +27,13 @@ public class ListaSegnalazioniChatAdapter extends BaseAdapter {
     private List<SegnalazioneChat> segnalazioni;
     private LayoutInflater inflater;
     private FragmentManager fragmentManager;
+    private Context context;
 
     public ListaSegnalazioniChatAdapter(Context context, List<SegnalazioneChat> segnalazioni, FragmentManager fragmentManager) {
         this.segnalazioni = segnalazioni;
         this.inflater = LayoutInflater.from(context);
         this.fragmentManager = fragmentManager;
+        this.context = context;
     }
 
     @Override
@@ -53,9 +57,31 @@ public class ListaSegnalazioniChatAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.generic_item, viewGroup, false);
         }
 
-        //Tesista
+        Database db = new Database(context);
+        int idUtenteChat = 0;
+
+        if(Utility.accountLoggato == Utility.TESISTA){
+            idUtenteChat = Utility.tesistaLoggato.getIdUtente();
+        } else if(Utility.accountLoggato == Utility.RELATORE){
+            idUtenteChat = Utility.relatoreLoggato.getIdUtente();
+        } else if(Utility.accountLoggato == Utility.CORELATORE){
+            idUtenteChat = Utility.coRelatoreLoggato.getIdUtente();
+        }
+
+
+        Cursor cursor = db.RicercaDato("SELECT " + Database.MESSAGGISEGNALAZIONE_UTENTEID +
+                " FROM " + Database.MESSAGGISEGNALAZIONE +
+                " WHERE " + Database.MESSAGGISEGNALAZIONE_SEGNALAZIONEID + "=" + segnalazioni.get(i).getIdSegnalazioneChat() +
+                " AND " + Database.MESSAGGISEGNALAZIONE_UTENTEID + "!=" + idUtenteChat + ";");
+        cursor.moveToFirst();
+
+        //Utente
+        Cursor cursorUtente = db.RicercaDato("SELECT u." + Database.UTENTI_COGNOME + ", " + Database.UTENTI_NOME + " " +
+                "FROM " + Database.UTENTI + " u " +
+                "WHERE " + Database.UTENTI_ID + "=" + cursor.getInt(cursor.getColumnIndexOrThrow(Database.MESSAGGISEGNALAZIONE_UTENTEID)) + ";");
+        cursorUtente.moveToFirst();
         TextView idSegnalazione = convertView.findViewById(R.id.titolo);
-        idSegnalazione.setText(String.valueOf(segnalazioni.get(i).getIdTesi()));
+        idSegnalazione.setText(cursorUtente.getString(cursorUtente.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorUtente.getString(cursorUtente.getColumnIndexOrThrow(Database.UTENTI_NOME)));
 
         //Oggetto
         TextView oggettoSegnalazione = convertView.findViewById(R.id.descrizione);

@@ -71,14 +71,14 @@ public class ListaTesiAdapter extends BaseAdapter {
 
         //Stato
         TextView statoTesi = convertView.findViewById(R.id.sottotitolo);
-        String disponibilita = "";
-        if (tesi.get(i).getStatoDisponibilita()) disponibilita = "Disponibile";
-        else disponibilita = "Non Disponibile";
-        statoTesi.setText(disponibilita);
+        if (tesi.get(i).getStatoDisponibilita()){
+            statoTesi.setText("Disponibile");
+        } else {
+            statoTesi.setText("Non Disponibile");
+        }
 
         //Edit Button
         Button editButton = convertView.findViewById(R.id.modifica);
-
         if(Utility.accountLoggato == Utility.TESISTA && tesi.get(i).getStatoDisponibilita() == Tesi.DISPONIBILE){
             editButton.setText("Richiedi");
             editButton.setOnClickListener(view -> {
@@ -94,7 +94,6 @@ public class ListaTesiAdapter extends BaseAdapter {
 
         //Detail Button
         Button detailButton = convertView.findViewById(R.id.visualizza);
-
         detailButton.setOnClickListener(view1 -> {
             VisualizzaTesiFragment bottomSheet = new VisualizzaTesiFragment(tesi.get(i));
             bottomSheet.show(this.fragmentManager, bottomSheet.getTag());

@@ -60,7 +60,7 @@ public class ListaTaskAdapter extends BaseAdapter {
 
         //Data Inizio
         TextView dataInizio = convertView.findViewById(R.id.descrizione);
-        dataInizio.setText("Data Assegnazione: " + task.get(i).getDataInizio());
+        dataInizio.setText("Data Assegnazione: " + task.get(i).getDataInizio().format(Utility.showDate));
 
         //Stato
         TextView stato = convertView.findViewById(R.id.sottotitolo);
