@@ -38,7 +38,7 @@ public class RichiestaTesiDatabase {
         long updateRisposta = db.update(Database.RICHIESTA, cvRisposta, Database.RICHIESTA_ID + " = '"+ risposta.getIdRichiesta() +"';", null);
         if(updateRisposta != -1){
 
-            TesiScelta tesiScelta = new TesiScelta(risposta.getIdTesi(), risposta.getIdTesista());
+            TesiScelta tesiScelta = new TesiScelta(risposta.getIdTesi(), risposta.getIdTesista(), risposta.getCapacitàStudente());
             if(TesiSceltaDatabase.RegistrazioneTesiScelta(tesiScelta, dbClass)){
                 return true;
             }

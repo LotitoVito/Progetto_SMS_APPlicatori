@@ -18,6 +18,7 @@ public class TesiScelta extends Tesi{
 
     private int idTesiScelta;
     private int idTesista;
+    private String capacitàStudente;
     private int idCorelatore;
     private int statoCorelatore;
     private byte[] file;
@@ -26,10 +27,11 @@ public class TesiScelta extends Tesi{
 
     public TesiScelta() {}
 
-    public TesiScelta(int idTesi, int idTesiScelta, int idTesista, int idCorelatore, int statoCorelatore, LocalDate dataPubblicazione, String riassunto) {
+    public TesiScelta(int idTesi, int idTesiScelta, int idTesista, String capacitàStudente, int idCorelatore, int statoCorelatore, LocalDate dataPubblicazione, String riassunto) {
         super(idTesi);
         this.idTesiScelta = idTesiScelta;
         this.idTesista = idTesista;
+        this.capacitàStudente = capacitàStudente;
         this.idCorelatore = idCorelatore;
         this.statoCorelatore = statoCorelatore;
         this.dataPubblicazione = dataPubblicazione;
@@ -37,9 +39,10 @@ public class TesiScelta extends Tesi{
     }
 
     //Usato per la registrazione
-    public TesiScelta(int idTesi, int idTesista) {
+    public TesiScelta(int idTesi, int idTesista, String capacitàStudente) {
         super(idTesi);
         this.idTesista = idTesista;
+        this.capacitàStudente = capacitàStudente;
     }
 
     public int getIdTesiScelta() {
@@ -57,6 +60,10 @@ public class TesiScelta extends Tesi{
     public void setIdTesista(int idTesista) {
         this.idTesista = idTesista;
     }
+
+    public String getCapacitàStudente() {return capacitàStudente;}
+
+    public void setCapacitàStudente(String capacitàStudente) {this.capacitàStudente = capacitàStudente;}
 
     public int getIdCorelatore() {
         return idCorelatore;

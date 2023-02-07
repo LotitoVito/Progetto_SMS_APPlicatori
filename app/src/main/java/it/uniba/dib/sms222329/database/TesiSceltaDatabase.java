@@ -15,6 +15,7 @@ public class TesiSceltaDatabase {
 
         cvTesiScelta.put(Database.TESISCELTA_TESIID, tesiScelta.getIdTesi());
         cvTesiScelta.put(Database.TESISCELTA_TESISTAID, tesiScelta.getIdTesista());
+        cvTesiScelta.put(Database.TESISCELTA_CAPACITATESISTA, tesiScelta.getCapacitàStudente());
 
         try{
             long insertTesi = db.insert(Database.TESISCELTA, null, cvTesiScelta);

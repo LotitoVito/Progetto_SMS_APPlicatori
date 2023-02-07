@@ -46,6 +46,7 @@
                 android:textSize="16sp" />
 
             <androidx.constraintlayout.utils.widget.MotionLabel
+                android:id="@+id/label_abstract"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/argomenti" />
@@ -138,6 +139,7 @@
 
 
             <androidx.constraintlayout.utils.widget.MotionLabel
+                android:id="@+id/label_data_consegna"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/data_prevista" />

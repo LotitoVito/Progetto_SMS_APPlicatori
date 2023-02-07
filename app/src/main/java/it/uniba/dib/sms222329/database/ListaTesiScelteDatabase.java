@@ -2,6 +2,7 @@ package it.uniba.dib.sms222329.database;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class ListaTesiScelteDatabase {
             tesiSceltaEstratta.setIdCorelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_CORELATOREID)));
             tesiSceltaEstratta.setStatoCorelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_STATOCORELATORE)));
             tesiSceltaEstratta.setIdTesista(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_TESISTAID)));
+            tesiSceltaEstratta.setCapacitàStudente(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESISCELTA_CAPACITATESISTA)));
 
             listaTesiScelte.add(tesiSceltaEstratta);
         }
@@ -67,6 +69,7 @@ public class ListaTesiScelteDatabase {
             tesiSceltaEstratta.setStatoCorelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_STATOCORELATORE)));
             tesiSceltaEstratta.setIdTesista(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_TESISTAID)));
             tesiSceltaEstratta.setTitolo(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESI_TITOLO)));
+            tesiSceltaEstratta.setCapacitàStudente(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESISCELTA_CAPACITATESISTA)));
 
             listaTesiScelte.add(tesiSceltaEstratta);
         }
@@ -91,6 +94,7 @@ public class ListaTesiScelteDatabase {
             richiestaTesi.setIdTesista(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_TESISTAID)));
             richiestaTesi.setIdCorelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_CORELATOREID)));
             richiestaTesi.setStatoCorelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_STATOCORELATORE)));
+            richiestaTesi.setCapacitàStudente(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESISCELTA_CAPACITATESISTA)));
             try{
                 LocalDate data = LocalDate.parse(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESISCELTA_DATAPUBBLICAZIONE)), Utility.convertFromStringDate);
                 richiestaTesi.setDataPubblicazione(data);
@@ -122,6 +126,7 @@ public class ListaTesiScelteDatabase {
             richiestaTesi.setIdTesista(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_TESISTAID)));
             richiestaTesi.setIdCorelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_CORELATOREID)));
             richiestaTesi.setStatoCorelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESISCELTA_STATOCORELATORE)));
+            richiestaTesi.setCapacitàStudente(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESISCELTA_CAPACITATESISTA)));
             try{
                 LocalDate data = LocalDate.parse(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESISCELTA_DATAPUBBLICAZIONE)), Utility.convertFromStringDate);
                 richiestaTesi.setDataPubblicazione(data);

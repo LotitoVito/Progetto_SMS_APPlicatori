@@ -135,7 +135,7 @@ public class MiaTesiFragment extends Fragment {
                 dataPubblicazione = LocalDate.parse(data, Utility.convertFromStringDate);
             }
             TesiScelta tesi = new TesiScelta(cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESISCELTA_TESIID)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESISCELTA_ID)), cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESISCELTA_TESISTAID)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESISCELTA_ID)), cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESISCELTA_TESISTAID)), cursor.getString(cursor.getColumnIndexOrThrow(Database.TESISCELTA_CAPACITATESISTA)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESISCELTA_CORELATOREID)), cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESISCELTA_STATOCORELATORE)),
                     dataPubblicazione, cursor.getString(cursor.getColumnIndexOrThrow(Database.TESISCELTA_ABSTRACT)));
             tesiScelta = tesi;

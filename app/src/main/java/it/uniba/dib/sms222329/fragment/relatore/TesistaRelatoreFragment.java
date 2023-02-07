@@ -32,6 +32,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.journeyapps.barcodescanner.Util;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -73,6 +74,9 @@ public class TesistaRelatoreFragment extends Fragment {
     private Button scaricaTesi;
     private Button caricaTesi;
     private MotionLabel labelCorelatore;
+    private MotionLabel labelDataConsegna;
+    private MotionLabel labelaAbstract;
+
     //Firebase
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
@@ -184,6 +188,8 @@ public class TesistaRelatoreFragment extends Fragment {
         caricaTesi = getView().findViewById(R.id.carica);
         labelCorelatore = getView().findViewById(R.id.label_corelatore);
         tesiUpload = getView().findViewById(R.id.tesi_upload);
+        labelDataConsegna= getView().findViewById(R.id.label_data_consegna);
+        labelaAbstract = getView().findViewById(R.id.label_abstract);
 
         getLastUpload();
 
@@ -197,20 +203,53 @@ public class TesistaRelatoreFragment extends Fragment {
     }
 
     private void SetTextAll(){
+        //Tesista
+        Cursor cursorTesista = db.RicercaDato("SELECT u." + Database.UTENTI_NOME + ", u." + Database.UTENTI_COGNOME + " FROM " + Database.UTENTI + " u, " + Database.TESISTA + " t " +
+                "WHERE u." + Database.UTENTI_ID + "=t." + Database.TESISTA_UTENTEID + " AND t." + Database.TESISTA_ID + "=" + tesiScelta.getIdTesista() + ";");
+        cursorTesista.moveToFirst();
+        tesista.setText(cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_NOME)));
+
+        //Tesi
+        Cursor cursorTesi = db.RicercaDato("SELECT t." + Database.TESI_TITOLO + ", t." + Database.TESI_ARGOMENTO + ", t." + Database.TESI_TEMPISTICHE + ", t." + Database.TESI_ESAMINECESSARI + ", t." + Database.TESI_SKILLRICHIESTE + " " +
+                "FROM " + Database.TESI + " t WHERE t." + Database.TESI_ID + "=" + tesiScelta.getIdTesi() + ";");
+        cursorTesi.moveToFirst();
+        titoloTesi.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_TITOLO)));
+        argomentoTesi.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)));
+        tempistiche.setText(String.valueOf(cursorTesi.getInt(cursorTesi.getColumnIndexOrThrow(Database.TESI_TEMPISTICHE))));
+        esamiMancanti.setText(String.valueOf(cursorTesi.getInt(cursorTesi.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI))));
+        capacitaRichiesta.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_SKILLRICHIESTE)));
+
         //Corelatore
-        Cursor cursore = db.RicercaDato("SELECT " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + " FROM " + Database.CORELATORE + " c, " + Database.UTENTI + " u " +
+        Cursor cursoreCorelatore = db.RicercaDato("SELECT " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + " FROM " + Database.CORELATORE + " c, " + Database.UTENTI + " u " +
                 "WHERE u." + Database.UTENTI_ID + "=c." + Database.CORELATORE_UTENTEID + " AND c." + Database.CORELATORE_ID + "=" + tesiScelta.getIdCorelatore() + ";");
         Log.d("test", String.valueOf(tesiScelta.getIdCorelatore()));
-        if(cursore.moveToFirst()){
+        if(cursoreCorelatore.moveToFirst()){
             if(tesiScelta.getStatoCorelatore()==TesiScelta.ACCETTATO){
-                corelatore.setText(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
-                emailCorelatore.setText(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
+                corelatore.setText(cursoreCorelatore.getString(cursoreCorelatore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursoreCorelatore.getString(cursoreCorelatore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
+                emailCorelatore.setText(cursoreCorelatore.getString(cursoreCorelatore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
             } else if(tesiScelta.getStatoCorelatore()==TesiScelta.IN_ATTESA) {
                 corelatore.setText("In attesa di approvazione");
-                emailCorelatore.setText(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
+                emailCorelatore.setText(cursoreCorelatore.getString(cursoreCorelatore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
             }
         }
 
+        //TesiScelta
+        if(tesiScelta.getRiassunto() != null){
+            riassunto.setText(tesiScelta.getRiassunto());
+        } else {
+            riassunto.setVisibility(View.GONE);
+            labelaAbstract.setVisibility(View.GONE);
+        }
+
+        if(tesiScelta.getDataPubblicazione() != null){
+            dataConsegna.setText(tesiScelta.getDataPubblicazione().format(Utility.showDate));
+        } else {
+            dataConsegna.setVisibility(View.GONE);
+            labelDataConsegna.setVisibility(View.GONE);
+        }
+
+        //Capacita
+        capacitaEffettive.setText(tesiScelta.getCapacitàStudente());
     }
 
     private void SettaGenerale(){
