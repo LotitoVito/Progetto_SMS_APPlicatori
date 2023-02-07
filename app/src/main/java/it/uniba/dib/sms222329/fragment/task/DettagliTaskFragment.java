@@ -139,7 +139,7 @@ public class DettagliTaskFragment extends Fragment {
     private void SetTextAll() {
         titoloTask.setText(task.getTitolo());
         descrizioneTask.setText(task.getDescrizione());
-        dateInizioFine.setText("Data inizio: " + task.getDataInizio() + " - Data fine: " + task.getDataFine());
+        dateInizioFine.setText("Data inizio: " + task.getDataInizio().format(Utility.showDate) + " - Data fine: " + task.getDataFine().format(Utility.showDate));
 
         if(sliderStato.getValue()==0){
             testoStato.setText("Assegnato");

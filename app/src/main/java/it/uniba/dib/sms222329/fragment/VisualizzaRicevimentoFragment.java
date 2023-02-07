@@ -1,5 +1,6 @@
 package it.uniba.dib.sms222329.fragment;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,7 @@ import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
 public class VisualizzaRicevimentoFragment extends Fragment {
 
     //Variabili e Oggetti
+    private Database db;
     private Ricevimento richiesta;
 
     //View Items
@@ -52,6 +54,7 @@ public class VisualizzaRicevimentoFragment extends Fragment {
 
 
     private void Init() {
+        db = new Database(getActivity().getApplicationContext());
         messaggioTesista = getView().findViewById(R.id.messaggio_tesista);
         taskRicevimento = getView().findViewById(R.id.task_ricevimento);
         dataRicevimento = getView().findViewById(R.id.data);
@@ -65,8 +68,11 @@ public class VisualizzaRicevimentoFragment extends Fragment {
 
     private void SetTextAll() {
         messaggioTesista.setText(richiesta.getMessaggio());
-        taskRicevimento.setText(String.valueOf(richiesta.getIdTask()));     //titolo task + argomento
-        dataRicevimento.setText(richiesta.getData() + " " + richiesta.getOrario());
+        Cursor cursor = db.RicercaDato("SELECT " + Database.TASK_TITOLO + ", " + Database.TASK_DESCRIZIONE + " FROM " + Database.TASK +
+                " WHERE " + Database.TASK_ID + "=" + richiesta.getIdTask() + ";");
+        cursor.moveToFirst();
+        taskRicevimento.setText(cursor.getString(cursor.getColumnIndexOrThrow(Database.TASK_TITOLO)) + "\n" + cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)));
+        dataRicevimento.setText(richiesta.getData().format(Utility.showDate) + " " + richiesta.getOrario().format(Utility.showDate));
 
         if(richiesta.getAccettazione()==Ricevimento.ACCETTATO){
             stato.setText("Accettato");

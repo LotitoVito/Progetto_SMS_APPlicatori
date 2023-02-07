@@ -1,5 +1,6 @@
 package it.uniba.dib.sms222329.fragment.tesista;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -23,6 +24,7 @@ import it.uniba.dib.sms222329.fragment.relatore.TesistiRelatoreFragment;
 public class DettagliRichiestaTesiFragment extends Fragment {
 
     //Variabili e Oggetti
+    private Database db;
     private RichiestaTesi richiesta;
 
     //View Items
@@ -55,11 +57,12 @@ public class DettagliRichiestaTesiFragment extends Fragment {
         super.onResume();
 
         Init();
-        ViewItemsSetText();
+        SetTextAll();
 
     }
 
     private void Init(){
+        db = new Database(getActivity().getApplicationContext());
         titoloTesi = getView().findViewById(R.id.titoloTesi);
         argomento = getView().findViewById(R.id.argomentoTesi);
         relatore = getView().findViewById(R.id.nome);
@@ -79,16 +82,31 @@ public class DettagliRichiestaTesiFragment extends Fragment {
         rispostaRelatore.setVisibility(View.GONE);
     }
 
-    private void ViewItemsSetText(){
-        titoloTesi.setText(String.valueOf(richiesta.getIdTesi()));
-        argomento.setText(String.valueOf(richiesta.getIdTesi()));
-        relatore.setText(String.valueOf(richiesta.getIdTesista()));
-        tempistiche.setText(String.valueOf(richiesta.getIdTesi()));
-        esamiMancanti.setText(String.valueOf(richiesta.getIdTesi()));
-        capacitaRichiesta.setText(String.valueOf(richiesta.getIdTesi()));
+    private void SetTextAll(){
+        //Tesi
+        Cursor cursorTesi = db.RicercaDato("SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_ID + "=" + richiesta.getIdTesi() + ";");
+        cursorTesi.moveToFirst();
+        titoloTesi.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_TITOLO)));
+        argomento.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)));
+        tempistiche.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_TEMPISTICHE)));
+        esamiMancanti.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)));
+        capacitaRichiesta.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_SKILLRICHIESTE)));
+        media.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)));
+
+        //Relatore
+        Cursor cursorRelatore = db.RicercaDato("SELECT u." + Database.UTENTI_COGNOME + ", u." + Database.UTENTI_NOME + " " +
+                "FROM " + Database.UTENTI + " u, " + Database.RELATORE + " r, " + Database.TESI + " t " +
+                "WHERE t." + Database.TESI_RELATOREID + "=r." + Database.RELATORE_ID + " AND r." + Database.RELATORE_UTENTEID + "=u." + Database.UTENTI_ID + " " +
+                "AND t." + Database.TESI_ID + "=" + richiesta.getIdTesi() + ";");
+        cursorRelatore.moveToFirst();
+        relatore.setText(cursorRelatore.getString(cursorRelatore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorRelatore.getString(cursorRelatore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
+
         capacitaEffettive.setText(richiesta.getCapacitàStudente());
-        media.setText(String.valueOf(richiesta.getIdTesi()));
         messaggioTesista.setText(richiesta.getMessaggio());
-        testoRispostaRelatore.setText(richiesta.getRisposta());
+        if(richiesta.getRisposta() != null){
+            testoRispostaRelatore.setText(richiesta.getRisposta());
+        } else {
+            testoRispostaRelatore.setText("In attesa della risposta del relatore");
+        }
     }
 }

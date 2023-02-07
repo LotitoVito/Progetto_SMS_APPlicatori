@@ -70,7 +70,7 @@ public class MiaTesiFragment extends Fragment {
         if(richieste.getVisibility()!=View.GONE){
             RefreshList();
         } else {
-            CaricaTesiScelta();
+            SetTextAll();
 
             visualizzaTask.setOnClickListener(view -> {
                 Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ListaTaskFragment(tesiScelta));
@@ -144,8 +144,7 @@ public class MiaTesiFragment extends Fragment {
         return false;
     }
 
-    private void CaricaTesiScelta() {
-        Log.d("test", "aaaaa");
+    private void SetTextAll() {
         Cursor cursorRelatore = db.RicercaDato("SELECT u." + Database.UTENTI_COGNOME + ", u." + Database.UTENTI_NOME + " " +
                 "FROM " + Database.UTENTI + " u, " + Database.RELATORE + " r, " + Database.TESI + " t, " + Database.TESISCELTA + " ts " +
                 "WHERE ts." + Database.TESISCELTA_TESIID + "=t." + Database.TESI_ID + " AND t." + Database.TESI_RELATOREID + "=r." + Database.RELATORE_ID + " AND r." + Database.RELATORE_UTENTEID + "=u." + Database.UTENTI_ID + " " +

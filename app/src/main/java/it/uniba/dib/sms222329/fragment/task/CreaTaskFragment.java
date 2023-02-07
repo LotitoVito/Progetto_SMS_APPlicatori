@@ -130,16 +130,4 @@ public class CreaTaskFragment extends Fragment {
             file = new File(path);
         }
     }
-
-    private void ScegliFile() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-        try {
-            startActivityForResult(Intent.createChooser(intent, "Seleziona un file"), 10);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 }

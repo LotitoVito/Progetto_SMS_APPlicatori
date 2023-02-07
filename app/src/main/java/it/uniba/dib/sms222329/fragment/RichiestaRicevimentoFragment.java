@@ -1,5 +1,6 @@
 package it.uniba.dib.sms222329.fragment;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -86,7 +87,10 @@ public class RichiestaRicevimentoFragment extends Fragment {
 
     private void SetTextAll() {
         messaggioTesista.setText(richiesta.getMessaggio());
-        taskRicevimento.setText(String.valueOf(richiesta.getIdTask()));     //titolo task + argomento
-        dataRicevimento.setText(richiesta.getData() + " " + richiesta.getOrario());
+        Cursor cursor = db.RicercaDato("SELECT " + Database.TASK_TITOLO + ", " + Database.TASK_DESCRIZIONE + " FROM " + Database.TASK +
+                " WHERE " + Database.TASK_ID + "=" + richiesta.getIdTask() + ";");
+        cursor.moveToFirst();
+        taskRicevimento.setText(cursor.getString(cursor.getColumnIndexOrThrow(Database.TASK_TITOLO)) + "\n" + cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)));
+        dataRicevimento.setText(richiesta.getData().format(Utility.showDate) + " " + richiesta.getOrario());
     }
 }
