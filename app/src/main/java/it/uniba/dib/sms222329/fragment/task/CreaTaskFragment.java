@@ -97,12 +97,16 @@ public class CreaTaskFragment extends Fragment {
         });
 
         creaTask.setOnClickListener(view -> {
-            Task task = new Task(titoloTask.getText().toString(), descrizioneTask.getText().toString(), dataSelezionata, null, tesiScelta.getIdTesiScelta());
-            if(TaskDatabase.CreaTask(db, task)){
-                Toast.makeText(getActivity().getApplicationContext(), "Task creata con successo", Toast.LENGTH_SHORT).show();
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new TesistaRelatoreFragment(tesiScelta));
+            if(!IsEmpty(titoloTask, descrizioneTask, dataFine)){
+                Task task = new Task(titoloTask.getText().toString().trim(), descrizioneTask.getText().toString().trim(), dataSelezionata, null, tesiScelta.getIdTesiScelta());
+                if(TaskDatabase.CreaTask(db, task)){
+                    Toast.makeText(getActivity().getApplicationContext(), "Task creata con successo", Toast.LENGTH_SHORT).show();
+                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new TesistaRelatoreFragment(tesiScelta));
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                }
             } else {
-                Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Compilare i campi obbligatori", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -129,5 +133,23 @@ public class CreaTaskFragment extends Fragment {
             String path = uri.getPath();
             file = new File(path);
         }
+    }
+
+    private boolean IsEmpty(EditText titolo, EditText argomento, EditText dataFine){
+        boolean risultato = false;
+
+        if(Utility.isEmptyTextbox(titolo)){
+            risultato = true;
+            titolo.setError("Obbligatorio");
+        }
+        if(Utility.isEmptyTextbox(argomento)){
+            risultato = true;
+            argomento.setError("Obbligatorio");
+        }
+        if(Utility.isEmptyTextbox(dataFine)){
+            risultato = true;
+            dataFine.setError("Obbligatorio");
+        }
+        return risultato;
     }
 }

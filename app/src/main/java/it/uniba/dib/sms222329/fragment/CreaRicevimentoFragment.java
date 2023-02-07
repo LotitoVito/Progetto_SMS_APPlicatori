@@ -110,7 +110,8 @@ public class CreaRicevimentoFragment extends Fragment {
 
         invia.setOnClickListener(view1 -> {
             if(LocalDate.now().compareTo(dataSelezionata) < 0){
-                if (richiesta != null) {
+                if (Utility.accountLoggato != Utility.TESISTA) {
+                    FillIfEmpty();
                     if(richiesta.ModificaRicevimento(db, dataSelezionata, orarioSelezionato)){
                         Toast.makeText(getActivity().getApplicationContext(), "Risposta inviata con successo", Toast.LENGTH_SHORT).show();
                         Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new HomeFragment());
@@ -118,12 +119,16 @@ public class CreaRicevimentoFragment extends Fragment {
                         Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Ricevimento richiesta = new Ricevimento(dataSelezionata, orarioSelezionato, task.getIdTask(), Ricevimento.IN_ATTESA_RELATORE, messaggio.getText().toString().trim());
-                    if(RicevimentoDatabase.RichiestaRicevimento(db, richiesta)){
-                        Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
-                        Utility.closeFragment(getActivity());
+                    if(!IsEmpty(data, ora, messaggio)){
+                        Ricevimento richiesta = new Ricevimento(dataSelezionata, orarioSelezionato, task.getIdTask(), Ricevimento.IN_ATTESA_RELATORE, messaggio.getText().toString().trim());
+                        if(RicevimentoDatabase.RichiestaRicevimento(db, richiesta)){
+                            Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
+                            Utility.closeFragment(getActivity());
+                        } else {
+                            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), "Compila i campi obbligatori", Toast.LENGTH_SHORT).show();
                     }
                 }
             } else {
@@ -144,5 +149,29 @@ public class CreaRicevimentoFragment extends Fragment {
             data.setText(String.valueOf(richiesta.getData()));
             ora.setText(String.valueOf(richiesta.getOrario()));
         }
+    }
+
+    private boolean IsEmpty(EditText data, EditText ora, EditText messaggio) {
+        boolean risultato = false;
+
+        if(Utility.isEmptyTextbox(data)){
+            risultato = true;
+            data.setError("Obbligatorio");
+        }
+        if(Utility.isEmptyTextbox(ora)){
+            risultato = true;
+            ora.setError("Obbligatorio");
+        }
+        if(Utility.isEmptyTextbox(messaggio)){
+            risultato = true;
+            messaggio.setError("Obbligatorio");
+        }
+
+        return risultato;
+    }
+
+    private void FillIfEmpty() {
+        Utility.fillIfEmpty(data, String.valueOf(richiesta.getData()));
+        Utility.fillIfEmpty(ora, String.valueOf(richiesta.getOrario()));
     }
 }

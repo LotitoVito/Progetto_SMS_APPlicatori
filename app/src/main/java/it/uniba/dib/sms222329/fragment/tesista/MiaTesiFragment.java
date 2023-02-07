@@ -10,11 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -42,7 +45,7 @@ public class MiaTesiFragment extends Fragment {
     private TextView relatore;
     private TextView titoloTesi;
     private TextView argomentoTesi;
-    private TextView abTesi;
+    private TextInputEditText abTesi;
     private TextView tempistiche;
     private TextView dataConsegna;
     private TextView nomeCorelatore;
@@ -85,10 +88,15 @@ public class MiaTesiFragment extends Fragment {
             });
 
             salvaModifica.setOnClickListener(view -> {
-                if(tesiScelta.ConsegnaTesiScelta(db, abTesi.getText().toString().trim())){
-                    Toast.makeText(getActivity().getApplicationContext(), "Consegna avvenuta con successo", Toast.LENGTH_SHORT).show();
+                if(!IsEmpty(abTesi)){
+                    if(tesiScelta.ConsegnaTesiScelta(db, abTesi.getText().toString().trim())){
+                        Toast.makeText(getActivity().getApplicationContext(), "Consegna avvenuta con successo", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Compila i campi obbligatori", Toast.LENGTH_SHORT).show();
+
                 }
             });
         }
@@ -178,5 +186,15 @@ public class MiaTesiFragment extends Fragment {
             nomeCorelatore.setText("Non ancora disponibile");
             emailCorelatore.setVisibility(View.GONE);
         }
+    }
+
+    private boolean IsEmpty(EditText abTesi){
+        boolean risultato = false;
+
+        if(Utility.isEmptyTextbox(abTesi)){
+            risultato = true;
+            abTesi.setError("Obbligatorio");
+        }
+        return risultato;
     }
 }

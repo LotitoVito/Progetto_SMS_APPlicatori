@@ -81,6 +81,7 @@ public class ModificaTaskFragment extends Fragment {
         super.onResume();
 
         Init();
+        SetHintAll();
 
         dataFine.setOnClickListener(view1 -> {
             MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
@@ -114,8 +115,9 @@ public class ModificaTaskFragment extends Fragment {
         });
 
         modificaTask.setOnClickListener(view -> {
+            FillIfEmpty();
             if(Utility.accountLoggato == Utility.RELATORE){
-                if(task.ModificaTask(titoloTask.getText().toString(), descrizioneTask.getText().toString(), dataSelezionata, (int) (sliderStato.getValue()/25), db)){        //settare slider
+                if(task.ModificaTask(titoloTask.getText().toString().trim(), descrizioneTask.getText().toString().trim(), dataSelezionata, (int) (sliderStato.getValue()/25), db)){        //settare slider
                     Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
@@ -205,5 +207,11 @@ public class ModificaTaskFragment extends Fragment {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+
+    private void FillIfEmpty() {
+        Utility.fillIfEmpty(titoloTask, task.getTitolo());
+        Utility.fillIfEmpty(descrizioneTask, task.getDescrizione());
     }
 }

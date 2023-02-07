@@ -51,18 +51,37 @@ public class CreaSegnalazioneFragment extends Fragment {
         inviaMessaggio.setOnClickListener(view -> {
             int idUtente = getIdUtenteLoggato();
             if(idUtente != -1){
-                SegnalazioneChat chat = new SegnalazioneChat(oggetto.getText().toString().trim(), tesi.getIdTesi());
-                SegnalazioneMessaggio messaggio = new SegnalazioneMessaggio(messaggioTesto.getText().toString().trim(), idUtente);
-                if(SegnalazioneDatabase.AvviaChat(db, chat, messaggio)){
-                    Toast.makeText(getActivity().getApplicationContext(), "Segnalazione creata con successo", Toast.LENGTH_SHORT).show();
-                    Utility.closeFragment(getActivity());
+                if(!IsEmpty(oggetto, messaggioTesto)){
+                    SegnalazioneChat chat = new SegnalazioneChat(oggetto.getText().toString().trim(), tesi.getIdTesi());
+                    SegnalazioneMessaggio messaggio = new SegnalazioneMessaggio(messaggioTesto.getText().toString().trim(), idUtente);
+                    if(SegnalazioneDatabase.AvviaChat(db, chat, messaggio)){
+                        Toast.makeText(getActivity().getApplicationContext(), "Segnalazione creata con successo", Toast.LENGTH_SHORT).show();
+                        Utility.closeFragment(getActivity());
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Compila i campi obbligatori", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private boolean IsEmpty(TextInputEditText oggetto, TextInputEditText messaggioTesto) {
+        boolean risultato = false;
+
+        if(Utility.isEmptyTextbox(oggetto)){
+            risultato = true;
+            oggetto.setError("Obbligatorio");
+        }
+        if(Utility.isEmptyTextbox(messaggioTesto)){
+            risultato = true;
+            messaggioTesto.setError("Obbligatorio");
+        }
+
+        return risultato;
     }
 
     private void Init() {

@@ -55,13 +55,17 @@ public class RichiestaTesiFragment extends Fragment {
         SetTextAll();
 
         invia.setOnClickListener(view -> {
-            RichiestaTesi richiesta = new RichiestaTesi(messaggio.getText().toString().trim(), capacitaTesista.getText().toString().trim(),
-                    tesi.getIdTesi(), Utility.tesistaLoggato.getIdTesista());
-            if(RichiestaTesiDatabase.RichiestaTesi(richiesta, db)){
-                Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
-                Utility.closeFragment(getActivity());
+            if (!IsEmpty(messaggio, capacitaTesista)) {
+                RichiestaTesi richiesta = new RichiestaTesi(messaggio.getText().toString().trim(), capacitaTesista.getText().toString().trim(),
+                        tesi.getIdTesi(), Utility.tesistaLoggato.getIdTesista());
+                if(RichiestaTesiDatabase.RichiestaTesi(richiesta, db)){
+                    Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
+                    Utility.closeFragment(getActivity());
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                }
             } else {
-                Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Compila i campi obbligatori", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -85,5 +89,20 @@ public class RichiestaTesiFragment extends Fragment {
                 "WHERE u." + Database.UTENTI_ID + "=r." + Database.RELATORE_UTENTEID + " AND r." + Database.RELATORE_ID + "=" + tesi.getIdRelatore() + ";" );
         cursor.moveToFirst();
         relatore.setText(cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_NOME)));
+    }
+
+    private boolean IsEmpty(TextInputEditText messaggio, TextInputEditText capacitaTesista) {
+        boolean risultato = false;
+
+        if(Utility.isEmptyTextbox(messaggio)){
+            risultato = true;
+            messaggio.setError("Obbligatorio");
+        }
+        if(Utility.isEmptyTextbox(capacitaTesista)){
+            risultato = true;
+            capacitaTesista.setError("Obbligatorio");
+        }
+
+        return risultato;
     }
 }
