@@ -352,10 +352,10 @@ public class TesistaRelatoreFragment extends Fragment {
                     file = new FileUpload(Utility.relatoreLoggato.getIdUtente(), Utility.relatoreLoggato.getNome()+" "+Utility.relatoreLoggato.getCognome(), url.toString(), new Date());
                     tesiUpload.setText(file.toString());
                     databaseReference.child(databaseReference.push().getKey()).setValue(file);
-
-                    Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
-                    //progressDialog.dismiss();
-
+                    if(TesiSceltaDatabase.UploadTesiScelta(db, tesiScelta, databaseReference)){
+                        Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
+                        //progressDialog.dismiss();
+                    }
                 }).addOnProgressListener(snapshot -> {
                     //double progress=(100.0* snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
                     //progressDialog.setMessage("Uploaded:"+(int)progress+"%");

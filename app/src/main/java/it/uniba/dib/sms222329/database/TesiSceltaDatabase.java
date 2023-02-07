@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.google.firebase.database.DatabaseReference;
+
 import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.classi.TesiScelta;
 
@@ -88,6 +90,19 @@ public class TesiSceltaDatabase {
 
         tesiSceltaCv.put(Database.TESISCELTA_ABSTRACT, tesi.getRiassunto());
         tesiSceltaCv.put(Database.TESISCELTA_DATAPUBBLICAZIONE, String.valueOf(tesi.getDataPubblicazione()));
+
+        long updateTesiScelta = db.update(Database.TESISCELTA, tesiSceltaCv, Database.TESISCELTA_ID + "=" + tesi.getIdTesiScelta(), null);
+        if(updateTesiScelta != -1){
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean UploadTesiScelta(Database dbClass, TesiScelta tesi, DatabaseReference valore){
+        SQLiteDatabase db = dbClass.getWritableDatabase();
+        ContentValues tesiSceltaCv = new ContentValues();
+
+        tesiSceltaCv.put(Database.TESISCELTA_DOWNLOAD, valore.push().getKey());
 
         long updateTesiScelta = db.update(Database.TESISCELTA, tesiSceltaCv, Database.TESISCELTA_ID + "=" + tesi.getIdTesiScelta(), null);
         if(updateTesiScelta != -1){

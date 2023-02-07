@@ -251,7 +251,7 @@ public class Database extends SQLiteOpenHelper {
                         TESISCELTA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         TESISCELTA_DATAPUBBLICAZIONE + " DATE," +
                         TESISCELTA_ABSTRACT + " VARCHAR(255)," +
-                        TESISCELTA_DOWNLOAD + " BLOB," +
+                        TESISCELTA_DOWNLOAD + " VARCHAR(255)," +
                         TESISCELTA_TESIID + " INT NOT NULL," +
                         TESISCELTA_CORELATOREID + " INT," +
                         TESISCELTA_STATOCORELATORE + " INT," +
@@ -285,7 +285,7 @@ public class Database extends SQLiteOpenHelper {
                         TASK_DESCRIZIONE + " VARCHAR(255) NOT NULL," +
                         TASK_DATAINIZIO + " DATE NOT NULL," +
                         TASK_DATAFINE + " DATE NOT NULL," +
-                        TASK_LINKMATERIALE + " BLOB," +
+                        TASK_LINKMATERIALE + " VARCHAR(255)," +
                         TASK_STATO + " VARCHAR(255) NOT NULL," +
                         TASK_TESISCELTAID + " INT NOT NULL," +
                         "FOREIGN KEY (" + TASK_TESISCELTAID + ") REFERENCES " + TESISCELTA + "(" + TESISCELTA_ID + ") ON DELETE CASCADE);";
