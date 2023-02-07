@@ -195,7 +195,7 @@ public class TesistaRelatoreFragment extends Fragment {
 
         if (Utility.accountLoggato == Utility.GUEST){
             SettaPerGuest();
-        } else if(Utility.accountLoggato != Utility.CORELATORE){
+        } else if(Utility.accountLoggato == Utility.CORELATORE){
             SettaPerCorelatore();
         } else {
             SettaGenerale();

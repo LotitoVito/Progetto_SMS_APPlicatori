@@ -116,8 +116,18 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
     }
 
     private void RefreshList(){
-        List<Ricevimento> lista = ListaRicevimentiDatabase.ListaRicevimenti(db, CalendarUtils.selectedDate.toString());
-        ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
-        listaRicevimenti.setAdapter(adapter);
+        if(Utility.accountLoggato == Utility.TESISTA){
+            List<Ricevimento> lista = ListaRicevimentiDatabase.ListaRicevimentiTesista(db, CalendarUtils.selectedDate.toString(), Utility.tesistaLoggato.getIdTesista());
+            ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+            listaRicevimenti.setAdapter(adapter);
+        } else if(Utility.accountLoggato == Utility.RELATORE){
+            List<Ricevimento> lista = ListaRicevimentiDatabase.ListaRicevimentiRelatore(db, CalendarUtils.selectedDate.toString(), Utility.relatoreLoggato.getIdRelatore());
+            ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+            listaRicevimenti.setAdapter(adapter);
+        } else if(Utility.accountLoggato == Utility.CORELATORE){
+            List<Ricevimento> lista = ListaRicevimentiDatabase.ListaRicevimentiCorelatore(db, CalendarUtils.selectedDate.toString(), Utility.coRelatoreLoggato.getIdCorelatore());
+            ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+            listaRicevimenti.setAdapter(adapter);
+        }
     }
 }

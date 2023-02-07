@@ -91,7 +91,7 @@ public class RelatoreDatabase {
 
         String query =  "SELECT r." + Database.RELATORE_UTENTEID + ", r." + Database.RELATORE_ID + ", " + Database.RELATORE_MATRICOLA + ", " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + ", " + Database.UTENTI_PASSWORD + ", " + Database.UTENTI_CODICEFISCALE + " " +
                         "FROM " + Database.UTENTI + " u, " + Database.RELATORE + " r " +
-                        "WHERE u." + Database.UTENTI_ID + "=r." + Database.RELATORE_UTENTEID + ";";
+                        "WHERE u." + Database.UTENTI_ID + "=r." + Database.RELATORE_UTENTEID + " AND " + Database.UTENTI_EMAIL + " = '" + account.getEmail() + "';";
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();
