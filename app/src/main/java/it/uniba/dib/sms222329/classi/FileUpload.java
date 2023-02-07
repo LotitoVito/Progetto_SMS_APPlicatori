@@ -2,19 +2,20 @@ package it.uniba.dib.sms222329.classi;
 
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class FileUpload {
 
-    private int idUtente;
-    private String nome;
-    private String url;
-    private LocalDate date;
+    int idUtente;
+    String nome;
+    String url;
+    Date date;
 
-    public FileUpload(int idUtente, String nome, String url, LocalDate timestamp) {
+    public FileUpload(int idUtente, String nome, String url, Date date) {
         this.idUtente = idUtente;
         this.nome = nome;
         this.url = url;
-        this.date = timestamp;
+        this.date = date;
     }
 
     public int getIdUtente() {
@@ -41,11 +42,11 @@ public class FileUpload {
         this.url = url;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

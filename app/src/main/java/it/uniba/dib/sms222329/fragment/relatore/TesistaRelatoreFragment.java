@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.utils.widget.MotionLabel;
 import androidx.fragment.app.Fragment;
@@ -23,11 +24,17 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
@@ -69,6 +76,7 @@ public class TesistaRelatoreFragment extends Fragment {
     //Firebase
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
+    private  FileUpload file;
 
     public TesistaRelatoreFragment(TesiScelta tesiScelta) {
         this.tesiScelta = tesiScelta;
@@ -83,6 +91,7 @@ public class TesistaRelatoreFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         storageReference = FirebaseStorage.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference("uploads");
     }
 
     @Override
@@ -176,6 +185,8 @@ public class TesistaRelatoreFragment extends Fragment {
         labelCorelatore = getView().findViewById(R.id.label_corelatore);
         tesiUpload = getView().findViewById(R.id.tesi_upload);
 
+        getLastUpload();
+
         if (Utility.accountLoggato == Utility.GUEST){
             SettaPerGuest();
         } else if(Utility.accountLoggato != Utility.CORELATORE){
@@ -199,6 +210,7 @@ public class TesistaRelatoreFragment extends Fragment {
                 emailCorelatore.setText(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
             }
         }
+
     }
 
     private void SettaGenerale(){
@@ -212,6 +224,25 @@ public class TesistaRelatoreFragment extends Fragment {
             corelatore.setVisibility(View.GONE);
             emailCorelatore.setVisibility(View.GONE);
         }
+    }
+
+    private void getLastUpload() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data : snapshot.getChildren()){
+                    FileUpload genericFile = data.getValue(FileUpload.class);
+                    if (file != null && genericFile.getIdUtente() == Utility.relatoreLoggato.getIdUtente()){
+                        tesiUpload.setText(genericFile.toString());
+                        file = genericFile;
+                    }
+                }
+          }
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {
+                    tesiUpload.setText("Nessun caricamento");
+          }
+      });
     }
 
     private void SettaPerCorelatore(){
@@ -258,9 +289,9 @@ public class TesistaRelatoreFragment extends Fragment {
     }
 
     private void uploadFiles(Uri data) {
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity().getApplicationContext());
-        progressDialog.setTitle("Uploading...");
-        progressDialog.show();
+        //final ProgressDialog progressDialog = new ProgressDialog(getActivity().getApplicationContext());
+        //progressDialog.setTitle("Uploading...");
+        //progressDialog.show();
 
         StorageReference reference = storageReference.child("Uploads/"+System.currentTimeMillis()+".pdf");
         reference.putFile(data)
@@ -268,16 +299,16 @@ public class TesistaRelatoreFragment extends Fragment {
                     Task<Uri> uriTask =taskSnapshot.getStorage().getDownloadUrl();
                     while(!uriTask.isComplete());
                     Uri url = uriTask.getResult();
-                    FileUpload file = new FileUpload(Utility.relatoreLoggato.getIdUtente(), Utility.relatoreLoggato.getNome(), url.toString(), LocalDate.now());
+                    file = new FileUpload(Utility.relatoreLoggato.getIdUtente(), Utility.relatoreLoggato.getNome()+" "+Utility.relatoreLoggato.getCognome(), url.toString(), new Date());
                     tesiUpload.setText(file.toString());
                     databaseReference.child(databaseReference.push().getKey()).setValue(file);
 
                     Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
-                    progressDialog.dismiss();
+                    //progressDialog.dismiss();
 
                 }).addOnProgressListener(snapshot -> {
-                    double progress=(100.0* snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
-                    progressDialog.setMessage("Uploaded:"+(int)progress+"%");
+                    //double progress=(100.0* snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
+                    //progressDialog.setMessage("Uploaded:"+(int)progress+"%");
                 });
 
     }
