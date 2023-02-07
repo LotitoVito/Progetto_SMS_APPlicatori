@@ -55,7 +55,7 @@ public class RichiestaRicevimentoFragment extends Fragment {
         accetta.setOnClickListener(view -> {
             if(RicevimentoDatabase.AccettaRicevimento(db, richiesta)){
                 Toast.makeText(getActivity().getApplicationContext(), "Ricevimento accettato", Toast.LENGTH_SHORT).show();
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new HomeFragment());
+                Utility.goBack(getActivity());
             }else{
                 Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
             }
@@ -64,7 +64,7 @@ public class RichiestaRicevimentoFragment extends Fragment {
         rifiuta.setOnClickListener(view -> {
             if(RicevimentoDatabase.RifiutaRicevimento(db, richiesta)){
                 Toast.makeText(getActivity().getApplicationContext(), "Ricevimento rifiutato", Toast.LENGTH_SHORT).show();
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new HomeFragment());
+                Utility.goBack(getActivity());
             } else{
                 Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
             }

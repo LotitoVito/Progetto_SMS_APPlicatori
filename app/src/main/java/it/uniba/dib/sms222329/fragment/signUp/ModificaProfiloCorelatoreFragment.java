@@ -59,7 +59,7 @@ public class ModificaProfiloCorelatoreFragment extends Fragment {
             if (Utility.coRelatoreLoggato.modCoRelatore(nome.getText().toString(), cognome.getText().toString(), mail.getText().toString(),
                     password.getText().toString(), codFisc.getText().toString(), org.getText().toString(), db)){
                 Toast.makeText(getActivity().getApplicationContext(),"Modifica effettuata con successo",Toast.LENGTH_SHORT).show();
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ProfiloFragment());
+                Utility.goBack(getActivity());
             }
         });
     }

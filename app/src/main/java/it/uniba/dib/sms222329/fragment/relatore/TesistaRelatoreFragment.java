@@ -2,7 +2,6 @@ package it.uniba.dib.sms222329.fragment.relatore;
 
 import static android.app.Activity.RESULT_OK;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -18,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,13 +26,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.journeyapps.barcodescanner.Util;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 import it.uniba.dib.sms222329.R;
@@ -115,7 +110,7 @@ public class TesistaRelatoreFragment extends Fragment {
             if(Utility.accountLoggato == Utility.CORELATORE){
                 if(tesiScelta.AccettaRichiesta(db)){
                     Toast.makeText(getActivity().getApplicationContext(), "Richiesta accettata", Toast.LENGTH_SHORT).show();
-                    Utility.closeFragment(getActivity());
+                    Utility.goBack(getActivity());
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), " Operazione fallita", Toast.LENGTH_SHORT).show();
                 }
@@ -136,7 +131,7 @@ public class TesistaRelatoreFragment extends Fragment {
             if(Utility.accountLoggato == Utility.CORELATORE){
                 if(tesiScelta.RifiutaRichiesta(db)){
                     Toast.makeText(getActivity().getApplicationContext(), "Richiesta rifiutata", Toast.LENGTH_SHORT).show();
-                    Utility.closeFragment(getActivity());
+                    Utility.goBack(getActivity());
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
                 }

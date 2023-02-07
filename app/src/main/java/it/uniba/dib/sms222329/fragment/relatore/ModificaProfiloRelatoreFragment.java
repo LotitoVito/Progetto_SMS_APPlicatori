@@ -78,7 +78,7 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
                     cognome.getText().toString().trim(), codFisc.getText().toString().trim(),mail.getText().toString().trim(),
                     password.getText().toString().trim(), corsiRelatore, db)) {
                 Toast.makeText(getActivity().getApplicationContext(),"Modificata effettuata con successo",Toast.LENGTH_SHORT).show();
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ProfiloFragment());
+                Utility.goBack(getActivity());
             }
         });
     }

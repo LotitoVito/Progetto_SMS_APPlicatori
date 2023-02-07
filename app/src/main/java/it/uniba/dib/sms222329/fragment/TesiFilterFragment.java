@@ -81,7 +81,6 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
             query = AddToQueryOrderType(query, ordinaAscendente);
 
             this.dismiss();
-            Log.d("test", query);
             Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.content2, new ListaTesiFragment(query));
         });
     }

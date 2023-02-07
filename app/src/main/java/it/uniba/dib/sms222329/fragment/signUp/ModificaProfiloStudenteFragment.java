@@ -78,7 +78,7 @@ public class ModificaProfiloStudenteFragment extends Fragment {
                     Integer.parseInt(numeroEsamiMancanti.getText().toString()),
                     codFisc.getText().toString(), corso, db)){
                 Toast.makeText(getActivity().getApplicationContext(),"modifica riuscita",Toast.LENGTH_SHORT).show();
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ProfiloFragment());
+                Utility.goBack(getActivity());
             }
         });
     }

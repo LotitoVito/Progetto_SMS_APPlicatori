@@ -142,13 +142,7 @@ public class LoggedActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.navigation_profile:
-                if(utenteLoggato.getTipoUtente() == Utility.TESISTA){
-                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment());
-                } else if (utenteLoggato.getTipoUtente() == Utility.RELATORE){
-                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment());
-                }else if(utenteLoggato.getTipoUtente() == Utility.CORELATORE){
-                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment());
-                }
+                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment());
                 setTitle(R.string.title_profile);
                 return true;
             case R.id.navigation_settings:

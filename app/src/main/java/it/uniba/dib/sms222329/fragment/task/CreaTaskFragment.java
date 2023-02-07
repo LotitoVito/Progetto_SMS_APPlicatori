@@ -101,7 +101,7 @@ public class CreaTaskFragment extends Fragment {
                 Task task = new Task(titoloTask.getText().toString().trim(), descrizioneTask.getText().toString().trim(), dataSelezionata, null, tesiScelta.getIdTesiScelta());
                 if(TaskDatabase.CreaTask(db, task)){
                     Toast.makeText(getActivity().getApplicationContext(), "Task creata con successo", Toast.LENGTH_SHORT).show();
-                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new TesistaRelatoreFragment(tesiScelta));
+                    Utility.goBack(getActivity());
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
                 }

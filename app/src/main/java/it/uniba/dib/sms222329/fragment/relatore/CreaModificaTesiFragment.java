@@ -84,7 +84,7 @@ public class CreaModificaTesiFragment extends Fragment {
                         Integer.parseInt(tempistiche.getText().toString().trim()), Float.parseFloat(media.getText().toString().trim()),
                         Integer.parseInt(esamiMancanti.getText().toString().trim()), capacitaRichiesta.getText().toString().trim(), db)){
                     Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
-                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ListaTesiFragment());
+                    Utility.goBack(getActivity());
                 } else{
                     Toast.makeText(getActivity().getApplicationContext(), "Modifica fallita", Toast.LENGTH_SHORT).show();
                 }
@@ -101,11 +101,10 @@ public class CreaModificaTesiFragment extends Fragment {
 
                     if (TesiDatabase.RegistrazioneTesi(tesi, db)) {
                         Toast.makeText(getActivity().getApplicationContext(), "Tesi registrata con successo", Toast.LENGTH_SHORT).show();
-                        Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new ListaTesiFragment());
+                        Utility.goBack(getActivity());
                     } else {
                         Toast.makeText(getActivity().getApplicationContext(), "Registrazione fallita", Toast.LENGTH_SHORT).show();
                     }
-
                 }else{
                     Toast.makeText(getActivity().getApplicationContext(), "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
                 }

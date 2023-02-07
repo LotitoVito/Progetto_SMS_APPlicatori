@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +16,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
@@ -114,7 +110,7 @@ public class CreaRicevimentoFragment extends Fragment {
                     FillIfEmpty();
                     if(richiesta.ModificaRicevimento(db, dataSelezionata, orarioSelezionato)){
                         Toast.makeText(getActivity().getApplicationContext(), "Risposta inviata con successo", Toast.LENGTH_SHORT).show();
-                        Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new HomeFragment());
+                        Utility.goBack(getActivity());
                     } else {
                         Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
                     }
@@ -123,7 +119,7 @@ public class CreaRicevimentoFragment extends Fragment {
                         Ricevimento richiesta = new Ricevimento(dataSelezionata, orarioSelezionato, task.getIdTask(), Ricevimento.IN_ATTESA_RELATORE, messaggio.getText().toString().trim());
                         if(RicevimentoDatabase.RichiestaRicevimento(db, richiesta)){
                             Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
-                            Utility.closeFragment(getActivity());
+                            Utility.goBack(getActivity());
                         } else {
                             Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
                         }

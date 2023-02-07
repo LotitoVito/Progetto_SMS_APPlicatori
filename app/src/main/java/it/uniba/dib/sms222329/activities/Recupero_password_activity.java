@@ -2,7 +2,6 @@ package it.uniba.dib.sms222329.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,7 +9,6 @@ import android.widget.Toast;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
-import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.UtenteRegistratoDatabase;
 
@@ -43,6 +41,7 @@ public class Recupero_password_activity extends AppCompatActivity {
                 if (UtenteRegistratoDatabase.ControlloMail(emailIns1.getText().toString().trim(), emailIns2.getText().toString().trim(), db)) {
                     if (UtenteRegistratoDatabase.ResetPassword(passswordIns1.getText().toString().trim(), passswordIns2.getText().toString().trim(), emailIns1.getText().toString().trim(), db)) {
                         Toast.makeText(this, "Password ripristinata", Toast.LENGTH_SHORT).show();
+                        Utility.goBack(this);
                     } else {
                         Toast.makeText(this, "Le password non corrispondono", Toast.LENGTH_SHORT).show();
                     }

@@ -75,6 +75,14 @@ public class ListaSegnalazioniChatAdapter extends BaseAdapter {
                 " AND " + Database.MESSAGGISEGNALAZIONE_UTENTEID + "!=" + idUtenteChat + ";");
         cursor.moveToFirst();
 
+        if(cursor.getCount() == 0){
+            cursor = db.RicercaDato("SELECT r." + Database.RELATORE_UTENTEID +
+                    " FROM " + Database.RELATORE + " r, " + Database.TESI + " t" +
+                    " WHERE t." + Database.TESI_RELATOREID + "=r." + Database.RELATORE_ID +
+                    " AND t." + Database.TESI_ID + "=" + segnalazioni.get(i).getIdTesi() + ";");
+            cursor.moveToFirst();
+        }
+
         //Utente
         Cursor cursorUtente = db.RicercaDato("SELECT u." + Database.UTENTI_COGNOME + ", " + Database.UTENTI_NOME + " " +
                 "FROM " + Database.UTENTI + " u " +

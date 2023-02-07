@@ -65,7 +65,7 @@ public class AccettaRichiestaTesiFragment extends Fragment {
                 richiesta.setAccettata(RichiestaTesi.ACCETTATO);
                 if(richiesta.AccettaRichiestaTesi(rispostaRelatore.getText().toString().trim(), db)){
                     Toast.makeText(getActivity().getApplicationContext(), "Richiesta accettata con successo", Toast.LENGTH_SHORT).show();
-                    Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new TesistiRelatoreFragment());
+                    Utility.goBack(getActivity());
                 } else{
                     Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
                 }
@@ -78,7 +78,7 @@ public class AccettaRichiestaTesiFragment extends Fragment {
         rifiuta.setOnClickListener(view -> {
             if(richiesta.RifiutaRichiestaTesi(rispostaRelatore.getText().toString().trim(), db)){
                 Toast.makeText(getActivity().getApplicationContext(), "Richiesta rifiutata con successo", Toast.LENGTH_SHORT).show();
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new TesistiRelatoreFragment());
+                Utility.goBack(getActivity());
             } else{
                 Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
             }

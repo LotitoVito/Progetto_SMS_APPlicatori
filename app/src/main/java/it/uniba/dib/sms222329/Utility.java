@@ -3,11 +3,9 @@ package it.uniba.dib.sms222329;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Environment;
-import android.util.Log;
 import android.view.autofill.AutofillValue;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,8 +14,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.time.format.DateTimeFormatter;
 
@@ -58,7 +54,7 @@ public class Utility {
                 .commit();
     }
 
-    public static void closeFragment(Activity activity){
+    public static void goBack(Activity activity){
         activity.onBackPressed();
     }
 

@@ -60,7 +60,7 @@ public class RichiestaTesiFragment extends Fragment {
                         tesi.getIdTesi(), Utility.tesistaLoggato.getIdTesista());
                 if(RichiestaTesiDatabase.RichiestaTesi(richiesta, db)){
                     Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
-                    Utility.closeFragment(getActivity());
+                    Utility.goBack(getActivity());
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
                 }

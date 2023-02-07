@@ -56,7 +56,7 @@ public class CreaSegnalazioneFragment extends Fragment {
                     SegnalazioneMessaggio messaggio = new SegnalazioneMessaggio(messaggioTesto.getText().toString().trim(), idUtente);
                     if(SegnalazioneDatabase.AvviaChat(db, chat, messaggio)){
                         Toast.makeText(getActivity().getApplicationContext(), "Segnalazione creata con successo", Toast.LENGTH_SHORT).show();
-                        Utility.closeFragment(getActivity());
+                        Utility.goBack(getActivity());
                     } else {
                         Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
                     }

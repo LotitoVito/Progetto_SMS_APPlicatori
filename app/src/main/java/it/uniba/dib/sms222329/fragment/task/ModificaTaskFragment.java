@@ -119,6 +119,7 @@ public class ModificaTaskFragment extends Fragment {
             if(Utility.accountLoggato == Utility.RELATORE){
                 if(task.ModificaTask(titoloTask.getText().toString().trim(), descrizioneTask.getText().toString().trim(), dataSelezionata, (int) (sliderStato.getValue()/25), db)){        //settare slider
                     Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
+                    Utility.goBack(getActivity());
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
                 }
@@ -127,6 +128,7 @@ public class ModificaTaskFragment extends Fragment {
             if(Utility.accountLoggato == Utility.TESISTA){
                 if(task.ModificaTask((int) (sliderStato.getValue()/25), db)){        //settare slider
                     Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
+                    Utility.goBack(getActivity());
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
                 }
