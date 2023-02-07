@@ -95,7 +95,7 @@ public class TesistaRelatoreFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         storageReference = FirebaseStorage.getInstance().getReference();
-        databaseReference = FirebaseDatabase.getInstance().getReference("uploads");
+        databaseReference = FirebaseDatabase.getInstance("https://laureapp-f0334-default-rtdb.europe-west1.firebasedatabase.app/").getReference("uploads");
     }
 
     @Override
@@ -162,7 +162,9 @@ public class TesistaRelatoreFragment extends Fragment {
         });
 
         caricaTesi.setOnClickListener(view -> {
-            caricaFile();
+            if(Utility.CheckStorage(getActivity())) {
+                caricaFile();
+            }
         });
     }
 
@@ -271,17 +273,26 @@ public class TesistaRelatoreFragment extends Fragment {
           public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()){
                     FileUpload genericFile = data.getValue(FileUpload.class);
-                    if (file != null && genericFile.getIdUtente() == Utility.relatoreLoggato.getIdUtente()){
+                    if (genericFile.getIdUtente() == Utility.relatoreLoggato.getIdUtente()){
                         tesiUpload.setText(genericFile.toString());
                         file = genericFile;
+                        break;
+                    }else{
+                        file = null;
                     }
                 }
           }
           @Override
           public void onCancelled(@NonNull DatabaseError error) {
-                    tesiUpload.setText("Nessun caricamento");
+                    tesiUpload.setText("Errore");
           }
-      });
+        });
+
+        if(file == null){
+
+            tesiUpload.setText("Nessun caricamento");
+
+        }
     }
 
     private void SettaPerCorelatore(){

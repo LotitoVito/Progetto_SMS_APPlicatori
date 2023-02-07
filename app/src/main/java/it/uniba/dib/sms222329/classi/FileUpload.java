@@ -11,6 +11,10 @@ public class FileUpload {
     String url;
     Date date;
 
+    public  FileUpload(){
+
+    }
+
     public FileUpload(int idUtente, String nome, String url, Date date) {
         this.idUtente = idUtente;
         this.nome = nome;
