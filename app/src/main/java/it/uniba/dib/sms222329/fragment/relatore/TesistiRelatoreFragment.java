@@ -114,13 +114,13 @@ public class TesistiRelatoreFragment extends Fragment {
     }
 
     private void CaricaListaTesistiRelatore(){
-        List<TesiScelta> lista = ListaTesiScelteDatabase.ListaTesiScelteDatabase(db);
+        List<TesiScelta> lista = ListaTesiScelteDatabase.ListaTesiScelteRelatoreDatabase(db, Utility.relatoreLoggato.getIdRelatore());
         ListaTesistiRelatoreAdapter adapter = new ListaTesistiRelatoreAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
         listView.setAdapter(adapter);
     }
 
     private void CaricaListaTesistiCorelatore(){
-        List<TesiScelta> lista = ListaTesiScelteDatabase.ListaTesistiCorelatore(db, Utility.coRelatoreLoggato.getIdCorelatore());
+        List<TesiScelta> lista = ListaTesiScelteDatabase.ListaTesiScelteCorelatore(db, Utility.coRelatoreLoggato.getIdCorelatore());
         ListaTesistiRelatoreAdapter adapter = new ListaTesistiRelatoreAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
         listView.setAdapter(adapter);
     }

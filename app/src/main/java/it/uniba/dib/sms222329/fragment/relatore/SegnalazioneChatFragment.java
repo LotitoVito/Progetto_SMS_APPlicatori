@@ -17,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.ListaClassificaSegnalazione;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.SegnalazioneChat;
@@ -64,8 +65,19 @@ public class SegnalazioneChatFragment extends Fragment {
     }
 
     private void RefreshList(){
-        List<SegnalazioneChat> lista = ListaSegnalazioniChatDatabase.ListaSegnalazioniChat(db);
-        ListaSegnalazioniChatAdapter adapterLista = new ListaSegnalazioniChatAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
-        listView.setAdapter(adapterLista);
+        if(Utility.accountLoggato == Utility.TESISTA){
+            List<SegnalazioneChat> lista = ListaSegnalazioniChatDatabase.ListaSegnalazioniChat(db, Utility.tesistaLoggato.getIdUtente());
+            ListaSegnalazioniChatAdapter adapterLista = new ListaSegnalazioniChatAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+            listView.setAdapter(adapterLista);
+        } else  if(Utility.accountLoggato == Utility.RELATORE){
+            List<SegnalazioneChat> lista = ListaSegnalazioniChatDatabase.ListaSegnalazioniChatRelatore(db, Utility.relatoreLoggato.getIdUtente(), Utility.relatoreLoggato.getIdRelatore());
+            ListaSegnalazioniChatAdapter adapterLista = new ListaSegnalazioniChatAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+            listView.setAdapter(adapterLista);
+        } else  if(Utility.accountLoggato == Utility.CORELATORE){
+            List<SegnalazioneChat> lista = ListaSegnalazioniChatDatabase.ListaSegnalazioniChat(db, Utility.coRelatoreLoggato.getIdUtente());
+            ListaSegnalazioniChatAdapter adapterLista = new ListaSegnalazioniChatAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+            listView.setAdapter(adapterLista);
+        }
+
     }
 }

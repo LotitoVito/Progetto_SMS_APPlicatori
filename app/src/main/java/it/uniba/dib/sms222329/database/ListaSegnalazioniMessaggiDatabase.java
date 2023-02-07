@@ -2,6 +2,7 @@ package it.uniba.dib.sms222329.database;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class ListaSegnalazioniMessaggiDatabase {
             listaMessaggiSegnalazione.add(messaggioEstratto);
 
         }
+        Log.d("test", "a" + idChat);
         return listaMessaggiSegnalazione;
     }
 }

@@ -75,7 +75,6 @@ public class Utility {
         }
     }
 
-    //fixare
     public static boolean CheckStorage(Activity activity){
         if(isExternalStorageAvailable() && !isExternalStorageReadOnly()){
             if (Utility.CheckPermessi(activity)){

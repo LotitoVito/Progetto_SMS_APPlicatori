@@ -14,8 +14,9 @@ import it.uniba.dib.sms222329.classi.TesiScelta;
 public class ListaRichiesteTesiDatabase {
 
     public static List<RichiestaTesi> ListaRichiesteTesiRelatore(Database dbClass, int idRelatore) {
-        String query = "SELECT * FROM " + Database.RICHIESTA + " " +
-                "WHERE " + Database.RICHIESTA_ACCETTATA + "=" + RichiestaTesi.IN_ATTESA + ";";
+        String query = "SELECT * FROM " + Database.RICHIESTA + " r, " + Database.TESI + " t " +
+                "WHERE r." + Database.RICHIESTA_TESIID + "=t." + Database.TESI_ID+ " AND "
+                + Database.RICHIESTA_ACCETTATA + "=" + RichiestaTesi.IN_ATTESA + " AND " + Database.TESI_RELATOREID + "=" + idRelatore + ";";
 
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
