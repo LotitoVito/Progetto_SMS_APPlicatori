@@ -13,10 +13,9 @@ import it.uniba.dib.sms222329.database.TesiDatabase;
 
 public class Tesi {
 
-    /**
-     * Costanti per la disponibilità
-     */
+    /** Costanti per la disponibilità della tesi*/
     public static final boolean DISPONIBILE = true;
+    /** Costanti per la disponibilità della tesi*/
     public static final boolean NON_DISPONIBILE = false;
 
     private int idTesi;

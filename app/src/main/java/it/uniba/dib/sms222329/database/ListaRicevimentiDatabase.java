@@ -21,7 +21,8 @@ public class ListaRicevimentiDatabase {
      * @return  Restituisce la lista trovata
      */
     public static List<Ricevimento> ListaRicevimentiTesista(Database dbClass, String dataQuery, int idTesista) {
-        String query = "SELECT * FROM " + Database.RICEVIMENTI + " r, " + Database.TASK + " t, " + Database.TESISCELTA + " ts " +
+        String query = "SELECT r." + Database.RICEVIMENTI_ID + ", r." + Database.RICEVIMENTI_DATA + ", r." + Database.RICEVIMENTI_ORARIO + ", r." + Database.RICEVIMENTI_TASKID + ", r." + Database.RICEVIMENTI_ACCETTAZIONE + ", r." + Database.RICEVIMENTI_MESSAGGIO +
+                " FROM " + Database.RICEVIMENTI + " r, " + Database.TASK + " t, " + Database.TESISCELTA + " ts " +
                 "WHERE r." + Database.RICEVIMENTI_TASKID + "=t." + Database.TASK_ID + " AND t." + Database.TASK_TESISCELTAID + "=ts." + Database.TESISCELTA_ID +
                 " AND r." + Database.RICEVIMENTI_DATA + " LIKE('" + dataQuery + "') AND ts." + Database.TESISCELTA_TESISTAID + "=" + idTesista + ";";
 
@@ -65,7 +66,8 @@ public class ListaRicevimentiDatabase {
      * @return  Restituisce la lista trovata
      */
     public static List<Ricevimento> ListaRicevimentiRelatore(Database dbClass, String dataQuery, int idRelatore) {
-        String query = "SELECT * FROM " + Database.RICEVIMENTI + " r, " + Database.TASK + " t, " + Database.TESISCELTA + " ts, " + Database.TESI + " te " +
+        String query = "SELECT r." + Database.RICEVIMENTI_ID + ", r." + Database.RICEVIMENTI_DATA + ", r." + Database.RICEVIMENTI_ORARIO + ", r." + Database.RICEVIMENTI_TASKID + ", r." + Database.RICEVIMENTI_ACCETTAZIONE + ", r." + Database.RICEVIMENTI_MESSAGGIO +
+                " FROM " + Database.RICEVIMENTI + " r, " + Database.TASK + " t, " + Database.TESISCELTA + " ts, " + Database.TESI + " te " +
                 "WHERE r." + Database.RICEVIMENTI_TASKID + "=t." + Database.TASK_ID + " AND t." + Database.TASK_TESISCELTAID + "=ts." + Database.TESISCELTA_ID + " AND ts." + Database.TESISCELTA_TESIID + "=te." + Database.TESI_ID +
                 " AND r." + Database.RICEVIMENTI_DATA + " LIKE('" + dataQuery + "') AND te." + Database.TESI_RELATOREID + "=" + idRelatore + ";";
 
@@ -108,7 +110,8 @@ public class ListaRicevimentiDatabase {
      * @return  Restituisce la lista trovata
      */
     public static List<Ricevimento> ListaRicevimentiCorelatore(Database dbClass, String dataQuery, int idCorelatore) {
-        String query = "SELECT * FROM " + Database.RICEVIMENTI + " r, " + Database.TASK + " t, " + Database.TESISCELTA + " ts " +
+        String query = "SELECT r." + Database.RICEVIMENTI_ID + ", r." + Database.RICEVIMENTI_DATA + ", r." + Database.RICEVIMENTI_ORARIO + ", r." + Database.RICEVIMENTI_TASKID + ", r." + Database.RICEVIMENTI_ACCETTAZIONE + ", r." + Database.RICEVIMENTI_MESSAGGIO +
+                " FROM " + Database.RICEVIMENTI + " r, " + Database.TASK + " t, " + Database.TESISCELTA + " ts " +
                 "WHERE r." + Database.RICEVIMENTI_TASKID + "=t." + Database.TASK_ID + " AND t." + Database.TASK_TESISCELTAID + "=ts." + Database.TESISCELTA_ID +
                 " AND r." + Database.RICEVIMENTI_DATA + " LIKE('" + dataQuery + "') AND ts." + Database.TESISCELTA_CORELATOREID + "=" + idCorelatore + ";";
 

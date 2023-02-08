@@ -1,15 +1,17 @@
 package it.uniba.dib.sms222329.classi;
 
+import android.util.Log;
+
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.RichiestaTesiDatabase;
 
 public class RichiestaTesi {
 
-    /**
-     * Costanti per lo stato della richiesta
-     */
-    public static final int ACCETTATO = 1;
-    public static final int IN_ATTESA = 2;
+    /** Costanti per lo stato della richiestaTesi */
+    public static final int IN_ATTESA = 1;
+    /** Costanti per lo stato della richiestaTesi */
+    public static final int ACCETTATO = 2;
+    /** Costanti per lo stato della richiestaTesi */
     public static final int RIFIUTATO = 3;
 
     private int idRichiesta;
@@ -120,6 +122,8 @@ public class RichiestaTesi {
     public boolean AccettaRichiestaTesi(String risposta, Database db){
         this.stato = ACCETTATO;
         this.risposta = risposta;
+
+        Log.d("test", String.valueOf(this.stato));
 
         if(RichiestaTesiDatabase.AccettaRichiestaTesi(this, db)){
             return true;

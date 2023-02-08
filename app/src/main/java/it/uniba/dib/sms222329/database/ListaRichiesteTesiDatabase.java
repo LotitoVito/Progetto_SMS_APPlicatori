@@ -2,6 +2,7 @@ package it.uniba.dib.sms222329.database;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +18,10 @@ public class ListaRichiesteTesiDatabase {
      * @return  Restituisce la lista trovata
      */
     public static List<RichiestaTesi> ListaRichiesteTesiRelatore(Database dbClass, int idRelatore) {
-        String query = "SELECT * FROM " + Database.RICHIESTA + " r, " + Database.TESI + " t " +
-                "WHERE r." + Database.RICHIESTA_TESIID + "=t." + Database.TESI_ID+ " AND "
-                + Database.RICHIESTA_ACCETTATA + "=" + RichiestaTesi.IN_ATTESA + " AND " + Database.TESI_RELATOREID + "=" + idRelatore + ";";
+        String query = "SELECT r." + Database.RICHIESTA_ID + ", r." + Database.RICHIESTA_MESSAGGIO + ", r." + Database.RICHIESTA_CAPACITASTUDENTE + ", r." + Database.RICHIESTA_TESIID + ", r." + Database.RICHIESTA_TESISTAID + ", r." + Database.RICHIESTA_ACCETTATA + ", r." + Database.RICHIESTA_RISPOSTA +
+                " FROM " + Database.RICHIESTA + " r, " + Database.TESI + " t " +
+                "WHERE r." + Database.RICHIESTA_TESIID + "=t." + Database.TESI_ID+
+                " AND r." + Database.RICHIESTA_ACCETTATA + "=" + RichiestaTesi.IN_ATTESA + " AND t." + Database.TESI_RELATOREID + "=" + idRelatore + ";";
 
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
@@ -38,7 +40,6 @@ public class ListaRichiesteTesiDatabase {
             richiestaTesi.setRisposta(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICHIESTA_RISPOSTA)));
 
             listaRichiesteTesi.add(richiestaTesi);
-
         }
         return listaRichiesteTesi;
     }
@@ -50,8 +51,9 @@ public class ListaRichiesteTesiDatabase {
      * @return  Restituisce la lista trovata
      */
     public static List<RichiestaTesi> ListaRichiesteTesiTesista(Database dbClass, int idTesista) {
-        String query = "SELECT * FROM " + Database.RICHIESTA + " " +
-                "WHERE " + Database.RICHIESTA_TESISTAID + "=" + idTesista + ";";
+        String query = "SELECT r." + Database.RICHIESTA_ID + ", r." + Database.RICHIESTA_MESSAGGIO + ", r." + Database.RICHIESTA_CAPACITASTUDENTE + ", r." + Database.RICHIESTA_TESIID + ", r." + Database.RICHIESTA_TESISTAID + ", r." + Database.RICHIESTA_ACCETTATA + ", r." + Database.RICHIESTA_RISPOSTA +
+                " FROM " + Database.RICHIESTA +
+                " WHERE " + Database.RICHIESTA_TESISTAID + "=" + idTesista + ";";
 
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);

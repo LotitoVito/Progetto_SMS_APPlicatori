@@ -23,28 +23,34 @@ import it.uniba.dib.sms222329.classi.Tesista;
 
 public class Utility {
 
-    /**
-     * Costanti per l'account loggato
-     */
+    /** Costanti per l'account loggato */
     public static final int GUEST = 0;
+    /** Costanti per l'account loggato */
     public static final int TESISTA = 1;
+    /** Costanti per l'account loggato */
     public static final int RELATORE = 2;
+    /** Costanti per l'account loggato */
     public static final int CORELATORE = 3;
-    /**
-     * Formatter data e ora
-     */
+
+    /** Formato conversione data*/
     public static final DateTimeFormatter convertFromStringDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    /** Formato conversione data e ora*/
     public static final DateTimeFormatter convertFromStringDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    /** Formato visualizzazione data*/
     public static final DateTimeFormatter showDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    /** Formato visualizzazione data e ora*/
     public static final DateTimeFormatter showDateTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
+
     public static final int PERMESSO_STORAGE = 1;
 
+    /** Account tesista loggato */
     public static Tesista tesistaLoggato;
+    /** Account relatore loggato */
     public static Relatore relatoreLoggato;
+    /** Account corelatore loggato */
     public static CoRelatore coRelatoreLoggato;
-    /**
-     * Variabile usata per tener conto di quale account è loggato
-     */
+    /** Variabile usata per tener conto di quale account è loggato */
     public static int accountLoggato;
 
     private Utility() {}

@@ -7,13 +7,15 @@ import it.uniba.dib.sms222329.database.TaskDatabase;
 
 public class Task {
 
-    /**
-     * Costanti per lo stato
-     */
+    /** Costanti per lo stato del task*/
     public static final int ASSEGNATO = 0;
+    /** Costanti per lo stato del task*/
     public static final int INIZIATO = 1;
+    /** Costanti per lo stato del task*/
     public static final int IN_COMPLEMAMENTO = 2;
+    /** Costanti per lo stato del task*/
     public static final int IN_REVISIONE = 3;
+    /** Costanti per lo stato del task*/
     public static final int COMPLETATO = 4;
 
     private int idTask;

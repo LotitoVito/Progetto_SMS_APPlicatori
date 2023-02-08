@@ -8,12 +8,13 @@ import it.uniba.dib.sms222329.database.RicevimentoDatabase;
 
 public class Ricevimento {
 
-    /**
-     * Costanti per l'accettazione del ricevimento
-     */
+    /** Costanti per lo stato del ricevimento */
     public static final int ACCETTATO = 1;
+    /** Costanti per lo stato del ricevimento */
     public static final int RIFIUTATO = 2;
+    /** Costanti per lo stato del ricevimento */
     public static final int IN_ATTESA_RELATORE = 3;
+    /** Costanti per lo stato del ricevimento */
     public static final int IN_ATTESA_TESISTA = 4;
 
     private int idRicevimento;

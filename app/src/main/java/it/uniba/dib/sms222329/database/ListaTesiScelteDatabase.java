@@ -19,9 +19,10 @@ public class ListaTesiScelteDatabase {
      * @return  Restituisce la lista trovata
      */
     public static List<TesiScelta> ListaTesiScelteRelatoreDatabase(Database dbClass, int idRelatore) {
-        String query =  "SELECT * FROM " + Database.TESISCELTA + " ts, " + Database.TESI + " t " +
-                        "WHERE ts." + Database.TESISCELTA_TESIID +"=t." + Database.TESI_ID + " " +
-                        "AND t." + Database.TESI_RELATOREID + "=" + idRelatore + ";";
+        String query =  "SELECT ts." + Database.TESISCELTA_ID + ", ts." + Database.TESISCELTA_DATAPUBBLICAZIONE + ", ts." + Database.TESISCELTA_ABSTRACT + ", ts." + Database.TESISCELTA_DOWNLOAD + ", ts." + Database.TESISCELTA_TESIID + ", ts." + Database.TESISCELTA_CORELATOREID + ", ts." + Database.TESISCELTA_STATOCORELATORE + ", ts." + Database.TESISCELTA_TESISTAID + ", ts." + Database.TESISCELTA_CAPACITATESISTA +
+                        " FROM " + Database.TESISCELTA + " ts, " + Database.TESI + " t " +
+                        " WHERE ts." + Database.TESISCELTA_TESIID +"=t." + Database.TESI_ID + " " +
+                        " AND t." + Database.TESI_RELATOREID + "=" + idRelatore + ";";
 
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
@@ -133,8 +134,9 @@ public class ListaTesiScelteDatabase {
      * @return  Restituisce la lista trovata
      */
     public static List<TesiScelta> ListaTesiScelteCompletateDatabase(Database dbClass) {
-        String query = "SELECT * FROM " + Database.TESISCELTA + " ts, " + Database.TESI + " t " +
-                "WHERE ts." + Database.TESISCELTA_TESIID + "=t." + Database.TESI_ID + " AND "+ Database.TESISCELTA_DATAPUBBLICAZIONE + "!='';";
+        String query = "SELECT ts." + Database.TESISCELTA_ID + ", ts." + Database.TESISCELTA_DATAPUBBLICAZIONE + ", ts." + Database.TESISCELTA_ABSTRACT + ", ts." + Database.TESISCELTA_DOWNLOAD + ", ts." + Database.TESISCELTA_TESIID + ", ts." + Database.TESISCELTA_CORELATOREID + ", ts." + Database.TESISCELTA_STATOCORELATORE + ", ts." + Database.TESISCELTA_TESISTAID + ", ts." + Database.TESISCELTA_CAPACITATESISTA + ", ts." + Database.TESI_TITOLO +
+                " FROM " + Database.TESISCELTA + " ts, " + Database.TESI + " t " +
+                " WHERE ts." + Database.TESISCELTA_TESIID + "=t." + Database.TESI_ID + " AND "+ Database.TESISCELTA_DATAPUBBLICAZIONE + "!='';";
 
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);

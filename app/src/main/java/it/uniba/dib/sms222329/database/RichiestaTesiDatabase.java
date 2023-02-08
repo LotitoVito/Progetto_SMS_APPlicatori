@@ -2,6 +2,7 @@ package it.uniba.dib.sms222329.database;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import it.uniba.dib.sms222329.classi.RichiestaTesi;
 import it.uniba.dib.sms222329.classi.TesiScelta;
@@ -41,6 +42,8 @@ public class RichiestaTesiDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvRisposta = new ContentValues();
 
+        //Log.d("test", String.valueOf(risposta.g));
+
         cvRisposta.put(Database.RICHIESTA_ACCETTATA, risposta.getStato());
         cvRisposta.put(Database.RICHIESTA_RISPOSTA, risposta.getRisposta());
 
@@ -64,6 +67,8 @@ public class RichiestaTesiDatabase {
     public static boolean RifiutaRichiestaTesi(RichiestaTesi risposta,Database dbClass){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvRisposta = new ContentValues();
+
+        Log.d("test", String.valueOf(risposta.getStato()));
 
         cvRisposta.put(Database.RICHIESTA_ACCETTATA, risposta.getStato());
         cvRisposta.put(Database.RICHIESTA_RISPOSTA, risposta.getRisposta());

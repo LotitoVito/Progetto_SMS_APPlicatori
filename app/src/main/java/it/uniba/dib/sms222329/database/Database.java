@@ -241,7 +241,7 @@ public class Database extends SQLiteOpenHelper {
                         RICHIESTA_CAPACITASTUDENTE + " VARCHAR(255) NOT NULL," +
                         RICHIESTA_TESIID + " INT NOT NULL," +
                         RICHIESTA_TESISTAID + " INT NOT NULL," +
-                        RICHIESTA_ACCETTATA + " BOOLEAN NOT NULL," +
+                        RICHIESTA_ACCETTATA + " INT NOT NULL," +
                         RICHIESTA_RISPOSTA + " VARCHAR(255)," +
                         "FOREIGN KEY (" + RICHIESTA_TESIID + ") REFERENCES " + TESI + "(" + TESI_ID + ") ON DELETE CASCADE," +
                         "FOREIGN KEY (" + RICHIESTA_TESISTAID + ") REFERENCES " + TESISTA + "(" + TESISTA_ID + ") ON DELETE CASCADE);";

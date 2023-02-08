@@ -12,11 +12,11 @@ import it.uniba.dib.sms222329.database.TesiSceltaDatabase;
 
 public class TesiScelta extends Tesi{
 
-    /**
-     * Costanti per statoCorelatore
-     */
+    /** Costanti per statoCorelatore della tesiScelta*/
     public static int RIFIUTATO = 0;
+    /** Costanti per statoCorelatore della tesiScelta*/
     public static int IN_ATTESA = 1;
+    /** Costanti per statoCorelatore della tesiScelta*/
     public static int ACCETTATO = 2;
 
     private int idTesiScelta;

@@ -18,6 +18,7 @@ import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Tesi;
+import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.fragment.VisualizzaTesiFragment;
 import it.uniba.dib.sms222329.fragment.relatore.CreaModificaTesiFragment;
 import it.uniba.dib.sms222329.fragment.tesista.RichiestaTesiFragment;
@@ -29,6 +30,7 @@ public class ListaTesiAdapter extends BaseAdapter {
     private ArrayList<Tesi> copiaRicerca;
     private LayoutInflater inflater;
     private FragmentManager fragmentManager;
+    private Context context;
 
     public ListaTesiAdapter(Context context, List<Tesi> tesi, FragmentManager fragmentManager) {
         this.tesi = tesi;
@@ -38,6 +40,7 @@ public class ListaTesiAdapter extends BaseAdapter {
         }
         this.inflater = LayoutInflater.from(context);
         this.fragmentManager = fragmentManager;
+        this.context = context;
     }
 
     @Override
@@ -61,6 +64,8 @@ public class ListaTesiAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.generic_item_with_buttons, viewGroup, false);
         }
 
+        Database db = new Database(context);
+
         //Titolo
         TextView titolo = convertView.findViewById(R.id.titolo);
         titolo.setText(tesi.get(i).getTitolo());
@@ -79,7 +84,8 @@ public class ListaTesiAdapter extends BaseAdapter {
 
         //Edit Button
         Button editButton = convertView.findViewById(R.id.modifica);
-        if(Utility.accountLoggato == Utility.TESISTA && tesi.get(i).getStatoDisponibilita() == Tesi.DISPONIBILE){
+        if(Utility.accountLoggato == Utility.TESISTA && tesi.get(i).getStatoDisponibilita() == Tesi.DISPONIBILE &&
+                !db.VerificaDatoEsistente("SELECT * FROM " + Database.TESISCELTA + " WHERE " + Database.TESISCELTA_TESISTAID + "=" + Utility.tesistaLoggato.getIdTesista() + ";")){
             editButton.setText("Richiedi");
             editButton.setOnClickListener(view -> {
                 Utility.replaceFragment(this.fragmentManager, R.id.container, new RichiestaTesiFragment(tesi.get(i)));

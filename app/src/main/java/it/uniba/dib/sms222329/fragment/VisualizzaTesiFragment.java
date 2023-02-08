@@ -109,7 +109,7 @@ public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
         share = getView().findViewById(R.id.condividi);
         creaSegnalazione = getView().findViewById(R.id.crea_segnalazione);
 
-        if(Utility.accountLoggato == Utility.GUEST){
+        if(Utility.accountLoggato == Utility.GUEST || Utility.relatoreLoggato.getIdRelatore() == tesi.getIdRelatore()){
             creaSegnalazione.setVisibility(View.GONE);
         }
     }
