@@ -13,6 +13,12 @@ import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 
 public class RelatoreDatabase {
 
+    /**
+     * Metodo per la registrazione dell'account del Relatore sul database nella tabella del Relatore e CorsiRelatore
+     * @param relatore
+     * @param dbClass
+     * @return  Restituisce true se l'operazione va a buon fine, altrimenti false
+     */
     public static boolean RegistrazioneRelatore(Relatore relatore, Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvRelatore = new ContentValues();
@@ -20,6 +26,7 @@ public class RelatoreDatabase {
         Cursor idUtente = dbClass.RicercaDato("SELECT " + Database.UTENTI_ID + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + " = '" + relatore.getEmail() + "';");
         idUtente.moveToNext();
 
+        //Registro tabella Relatore
         cvRelatore.put(Database.RELATORE_UTENTEID, idUtente.getString(idUtente.getColumnIndexOrThrow(Database.UTENTI_ID)));
         cvRelatore.put(Database.RELATORE_MATRICOLA, relatore.getMatricola());
 
@@ -31,6 +38,7 @@ public class RelatoreDatabase {
                 Cursor idRelatore = dbClass.RicercaDato("SELECT " + Database.RELATORE_ID + " FROM " + Database.RELATORE + " WHERE " + Database.RELATORE_UTENTEID + " = '" + idUtente.getString(0) + "';");
                 idRelatore.moveToNext();
 
+                //Registro tabella CorsiRelatore
                 for(int i=0; i<relatore.getCorsiRelatore().size(); i++){
                     cvCorsiRelatore.put(Database.CORSIRELATORE_RELATOREID, idRelatore.getString(idRelatore.getColumnIndexOrThrow(Database.RELATORE_ID)));
                     cvCorsiRelatore.put(Database.CORSIRELATORE_UNIVERSITACORSOID, relatore.getCorsiRelatore().get(i));
@@ -48,6 +56,12 @@ public class RelatoreDatabase {
         return false;
     }
 
+    /**
+     * Metodo di modifica dell'account del Relatore sul database
+     * @param account
+     * @param dbClass
+     * @return  Restituisce true se l'operazione va a buon fine, altrimenti false
+     */
     public static boolean modRelatore(Relatore account, Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
@@ -86,6 +100,13 @@ public class RelatoreDatabase {
         return false;
     }
 
+    /**
+     * Metodo per istanziare l'account del Relatore, ricerca i dati in base alle informazioni di login poassate nell'oggetto account e
+     * istanzia il relatore
+     * @param account
+     * @param dbClass
+     * @return  Restituisce l'oggetto Relatore
+     */
     public static Relatore IstanziaRelatore(UtenteRegistrato account, Database dbClass){
         Relatore relatoreLog = new Relatore();
 

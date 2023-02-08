@@ -102,6 +102,9 @@ public class MiaTesiFragment extends Fragment {
         }
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
         richieste = getView().findViewById(R.id.richieste);
@@ -128,12 +131,19 @@ public class MiaTesiFragment extends Fragment {
         salvaModifica = getView().findViewById(R.id.salvaModifica);
     }
 
+    /**
+     * Ricarica la lista delle richieste in base al tesista loggato
+     */
     private void RefreshList(){
         List<RichiestaTesi> lista = ListaRichiesteTesiDatabase.ListaRichiesteTesiTesista(db, Utility.tesistaLoggato.getIdTesista());
         ListaRichiesteAdapter adapter = new ListaRichiesteAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
         listaRichieste.setAdapter(adapter);
     }
 
+    /**
+     * Verifica se il tesista loggato ha già una tesi scelta, nel caso sia vero imposta la view della tesi scelta
+     * @return  Restituisce true se il tesista loggato ha una tesi scelta, altrimenti false
+     */
     private boolean VerificaTesiScelta(){
         Cursor cursor = db.RicercaDato("SELECT * FROM " + Database.TESISCELTA + " WHERE " + Database.TESISCELTA_TESISTAID + "=" + Utility.tesistaLoggato.getIdTesista() + ";");
         if(cursor.moveToNext()){
@@ -152,6 +162,9 @@ public class MiaTesiFragment extends Fragment {
         return false;
     }
 
+    /**
+     * Imposta il testo per ogni elemento della view in base ai casi
+     */
     private void SetTextAll() {
         Cursor cursorRelatore = db.RicercaDato("SELECT u." + Database.UTENTI_COGNOME + ", u." + Database.UTENTI_NOME + " " +
                 "FROM " + Database.UTENTI + " u, " + Database.RELATORE + " r, " + Database.TESI + " t, " + Database.TESISCELTA + " ts " +
@@ -188,6 +201,11 @@ public class MiaTesiFragment extends Fragment {
         }
     }
 
+    /**
+     * Metodo che verifica se i campi obbligatori sono vuoti, nel caso siano vuoti sono contrassegnati;
+     * @param abTesi
+     * @return  Il metodo restituisce true se almeno un campo è vuoto, restituisce false se tutti i campi non sono vuoti
+     */
     private boolean IsEmpty(EditText abTesi){
         boolean risultato = false;
 

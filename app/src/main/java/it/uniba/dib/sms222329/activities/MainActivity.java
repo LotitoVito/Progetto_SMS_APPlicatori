@@ -7,18 +7,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 
-import java.util.ArrayList;
-
 import it.uniba.dib.sms222329.R;
-import it.uniba.dib.sms222329.Utility;
-import it.uniba.dib.sms222329.classi.ListaClassificaRicevimento;
-import it.uniba.dib.sms222329.classi.ListaTesi;
-import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.classi.UtenteRegistrato;
-import it.uniba.dib.sms222329.database.Database;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,7 +51,5 @@ public class MainActivity extends AppCompatActivity {
             guest.putExtra("utentePassato", Utente);
             startActivity(guest);
         });
-
-
     }
 }

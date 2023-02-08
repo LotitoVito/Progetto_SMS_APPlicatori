@@ -75,6 +75,9 @@ public class RichiestaRicevimentoFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
         messaggioTesista = getView().findViewById(R.id.messaggio_tesista);
@@ -85,6 +88,9 @@ public class RichiestaRicevimentoFragment extends Fragment {
         cambiaRicevimento = getView().findViewById(R.id.riorganizza);
     }
 
+    /**
+     * Imposta il testo per ogni elemento della view
+     */
     private void SetTextAll() {
         messaggioTesista.setText(richiesta.getMessaggio());
         Cursor cursor = db.RicercaDato("SELECT " + Database.TASK_TITOLO + ", " + Database.TASK_DESCRIZIONE + " FROM " + Database.TASK +

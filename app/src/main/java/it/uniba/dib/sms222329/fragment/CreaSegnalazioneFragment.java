@@ -69,6 +69,12 @@ public class CreaSegnalazioneFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo che verifica se i campi obbligatori sono vuoti, nel caso siano vuoti sono contrassegnati;
+     * @param oggetto
+     * @param messaggioTesto
+     * @return  Il metodo restituisce true se almeno un campo è vuoto, restituisce false se tutti i campi non sono vuoti
+     */
     private boolean IsEmpty(TextInputEditText oggetto, TextInputEditText messaggioTesto) {
         boolean risultato = false;
 
@@ -84,6 +90,9 @@ public class CreaSegnalazioneFragment extends Fragment {
         return risultato;
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
         oggetto = getView().findViewById(R.id.titolo_segnalazione);
@@ -91,7 +100,10 @@ public class CreaSegnalazioneFragment extends Fragment {
         inviaMessaggio = getView().findViewById(R.id.invia_messaggio);
     }
 
-
+    /**
+     * Il metodo recupera l'idUtente dell'utente loggato
+     * @return  Restituisce il risultato della ricerca
+     */
     private int getIdUtenteLoggato() {
         int risultato = -1;
         if(Utility.accountLoggato==Utility.TESISTA){

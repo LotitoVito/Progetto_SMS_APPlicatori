@@ -70,6 +70,9 @@ public class RichiestaTesiFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
         titoloTesi = getView().findViewById(R.id.titoloTesi);
@@ -80,7 +83,9 @@ public class RichiestaTesiFragment extends Fragment {
         capacitaTesista = getView().findViewById(R.id.skill_richieste);
         invia = getView().findViewById(R.id.invia);
     }
-
+    /**
+     * Imposta il testo per ogni elemento della view
+     */
     private void SetTextAll(){
         titoloTesi.setText(tesi.getTitolo());
         argomentoTesi.setText(tesi.getArgomenti());
@@ -91,6 +96,12 @@ public class RichiestaTesiFragment extends Fragment {
         relatore.setText(cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_NOME)));
     }
 
+    /**
+     * Metodo che verifica se i campi obbligatori sono vuoti, nel caso siano vuoti sono contrassegnati;
+     * @param messaggio
+     * @param capacitaTesista
+     * @return  Il metodo restituisce true se almeno un campo è vuoto, restituisce false se tutti i campi non sono vuoti
+     */
     private boolean IsEmpty(TextInputEditText messaggio, TextInputEditText capacitaTesista) {
         boolean risultato = false;
 

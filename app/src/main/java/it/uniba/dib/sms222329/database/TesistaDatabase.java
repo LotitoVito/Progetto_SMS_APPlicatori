@@ -11,6 +11,12 @@ import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 
 public class TesistaDatabase {
 
+    /**
+     * Metodo per la registrazione dell'account del Tesista sul database nella tabella del Tesista
+     * @param tesista
+     * @param dbClass
+     * @return  Restituisce true se l'operazione va a buon fine, altrimenti false
+     */
     public static boolean RegistrazioneTesista(Tesista tesista, Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvTesista = new ContentValues();
@@ -35,6 +41,12 @@ public class TesistaDatabase {
         return false;
     }
 
+    /**
+     * Metodo di modifica dell'account del Tesista sul database
+     * @param tesista
+     * @param dbClass
+     * @return  Restituisce true se l'operazione va a buon fine, altrimenti false
+     */
     public static boolean modTesista(Tesista tesista, Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
@@ -64,6 +76,13 @@ public class TesistaDatabase {
         return false;
     }
 
+    /**
+     * Metodo per istanziare l'account del Tesista, ricerca i dati in base alle informazioni di login poassate nell'oggetto account e
+     * istanzia il tesista
+     * @param account
+     * @param dbClass
+     * @return  Restituisce l'oggetto tesista
+     */
     public static Tesista IstanziaTesista(UtenteRegistrato account, Database dbClass){
         Tesista TesistaLog = new Tesista();
 

@@ -101,6 +101,9 @@ public class ListaTesiFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getContext());
         addButton = getView().findViewById(R.id.aggiungiTesi);
@@ -114,6 +117,9 @@ public class ListaTesiFragment extends Fragment {
         }
     }
 
+    /**
+     * Ricarica la lista delle tesi in base ai filtri passati
+     */
     private void RefreshList(){
         List<Tesi> listaTesi = ListaTesiDatabase.ListaTesi(queryFiltri, db);
         adapterLista = new ListaTesiAdapter(getActivity().getApplicationContext(), listaTesi, getActivity().getSupportFragmentManager());

@@ -102,6 +102,10 @@ public class ListaTesiAdapter extends BaseAdapter {
         return convertView;
     }
 
+    /**
+     * Il metodo permette di filtrare e mostrare solo le tesi che hanno il titolo corrispondente alla stringa di ricerca
+     * @param ricerca
+     */
     public void filter(String ricerca){
         ricerca = ricerca.toLowerCase(Locale.getDefault());
         tesi.clear();

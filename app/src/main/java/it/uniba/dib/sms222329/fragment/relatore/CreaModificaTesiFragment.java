@@ -113,6 +113,9 @@ public class CreaModificaTesiFragment extends Fragment {
         }
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init(){
         db = new Database(getActivity().getApplicationContext());
         titolo = getView().findViewById(R.id.titoloTesi);
@@ -125,6 +128,9 @@ public class CreaModificaTesiFragment extends Fragment {
         salva = getView().findViewById(R.id.add);
     }
 
+    /**
+     * Imposta il testo per ogni elemento della view come suggerimento
+     */
     private void SetAllHint(){
         titolo.setHint(tesi.getTitolo());
         argomenti.setHint(tesi.getArgomenti());
@@ -135,6 +141,9 @@ public class CreaModificaTesiFragment extends Fragment {
         statoDisponibilita.setChecked(tesi.getStatoDisponibilita());
     }
 
+    /**
+     * Riempie i campi vuoti con il giusto valore se sono vuoti
+     */
     private void FillAllEmpty(){
         Utility.fillIfEmpty(titolo, tesi.getTitolo());
         Utility.fillIfEmpty(argomenti, tesi.getArgomenti());
@@ -144,6 +153,16 @@ public class CreaModificaTesiFragment extends Fragment {
         Utility.fillIfEmpty(media, String.valueOf(tesi.getMediaVotiMinima()));
     }
 
+    /**
+     * Metodo che verifica se i campi obbligatori sono vuoti, nel caso siano vuoti sono contrassegnati;
+     * @param titolo
+     * @param argomenti
+     * @param tempistiche
+     * @param media
+     * @param esamiMancanti
+     * @param capacitaRichiesta
+     * @return  Il metodo restituisce true se almeno un campo è vuoto, restituisce false se tutti i campi non sono vuoti
+     */
     private boolean IsEmpty(EditText titolo, EditText argomenti, EditText tempistiche, EditText media, EditText esamiMancanti, EditText capacitaRichiesta){
         boolean risultato = false;
 

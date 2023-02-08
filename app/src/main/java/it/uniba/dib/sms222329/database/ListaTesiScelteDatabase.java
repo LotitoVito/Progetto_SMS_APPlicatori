@@ -2,7 +2,6 @@ package it.uniba.dib.sms222329.database;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,10 +9,15 @@ import java.util.List;
 
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.TesiScelta;
-import it.uniba.dib.sms222329.fragment.calendario.CalendarUtils;
 
 public class ListaTesiScelteDatabase {
 
+    /**
+     * Metodo usato per recuperare la lista di tesi del relatore loggato su cui i tesisti stanno lavorando
+     * @param dbClass
+     * @param idRelatore
+     * @return  Restituisce la lista trovata
+     */
     public static List<TesiScelta> ListaTesiScelteRelatoreDatabase(Database dbClass, int idRelatore) {
         String query =  "SELECT * FROM " + Database.TESISCELTA + " ts, " + Database.TESI + " t " +
                         "WHERE ts." + Database.TESISCELTA_TESIID +"=t." + Database.TESI_ID + " " +
@@ -46,6 +50,12 @@ public class ListaTesiScelteDatabase {
         return listaTesiScelte;
     }
 
+    /**
+     * Metodo usato per recuperare le richieste dei relatori per il corelatore loggato di far parte di una certa tesi scelta
+     * @param dbClass
+     * @param idCorelatore
+     * @return  Restituisce la lista trovata
+     */
     public static List<TesiScelta> ListaRichiesteTesiCorelatore(Database dbClass, int idCorelatore) {
         String query = "SELECT * FROM " + Database.TESISCELTA + " " +
                 "WHERE " + Database.TESISCELTA_CORELATOREID + "=" + idCorelatore + " " +
@@ -79,6 +89,12 @@ public class ListaTesiScelteDatabase {
         return listaRichieste;
     }
 
+    /**
+     * Metodo usato per recuperare la lista di tesi scelte di cui il corelatore loggato ha accettato di far parte
+     * @param dbClass
+     * @param idCorelatore
+     * @return  Restituisce la lista trovata
+     */
     public static List<TesiScelta> ListaTesiScelteCorelatore(Database dbClass, int idCorelatore) {
         String query = "SELECT * FROM " + Database.TESISCELTA + " " +
                 "WHERE " + Database.TESISCELTA_CORELATOREID + "=" + idCorelatore + ";";
@@ -111,6 +127,11 @@ public class ListaTesiScelteDatabase {
         return listaRichieste;
     }
 
+    /**
+     * Metodo usato per recuperare le tesi scelte completate e consegnate
+     * @param dbClass
+     * @return  Restituisce la lista trovata
+     */
     public static List<TesiScelta> ListaTesiScelteCompletateDatabase(Database dbClass) {
         String query = "SELECT * FROM " + Database.TESISCELTA + " ts, " + Database.TESI + " t " +
                 "WHERE ts." + Database.TESISCELTA_TESIID + "=t." + Database.TESI_ID + " AND "+ Database.TESISCELTA_DATAPUBBLICAZIONE + "!='';";

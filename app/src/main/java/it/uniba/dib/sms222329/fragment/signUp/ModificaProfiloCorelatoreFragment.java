@@ -64,6 +64,9 @@ public class ModificaProfiloCorelatoreFragment extends Fragment {
         });
     }
 
+    /**
+     * Imposta il testo per ogni elemento della view come suggerimento
+     */
     private void SetAllHint() {
         nome.setHint(Utility.coRelatoreLoggato.getNome());
         cognome.setHint(Utility.coRelatoreLoggato.getCognome());
@@ -73,6 +76,9 @@ public class ModificaProfiloCorelatoreFragment extends Fragment {
         org.setHint(Utility.coRelatoreLoggato.getOrganizzazione());
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
         nome = getActivity().findViewById(R.id.nome);
@@ -84,6 +90,9 @@ public class ModificaProfiloCorelatoreFragment extends Fragment {
         editButton = getActivity().findViewById(R.id.conferma);
     }
 
+    /**
+     * Riempie i campi vuoti con il giusto valore se sono vuoti
+     */
     private void FillAllEmpty(){
         Utility.fillIfEmpty(nome, Utility.coRelatoreLoggato.getNome());
         Utility.fillIfEmpty(cognome, Utility.coRelatoreLoggato.getCognome());

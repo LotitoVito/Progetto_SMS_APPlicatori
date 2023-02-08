@@ -93,6 +93,9 @@ public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
         titolo = getView().findViewById(R.id.titoloTesi);
@@ -111,6 +114,9 @@ public class VisualizzaTesiFragment extends BottomSheetDialogFragment {
         }
     }
 
+    /**
+     * Imposta il testo per ogni elemento della view
+     */
     private void SetTextAll(){
         titolo.setText(tesi.getTitolo());
         argomento.setText(tesi.getArgomenti());

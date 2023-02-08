@@ -55,11 +55,11 @@ public class ProfiloFragment extends Fragment {
         Init();
 
         if (Utility.accountLoggato == Utility.TESISTA){
-            SetView(Utility.tesistaLoggato, Utility.accountLoggato);
+            SetTextAll(Utility.tesistaLoggato, Utility.accountLoggato);
         } else if (Utility.accountLoggato == Utility.RELATORE){
-            SetView(Utility.relatoreLoggato, Utility.accountLoggato);
+            SetTextAll(Utility.relatoreLoggato, Utility.accountLoggato);
         } else if (Utility.accountLoggato == Utility.CORELATORE){
-            SetView(Utility.coRelatoreLoggato, Utility.accountLoggato);
+            SetTextAll(Utility.coRelatoreLoggato, Utility.accountLoggato);
         }
 
         Button button = getView().findViewById(R.id.modificaProfilo);
@@ -74,6 +74,9 @@ public class ProfiloFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         nome = getView().findViewById(R.id.tv_name);
         cognome = getView().findViewById(R.id.tv_surname);
@@ -82,7 +85,10 @@ public class ProfiloFragment extends Fragment {
         ruoloTv = getView().findViewById(R.id.tv_role);
     }
 
-    private void SetView(UtenteRegistrato utente, int ruoloLoggato){
+    /**
+     * Imposta il testo per ogni elemento della view in base ai casi
+     */
+    private void SetTextAll(UtenteRegistrato utente, int ruoloLoggato){
         nome.setText(utente.getNome());
         cognome.setText(utente.getCognome());
         codiceFiscale.setText(utente.getCodiceFiscale());

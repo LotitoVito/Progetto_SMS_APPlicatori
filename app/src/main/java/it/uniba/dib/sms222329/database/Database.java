@@ -331,7 +331,11 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1){}
 
-    //Verifica che il dato cercato in una determinata tabella esiste o no
+    /**
+     * Metodo usato per verificare se un dato esiste nel database in base alla query
+     * @param query
+     * @return  Restituisce true esistono i dati della query, altrimenti false
+     */
     public boolean VerificaDatoEsistente(String query){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
@@ -342,14 +346,21 @@ public class Database extends SQLiteOpenHelper {
         return false;
     }
 
-    //Restituisce i risultati della ricerca di un dato
+    /**
+     * Metodo usato per ricercare dei dati in base alla query
+     * @param query
+     * @return  Restituisce l'oggetto Cursor con i risultati
+     */
     public Cursor RicercaDato(String query){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);
         return cursore;
     }
 
-    //Metodo usato per i dati di mock della tabella Universita-CorsiStudio
+    /**
+     * Metodo usato per popolare la tabella UNIVERSITACORSO
+     * @param db
+     */
     private void PopolamentoUniCorsi(SQLiteDatabase db){
         ContentValues cv = new ContentValues();
 

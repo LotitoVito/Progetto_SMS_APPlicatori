@@ -84,6 +84,9 @@ public class RegistraRelatoreFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
         registerButton = getActivity().findViewById(R.id.Signupbutton);
@@ -95,6 +98,9 @@ public class RegistraRelatoreFragment extends Fragment {
         spinnerCreate();
     }
 
+    /**
+     * Crea lo spinner università
+     */
     private void spinnerCreate(){
         //Carica i nomi
         String query = "SELECT " + Database.UNIVERSITA_NOME + " FROM " + Database.UNIVERSITA + ";";
@@ -112,6 +118,10 @@ public class RegistraRelatoreFragment extends Fragment {
         universita.setAdapter(adapter);
     }
 
+    /**
+     * Recupera l'id da database dell'università selezionata
+     * @return  Restituisce l'id dell'università selezionata
+     */
     private String RecuperaIdSpinner(){
         Cursor idCursor;
         idCursor = db.RicercaDato("SELECT id FROM "+ Database.UNIVERSITA +" WHERE nome = '"+ universita.getSelectedItem().toString() +"';");
@@ -119,6 +129,10 @@ public class RegistraRelatoreFragment extends Fragment {
         return idCursor.getString(0);
     }
 
+    /**
+     * Recupera gli id dal database dei corsi selezionati con i checkbox
+     * @return  Restituisce un array di id dei corsi selezionati
+     */
     private List RecuperaIdCorsi(){
         List<String> idCorsiSelezionati = new ArrayList<>();
         for (int i = 0; i < corsi.getChildCount(); i++) {
@@ -134,6 +148,12 @@ public class RegistraRelatoreFragment extends Fragment {
         return idCorsiSelezionati;
     }
 
+    /**
+     * Recupera l'id della coppia universita-corso dal database
+     * @param idUniversita
+     * @param idCorsiSelezionati
+     * @return  Restituisce l'id della coppia università-corso
+     */
     private ArrayList<Integer> RecuperaUniversitaCorso(String idUniversita, List idCorsiSelezionati){
         Cursor idCursor;
         ArrayList<Integer> corsiRelatore = new ArrayList();
@@ -145,6 +165,10 @@ public class RegistraRelatoreFragment extends Fragment {
         return corsiRelatore;
     }
 
+    /**
+     * Gestisce lo spinner università e cambia le checkbox dei corsi in bae all'università selezionata
+     * @param spinner
+     */
     private void GestisciSpinner(Spinner spinner){
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

@@ -111,6 +111,9 @@ public class DettagliTaskFragment extends Fragment {
         }
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
         titoloTask = getView().findViewById(R.id.titolo_task);
@@ -136,6 +139,9 @@ public class DettagliTaskFragment extends Fragment {
         sliderStato.setEnabled(false);
     }
 
+    /**
+     * Imposta il testo per ogni elemento della view
+     */
     private void SetTextAll() {
         titoloTask.setText(task.getTitolo());
         descrizioneTask.setText(task.getDescrizione());
@@ -152,8 +158,6 @@ public class DettagliTaskFragment extends Fragment {
         } else if(sliderStato.getValue()==100){
             testoStato.setText("Completato");
         }
-
         materiale.setText(String.valueOf(task.getLinkMateriale()));
     }
-
 }

@@ -9,6 +9,13 @@ import it.uniba.dib.sms222329.classi.SegnalazioneChat;
 
 public class SegnalazioneDatabase {
 
+    /**
+     * Metodo per la registrazione di una nuova chat in base alla tesi selezionata, registra anche il primo messaggio mandato
+     * @param dbClass
+     * @param chat
+     * @param messaggio
+     * @return  Restituisce true se l'operazione va a buon fine, altrimento false
+     */
     public static boolean AvviaChat(Database dbClass, SegnalazioneChat chat, SegnalazioneMessaggio messaggio){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues chatCv = new ContentValues();
@@ -36,6 +43,12 @@ public class SegnalazioneDatabase {
         return false;
     }
 
+    /**
+     * Metodo usato per registrare un nuovo messaggio in una chat specifica
+     * @param dbClass
+     * @param messaggio
+     * @return  Restituisce true se l'operazione va a buon fine, altrimento false
+     */
     public static boolean MessaggioChat(Database dbClass, SegnalazioneMessaggio messaggio){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues messaggioCv = new ContentValues();

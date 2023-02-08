@@ -13,6 +13,9 @@ import it.uniba.dib.sms222329.database.TesiDatabase;
 
 public class Tesi {
 
+    /**
+     * Costanti per la disponibilità
+     */
     public static final boolean DISPONIBILE = true;
     public static final boolean NON_DISPONIBILE = false;
 
@@ -27,12 +30,32 @@ public class Tesi {
     private int numeroVisualizzazioni;
     private int idRelatore;
 
+    /**
+     * Costruttore vuoto
+     */
     public Tesi() {}
 
+    /**
+     * Costruttore per la TesiScelta
+     * @param idTesi
+     */
     public Tesi(int idTesi) {
         this.idTesi = idTesi;
     }
 
+    /**
+     * Costruttore con tutti i parametri
+     * @param id
+     * @param titolo
+     * @param argomenti
+     * @param tempistiche
+     * @param mediaVotiMinima
+     * @param esamiNecessari
+     * @param capacitaRichieste
+     * @param statoDisponibilita
+     * @param numeroVisualizzazioni
+     * @param idRelatore
+     */
     public Tesi(int id, String titolo, String argomenti, int tempistiche, float mediaVotiMinima, int esamiNecessari,
                 String capacitaRichieste, boolean statoDisponibilita, int numeroVisualizzazioni, int idRelatore) {
         this.idTesi = id;
@@ -47,7 +70,17 @@ public class Tesi {
         this.idRelatore = idRelatore;
     }
 
-    //Usato per al registrazione
+    /**
+     * Costruttore per la registrazione
+     * @param titolo
+     * @param argomenti
+     * @param statoDisponibilita
+     * @param idRelatore
+     * @param tempistiche
+     * @param mediaVotiMinima
+     * @param esamiNecessari
+     * @param capacitaRichieste
+     */
     public Tesi(String titolo, String argomenti, boolean statoDisponibilita, int idRelatore, int tempistiche,
                 float mediaVotiMinima, int esamiNecessari, String capacitaRichieste) {
         this.titolo = titolo;
@@ -61,7 +94,13 @@ public class Tesi {
         this.capacitaRichieste = capacitaRichieste;
     }
 
-    //Usato per la tesi scelta
+    /**
+     * Costruttore per la TesiScelta
+     * @param id
+     * @param titolo
+     * @param argomenti
+     * @param idRelatore
+     */
     public Tesi(int id, String titolo, String argomenti, int idRelatore) {
         this.idTesi = id;
         this.titolo = titolo;
@@ -69,47 +108,31 @@ public class Tesi {
         this.idRelatore = idRelatore;
     }
 
-    public int getIdTesi() {
-        return idTesi;
-    }
+    public int getIdTesi() {return idTesi;}
 
-    public void setIdTesi(int idTesi) {
-        this.idTesi = idTesi;
-    }
+    public void setIdTesi(int idTesi) {this.idTesi = idTesi;}
 
     public String getTitolo() {return titolo;}
 
     public void setTitolo(String titolo) {this.titolo = titolo;}
 
-    public String getArgomenti() {
-        return argomenti;
-    }
+    public String getArgomenti() {return argomenti;}
 
-    public void setArgomenti(String argomenti) {
-        this.argomenti = argomenti;
-    }
+    public void setArgomenti(String argomenti) {this.argomenti = argomenti;}
 
-    public boolean isStatoDisponibilita() {
-        return statoDisponibilita;
-    }
+    public boolean isStatoDisponibilita() {return statoDisponibilita;}
 
     public void setStatoDisponibilita(boolean statoDisponibilita) {this.statoDisponibilita = statoDisponibilita;}
 
     public boolean getStatoDisponibilita() {return statoDisponibilita;}
 
-    public int getNumeroVisualizzazioni() {
-        return numeroVisualizzazioni;
-    }
+    public int getNumeroVisualizzazioni() {return numeroVisualizzazioni;}
 
     public void setNumeroVisualizzazioni(int numeroVisualizzazioni) {this.numeroVisualizzazioni = numeroVisualizzazioni;}
 
-    public int getIdRelatore() {
-        return idRelatore;
-    }
+    public int getIdRelatore() {return idRelatore;}
 
-    public void setIdRelatore(int idRelatore) {
-        this.idRelatore = idRelatore;
-    }
+    public void setIdRelatore(int idRelatore) {this.idRelatore = idRelatore;}
 
     public int getTempistiche() {return tempistiche;}
 
@@ -127,6 +150,19 @@ public class Tesi {
 
     public void setCapacitaRichieste(String capacitaRichieste) {this.capacitaRichieste = capacitaRichieste;}
 
+    /**
+     * Metodo di modifica della tesi; modifica i valori dell'oggetto istanziato e richiama il metodo ModificaTesi()
+     * per aggiornare gli stessi dati sul database.
+     * @param titolo
+     * @param argomenti
+     * @param statoDisponibilita
+     * @param tempistiche
+     * @param mediaVotiMinima
+     * @param esamiNecessari
+     * @param capacitaRichieste
+     * @param db
+     * @return  Restituisce true se l'aggiornamento sul database va a buon fine, nel caso contrario restituisce false.
+     */
     public boolean ModificaTesi(String titolo, String argomenti, boolean statoDisponibilita, int tempistiche,
                                 float mediaVotiMinima, int esamiNecessari, String capacitaRichieste, Database db){
         this.titolo = titolo;
@@ -143,6 +179,10 @@ public class Tesi {
         return false;
     }
 
+    /**
+     * Metodo di generazione del QRCode in base all'id della tesi
+     * @return  restituisce la variabile Bitmap per mostrare il QRCode
+     */
     public Bitmap QRGenerator(){
         MultiFormatWriter writer = new MultiFormatWriter();
         Bitmap bitmap = null;
@@ -156,6 +196,12 @@ public class Tesi {
         return bitmap;
     }
 
+    /**
+     * Metodo di incremento delle visualizzazioni della tesi; modifica i valori dell'oggetto istanziato e richiama il metodo incrementaVisualizzazioni()
+     * per aggiornare gli stessi dati sul database.
+     * @param db
+     * @return  Restituisce true se l'aggiornamento sul database va a buon fine, nel caso contrario restituisce false.
+     */
     public boolean incrementaVisualizzazioni(Database db){
         this.numeroVisualizzazioni++;
         if(TesiDatabase.incrementaVisualizzazioni(this, db)){

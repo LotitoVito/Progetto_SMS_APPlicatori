@@ -5,6 +5,9 @@ import it.uniba.dib.sms222329.database.RichiestaTesiDatabase;
 
 public class RichiestaTesi {
 
+    /**
+     * Costanti per lo stato della richiesta
+     */
     public static final int ACCETTATO = 1;
     public static final int IN_ATTESA = 2;
     public static final int RIFIUTATO = 3;
@@ -14,27 +17,47 @@ public class RichiestaTesi {
     private String capacitàStudente;
     private int idTesi;
     private int idTesista;
-    private int accettata;
+    private int stato;
     private String risposta;
 
+    /**
+     * Costruttore vuoto
+     */
     public RichiestaTesi(){}
 
-    public RichiestaTesi(int idRichiesta, String messaggio, String capacitàStudente, int idTesi, int idTesista, int accettata, String risposta) {
+    /**
+     * Costruttore con tutti i parametri
+     * @param idRichiesta
+     * @param messaggio
+     * @param capacitàStudente
+     * @param idTesi
+     * @param idTesista
+     * @param stato
+     * @param risposta
+     */
+    public RichiestaTesi(int idRichiesta, String messaggio, String capacitàStudente, int idTesi, int idTesista, int stato, String risposta) {
         this.idRichiesta = idRichiesta;
         this.messaggio = messaggio;
         this.capacitàStudente = capacitàStudente;
         this.idTesi = idTesi;
         this.idTesista = idTesista;
-        this.accettata = accettata;
+        this.stato = stato;
         this.risposta = risposta;
     }
 
+    /**
+     * Costruttore per la registrazione
+     * @param messaggio
+     * @param capacitàStudente
+     * @param idTesi
+     * @param idTesista
+     */
     public RichiestaTesi(String messaggio, String capacitàStudente, int idTesi, int idTesista) {
         this.messaggio = messaggio;
         this.capacitàStudente = capacitàStudente;
         this.idTesi = idTesi;
         this.idTesista = idTesista;
-        this.accettata = IN_ATTESA;
+        this.stato = IN_ATTESA;
     }
 
     public int getIdRichiesta() {
@@ -57,7 +80,7 @@ public class RichiestaTesi {
 
     public void setCapacitàStudente(String capacitàStudente) {this.capacitàStudente = capacitàStudente;}
 
-    public int getAccettata() {return accettata;}
+    public int getStato() {return stato;}
 
     public int getIdTesi() {
         return idTesi;
@@ -75,8 +98,8 @@ public class RichiestaTesi {
         this.idTesista = idTesista;
     }
 
-    public void setAccettata(int accettata) {
-        this.accettata = accettata;
+    public void setStato(int stato) {
+        this.stato = stato;
     }
 
     public String getRisposta() {
@@ -87,8 +110,15 @@ public class RichiestaTesi {
         this.risposta = risposta;
     }
 
+    /**
+     * Metodo di accettazione della richiesta; modifica i valori dell'oggetto istanziato e richiama il metodo AccettaRichiestaTesi()
+     * per aggiornare gli stessi dati sul database.
+     * @param risposta
+     * @param db
+     * @return  Restituisce true se l'aggiornamento sul database va a buon fine, nel caso contrario restituisce false.
+     */
     public boolean AccettaRichiestaTesi(String risposta, Database db){
-        this.accettata = ACCETTATO;
+        this.stato = ACCETTATO;
         this.risposta = risposta;
 
         if(RichiestaTesiDatabase.AccettaRichiestaTesi(this, db)){
@@ -97,8 +127,15 @@ public class RichiestaTesi {
         return false;
     }
 
+    /**
+     * Metodo di rifiuto della richiesta; modifica i valori dell'oggetto istanziato e richiama il metodo RifiutaRichiestaTesi()
+     * per aggiornare gli stessi dati sul database.
+     * @param risposta
+     * @param db
+     * @return  Restituisce true se l'aggiornamento sul database va a buon fine, nel caso contrario restituisce false.
+     */
     public boolean RifiutaRichiestaTesi(String risposta, Database db){
-        this.accettata = RIFIUTATO;
+        this.stato = RIFIUTATO;
         this.risposta = risposta;
 
         if(RichiestaTesiDatabase.RifiutaRichiestaTesi(this, db)){

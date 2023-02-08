@@ -59,19 +59,19 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
             String query = "SELECT * FROM " + Database.TESI + " WHERE ";
 
             //Filtri
-            if(!isEmptyTextbox(relatore)){
+            if(!Utility.isEmptyTextbox(relatore)){
                 query = AddToQueryRelatore(query, relatore, db);
             }
-            if(!isEmptyTextbox(argomento)){
+            if(!Utility.isEmptyTextbox(argomento)){
                 query = AddToQueryArgomento(query, argomento);
             }
-            if(!isEmptyTextbox(tempistiche)){
+            if(!Utility.isEmptyTextbox(tempistiche)){
                 query = AddToQueryTempistiche(query, tempistiche);
             }
-            if(!isEmptyTextbox(media)){
+            if(!Utility.isEmptyTextbox(media)){
                 query = AddToQueryMedia(query, media);
             }
-            if(!isEmptyTextbox(numeroEsamiMancanti)){
+            if(!Utility.isEmptyTextbox(numeroEsamiMancanti)){
                 query = AddToQueryNumeroEsamiMancanti(query, numeroEsamiMancanti);
             }
             query = AddToQueryDisponibilita(query, disponibilita);
@@ -85,6 +85,9 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         relatore = getView().findViewById(R.id.relatore);
         argomento = getView().findViewById(R.id.argomento);
@@ -102,7 +105,10 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
         disponibilita.setChecked(true);
     }
 
-
+    /**
+     * Crea lo spinner per l'ordinamento della lista delle proposte di tesi
+     * @param spinner
+     */
     private void spinnerCreate(Spinner spinner){
         List<String> items = new ArrayList<>();
         items.add("Titolo");
@@ -116,18 +122,13 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
         spinner.setAdapter(adapter);
     }
 
-    private boolean isEmptyTextbox(EditText textbox){
-        if(textbox.getText().toString().trim().compareTo("")==0){
-            return true;
-        }
-        return false;
-    }
-
-    private String EndQuery(String query){
-        query += ";";
-        return query;
-    }
-
+    /**
+     * Il metodo aggiunge alla query il vincolo del relatore se esiste
+     * @param query
+     * @param relatore
+     * @param db
+     * @return  Restituisce la query aggiornata
+     */
     private String AddToQueryRelatore(String query, EditText relatore, Database db){
         try {
             Cursor cursor = db.RicercaDato("SELECT " + Database.RELATORE_ID + " FROM " + Database.RELATORE +
@@ -141,26 +142,56 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
         return query;
     }
 
+    /**
+     * Il metodo aggiunge alla query il vincolo dell'argomento
+     * @param query
+     * @param argomento
+     * @return  Restituisce la query aggiornata
+     */
     private String AddToQueryArgomento(String query, EditText argomento){
         query += " " + Database.TESI_ARGOMENTO + "LIKE('" + argomento.getText().toString() + "') AND";
         return query;
     }
 
+    /**
+     * Il metodo aggiunge alla query il vincolo delle tempistiche minime
+     * @param query
+     * @param tempistiche
+     * @return  Restituisce la query aggiornata
+     */
     private String AddToQueryTempistiche(String query, EditText tempistiche){
         query += " " + Database.TESI_TEMPISTICHE + ">" + tempistiche.getText().toString() + " AND";
         return query;
     }
 
+    /**
+     * Il metodo aggiunge alla query il vincolo della media minima
+     * @param query
+     * @param media
+     * @return  Restituisce la query aggiornata
+     */
     private String AddToQueryMedia(String query, EditText media){
         query += " " + Database.TESI_MEDIAVOTOMINIMA + ">" + media.getText().toString() + " AND";
         return query;
     }
 
+    /**
+     * Il metodo aggiunge alla query il vincolo del numero degli esami mancanti minimo
+     * @param query
+     * @param numeroEsamiMancanti
+     * @return  Restituisce la query aggiornata
+     */
     private String AddToQueryNumeroEsamiMancanti(String query, EditText numeroEsamiMancanti){
         query += " " + Database.TESI_ESAMINECESSARI + ">" + numeroEsamiMancanti.getText().toString() + " AND";
         return query;
     }
 
+    /**
+     * Il metodo aggiunge alla query il vincolo della disponibilità
+     * @param query
+     * @param disponibilita
+     * @return  Restituisce la query aggiornata
+     */
     private String AddToQueryDisponibilita(String query, SwitchMaterial disponibilita){
         if(disponibilita.isChecked()){
             query += " " + Database.TESI_STATO + "=1 "; //TRUE
@@ -170,6 +201,12 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
         return query;
     }
 
+    /**
+     * Il metodo aggiunge alla query l'ordinamento in base al campo selezionato
+     * @param query
+     * @param campoOrdinamento
+     * @return  Restituisce la query aggiornata
+     */
     private String AddToQueryOrderBy(String query, Spinner campoOrdinamento) {
         if (campoOrdinamento.getSelectedItem().toString().compareTo("Titolo") == 0){
             query += " ORDER BY " + Database.TESI_TITOLO;
@@ -185,6 +222,12 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
         return query;
     }
 
+    /**
+     * Il metodo aggiunge alla query il tipo  di ordinamento selezionato
+     * @param query
+     * @param ordinaAscendente
+     * @return
+     */
     private String AddToQueryOrderType(String query, SwitchMaterial ordinaAscendente) {
         if(ordinaAscendente.isChecked()){
             query += " ASC;";

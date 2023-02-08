@@ -56,6 +56,9 @@ public class ListaTaskFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
         listaTask = getView().findViewById(R.id.lista_task);
@@ -66,6 +69,9 @@ public class ListaTaskFragment extends Fragment {
         }
     }
 
+    /**
+     * Ricarica la lista dei task in base alla tesi scelta
+     */
     private void RefreshList(){
         List<Task> lista = ListaTaskDatabase.ListaTask(db, tesiScelta.getIdTesiScelta());
         ListaTaskAdapter adapter = new ListaTaskAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());

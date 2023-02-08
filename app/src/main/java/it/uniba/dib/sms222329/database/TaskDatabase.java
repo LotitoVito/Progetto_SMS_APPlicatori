@@ -19,6 +19,12 @@ import it.uniba.dib.sms222329.classi.Task;
 
 public class TaskDatabase {
 
+    /**
+     * Metodo usato per assegnare un nuovo task in una tesi scelta specifica su database
+     * @param dbClass
+     * @param task
+     * @return  Restituisce true se l'operazione va a buon fine, altrimento false
+     */
     public static boolean CreaTask(Database dbClass, Task task){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues taskCv = new ContentValues();
@@ -38,6 +44,12 @@ public class TaskDatabase {
         return false;
     }
 
+    /**
+     * Metodo usato per modificare un task su database
+     * @param dbClass
+     * @param task
+     * @return  Restituisce true se l'operazione va a buon fine, altrimento false
+     */
     public static boolean ModificaTask(Database dbClass, Task task){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues taskCv = new ContentValues();
@@ -81,6 +93,4 @@ public class TaskDatabase {
         }
         return false;
     }
-
-
 }

@@ -56,7 +56,7 @@ public class SegnalazioneMessaggiFragment extends Fragment {
         refreshChat();
 
         sendMessage.setOnClickListener(view -> {
-            if(!isEmptyTextbox(messaggio)){
+            if(!Utility.isEmptyTextbox(messaggio)){
                 SegnalazioneMessaggio messaggioOggetto = null;
                 if(Utility.accountLoggato == Utility.RELATORE) {
                     messaggioOggetto = new SegnalazioneMessaggio(idChat, messaggio.getText().toString(), Utility.relatoreLoggato.getIdUtente());
@@ -71,13 +71,9 @@ public class SegnalazioneMessaggiFragment extends Fragment {
         });
     }
 
-    private boolean isEmptyTextbox(EditText textbox){
-        if(textbox.getText().toString().trim().compareTo("")==0){
-            return true;
-        }
-        return false;
-    }
-
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init(){
         db = new Database(getContext());
         listView = getView().findViewById(R.id.chat_list);
@@ -85,6 +81,9 @@ public class SegnalazioneMessaggiFragment extends Fragment {
         messaggio = getView().findViewById(R.id.chat_input);
     }
 
+    /**
+     * Ricarica i messaggi in base all'idChat eall'utente loggato
+     */
     private void refreshChat(){
         List<SegnalazioneMessaggio> listaSegnalazioni = ListaSegnalazioniMessaggiDatabase.ListaMessaggi(db, this.idChat);
         ListaSegnalazioniMessaggiAdapter adapterLista = null;

@@ -111,6 +111,9 @@ public class CreaTaskFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
         titoloTask = getView().findViewById(R.id.titolo_task);
@@ -135,6 +138,13 @@ public class CreaTaskFragment extends Fragment {
         }
     }
 
+    /**
+     * Metodo che verifica se i campi obbligatori sono vuoti, nel caso siano vuoti sono contrassegnati;
+     * @param titolo
+     * @param argomento
+     * @param dataFine
+     * @return  Il metodo restituisce true se almeno un campo è vuoto, restituisce false se tutti i campi non sono vuoti
+     */
     private boolean IsEmpty(EditText titolo, EditText argomento, EditText dataFine){
         boolean risultato = false;
 

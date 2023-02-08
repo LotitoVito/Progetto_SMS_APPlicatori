@@ -3,16 +3,19 @@ package it.uniba.dib.sms222329.database;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.RichiestaTesi;
-import it.uniba.dib.sms222329.classi.TesiScelta;
 
 public class ListaRichiesteTesiDatabase {
 
+    /**
+     * Metodo usato per ricercare le richieste di tesi fatte dai tesisti per il relatore loggato
+     * @param dbClass
+     * @param idRelatore
+     * @return  Restituisce la lista trovata
+     */
     public static List<RichiestaTesi> ListaRichiesteTesiRelatore(Database dbClass, int idRelatore) {
         String query = "SELECT * FROM " + Database.RICHIESTA + " r, " + Database.TESI + " t " +
                 "WHERE r." + Database.RICHIESTA_TESIID + "=t." + Database.TESI_ID+ " AND "
@@ -31,7 +34,7 @@ public class ListaRichiesteTesiDatabase {
             richiestaTesi.setCapacitàStudente(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICHIESTA_CAPACITASTUDENTE)));
             richiestaTesi.setIdTesi(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICHIESTA_TESIID)));
             richiestaTesi.setIdTesista(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICHIESTA_TESISTAID)));
-            richiestaTesi.setAccettata(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICHIESTA_ACCETTATA)));
+            richiestaTesi.setStato(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICHIESTA_ACCETTATA)));
             richiestaTesi.setRisposta(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICHIESTA_RISPOSTA)));
 
             listaRichiesteTesi.add(richiestaTesi);
@@ -40,6 +43,12 @@ public class ListaRichiesteTesiDatabase {
         return listaRichiesteTesi;
     }
 
+    /**
+     * Metodo usato per ricercare le richieste di tesi fatte dal tesista loggato
+     * @param dbClass
+     * @param idTesista
+     * @return  Restituisce la lista trovata
+     */
     public static List<RichiestaTesi> ListaRichiesteTesiTesista(Database dbClass, int idTesista) {
         String query = "SELECT * FROM " + Database.RICHIESTA + " " +
                 "WHERE " + Database.RICHIESTA_TESISTAID + "=" + idTesista + ";";
@@ -57,7 +66,7 @@ public class ListaRichiesteTesiDatabase {
             richiestaTesi.setCapacitàStudente(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICHIESTA_CAPACITASTUDENTE)));
             richiestaTesi.setIdTesi(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICHIESTA_TESIID)));
             richiestaTesi.setIdTesista(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICHIESTA_TESISTAID)));
-            richiestaTesi.setAccettata(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICHIESTA_ACCETTATA)));
+            richiestaTesi.setStato(cursore.getInt(cursore.getColumnIndexOrThrow(Database.RICHIESTA_ACCETTATA)));
             richiestaTesi.setRisposta(cursore.getString(cursore.getColumnIndexOrThrow(Database.RICHIESTA_RISPOSTA)));
 
             listaRichiesteTesi.add(richiestaTesi);

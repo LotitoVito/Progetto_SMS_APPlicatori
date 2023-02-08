@@ -11,6 +11,12 @@ import it.uniba.dib.sms222329.classi.TesiScelta;
 
 public class TesiSceltaDatabase {
 
+    /**
+     * Metodo usato per registrare su database una tesi scelta nel momento in cui il relatore accetta la richiesta
+     * @param tesiScelta
+     * @param dbClass
+     * @return  Restituisce true se l'operazione va a buon fine, altrimento false
+     */
     public static boolean RegistrazioneTesiScelta(TesiScelta tesiScelta, Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvTesiScelta = new ContentValues();
@@ -30,6 +36,12 @@ public class TesiSceltaDatabase {
         return false;
     }
 
+    /**
+     * Metodo usato dal relatore per inviare una proposta ad un corelatore di aggiungersi ad una tesi scelta speicifica
+     * @param dbClass
+     * @param tesi
+     * @return  Restituisce true se l'operazione va a buon fine, altrimento false
+     */
     public static boolean AggiungiCorelatore(Database dbClass, TesiScelta tesi){
         SQLiteDatabase db = dbClass.getWritableDatabase();
 
@@ -44,6 +56,12 @@ public class TesiSceltaDatabase {
         return false;
     }
 
+    /**
+     * Metodo usato dal relatore per rimuovere un corelatore da una tesi scelta specifica
+     * @param dbClass
+     * @param tesi
+     * @return  Restituisce true se l'operazione va a buon fine, altrimento false
+     */
     public static boolean RimuoviCorelatore(Database dbClass, TesiScelta tesi){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues tesiSceltaCv = new ContentValues();
@@ -58,6 +76,12 @@ public class TesiSceltaDatabase {
         return false;
     }
 
+    /**
+     * Metodo usato dal corelatore per accettare una richiesta di far parte di una tesi scelta specifica
+     * @param dbClass
+     * @param tesi
+     * @return  Restituisce true se l'operazione va a buon fine, altrimento false
+     */
     public static boolean AccettaRichiesta(Database dbClass, TesiScelta tesi){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues tesiSceltaCv = new ContentValues();
@@ -71,6 +95,12 @@ public class TesiSceltaDatabase {
         return false;
     }
 
+    /**
+     * Metodo usato dal corelatore per rifiutare una richiesta di far parte di una tesi scelta specifica
+     * @param dbClass
+     * @param tesi
+     * @return  Restituisce true se l'operazione va a buon fine, altrimento false
+     */
     public static boolean RifiutaRichiesta(Database dbClass, TesiScelta tesi){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues tesiSceltaCv = new ContentValues();
@@ -84,6 +114,12 @@ public class TesiSceltaDatabase {
         return false;
     }
 
+    /**
+     * Metodo usato dal tesista per consegnare una tesi scelta specifica
+     * @param dbClass
+     * @param tesi
+     * @return  Restituisce true se l'operazione va a buon fine, altrimento false
+     */
     public static boolean ConsegnaTesiScelta(Database dbClass, TesiScelta tesi){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues tesiSceltaCv = new ContentValues();
@@ -98,6 +134,13 @@ public class TesiSceltaDatabase {
         return false;
     }
 
+    /**
+     * Metodo usato per registrare l'upload del file pdf di una tesi scelta speicifica su database
+     * @param dbClass
+     * @param tesi
+     * @param valore
+     * @return  Restituisce true se l'operazione va a buon fine, altrimento false
+     */
     public static boolean UploadTesiScelta(Database dbClass, TesiScelta tesi, DatabaseReference valore){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues tesiSceltaCv = new ContentValues();

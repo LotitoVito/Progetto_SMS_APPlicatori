@@ -142,6 +142,9 @@ public class ModificaTaskFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
         titoloTask = getView().findViewById(R.id.titolo_task);
@@ -176,6 +179,9 @@ public class ModificaTaskFragment extends Fragment {
         }
     }
 
+    /**
+     * Imposta il testo per ogni elemento della view come suggerimento
+     */
     private void SetHintAll(){
         titoloTask.setHint(task.getTitolo());
         descrizioneTask.setHint(task.getDescrizione());
@@ -211,7 +217,9 @@ public class ModificaTaskFragment extends Fragment {
         }
     }
 
-
+    /**
+     * Riempie i campi vuoti con il giusto valore se sono vuoti
+     */
     private void FillIfEmpty() {
         Utility.fillIfEmpty(titoloTask, task.getTitolo());
         Utility.fillIfEmpty(descrizioneTask, task.getDescrizione());

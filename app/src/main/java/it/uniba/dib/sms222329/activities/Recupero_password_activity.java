@@ -54,6 +54,14 @@ public class Recupero_password_activity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Metodo che verifica se i campi obbligatori sono vuoti, nel caso siano vuoti sono contrassegnati;
+     * @param emailIns1
+     * @param emailIns2
+     * @param passswordIns1
+     * @param passswordIns2
+     * @return Il metodo restituisce true se almeno un campo è vuoto, restituisce false se tutti i campi non sono vuoti
+     */
     private boolean IsEmpty(EditText emailIns1, EditText emailIns2, EditText passswordIns1, EditText passswordIns2){
         boolean risultato = false;
 
@@ -76,6 +84,9 @@ public class Recupero_password_activity extends AppCompatActivity {
         return risultato;
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init(){
         db = new Database(this);
         signInButton = findViewById(R.id.recoverPasswordButton);

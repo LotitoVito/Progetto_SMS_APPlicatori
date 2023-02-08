@@ -36,6 +36,9 @@ public class LoggedActivity extends AppCompatActivity {
 
     //Variabili e Oggetti
     private Database db = new Database(this);
+    /**
+     * Variabile usata verificare quale account istanziare
+     */
     public static UtenteRegistrato utenteLoggato;
     private BottomNavigationView bottomNavigationView;
 
@@ -75,6 +78,13 @@ public class LoggedActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Metodo usato per impostare la nav bar corretta a seconda dell'utente che logga
+     * @param thesisFragment    fragment per la tab lista delle tesi
+     * @param messagesFragment  fragment per la tab messaggi
+     * @param homeFragment      fragment per la tab home
+     * @param studentFragment   fragment per la tab studenti
+     */
     private void setBottomNavigation(Fragment thesisFragment, Fragment messagesFragment, Fragment homeFragment, Fragment studentFragment) {
 
         bottomNavigationView = findViewById(R.id.navigation);
@@ -108,6 +118,11 @@ public class LoggedActivity extends AppCompatActivity {
             return false;
         });
     }
+
+    /**
+     * Metodo usato per settare la nav bar del guest
+     * @param thesisFragment    fragment per la tab lista delle tesi
+     */
     private void setGuestBottomNavigation(Fragment thesisFragment) {
         bottomNavigationView = findViewById(R.id.navigation);
 
@@ -159,6 +174,9 @@ public class LoggedActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Metodo usato per lo scanQR, permette di mostrare la tesi trovata tramite QR se l'utente conferma la richiesta di visualizzazione
+     */
     private void scanQR(){
         ScanOptions options = new ScanOptions();
         options.setPrompt("Volume up per usare il flash");

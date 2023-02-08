@@ -64,12 +64,20 @@ public class RegistraCoRelatoreFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init(){
         db = new Database(getActivity().getApplicationContext());
         registerButton = getActivity().findViewById(R.id.Signupbutton);
         organizzaione = getActivity().findViewById(R.id.organizzazione);
     }
 
+    /**
+     * Metodo che verifica se il campo obbligatoro è vuoto, nel caso sia vuoto lo contrassegna;
+     * @param textbox
+     * @return  Il metodo restituisce true se il campo è vuoto, altrimenti false
+     */
     private boolean isEmpty(EditText textbox){
         boolean risultato = false;
         if(Utility.isEmptyTextbox(textbox)){

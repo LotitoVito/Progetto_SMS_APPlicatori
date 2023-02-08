@@ -33,6 +33,12 @@ public class ListaTesistiRelatoreAdapter extends BaseAdapter {
     private ArrayList<TesiScelta> copiaRicerca;
     private Context context;
 
+    /**
+     * Costruttore standard
+     * @param context
+     * @param tesiScelte
+     * @param manager
+     */
     public ListaTesistiRelatoreAdapter(Context context, List<TesiScelta> tesiScelte, FragmentManager manager) {
         this.tesiScelte = tesiScelte;
         this.inflater = LayoutInflater.from(context);
@@ -43,6 +49,14 @@ public class ListaTesistiRelatoreAdapter extends BaseAdapter {
             this.copiaRicerca.addAll(tesiScelte);
         }
     }
+
+    /**
+     * Costruttore usato per il Corelatore
+     * @param context
+     * @param tesiScelte
+     * @param manager
+     * @param richiesta
+     */
     public ListaTesistiRelatoreAdapter(Context context, List<TesiScelta> tesiScelte, FragmentManager manager, boolean richiesta) {
         this.tesiScelte = tesiScelte;
         this.inflater = LayoutInflater.from(context);
@@ -139,6 +153,10 @@ public class ListaTesistiRelatoreAdapter extends BaseAdapter {
         return convertView;
     }
 
+    /**
+     * Il metodo permette di filtrare e mostrare solo le tesi che hanno il titolo corrispondente alla stringa di ricerca
+     * @param ricerca
+     */
     public void filter(String ricerca){
         ricerca = ricerca.toLowerCase(Locale.getDefault());
         tesiScelte.clear();

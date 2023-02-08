@@ -12,6 +12,12 @@ import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 
 public class UtenteRegistratoDatabase {
 
+    /**
+     * Metodo per la registrazione di un account nella tabella Utente per il tesista
+     * @param tesista
+     * @param dbClass
+     * @return  Restituisce true se l'operazione va a buon fine, altrimenti false
+     */
     public static boolean RegistrazioneUtente(Tesista tesista, Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
@@ -34,6 +40,12 @@ public class UtenteRegistratoDatabase {
         return false;
     }
 
+    /**
+     * Metodo per la registrazione di un account nella tabella Utente per il relatore
+     * @param relatore
+     * @param dbClass
+     * @return  Restituisce true se l'operazione va a buon fine, altrimenti false
+     */
     public static boolean RegistrazioneUtente(Relatore relatore, Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
@@ -56,6 +68,12 @@ public class UtenteRegistratoDatabase {
         return false;
     }
 
+    /**
+     * Metodo per la registrazione di un account nella tabella Utente per il corelatore
+     * @param coRelatore
+     * @param dbClass
+     * @return  Restituisce true se l'operazione va a buon fine, altrimenti false
+     */
     public static boolean RegistrazioneUtente(CoRelatore coRelatore, Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
@@ -78,6 +96,12 @@ public class UtenteRegistratoDatabase {
         return false;
     }
 
+    /**
+     * Metodo usato per verificare che i dati di login corrispondino ad un account
+     * @param account
+     * @param dbClass
+     * @return  Restituisce true se l'operazione va a buon fine, altrimenti false
+     */
     public static boolean LoginStatus(UtenteRegistrato account, Database dbClass) {
         SQLiteDatabase db = dbClass.getReadableDatabase();
         String query = "SELECT " + Database.UTENTI_RUOLOID + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + " = '" + account.getEmail() + "' AND " + Database.UTENTI_PASSWORD + " = '" + account.getPassword() + "';";
@@ -91,6 +115,13 @@ public class UtenteRegistratoDatabase {
         return false;
     }
 
+    /**
+     * Metodo usato per verificare se la mail esiste sul database per il recupero password
+     * @param email1
+     * @param email2
+     * @param dbClass
+     * @return  Restituisce true se l'operazione va a buon fine, altrimenti false
+     */
     public static boolean ControlloMail(String email1, String email2, Database dbClass){     //ritorna vero se le email corrispondono e se c'è corrispondenza nel db
         String query = "SELECT " + Database.UTENTI_EMAIL + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + " = '" + email1 + "';";
         if (email1.equals(email2) && dbClass.VerificaDatoEsistente(query)){
@@ -99,6 +130,14 @@ public class UtenteRegistratoDatabase {
         return false;
     }
 
+    /**
+     * Metodo usato per eseguire il reset della password su database per un account specifico in base alla email
+     * @param password1
+     * @param password2
+     * @param email
+     * @param dbClass
+     * @return  Restituisce true se l'operazione va a buon fine, altrimenti false
+     */
     public static boolean ResetPassword(String password1, String password2, String email, Database dbClass){
         if(password1.equals(password2)){
             String aggiornaPassword = "UPDATE " + Database.UTENTI + " SET " + Database.UTENTI_PASSWORD + " = '" + password1 + "' WHERE " + Database.UTENTI_EMAIL + " = '" + email + "';";

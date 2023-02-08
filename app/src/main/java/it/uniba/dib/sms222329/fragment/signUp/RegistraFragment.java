@@ -66,6 +66,10 @@ public class RegistraFragment extends Fragment {
         });
     }
 
+    /**
+     * Il metodo carica il fragment corretto in base alla scelta del tipo di account effettuata con i radio button
+     * @param account
+     */
     private void loadNextFragment(UtenteRegistrato account){
         RadioGroup radioGroup = getActivity().findViewById(R.id.radio_group);
         int checkedId = radioGroup.getCheckedRadioButtonId();
@@ -83,6 +87,9 @@ public class RegistraFragment extends Fragment {
 
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init(){
         db = new Database(getActivity().getApplicationContext());
         button = getView().findViewById(R.id.next_button);
@@ -93,6 +100,15 @@ public class RegistraFragment extends Fragment {
         password = getActivity().findViewById(R.id.password);
     }
 
+    /**
+     * Metodo che verifica se i campi obbligatori sono vuoti, nel caso siano vuoti sono contrassegnati;
+     * @param nome
+     * @param cognome
+     * @param codiceFiscale
+     * @param email
+     * @param password
+     * @return  Il metodo restituisce true se almeno un campo è vuoto, restituisce false se tutti i campi non sono vuoti
+     */
     private boolean IsEmpty(EditText nome, EditText cognome, EditText codiceFiscale, EditText email, EditText password){
         boolean risultato = false;
 
@@ -117,14 +133,5 @@ public class RegistraFragment extends Fragment {
             password.setError("Obbligatorio");
         }
         return risultato;
-    }
-
-    private boolean isEmptyTextbox(EditText textbox){
-        if(textbox.getText().toString().trim().compareTo("")==0){
-
-            return true;
-        }
-        textbox.setError(null);
-        return false;
     }
 }

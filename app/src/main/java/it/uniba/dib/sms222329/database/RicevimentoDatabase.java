@@ -7,6 +7,12 @@ import it.uniba.dib.sms222329.classi.Ricevimento;
 
 public class RicevimentoDatabase {
 
+    /**
+     * Metodo per la registrazione di una richiesta di ricevimento sul database
+     * @param dbClass
+     * @param richiesta
+     * @return  Restituisce true se l'operazione va a buon fine, altrimenti false
+     */
     public static boolean RichiestaRicevimento(Database dbClass, Ricevimento richiesta) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues richiestaCv = new ContentValues();
@@ -24,6 +30,12 @@ public class RicevimentoDatabase {
         return false;
     }
 
+    /**
+     * Metodo per l'accettazione della richiesta di ricevimento passato come parametro
+     * @param dbClass
+     * @param ricevimento
+     * @return  Restituisce true se l'operazione va a buon fine, altrimenti false
+     */
     public static boolean AccettaRicevimento(Database dbClass, Ricevimento ricevimento){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues ricevimentoCv = new ContentValues();
@@ -37,6 +49,12 @@ public class RicevimentoDatabase {
         return false;
     }
 
+    /**
+     * Metodo per il rifiuto della richiesta di ricevimento passato come parametro
+     * @param dbClass
+     * @param ricevimento
+     * @return  Restituisce true se l'operazione va a buon fine, altrimenti false
+     */
     public static boolean RifiutaRicevimento(Database dbClass, Ricevimento ricevimento){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues ricevimentoCv = new ContentValues();
@@ -50,6 +68,13 @@ public class RicevimentoDatabase {
         return false;
     }
 
+    /**
+     * Metodo per la modifica della richiesta del ricevimento passato come parametro; setta lo stato della richiesta in maniera tale
+     * che sia il tesista ad accettare o rifiutare la controrisposta
+     * @param dbClass
+     * @param ricevimento
+     * @return  Restituisce true se l'operazione va a buon fine, altrimenti false
+     */
     public static boolean ModificaRicevimento(Database dbClass, Ricevimento ricevimento){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues ricevimentoCv = new ContentValues();

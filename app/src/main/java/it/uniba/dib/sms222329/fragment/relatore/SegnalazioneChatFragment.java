@@ -12,14 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
-import it.uniba.dib.sms222329.classi.ListaClassificaSegnalazione;
-import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.SegnalazioneChat;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.ListaSegnalazioniChatDatabase;
@@ -58,12 +54,18 @@ public class SegnalazioneChatFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
          db = new Database(getContext());
          listView = getActivity().findViewById(R.id.segnalazioniList);
          filtra = getView().findViewById(R.id.filtra);
     }
 
+    /**
+     * Ricatica la lista delle chat in base all'account loggato
+     */
     private void RefreshList(){
         if(Utility.accountLoggato == Utility.TESISTA){
             List<SegnalazioneChat> lista = ListaSegnalazioniChatDatabase.ListaSegnalazioniChat(db, Utility.tesistaLoggato.getIdUtente());

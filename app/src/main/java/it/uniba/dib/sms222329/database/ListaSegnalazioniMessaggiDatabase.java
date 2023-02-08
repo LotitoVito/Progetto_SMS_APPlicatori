@@ -13,6 +13,12 @@ import it.uniba.dib.sms222329.classi.SegnalazioneMessaggio;
 
 public class ListaSegnalazioniMessaggiDatabase {
 
+    /**
+     * Metodo usato per recuperare i messaggi di una chat in base all'idChat
+     * @param dbClass
+     * @param idChat
+     * @return  Restituisce la lista trovata
+     */
     public static List<SegnalazioneMessaggio> ListaMessaggi(Database dbClass, int idChat) {
         String query = "SELECT * FROM " + Database.MESSAGGISEGNALAZIONE + " WHERE " + Database.MESSAGGISEGNALAZIONE_SEGNALAZIONEID + "=" + idChat + " ORDER BY " + Database.MESSAGGISEGNALAZIONE_TIMESTAMP +";";
 
@@ -34,7 +40,6 @@ public class ListaSegnalazioniMessaggiDatabase {
             listaMessaggiSegnalazione.add(messaggioEstratto);
 
         }
-        Log.d("test", "a" + idChat);
         return listaMessaggiSegnalazione;
     }
 }

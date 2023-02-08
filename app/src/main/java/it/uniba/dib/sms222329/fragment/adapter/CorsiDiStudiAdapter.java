@@ -24,8 +24,16 @@ public class CorsiDiStudiAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private boolean modifica;
-    private boolean oldCheckBox;        //Serve per capire se settare attive le checkbox dei corsi già registrati
+    /**
+     * Variabile usata per verificare se settare attive le checkbox dei corsi già registrati
+     */
+    private boolean oldCheckBox;
 
+    /**
+     * Costruttore standard
+     * @param context
+     * @param corsi
+     */
     public CorsiDiStudiAdapter(Context context, List<String> corsi) {
         this.corsi = corsi;
         this.context = context;
@@ -33,6 +41,12 @@ public class CorsiDiStudiAdapter extends BaseAdapter {
         this.modifica = false;
     }
 
+    /**
+     * Costruttore usato per il Relatore
+     * @param context
+     * @param corsi
+     * @param oldCheckBox
+     */
     public CorsiDiStudiAdapter(Context context, List<String> corsi, boolean oldCheckBox) {
         this.corsi = corsi;
         this.context = context;

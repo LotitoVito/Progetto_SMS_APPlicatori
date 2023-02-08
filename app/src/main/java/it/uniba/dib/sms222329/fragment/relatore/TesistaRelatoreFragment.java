@@ -163,6 +163,9 @@ public class TesistaRelatoreFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
         tesista = getView().findViewById(R.id.nomeStudente);
@@ -199,6 +202,9 @@ public class TesistaRelatoreFragment extends Fragment {
         }
     }
 
+    /**
+     * Imposta il testo per ogni elemento in base ai casi
+     */
     private void SetTextAll(){
         //Tesista
         Cursor cursorTesista = db.RicercaDato("SELECT u." + Database.UTENTI_NOME + ", u." + Database.UTENTI_COGNOME + " FROM " + Database.UTENTI + " u, " + Database.TESISTA + " t " +
@@ -249,6 +255,9 @@ public class TesistaRelatoreFragment extends Fragment {
         capacitaEffettive.setText(tesiScelta.getCapacitàStudente());
     }
 
+    /**
+     * Setta la view per un utente loggato non specifico
+     */
     private void SettaGenerale(){
         if(tesiScelta.getStatoCorelatore() == TesiScelta.ACCETTATO || tesiScelta.getStatoCorelatore() == TesiScelta.IN_ATTESA){
             aggiungiCorelatore.setVisibility(View.GONE);
@@ -290,6 +299,9 @@ public class TesistaRelatoreFragment extends Fragment {
         }
     }
 
+    /**
+     * Setta la view per un corelatore loggato
+     */
     private void SettaPerCorelatore(){
         labelCorelatore.setVisibility(View.GONE);
         corelatore.setVisibility(View.GONE);
@@ -308,6 +320,9 @@ public class TesistaRelatoreFragment extends Fragment {
         }
     }
 
+    /**
+     * Setta la view per un guest loggato
+     */
     private void SettaPerGuest(){
         richiestaCorelatore.setVisibility(View.GONE);
         aggiungiCorelatore.setVisibility(View.GONE);
@@ -317,6 +332,9 @@ public class TesistaRelatoreFragment extends Fragment {
         caricaTesi.setVisibility(View.GONE);
     }
 
+    /**
+     * Permette di aprire il picker di file
+     */
     private void caricaFile() {
         Intent intent = new Intent();
         intent.setType("application/pdf");

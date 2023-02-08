@@ -61,6 +61,9 @@ public class DettagliRichiestaTesiFragment extends Fragment {
 
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init(){
         db = new Database(getActivity().getApplicationContext());
         titoloTesi = getView().findViewById(R.id.titoloTesi);
@@ -82,6 +85,9 @@ public class DettagliRichiestaTesiFragment extends Fragment {
         rispostaRelatore.setVisibility(View.GONE);
     }
 
+    /**
+     * Imposta il testo per ogni elemento della view in base ai casi
+     */
     private void SetTextAll(){
         //Tesi
         Cursor cursorTesi = db.RicercaDato("SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_ID + "=" + richiesta.getIdTesi() + ";");

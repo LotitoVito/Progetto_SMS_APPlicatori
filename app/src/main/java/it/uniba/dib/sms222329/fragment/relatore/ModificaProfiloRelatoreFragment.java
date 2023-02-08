@@ -83,6 +83,9 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init(){
         db = new Database(getActivity().getApplicationContext());
         nome = getView().findViewById(R.id.nome);
@@ -98,6 +101,9 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
         spinnerCreate();
     }
 
+    /**
+     * Imposta il testo per ogni elemento della view come suggerimento
+     */
     private void SetHintAll(){
         nome.setHint(Utility.relatoreLoggato.getNome());
         cognome.setHint(Utility.relatoreLoggato.getCognome());
@@ -107,6 +113,9 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
         matricola.setHint(Utility.relatoreLoggato.getMatricola());
     }
 
+    /**
+     * Riempie i campi vuoti con il giusto valore se sono vuoti
+     */
     private void FillAllEmpty(){
         Utility.fillIfEmpty(nome, Utility.relatoreLoggato.getNome());
         Utility.fillIfEmpty(cognome, Utility.relatoreLoggato.getCognome());
@@ -116,6 +125,9 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
         Utility.fillIfEmpty(matricola, Utility.relatoreLoggato.getMatricola());
     }
 
+    /**
+     * Crea lo spinner e lo imposta al valore iniziale corretto
+     */
     private void spinnerCreate(){
         //Carica Elementi
         String query = "SELECT " + Database.UNIVERSITA_NOME + " FROM " + Database.UNIVERSITA + ";";
@@ -142,6 +154,10 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
         }
     }
 
+    /**
+     * Permette di recuperare l'id dell'università selezionata dallo spinner
+     * @return  Restituisce l'id dellì'università selezionata
+     */
     private String RecuperaIdUniversita(){
         Cursor idCursor;
         idCursor = db.RicercaDato("SELECT " + Database.UNIVERSITA_ID + " FROM "+ Database.UNIVERSITA +" WHERE nome = '"+ universita.getSelectedItem().toString() +"';");
@@ -149,6 +165,10 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
         return idCursor.getString(idCursor.getColumnIndexOrThrow(Database.UNIVERSITA_ID));
     }
 
+    /**
+     * Permette di recuperare gli id dei corsi selezionati con le checkbox
+     * @return  restituisce un array di id dei corsi selezionati
+     */
     private List RecuperaIdCorsi(){
         List<String> idCorsiSelezionati = new ArrayList<>();
 
@@ -165,6 +185,12 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
         return idCorsiSelezionati;
     }
 
+    /**
+     * Permette di recuperare l'id della coppia università-corso dal database
+     * @param idUniversita
+     * @param idCorsiSelezionati
+     * @return  Restituisce l'id della coppia università-corso
+     */
     private ArrayList<Integer> RecuperaUniversitaCorso(String idUniversita, List idCorsiSelezionati){
         Cursor idCursor;
         ArrayList<Integer> corsiRelatore = new ArrayList();
@@ -176,6 +202,10 @@ public class  ModificaProfiloRelatoreFragment extends Fragment {
         return corsiRelatore;
     }
 
+    /**
+     * Permette di gestire i cambiati di valore dello spinner e di adattare le checkbox
+     * @param spinner
+     */
    private void GestisciSpinner(Spinner spinner){
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

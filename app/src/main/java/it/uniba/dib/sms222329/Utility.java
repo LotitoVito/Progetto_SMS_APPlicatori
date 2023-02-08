@@ -23,10 +23,16 @@ import it.uniba.dib.sms222329.classi.Tesista;
 
 public class Utility {
 
+    /**
+     * Costanti per l'account loggato
+     */
     public static final int GUEST = 0;
     public static final int TESISTA = 1;
     public static final int RELATORE = 2;
     public static final int CORELATORE = 3;
+    /**
+     * Formatter data e ora
+     */
     public static final DateTimeFormatter convertFromStringDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public static final DateTimeFormatter convertFromStringDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public static final DateTimeFormatter showDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -36,10 +42,16 @@ public class Utility {
     public static Tesista tesistaLoggato;
     public static Relatore relatoreLoggato;
     public static CoRelatore coRelatoreLoggato;
+    /**
+     * Variabile usata per tener conto di quale account è loggato
+     */
     public static int accountLoggato;
 
     private Utility() {}
 
+    /**
+     * Metodo usato per pulire le variabili di login quando si effettua il logout
+     */
     public static void Clear(){
         Utility.tesistaLoggato = null;
         Utility.relatoreLoggato = null;
@@ -47,6 +59,12 @@ public class Utility {
         Utility.accountLoggato = -1;
     }
 
+    /**
+     * Metodo usato per l'apertura di un nuovo fragment
+     * @param fragmentManager
+     * @param containerId
+     * @param fragment
+     */
     public static void replaceFragment(FragmentManager fragmentManager, int containerId, Fragment fragment) {
         fragmentManager.beginTransaction()
                 .replace(containerId, fragment)
@@ -54,10 +72,19 @@ public class Utility {
                 .commit();
     }
 
+    /**
+     * Metodo usato per tornare alla view precedente
+     * @param activity
+     */
     public static void goBack(Activity activity){
         activity.onBackPressed();
     }
 
+    /**
+     * Metodo usato per verificare se la textbox è vuota
+     * @param textbox
+     * @return  Restituisce true se è vuota, altrimento false
+     */
     public static boolean isEmptyTextbox(EditText textbox){
         if(textbox.getText().toString().trim().compareTo("")==0){
             return true;
@@ -65,12 +92,22 @@ public class Utility {
         return false;
     }
 
+    /**
+     * Metodo usato per riempire la textbox con il value se è vuota
+     * @param campo
+     * @param value
+     */
     public static void fillIfEmpty(EditText campo, String value){
         if(campo.getText().toString().trim().matches("")){
             campo.autofill(AutofillValue.forText(value));
         }
     }
 
+    /**
+     * Metodo usato per verificare se la memoria esterna è accessibile
+     * @param activity
+     * @return  Restituisce true se è accessibile, altrimenti false
+     */
     public static boolean CheckStorage(Activity activity){
         if(isExternalStorageAvailable() && !isExternalStorageReadOnly()){
             if (Utility.CheckPermessi(activity)){
@@ -84,6 +121,12 @@ public class Utility {
         return false;
     }
 
+    /**
+     * Metodo usato per verificare se i permessi di accesso alla memoria esterna sono già stati concessi; se non sono ancora stati concessi
+     * effettua la richiesta all'utente
+     * @param activity
+     * @return  Restituisce true se i permessi sono concessi, altrimenti false
+     */
     public static boolean CheckPermessi(Activity activity){
         if(ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission_group.STORAGE) != PackageManager.PERMISSION_GRANTED){
             if(ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission_group.STORAGE)){
@@ -111,6 +154,10 @@ public class Utility {
         return true;
     }
 
+    /**
+     * Metodo usato per verificare se la memoria esterna è disponibile
+     * @return  Restituisce true se la memoria esterna è disponibile, altrimento false
+     */
     public static boolean isExternalStorageAvailable() {
         String extStorageState = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(extStorageState)) {
@@ -119,6 +166,10 @@ public class Utility {
         return false;
     }
 
+    /**
+     * Metodo usato per verificare se la memoria esterna è a sola lettura
+     * @return  Restituisce true se la memoria esterno è a sola lettura, altrimento false
+     */
     public static boolean isExternalStorageReadOnly() {
         String extStorageState = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(extStorageState)) {

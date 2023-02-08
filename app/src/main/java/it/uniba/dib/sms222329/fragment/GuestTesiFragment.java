@@ -65,6 +65,9 @@ public class GuestTesiFragment extends Fragment {
 
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
         listaTesiScelte = getView().findViewById(R.id.tesiList);
@@ -73,6 +76,9 @@ public class GuestTesiFragment extends Fragment {
         barraRicerca.setQueryHint("Inserisci il titolo della tesi");
     }
 
+    /**
+     * Il metodo Carica la lista delle tesiscelte
+     */
     private void RefreshList(){
         List<TesiScelta> list = ListaTesiScelteDatabase.ListaTesiScelteCompletateDatabase(db);
         adapter = new ListaTesistiRelatoreAdapter(getActivity().getApplicationContext(), list, getActivity().getSupportFragmentManager());

@@ -12,15 +12,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.RichiestaTesi;
-import it.uniba.dib.sms222329.classi.TesiScelta;
 import it.uniba.dib.sms222329.database.Database;
-import it.uniba.dib.sms222329.database.RichiestaTesiDatabase;
-import it.uniba.dib.sms222329.fragment.calendario.CalendarUtils;
 
 public class AccettaRichiestaTesiFragment extends Fragment {
 
@@ -58,11 +53,11 @@ public class AccettaRichiestaTesiFragment extends Fragment {
         super.onResume();
 
         Init();
-        ViewItemsSetText();
+        SetTextAll();
 
         accetta.setOnClickListener(view -> {
             if(!db.VerificaDatoEsistente("SELECT * FROM " + Database.TESISCELTA + " WHERE " + Database.TESISCELTA_TESISTAID + "=" + richiesta.getIdTesista() + ";")){
-                richiesta.setAccettata(RichiestaTesi.ACCETTATO);
+                richiesta.setStato(RichiestaTesi.ACCETTATO);
                 if(richiesta.AccettaRichiestaTesi(rispostaRelatore.getText().toString().trim(), db)){
                     Toast.makeText(getActivity().getApplicationContext(), "Richiesta accettata con successo", Toast.LENGTH_SHORT).show();
                     Utility.goBack(getActivity());
@@ -85,6 +80,9 @@ public class AccettaRichiestaTesiFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init(){
         db = new Database(getActivity().getApplicationContext());
         titoloTesi = getView().findViewById(R.id.titoloTesi);
@@ -101,7 +99,10 @@ public class AccettaRichiestaTesiFragment extends Fragment {
         rifiuta = getView().findViewById(R.id.rifiuta);
     }
 
-    private void ViewItemsSetText(){
+    /**
+     * Imposta il testo per ogni elemento della view
+     */
+    private void SetTextAll(){
         //Tesi
         Cursor cursorTesi = db.RicercaDato("SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_ID + "=" + richiesta.getIdTesi() + ";");
         cursorTesi.moveToFirst();

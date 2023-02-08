@@ -94,6 +94,9 @@ public class TesistiRelatoreFragment extends Fragment {
 
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init(){
         db = new Database(getActivity().getApplicationContext());
         listView = getView().findViewById(R.id.tesistiList);
@@ -101,30 +104,45 @@ public class TesistiRelatoreFragment extends Fragment {
         tesisti = getActivity().findViewById(R.id.tesisti);
     }
 
+    /**
+     * Carica la lista delle richieste di tesi del relatore loggato
+     */
     private void CaricaListaRichiesteRelatore(){
         List<RichiestaTesi> lista = ListaRichiesteTesiDatabase.ListaRichiesteTesiRelatore(db, Utility.relatoreLoggato.getIdRelatore());
         ListaRichiesteAdapter adapter = new ListaRichiesteAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
         listView.setAdapter(adapter);
     }
 
+    /**
+     * Carica la lista delle richieste di partecipazione a tesi scelte per il corelatore loggato
+     */
     private void CaricaListaRichiesteCorelatore(){
         List<TesiScelta> lista = ListaTesiScelteDatabase.ListaRichiesteTesiCorelatore(db, Utility.coRelatoreLoggato.getIdCorelatore());
         ListaTesistiRelatoreAdapter adapter = new ListaTesistiRelatoreAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager(), true);
         listView.setAdapter(adapter);
     }
 
+    /**
+     * Carica la lista delle tesi scelte accettate del relatore loggato
+     */
     private void CaricaListaTesistiRelatore(){
         List<TesiScelta> lista = ListaTesiScelteDatabase.ListaTesiScelteRelatoreDatabase(db, Utility.relatoreLoggato.getIdRelatore());
         ListaTesistiRelatoreAdapter adapter = new ListaTesistiRelatoreAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
         listView.setAdapter(adapter);
     }
 
+    /**
+     * Carica la lista delle tesi scelte accettate del corelatore loggato
+     */
     private void CaricaListaTesistiCorelatore(){
         List<TesiScelta> lista = ListaTesiScelteDatabase.ListaTesiScelteCorelatore(db, Utility.coRelatoreLoggato.getIdCorelatore());
         ListaTesistiRelatoreAdapter adapter = new ListaTesistiRelatoreAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
         listView.setAdapter(adapter);
     }
 
+    /**
+     * Setta la view per le richieste
+     */
     private void SettaRichieste(){
         tesisti.setTextColor(defaultColor);
         richieste.setTextColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
@@ -132,6 +150,9 @@ public class TesistiRelatoreFragment extends Fragment {
         u_tesisti.setBackgroundColor(u_defaultColor);
     }
 
+    /**
+     * Setta la view per le tesi scelte
+     */
     private void SettaTesisti(){
         tesisti.setTextColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
         richieste.setTextColor(defaultColor);

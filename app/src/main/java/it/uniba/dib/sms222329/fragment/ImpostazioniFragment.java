@@ -58,6 +58,10 @@ public class ImpostazioniFragment extends Fragment {
     }
 
 
+    /**
+     * Il metodo salva la preferenza della modalità scura selezionata dall'utente
+     * @param isChecked
+     */
     private void saveDarkModePref(boolean isChecked) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor editor = prefs.edit();
@@ -65,6 +69,10 @@ public class ImpostazioniFragment extends Fragment {
         editor.commit();
     }
 
+    /**
+     * Il metodo carica la preferenza della modalità scura
+     * @return  Restituisce la preferenza della modalità scura
+     */
     private boolean loadDarkModePref() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         return prefs.getBoolean("dark_mode", false);

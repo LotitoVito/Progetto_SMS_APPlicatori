@@ -83,6 +83,9 @@ public class ModificaProfiloStudenteFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
         nome = getActivity().findViewById(R.id.nome);
@@ -104,6 +107,9 @@ public class ModificaProfiloStudenteFragment extends Fragment {
         spinnerCreate(spinnerUniversita, queryValori, queryValoreRegistrato);
     }
 
+    /**
+     * Imposta il testo per ogni elemento della view come suggerimento
+     */
     private void SetHintAll(){
         nome.setHint(Utility.tesistaLoggato.getNome());
         cognome.setHint(Utility.tesistaLoggato.getCognome());
@@ -115,6 +121,9 @@ public class ModificaProfiloStudenteFragment extends Fragment {
         numeroEsamiMancanti.setHint(String.valueOf(Utility.tesistaLoggato.getNumeroEsamiMancanti()));
     }
 
+    /**
+     * Riempie i campi vuoti con il giusto valore se sono vuoti
+     */
     private void FillAllEmpty(){
         Utility.fillIfEmpty(nome, Utility.tesistaLoggato.getNome());
         Utility.fillIfEmpty(cognome, Utility.tesistaLoggato.getCognome());
@@ -126,7 +135,12 @@ public class ModificaProfiloStudenteFragment extends Fragment {
         Utility.fillIfEmpty(numeroEsamiMancanti, String.valueOf(Utility.tesistaLoggato.getNumeroEsamiMancanti()));
     }
 
-
+    /**
+     * Crea lo spinner specifico passato per parametro e setta i valori e il valore da mostrare in base alle query
+     * @param spinner
+     * @param queryValori
+     * @param queryValoriRegistrati
+     */
     private void spinnerCreate(Spinner spinner, String queryValori, String queryValoriRegistrati){
         //Carica i nomi
         Cursor cursor = db.getReadableDatabase().rawQuery(queryValori,null);
@@ -146,6 +160,12 @@ public class ModificaProfiloStudenteFragment extends Fragment {
         SettaValoreSpinnerRegistrato(spinner, queryValoriRegistrati, adapter);
     }
 
+    /**
+     * Setta il valore dello spinner da mostrare
+     * @param spinner
+     * @param query
+     * @param adapter
+     */
     private void SettaValoreSpinnerRegistrato(Spinner spinner, String query, ArrayAdapter<String> adapter){
         Cursor cursor = db.RicercaDato(query);
         if(cursor.moveToNext()){
@@ -153,6 +173,12 @@ public class ModificaProfiloStudenteFragment extends Fragment {
         }
     }
 
+    /**
+     * Recupera l'id dal database del valore dello spinner selezionato
+     * @param spinner
+     * @param tabella
+     * @return
+     */
     private String RecuperaIdSpinner(Spinner spinner, String tabella){
         Cursor idCursor;
         idCursor = db.RicercaDato("SELECT id FROM "+ tabella +" WHERE nome = '"+ spinner.getSelectedItem().toString() +"';");
@@ -160,6 +186,12 @@ public class ModificaProfiloStudenteFragment extends Fragment {
         return idCursor.getString(0);
     }
 
+    /**
+     * Recupera l'id della coppia Universita-corso dal database
+     * @param idUniversita
+     * @param idCorso
+     * @return
+     */
     private int RecuperaUniversitaCorso(String idUniversita, String idCorso){
         Cursor idCursor;
         idCursor = db.RicercaDato("SELECT " + Database.UNIVERSITACORSO_ID + " FROM " + Database.UNIVERSITACORSO + " WHERE " + Database.UNIVERSITACORSO_UNIVERSITAID + " = '"+ idUniversita +"' AND " + Database.UNIVERSITACORSO_CORSOID + " = '"+ idCorso +"';");
@@ -167,6 +199,10 @@ public class ModificaProfiloStudenteFragment extends Fragment {
         return idCursor.getInt(idCursor.getColumnIndexOrThrow(Database.UNIVERSITACORSO_ID));
     }
 
+    /**
+     * Gestisce lo spinner dei corsi in base al valore dello spinner dell'università
+     * @param spinner
+     */
     private void GestisciSpinner(Spinner spinner){
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

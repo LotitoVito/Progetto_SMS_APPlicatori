@@ -11,13 +11,10 @@ import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
 
-import com.google.android.material.tabs.TabLayout;
-
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
-import it.uniba.dib.sms222329.classi.Ricevimento;
 import it.uniba.dib.sms222329.classi.RichiestaTesi;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.fragment.relatore.AccettaRichiestaTesiFragment;
@@ -111,9 +108,9 @@ public class ListaRichiesteAdapter extends BaseAdapter {
 
             //Stato
             TextView stato = convertView.findViewById(R.id.sottotitolo);
-            if(richieste.get(i).getAccettata() == RichiestaTesi.IN_ATTESA){
+            if(richieste.get(i).getStato() == RichiestaTesi.IN_ATTESA){
                 stato.setText("Richiesta in attesa di approvazione");
-            } else if(richieste.get(i).getAccettata() == RichiestaTesi.RIFIUTATO) {
+            } else if(richieste.get(i).getStato() == RichiestaTesi.RIFIUTATO) {
                 stato.setText("Richiesta rifiutata");
             }
 

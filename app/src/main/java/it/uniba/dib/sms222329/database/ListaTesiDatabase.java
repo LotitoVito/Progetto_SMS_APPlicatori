@@ -10,6 +10,12 @@ import it.uniba.dib.sms222329.classi.Tesi;
 
 public class ListaTesiDatabase {
 
+    /**
+     * Metodo usato per recuperare la lista di proposte di tesi in base alla query passata; la query conterrà diversi vincoli
+     * @param query
+     * @param dbClass
+     * @return  Restituisce la lista trovata
+     */
     public static ArrayList<Tesi> ListaTesi(String query, Database dbClass){
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);

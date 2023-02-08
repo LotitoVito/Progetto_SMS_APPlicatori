@@ -133,6 +133,9 @@ public class CreaRicevimentoFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
         messaggio = getView().findViewById(R.id.messaggio);
@@ -147,6 +150,13 @@ public class CreaRicevimentoFragment extends Fragment {
         }
     }
 
+    /**
+     * Metodo che verifica se i campi obbligatori sono vuoti, nel caso siano vuoti sono contrassegnati;
+     * @param data
+     * @param ora
+     * @param messaggio
+     * @return  Il metodo restituisce true se almeno un campo è vuoto, restituisce false se tutti i campi non sono vuoti
+     */
     private boolean IsEmpty(EditText data, EditText ora, EditText messaggio) {
         boolean risultato = false;
 
@@ -166,6 +176,9 @@ public class CreaRicevimentoFragment extends Fragment {
         return risultato;
     }
 
+    /**
+     * Riempie i campi vuoti con il giusto valore se sono vuoti
+     */
     private void FillIfEmpty() {
         Utility.fillIfEmpty(data, String.valueOf(richiesta.getData()));
         Utility.fillIfEmpty(ora, String.valueOf(richiesta.getOrario()));

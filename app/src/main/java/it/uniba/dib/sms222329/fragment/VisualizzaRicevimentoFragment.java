@@ -10,14 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Ricevimento;
 import it.uniba.dib.sms222329.database.Database;
-import it.uniba.dib.sms222329.database.RicevimentoDatabase;
-import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
 
 public class VisualizzaRicevimentoFragment extends Fragment {
 
@@ -52,7 +49,9 @@ public class VisualizzaRicevimentoFragment extends Fragment {
 
     }
 
-
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
         messaggioTesista = getView().findViewById(R.id.messaggio_tesista);
@@ -66,6 +65,9 @@ public class VisualizzaRicevimentoFragment extends Fragment {
         rifiuta.setVisibility(View.GONE);
     }
 
+    /**
+     * Imposta il testo per ogni elemento della view
+     */
     private void SetTextAll() {
         messaggioTesista.setText(richiesta.getMessaggio());
         Cursor cursor = db.RicercaDato("SELECT " + Database.TASK_TITOLO + ", " + Database.TASK_DESCRIZIONE + " FROM " + Database.TASK +
@@ -74,13 +76,13 @@ public class VisualizzaRicevimentoFragment extends Fragment {
         taskRicevimento.setText(cursor.getString(cursor.getColumnIndexOrThrow(Database.TASK_TITOLO)) + "\n" + cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)));
         dataRicevimento.setText(richiesta.getData().format(Utility.showDate) + " " + richiesta.getOrario().format(Utility.showDate));
 
-        if(richiesta.getAccettazione()==Ricevimento.ACCETTATO){
+        if(richiesta.getStato()==Ricevimento.ACCETTATO){
             stato.setText("Accettato");
-        } else if(richiesta.getAccettazione()==Ricevimento.RIFIUTATO){
+        } else if(richiesta.getStato()==Ricevimento.RIFIUTATO){
             stato.setText("Rifiutato");
-        } else if(richiesta.getAccettazione()==Ricevimento.IN_ATTESA_RELATORE){
+        } else if(richiesta.getStato()==Ricevimento.IN_ATTESA_RELATORE){
             stato.setText("In attesa risposta relatore");
-        } else if(richiesta.getAccettazione()==Ricevimento.IN_ATTESA_TESISTA){
+        } else if(richiesta.getStato()==Ricevimento.IN_ATTESA_TESISTA){
             stato.setText("In attesa risposta tesista");
         }
     }

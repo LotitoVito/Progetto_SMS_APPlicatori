@@ -8,6 +8,12 @@ import it.uniba.dib.sms222329.classi.Tesi;
 
 public class TesiDatabase {
 
+    /**
+     * Metodo usato dal relatore per registrare su database una nuova proposta di tesi
+     * @param tesi
+     * @param dbClass
+     * @return  Restituisce true se l'operazione va a buon fine, altrimento false
+     */
     public static boolean RegistrazioneTesi(Tesi tesi, Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvTesi = new ContentValues();
@@ -33,6 +39,12 @@ public class TesiDatabase {
         return false;
     }
 
+    /**
+     * Metodo usato dal relatore per modificare una proposta di tesi specifica
+     * @param tesi
+     * @param dbClass
+     * @return  Restituisce true se l'operazione va a buon fine, altrimento false
+     */
     public static boolean ModificaTesi(Tesi tesi, Database dbClass){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvTesi = new ContentValues();
@@ -55,6 +67,12 @@ public class TesiDatabase {
         return false;
     }
 
+    /**
+     * Metodo usato per incrementare il numero di visualizzazione su database di una proposta di tesi
+     * @param tesi
+     * @param dbClass
+     * @return  Restituisce true se l'operazione va a buon fine, altrimento false
+     */
     public static boolean incrementaVisualizzazioni(Tesi tesi, Database dbClass){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cv = new ContentValues();

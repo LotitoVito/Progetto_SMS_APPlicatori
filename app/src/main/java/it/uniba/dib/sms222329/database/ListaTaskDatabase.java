@@ -13,6 +13,12 @@ import it.uniba.dib.sms222329.classi.Task;
 
 public class ListaTaskDatabase {
 
+    /**
+     * Metodo usato per recuperare la lista di task in base all'idTesiScelta
+     * @param dbClass
+     * @param idTesiScelta
+     * @return  Restituisce la lista trovata
+     */
     public static List<Task> ListaTask(Database dbClass, int idTesiScelta) {
         String query = "SELECT * FROM " + Database.TASK + " WHERE " + Database.TASK_TESISCELTAID + "=" + idTesiScelta + ";";
 

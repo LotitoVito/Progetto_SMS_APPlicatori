@@ -56,6 +56,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init(){
         db = new Database(this);
         signInButton = findViewById(R.id.signInButton);

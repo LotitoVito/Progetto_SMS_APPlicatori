@@ -4,11 +4,18 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.CoRelatore;
 import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 
 public class CoRelatoreDatabase {
 
+    /**
+     * Metodo per la registrazione dell'account del Corelatore sul database nella tabella del Corelatore
+     * @param corelatore
+     * @param dbClass
+     * @return  Restituisce true se l'operazione va a buon fine, altrimenti false
+     */
     public static boolean RegistrazioneCoRelatore(CoRelatore corelatore, Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvCoRelatore = new ContentValues();
@@ -30,6 +37,12 @@ public class CoRelatoreDatabase {
         return false;
     }
 
+    /**
+     * Metodo di modifica dell'account del Corelatore sul database
+     * @param corelatore
+     * @param dbClass
+     * @return  Restituisce true se l'operazione va a buon fine, altrimenti false
+     */
     public static boolean modCoRelatore(CoRelatore corelatore, Database dbClass) {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvUtente = new ContentValues();
@@ -54,9 +67,14 @@ public class CoRelatoreDatabase {
         return false;
     }
 
+    /**
+     * Metodo per istanziare l'account del Corelatore, ricerca i dati in base alle informazioni di login poassate nell'oggetto account e
+     * istanzia il corelatore
+     * @param account
+     * @param dbClass
+     * @return  Restituisce l'oggetto corelatore
+     */
     public static CoRelatore IstanziaCoRelatore(UtenteRegistrato account, Database dbClass){
-        CoRelatore CorelatoreLog = new CoRelatore();
-
         String query =  "SELECT c." + Database.CORELATORE_UTENTEID + ", c." + Database.CORELATORE_ID + ", " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + ", " + Database.UTENTI_PASSWORD + ", " + Database.CORELATORE_ORGANIZZAZIONE + ", " + Database.UTENTI_CODICEFISCALE + " " +
                         "FROM " + Database.UTENTI + " u, " + Database.CORELATORE + " c " +
                         "WHERE u." + Database.UTENTI_ID + "=c." + Database.CORELATORE_UTENTEID + " AND " + Database.UTENTI_EMAIL + " = '" + account.getEmail() + "';";
@@ -64,15 +82,17 @@ public class CoRelatoreDatabase {
         Cursor cursore = db.rawQuery(query, null);
         cursore.moveToNext();
 
-        CorelatoreLog.setIdUtente(cursore.getInt(cursore.getColumnIndexOrThrow(Database.CORELATORE_UTENTEID)));
-        CorelatoreLog.setIdCorelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.CORELATORE_ID)));
-        CorelatoreLog.setNome(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
-        CorelatoreLog.setCognome(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)));
-        CorelatoreLog.setEmail(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
-        CorelatoreLog.setPassword(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_PASSWORD)));
-        CorelatoreLog.setOrganizzazione(cursore.getString(cursore.getColumnIndexOrThrow(Database.CORELATORE_ORGANIZZAZIONE)));
-        CorelatoreLog.setCodiceFiscale(cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_CODICEFISCALE)));
+        CoRelatore corelatoreLog = new CoRelatore(
+                cursore.getInt(cursore.getColumnIndexOrThrow(Database.CORELATORE_UTENTEID)),
+                cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_NOME)),
+                cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)),
+                cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_CODICEFISCALE)),
+                cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)),
+                cursore.getString(cursore.getColumnIndexOrThrow(Database.UTENTI_PASSWORD)),
+                Utility.CORELATORE,
+                cursore.getString(cursore.getColumnIndexOrThrow(Database.CORELATORE_ORGANIZZAZIONE)),
+                cursore.getInt(cursore.getColumnIndexOrThrow(Database.CORELATORE_ID)));
 
-        return CorelatoreLog;
+        return corelatoreLog;
     }
 }

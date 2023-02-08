@@ -84,6 +84,9 @@ public class RegistraStudentFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo di inizializzazione delle variabili
+     */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
         registerButton = getActivity().findViewById(R.id.Signupbutton);
@@ -97,6 +100,11 @@ public class RegistraStudentFragment extends Fragment {
         spinnerCreate(spinnerUniversita, query);
     }
 
+    /**
+     * Crea lo spinner passato come parametro con i valori della query
+     * @param spinner
+     * @param query
+     */
     private void spinnerCreate(Spinner spinner, String query){
         //Recupera i nomi dalla query
         Cursor cursor = db.getReadableDatabase().rawQuery(query, null);
@@ -113,6 +121,12 @@ public class RegistraStudentFragment extends Fragment {
         spinner.setAdapter(adapter);
     }
 
+    /**
+     * Recupera l'id dal database del valore dello spinner selezionato
+     * @param spinner
+     * @param tabella
+     * @return  Restituisce l'id del valore selezionato
+     */
     private String RecuperaIdSpinner(Spinner spinner, String tabella){
         Cursor idCursor;
         idCursor = db.RicercaDato("SELECT id FROM "+ tabella +" WHERE nome = '"+ spinner.getSelectedItem().toString() +"';");
@@ -120,6 +134,12 @@ public class RegistraStudentFragment extends Fragment {
         return idCursor.getString(0);
     }
 
+    /**
+     * Recupera l'id della coppia universita-corso dal database
+     * @param idUniversita
+     * @param idCorso
+     * @return  Restituisce l'id della coppia università-corso
+     */
     private int RecuperaUniversitaCorso(String idUniversita, String idCorso){
         Cursor idCursor;
         idCursor = db.RicercaDato("SELECT " + Database.UNIVERSITACORSO_ID + " FROM " + Database.UNIVERSITACORSO + " WHERE " + Database.UNIVERSITACORSO_UNIVERSITAID + " = '"+ idUniversita +"' AND " + Database.UNIVERSITACORSO_CORSOID + " = '"+ idCorso +"';");
@@ -127,6 +147,10 @@ public class RegistraStudentFragment extends Fragment {
         return idCursor.getInt(0);
     }
 
+    /**
+     * Gestisce lo spinner università cambiando i valori dello spinner corsi in base al valore selezionato
+     * @param spinner
+     */
     private void GestisciSpinner(Spinner spinner){
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

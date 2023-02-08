@@ -86,13 +86,13 @@ public class ListaRicevimentiAdapter extends BaseAdapter {
         //Stato
         TextView stato = convertView.findViewById(R.id.sottotitolo);
         String disponibilita = "";
-        if (ricevimenti.get(i).getAccettazione()==Ricevimento.ACCETTATO){
+        if (ricevimenti.get(i).getStato()==Ricevimento.ACCETTATO){
             disponibilita = "Accettato";
-        } else if (ricevimenti.get(i).getAccettazione()==Ricevimento.RIFIUTATO) {
+        } else if (ricevimenti.get(i).getStato()==Ricevimento.RIFIUTATO) {
             disponibilita = "Rifiutato";
-        } else if (ricevimenti.get(i).getAccettazione()==Ricevimento.IN_ATTESA_RELATORE){
+        } else if (ricevimenti.get(i).getStato()==Ricevimento.IN_ATTESA_RELATORE){
             disponibilita = "In attesa della risposta del relatore";
-        } else if (ricevimenti.get(i).getAccettazione()==Ricevimento.IN_ATTESA_TESISTA){
+        } else if (ricevimenti.get(i).getStato()==Ricevimento.IN_ATTESA_TESISTA){
             disponibilita = "In attesa della risposta del tesista";
         }
         stato.setText(disponibilita);
@@ -101,9 +101,9 @@ public class ListaRicevimentiAdapter extends BaseAdapter {
         Button modifica = convertView.findViewById(R.id.modifica);
         modifica.setText("Rispondi");
         if(Utility.accountLoggato == Utility.CORELATORE ||
-                ricevimenti.get(i).getAccettazione()==Ricevimento.ACCETTATO || ricevimenti.get(i).getAccettazione()==Ricevimento.RIFIUTATO ||
-                (Utility.accountLoggato == Utility.TESISTA && ricevimenti.get(i).getAccettazione()==Ricevimento.IN_ATTESA_RELATORE) ||
-                (Utility.accountLoggato == Utility.RELATORE && ricevimenti.get(i).getAccettazione()==Ricevimento.IN_ATTESA_TESISTA)){
+                ricevimenti.get(i).getStato()==Ricevimento.ACCETTATO || ricevimenti.get(i).getStato()==Ricevimento.RIFIUTATO ||
+                (Utility.accountLoggato == Utility.TESISTA && ricevimenti.get(i).getStato()==Ricevimento.IN_ATTESA_RELATORE) ||
+                (Utility.accountLoggato == Utility.RELATORE && ricevimenti.get(i).getStato()==Ricevimento.IN_ATTESA_TESISTA)){
             modifica.setVisibility(View.GONE);
         }
 
