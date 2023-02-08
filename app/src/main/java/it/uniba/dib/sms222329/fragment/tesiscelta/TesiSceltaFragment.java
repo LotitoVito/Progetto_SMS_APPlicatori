@@ -94,8 +94,7 @@ public class TesiSceltaFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        storageReference = FirebaseStorage.getInstance().getReference();
-        databaseReference = FirebaseDatabase.getInstance("https://laureapp-f0334-default-rtdb.europe-west1.firebasedatabase.app/").getReference("uploads");
+        inizializzaFirebase();
     }
 
     @Override
@@ -170,15 +169,6 @@ public class TesiSceltaFragment extends Fragment {
                 caricaFile();
             }
         });
-    }
-
-    private void downloadFile() {
-        DownloadManager downloadManager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
-        Uri uri = Uri.parse(file.getUrl());
-        DownloadManager.Request request = new DownloadManager.Request(uri);
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalFilesDir(getContext(), Environment.DIRECTORY_DOWNLOADS, System.currentTimeMillis()+".pdf");
-        downloadManager.enqueue(request);
     }
 
     /**
@@ -289,31 +279,6 @@ public class TesiSceltaFragment extends Fragment {
         }
     }
 
-    private void getLastUpload() {
-        file = null;
-        databaseReference.addValueEventListener(new ValueEventListener() {
-          @Override
-          public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()){
-                    if (TesiSceltaDatabase.DownloadTesiScelta(db, tesiScelta).compareTo(data.getKey())==0){
-                        FileUpload genericFile = data.getValue(FileUpload.class);
-                        tesiUpload.setText(genericFile.toString());
-                        file = genericFile;
-                        break;
-                    }
-                }
-          }
-          @Override
-          public void onCancelled(@NonNull DatabaseError error) {
-                    tesiUpload.setText("Errore");
-          }
-        });
-
-        if(file == null){
-            tesiUpload.setText("Nessun caricamento");
-        }
-    }
-
     /**
      * Setta la view per un corelatore loggato
      */
@@ -345,6 +310,36 @@ public class TesiSceltaFragment extends Fragment {
         creaTask.setVisibility(View.GONE);
         mostraTask.setVisibility(View.GONE);
         caricaTesi.setVisibility(View.GONE);
+    }
+
+    private void inizializzaFirebase() {
+        storageReference = FirebaseStorage.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance("https://laureapp-f0334-default-rtdb.europe-west1.firebasedatabase.app/").getReference("uploads");
+    }
+
+    private void getLastUpload() {
+        file = null;
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data : snapshot.getChildren()){
+                    if (TesiSceltaDatabase.DownloadTesiScelta(db, tesiScelta).compareTo(data.getKey())==0){
+                        FileUpload genericFile = data.getValue(FileUpload.class);
+                        tesiUpload.setText(genericFile.toString());
+                        file = genericFile;
+                        break;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                tesiUpload.setText("Errore");
+            }
+        });
+
+        if(file == null){
+            tesiUpload.setText("Nessun caricamento");
+        }
     }
 
     /**
@@ -411,5 +406,14 @@ public class TesiSceltaFragment extends Fragment {
                 Log.e("firebasestorage", "onFailure: did not delete file");
             }
         });
+    }
+
+    private void downloadFile() {
+        DownloadManager downloadManager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(file.getUrl());
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalFilesDir(getContext(), Environment.DIRECTORY_DOWNLOADS, System.currentTimeMillis()+".pdf");
+        downloadManager.enqueue(request);
     }
 }
