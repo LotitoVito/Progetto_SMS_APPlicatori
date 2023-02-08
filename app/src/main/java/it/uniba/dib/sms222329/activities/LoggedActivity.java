@@ -70,7 +70,7 @@ public class LoggedActivity extends AppCompatActivity {
             else if(utenteLoggato.getEmail().compareTo("guest")==0) {
                 Utility.accountLoggato = Utility.GUEST;
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new TesiSceltaListaGuestFragment());
-                setGuestBottomNavigation(new TesiSceltaListaGuestFragment());
+                setGuestBottomNavigation(new TesiListaFragment(),new TesiSceltaListaGuestFragment());
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -122,7 +122,7 @@ public class LoggedActivity extends AppCompatActivity {
      * Metodo usato per settare la nav bar del guest
      * @param thesisFragment    fragment per la tab lista delle tesi
      */
-    private void setGuestBottomNavigation(Fragment thesisFragment) {
+    private void setGuestBottomNavigation(Fragment thesisFragment, Fragment studentFragment) {
         bottomNavigationView = findViewById(R.id.navigation);
 
         bottomNavigationView.getMenu().clear();
@@ -135,6 +135,10 @@ public class LoggedActivity extends AppCompatActivity {
                 case R.id.navigation_thesis:
                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, thesisFragment);
                     setTitle(R.string.tesi);
+                    return true;
+                case R.id.navigation_student:
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, studentFragment);
+                    setTitle(R.string.mythesis);
                     return true;
                 case R.id.navigation_camera:
                     scanQR();
