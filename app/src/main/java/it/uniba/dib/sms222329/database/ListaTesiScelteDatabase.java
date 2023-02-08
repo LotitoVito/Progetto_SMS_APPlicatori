@@ -134,7 +134,7 @@ public class ListaTesiScelteDatabase {
      * @return  Restituisce la lista trovata
      */
     public static List<TesiScelta> ListaTesiScelteCompletateDatabase(Database dbClass) {
-        String query = "SELECT ts." + Database.TESISCELTA_ID + ", ts." + Database.TESISCELTA_DATAPUBBLICAZIONE + ", ts." + Database.TESISCELTA_ABSTRACT + ", ts." + Database.TESISCELTA_DOWNLOAD + ", ts." + Database.TESISCELTA_TESIID + ", ts." + Database.TESISCELTA_CORELATOREID + ", ts." + Database.TESISCELTA_STATOCORELATORE + ", ts." + Database.TESISCELTA_TESISTAID + ", ts." + Database.TESISCELTA_CAPACITATESISTA + ", ts." + Database.TESI_TITOLO +
+        String query = "SELECT ts." + Database.TESISCELTA_ID + ", ts." + Database.TESISCELTA_DATAPUBBLICAZIONE + ", ts." + Database.TESISCELTA_ABSTRACT + ", ts." + Database.TESISCELTA_DOWNLOAD + ", ts." + Database.TESISCELTA_TESIID + ", ts." + Database.TESISCELTA_CORELATOREID + ", ts." + Database.TESISCELTA_STATOCORELATORE + ", ts." + Database.TESISCELTA_TESISTAID + ", ts." + Database.TESISCELTA_CAPACITATESISTA + ", t." + Database.TESI_TITOLO +
                 " FROM " + Database.TESISCELTA + " ts, " + Database.TESI + " t " +
                 " WHERE ts." + Database.TESISCELTA_TESIID + "=t." + Database.TESI_ID + " AND "+ Database.TESISCELTA_DATAPUBBLICAZIONE + "!='';";
 
