@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         forgotPasswordButton.setOnClickListener(view -> {
-            Intent Recupero_password_activity = new Intent(getApplicationContext(), it.uniba.dib.sms222329.activities.Recupero_password_activity.class);
+            Intent Recupero_password_activity = new Intent(getApplicationContext(), RecuperoPasswordActivity.class);
             startActivity(Recupero_password_activity);
         });
     }

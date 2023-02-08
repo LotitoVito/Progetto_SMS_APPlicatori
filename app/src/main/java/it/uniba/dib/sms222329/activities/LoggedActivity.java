@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import androidx.activity.result.ActivityResultLauncher;
@@ -22,15 +21,15 @@ import it.uniba.dib.sms222329.database.CoRelatoreDatabase;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.RelatoreDatabase;
 import it.uniba.dib.sms222329.database.TesistaDatabase;
-import it.uniba.dib.sms222329.fragment.GuestTesiFragment;
+import it.uniba.dib.sms222329.fragment.tesiscelta.TesiSceltaListaGuestFragment;
 import it.uniba.dib.sms222329.fragment.ImpostazioniFragment;
-import it.uniba.dib.sms222329.fragment.ProfiloFragment;
-import it.uniba.dib.sms222329.fragment.VisualizzaTesiFragment;
-import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
-import it.uniba.dib.sms222329.fragment.relatore.SegnalazioneChatFragment;
-import it.uniba.dib.sms222329.fragment.relatore.ListaTesiFragment;
-import it.uniba.dib.sms222329.fragment.relatore.TesistiRelatoreFragment;
-import it.uniba.dib.sms222329.fragment.tesista.MiaTesiFragment;
+import it.uniba.dib.sms222329.fragment.utente.UtenteProfiloFragment;
+import it.uniba.dib.sms222329.fragment.tesi.TesiVisualizzaFragment;
+import it.uniba.dib.sms222329.fragment.ricevimento.RicevimentiCalendarioFragment;
+import it.uniba.dib.sms222329.fragment.segnalazione.SegnalazioneChatFragment;
+import it.uniba.dib.sms222329.fragment.tesi.TesiListaFragment;
+import it.uniba.dib.sms222329.fragment.tesiscelta.TesiSceltaListaFragment;
+import it.uniba.dib.sms222329.fragment.tesiscelta.TesiSceltaMiaFragment;
 
 public class LoggedActivity extends AppCompatActivity {
 
@@ -53,25 +52,25 @@ public class LoggedActivity extends AppCompatActivity {
             if(utenteLoggato.getTipoUtente() == Utility.TESISTA){
                 Utility.tesistaLoggato = TesistaDatabase.IstanziaTesista(utenteLoggato, db);
                 Utility.accountLoggato = Utility.TESISTA;
-                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment());
-                setBottomNavigation(new ListaTesiFragment(), new SegnalazioneChatFragment(), new HomeFragment(), new MiaTesiFragment());
+                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new RicevimentiCalendarioFragment());
+                setBottomNavigation(new TesiListaFragment(), new SegnalazioneChatFragment(), new RicevimentiCalendarioFragment(), new TesiSceltaMiaFragment());
             }
             else if (utenteLoggato.getTipoUtente() == Utility.RELATORE){
                 Utility.relatoreLoggato = RelatoreDatabase.IstanziaRelatore(utenteLoggato, db);
                 Utility.accountLoggato = Utility.RELATORE;
-                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment());
-                setBottomNavigation(new ListaTesiFragment(), new SegnalazioneChatFragment(), new HomeFragment(), new TesistiRelatoreFragment());
+                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new RicevimentiCalendarioFragment());
+                setBottomNavigation(new TesiListaFragment(), new SegnalazioneChatFragment(), new RicevimentiCalendarioFragment(), new TesiSceltaListaFragment());
             }
             else if (utenteLoggato.getTipoUtente() == Utility.CORELATORE){
                 Utility.coRelatoreLoggato = CoRelatoreDatabase.IstanziaCoRelatore(utenteLoggato, db);
                 Utility.accountLoggato = Utility.CORELATORE;
-                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new HomeFragment());
-                setBottomNavigation(new ListaTesiFragment(), new SegnalazioneChatFragment(), new HomeFragment(), new TesistiRelatoreFragment());
+                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new RicevimentiCalendarioFragment());
+                setBottomNavigation(new TesiListaFragment(), new SegnalazioneChatFragment(), new RicevimentiCalendarioFragment(), new TesiSceltaListaFragment());
             }
             else if(utenteLoggato.getEmail().compareTo("guest")==0) {
                 Utility.accountLoggato = Utility.GUEST;
-                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new GuestTesiFragment());
-                setGuestBottomNavigation(new GuestTesiFragment());
+                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new TesiSceltaListaGuestFragment());
+                setGuestBottomNavigation(new TesiSceltaListaGuestFragment());
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -157,7 +156,7 @@ public class LoggedActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.navigation_profile:
-                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new ProfiloFragment());
+                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new UtenteProfiloFragment());
                 setTitle(R.string.title_profile);
                 return true;
             case R.id.navigation_settings:
@@ -210,7 +209,7 @@ public class LoggedActivity extends AppCompatActivity {
                             cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_STATO))==1,
                             cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_VISUALIZZAZIONI)),
                             cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_RELATOREID)));
-                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new VisualizzaTesiFragment(tesi));
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new TesiVisualizzaFragment(tesi));
                 }
             }).show();
         }

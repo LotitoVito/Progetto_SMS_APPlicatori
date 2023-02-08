@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import it.uniba.dib.sms222329.R;
-import it.uniba.dib.sms222329.fragment.relatore.HomeFragment;
+import it.uniba.dib.sms222329.fragment.ricevimento.RicevimentiCalendarioFragment;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
 {
@@ -49,7 +49,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
         else
         {
             holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
-            if(date.equals(HomeFragment.selectedDate))
+            if(date.equals(RicevimentiCalendarioFragment.selectedDate))
                 holder.parentView.setBackgroundColor(Color.LTGRAY);
         }
     }

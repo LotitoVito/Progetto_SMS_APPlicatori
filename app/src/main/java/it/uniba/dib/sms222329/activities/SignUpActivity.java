@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
-import it.uniba.dib.sms222329.fragment.signUp.RegistraFragment;
+import it.uniba.dib.sms222329.fragment.utente.UtenteRegistraFragment;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -14,7 +14,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        Utility.replaceFragment(getSupportFragmentManager(), R.id.signUpcontainer, new RegistraFragment());
+        Utility.replaceFragment(getSupportFragmentManager(), R.id.signUpcontainer, new UtenteRegistraFragment());
     }
 
     @Override

@@ -15,10 +15,8 @@ import java.util.List;
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Task;
-import it.uniba.dib.sms222329.classi.TesiScelta;
-import it.uniba.dib.sms222329.fragment.relatore.TesistaRelatoreFragment;
-import it.uniba.dib.sms222329.fragment.task.DettagliTaskFragment;
-import it.uniba.dib.sms222329.fragment.task.ModificaTaskFragment;
+import it.uniba.dib.sms222329.fragment.task.TaskDettagliFragment;
+import it.uniba.dib.sms222329.fragment.task.TaskModificaFragment;
 
 public class ListaTaskAdapter extends BaseAdapter {
 
@@ -79,13 +77,13 @@ public class ListaTaskAdapter extends BaseAdapter {
         //EditButton
         Button modifica = convertView.findViewById(R.id.modifica);
         modifica.setOnClickListener(view -> {
-            Utility.replaceFragment(manager, R.id.container, new ModificaTaskFragment(task.get(i)));
+            Utility.replaceFragment(manager, R.id.container, new TaskModificaFragment(task.get(i)));
         });
 
         //DetailButton
         Button dettagli = convertView.findViewById(R.id.visualizza);
         dettagli.setOnClickListener(view -> {
-            Utility.replaceFragment(manager, R.id.container, new DettagliTaskFragment(task.get(i)));
+            Utility.replaceFragment(manager, R.id.container, new TaskDettagliFragment(task.get(i)));
         });
 
         return convertView;

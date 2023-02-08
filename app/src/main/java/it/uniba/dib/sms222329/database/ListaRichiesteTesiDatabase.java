@@ -52,7 +52,7 @@ public class ListaRichiesteTesiDatabase {
      */
     public static List<RichiestaTesi> ListaRichiesteTesiTesista(Database dbClass, int idTesista) {
         String query = "SELECT r." + Database.RICHIESTA_ID + ", r." + Database.RICHIESTA_MESSAGGIO + ", r." + Database.RICHIESTA_CAPACITASTUDENTE + ", r." + Database.RICHIESTA_TESIID + ", r." + Database.RICHIESTA_TESISTAID + ", r." + Database.RICHIESTA_ACCETTATA + ", r." + Database.RICHIESTA_RISPOSTA +
-                " FROM " + Database.RICHIESTA +
+                " FROM " + Database.RICHIESTA + " r " +
                 " WHERE " + Database.RICHIESTA_TESISTAID + "=" + idTesista + ";";
 
         SQLiteDatabase db = dbClass.getReadableDatabase();

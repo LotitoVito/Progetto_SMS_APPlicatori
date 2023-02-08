@@ -17,8 +17,8 @@ import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Ricevimento;
 import it.uniba.dib.sms222329.database.Database;
-import it.uniba.dib.sms222329.fragment.RichiestaRicevimentoFragment;
-import it.uniba.dib.sms222329.fragment.VisualizzaRicevimentoFragment;
+import it.uniba.dib.sms222329.fragment.ricevimento.RicevimentoRichiestaFragment;
+import it.uniba.dib.sms222329.fragment.ricevimento.RicevimentoVisualizzaFragment;
 
 public class ListaRicevimentiAdapter extends BaseAdapter {
 
@@ -108,13 +108,13 @@ public class ListaRicevimentiAdapter extends BaseAdapter {
         }
 
         modifica.setOnClickListener(view -> {
-            Utility.replaceFragment(manager, R.id.container, new RichiestaRicevimentoFragment(ricevimenti.get(i)));
+            Utility.replaceFragment(manager, R.id.container, new RicevimentoRichiestaFragment(ricevimenti.get(i)));
         });
 
         //DetailButton
         Button dettagli = convertView.findViewById(R.id.visualizza);
         dettagli.setOnClickListener(view -> {
-            Utility.replaceFragment(manager, R.id.container, new VisualizzaRicevimentoFragment(ricevimenti.get(i)));
+            Utility.replaceFragment(manager, R.id.container, new RicevimentoVisualizzaFragment(ricevimenti.get(i)));
         });
 
         return convertView;

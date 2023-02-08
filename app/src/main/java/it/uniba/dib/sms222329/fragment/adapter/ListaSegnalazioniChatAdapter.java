@@ -10,16 +10,13 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
-import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.SegnalazioneChat;
 import it.uniba.dib.sms222329.database.Database;
-import it.uniba.dib.sms222329.fragment.SegnalazioneMessaggiFragment;
+import it.uniba.dib.sms222329.fragment.segnalazione.SegnalazioneMessaggiFragment;
 
 public class ListaSegnalazioniChatAdapter extends BaseAdapter {
 

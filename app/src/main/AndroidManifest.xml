@@ -17,7 +17,7 @@
         android:theme="@style/Theme.LaureApp"
         tools:targetApi="31">
         <activity
-            android:name=".activities.Recupero_password_activity"
+            android:name=".activities.RecuperoPasswordActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

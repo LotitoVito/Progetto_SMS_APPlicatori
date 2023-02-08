@@ -2,7 +2,6 @@ package it.uniba.dib.sms222329.fragment.adapter;
 
 import androidx.fragment.app.FragmentManager;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +15,12 @@ import java.util.Locale;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
-import it.uniba.dib.sms222329.classi.Relatore;
+import it.uniba.dib.sms222329.classi.RichiestaTesi;
 import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.database.Database;
-import it.uniba.dib.sms222329.fragment.VisualizzaTesiFragment;
-import it.uniba.dib.sms222329.fragment.relatore.CreaModificaTesiFragment;
-import it.uniba.dib.sms222329.fragment.tesista.RichiestaTesiFragment;
+import it.uniba.dib.sms222329.fragment.tesi.TesiVisualizzaFragment;
+import it.uniba.dib.sms222329.fragment.tesi.TesiCreaModificaFragment;
+import it.uniba.dib.sms222329.fragment.richiestatesi.RichiestaTesiFragment;
 
 public class ListaTesiAdapter extends BaseAdapter {
 
@@ -85,14 +84,15 @@ public class ListaTesiAdapter extends BaseAdapter {
         //Edit Button
         Button editButton = convertView.findViewById(R.id.modifica);
         if(Utility.accountLoggato == Utility.TESISTA && tesi.get(i).getStatoDisponibilita() == Tesi.DISPONIBILE &&
-                !db.VerificaDatoEsistente("SELECT * FROM " + Database.TESISCELTA + " WHERE " + Database.TESISCELTA_TESISTAID + "=" + Utility.tesistaLoggato.getIdTesista() + ";")){
+                !db.VerificaDatoEsistente("SELECT * FROM " + Database.TESISCELTA + " WHERE " + Database.TESISCELTA_TESISTAID + "=" + Utility.tesistaLoggato.getIdTesista() + ";") &&
+                !db.VerificaDatoEsistente("SELECT * FROM " + Database.RICHIESTA + " WHERE " + Database.RICHIESTA_TESISTAID + "=" + Utility.tesistaLoggato.getIdTesista() + " AND " + Database.RICHIESTA_ACCETTATA + "=" + RichiestaTesi.IN_ATTESA + ";")){
             editButton.setText("Richiedi");
             editButton.setOnClickListener(view -> {
                 Utility.replaceFragment(this.fragmentManager, R.id.container, new RichiestaTesiFragment(tesi.get(i)));
             });
         } else if (Utility.accountLoggato == Utility.RELATORE && tesi.get(i).getIdRelatore() == Utility.relatoreLoggato.getIdRelatore()){
             editButton.setOnClickListener(view ->{
-                Utility.replaceFragment( this.fragmentManager, R.id.container, new CreaModificaTesiFragment(this.tesi.get(i)));
+                Utility.replaceFragment( this.fragmentManager, R.id.container, new TesiCreaModificaFragment(this.tesi.get(i)));
             });
         } else {
             editButton.setVisibility(View.GONE);
@@ -101,7 +101,7 @@ public class ListaTesiAdapter extends BaseAdapter {
         //Detail Button
         Button detailButton = convertView.findViewById(R.id.visualizza);
         detailButton.setOnClickListener(view1 -> {
-            VisualizzaTesiFragment bottomSheet = new VisualizzaTesiFragment(tesi.get(i));
+            TesiVisualizzaFragment bottomSheet = new TesiVisualizzaFragment(tesi.get(i));
             bottomSheet.show(this.fragmentManager, bottomSheet.getTag());
         });
 
