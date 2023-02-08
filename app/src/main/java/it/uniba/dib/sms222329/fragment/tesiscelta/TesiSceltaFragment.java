@@ -377,17 +377,17 @@ public class TesiSceltaFragment extends Fragment {
                     Task<Uri> uriTask =taskSnapshot.getStorage().getDownloadUrl();
                     while(!uriTask.isComplete());
                     Uri url = uriTask.getResult();
-                    if(Utility.accountLoggato == Utility.TESISTA) file = new FileUpload(Utility.tesistaLoggato.getIdUtente(), Utility.tesistaLoggato.getNome()+" "+Utility.tesistaLoggato.getCognome(), url.toString(), new Date());
-                    if(Utility.accountLoggato == Utility.RELATORE) file = new FileUpload(Utility.relatoreLoggato.getIdUtente(), Utility.relatoreLoggato.getNome()+" "+Utility.relatoreLoggato.getCognome(), url.toString(), new Date());
-                    if(Utility.accountLoggato == Utility.CORELATORE) file = new FileUpload(Utility.coRelatoreLoggato.getIdUtente(), Utility.coRelatoreLoggato.getNome()+" "+Utility.coRelatoreLoggato.getCognome(), url.toString(), new Date());
-                    tesiUpload.setText(file.toString());
                     String downloadKey;
                     if(file==null){
                         downloadKey = databaseReference.push().getKey();
                     }else{
                         downloadKey = TesiSceltaDatabase.DownloadTesiScelta(db,tesiScelta);
-                        //eliminaFile(file.getUrl());
+                        eliminaFile(file.getUrl());
                     }
+                    if(Utility.accountLoggato == Utility.TESISTA) file = new FileUpload(Utility.tesistaLoggato.getIdUtente(), Utility.tesistaLoggato.getNome()+" "+Utility.tesistaLoggato.getCognome(), url.toString(), new Date());
+                    if(Utility.accountLoggato == Utility.RELATORE) file = new FileUpload(Utility.relatoreLoggato.getIdUtente(), Utility.relatoreLoggato.getNome()+" "+Utility.relatoreLoggato.getCognome(), url.toString(), new Date());
+                    if(Utility.accountLoggato == Utility.CORELATORE) file = new FileUpload(Utility.coRelatoreLoggato.getIdUtente(), Utility.coRelatoreLoggato.getNome()+" "+Utility.coRelatoreLoggato.getCognome(), url.toString(), new Date());
+                    tesiUpload.setText(file.toString());
                     databaseReference.child(downloadKey).setValue(file);
                     TesiSceltaDatabase.UploadTesiScelta(db, tesiScelta,downloadKey);
                     Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
