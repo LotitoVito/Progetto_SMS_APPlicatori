@@ -293,9 +293,7 @@ public class TesiSceltaFragment extends Fragment {
         });
 
         if(file == null){
-
             tesiUpload.setText("Nessun caricamento");
-
         }
     }
 
@@ -365,7 +363,7 @@ public class TesiSceltaFragment extends Fragment {
                     file = new FileUpload(Utility.relatoreLoggato.getIdUtente(), Utility.relatoreLoggato.getNome()+" "+Utility.relatoreLoggato.getCognome(), url.toString(), new Date());
                     tesiUpload.setText(file.toString());
                     databaseReference.child(databaseReference.push().getKey()).setValue(file);
-                    if(TesiSceltaDatabase.UploadTesiScelta(db, tesiScelta, databaseReference)){
+                    if(TesiSceltaDatabase.UploadTesiScelta(db, tesiScelta, databaseReference.push().getKey())){
                         Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
                         //progressDialog.dismiss();
                     }

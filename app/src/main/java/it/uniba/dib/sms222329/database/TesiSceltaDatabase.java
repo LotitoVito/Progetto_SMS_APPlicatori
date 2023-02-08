@@ -141,11 +141,11 @@ public class TesiSceltaDatabase {
      * @param valore
      * @return  Restituisce true se l'operazione va a buon fine, altrimento false
      */
-    public static boolean UploadTesiScelta(Database dbClass, TesiScelta tesi, DatabaseReference valore){
+    public static boolean UploadTesiScelta(Database dbClass, TesiScelta tesi, String valore){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues tesiSceltaCv = new ContentValues();
 
-        tesiSceltaCv.put(Database.TESISCELTA_DOWNLOAD, valore.push().getKey());
+        tesiSceltaCv.put(Database.TESISCELTA_DOWNLOAD, valore);
 
         long updateTesiScelta = db.update(Database.TESISCELTA, tesiSceltaCv, Database.TESISCELTA_ID + "=" + tesi.getIdTesiScelta(), null);
         if(updateTesiScelta != -1){
