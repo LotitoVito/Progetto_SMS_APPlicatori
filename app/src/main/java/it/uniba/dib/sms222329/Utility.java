@@ -20,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 import it.uniba.dib.sms222329.classi.CoRelatore;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Tesista;
+import it.uniba.dib.sms222329.classi.UtenteRegistrato;
 
 public class Utility {
 
@@ -50,6 +51,8 @@ public class Utility {
     public static Relatore relatoreLoggato;
     /** Account corelatore loggato */
     public static CoRelatore coRelatoreLoggato;
+    /** Account utente loggato */
+    public static UtenteRegistrato utenteLoggato;
     /** Variabile usata per tener conto di quale account è loggato */
     public static int accountLoggato;
 
@@ -62,6 +65,7 @@ public class Utility {
         Utility.tesistaLoggato = null;
         Utility.relatoreLoggato = null;
         Utility.coRelatoreLoggato = null;
+        Utility.utenteLoggato = null;
         Utility.accountLoggato = -1;
     }
 

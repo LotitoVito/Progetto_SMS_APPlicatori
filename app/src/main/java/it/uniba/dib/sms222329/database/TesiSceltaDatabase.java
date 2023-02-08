@@ -160,6 +160,10 @@ public class TesiSceltaDatabase {
                 " FROM " + Database.TESISCELTA +
                 " WHERE " + Database.TESISCELTA_ID + "=" + tesiScelta.getIdTesiScelta() + ";", null);
         cursor.moveToFirst();
-        return cursor.getString(cursor.getColumnIndexOrThrow(Database.TESISCELTA_DOWNLOAD));
+        String key = cursor.getString(cursor.getColumnIndexOrThrow(Database.TESISCELTA_DOWNLOAD));
+        if(key == null) {
+            key = "Empty";
+        }
+        return key;
     }
 }

@@ -50,18 +50,21 @@ public class LoggedActivity extends AppCompatActivity {
 
         try{
             if(utenteLoggato.getTipoUtente() == Utility.TESISTA){
+                Utility.utenteLoggato = utenteLoggato;
                 Utility.tesistaLoggato = TesistaDatabase.IstanziaTesista(utenteLoggato, db);
                 Utility.accountLoggato = Utility.TESISTA;
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new RicevimentiCalendarioFragment());
                 setBottomNavigation(new TesiListaFragment(), new SegnalazioneChatFragment(), new RicevimentiCalendarioFragment(), new TesiSceltaMiaFragment());
             }
             else if (utenteLoggato.getTipoUtente() == Utility.RELATORE){
+                Utility.utenteLoggato = utenteLoggato;
                 Utility.relatoreLoggato = RelatoreDatabase.IstanziaRelatore(utenteLoggato, db);
                 Utility.accountLoggato = Utility.RELATORE;
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new RicevimentiCalendarioFragment());
                 setBottomNavigation(new TesiListaFragment(), new SegnalazioneChatFragment(), new RicevimentiCalendarioFragment(), new TesiSceltaListaFragment());
             }
             else if (utenteLoggato.getTipoUtente() == Utility.CORELATORE){
+                Utility.utenteLoggato = utenteLoggato;
                 Utility.coRelatoreLoggato = CoRelatoreDatabase.IstanziaCoRelatore(utenteLoggato, db);
                 Utility.accountLoggato = Utility.CORELATORE;
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new RicevimentiCalendarioFragment());

@@ -2,6 +2,8 @@ package it.uniba.dib.sms222329.fragment.tesiscelta;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -12,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.utils.widget.MotionLabel;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +23,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
@@ -153,7 +158,11 @@ public class TesiSceltaFragment extends Fragment {
         });
 
         scaricaTesi.setOnClickListener(view -> {
-
+            if(file!=null){
+                if(Utility.CheckStorage(getActivity())) {
+                    downloadFile();
+                }
+            }
         });
 
         caricaTesi.setOnClickListener(view -> {
@@ -161,6 +170,15 @@ public class TesiSceltaFragment extends Fragment {
                 caricaFile();
             }
         });
+    }
+
+    private void downloadFile() {
+        DownloadManager downloadManager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(file.getUrl());
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalFilesDir(getContext(), Environment.DIRECTORY_DOWNLOADS, System.currentTimeMillis()+".pdf");
+        downloadManager.enqueue(request);
     }
 
     /**
@@ -272,17 +290,16 @@ public class TesiSceltaFragment extends Fragment {
     }
 
     private void getLastUpload() {
+        file = null;
         databaseReference.addValueEventListener(new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()){
-                    FileUpload genericFile = data.getValue(FileUpload.class);
-                    if (genericFile.getIdUtente() == Utility.relatoreLoggato.getIdUtente()){
+                    if (TesiSceltaDatabase.DownloadTesiScelta(db, tesiScelta).compareTo(data.getKey())==0){
+                        FileUpload genericFile = data.getValue(FileUpload.class);
                         tesiUpload.setText(genericFile.toString());
                         file = genericFile;
                         break;
-                    }else{
-                        file = null;
                     }
                 }
           }
@@ -360,17 +377,39 @@ public class TesiSceltaFragment extends Fragment {
                     Task<Uri> uriTask =taskSnapshot.getStorage().getDownloadUrl();
                     while(!uriTask.isComplete());
                     Uri url = uriTask.getResult();
-                    file = new FileUpload(Utility.relatoreLoggato.getIdUtente(), Utility.relatoreLoggato.getNome()+" "+Utility.relatoreLoggato.getCognome(), url.toString(), new Date());
+                    if(Utility.accountLoggato == Utility.TESISTA) file = new FileUpload(Utility.tesistaLoggato.getIdUtente(), Utility.tesistaLoggato.getNome()+" "+Utility.tesistaLoggato.getCognome(), url.toString(), new Date());
+                    if(Utility.accountLoggato == Utility.RELATORE) file = new FileUpload(Utility.relatoreLoggato.getIdUtente(), Utility.relatoreLoggato.getNome()+" "+Utility.relatoreLoggato.getCognome(), url.toString(), new Date());
+                    if(Utility.accountLoggato == Utility.CORELATORE) file = new FileUpload(Utility.coRelatoreLoggato.getIdUtente(), Utility.coRelatoreLoggato.getNome()+" "+Utility.coRelatoreLoggato.getCognome(), url.toString(), new Date());
                     tesiUpload.setText(file.toString());
-                    databaseReference.child(databaseReference.push().getKey()).setValue(file);
-                    if(TesiSceltaDatabase.UploadTesiScelta(db, tesiScelta, databaseReference.push().getKey())){
-                        Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
-                        //progressDialog.dismiss();
+                    String downloadKey;
+                    if(file==null){
+                        downloadKey = databaseReference.push().getKey();
+                    }else{
+                        downloadKey = TesiSceltaDatabase.DownloadTesiScelta(db,tesiScelta);
+                        //eliminaFile(file.getUrl());
                     }
+                    databaseReference.child(downloadKey).setValue(file);
+                    TesiSceltaDatabase.UploadTesiScelta(db, tesiScelta,downloadKey);
+                    Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
+                    //progressDialog.dismiss();
                 }).addOnProgressListener(snapshot -> {
                     //double progress=(100.0* snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
                     //progressDialog.setMessage("Uploaded:"+(int)progress+"%");
                 });
 
+    }
+
+    private void eliminaFile(String url) {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(url);
+        storageReference.delete().addOnSuccessListener(aVoid -> {
+            // File deleted successfully
+            Log.e("firebasestorage", "onSuccess: deleted file");
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Uh-oh, an error occurred!
+                Log.e("firebasestorage", "onFailure: did not delete file");
+            }
+        });
     }
 }
