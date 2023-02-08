@@ -153,4 +153,13 @@ public class TesiSceltaDatabase {
         }
         return false;
     }
+
+    public static String DownloadTesiScelta(Database dbClass, TesiScelta tesiScelta){
+        SQLiteDatabase db = dbClass.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " + Database.TESISCELTA_DOWNLOAD +
+                " FROM " + Database.TESISCELTA +
+                " WHERE " + Database.TESISCELTA_ID + "=" + tesiScelta.getIdTesiScelta() + ";", null);
+        cursor.moveToFirst();
+        return cursor.getString(cursor.getColumnIndexOrThrow(Database.TESISCELTA_DOWNLOAD));
+    }
 }
