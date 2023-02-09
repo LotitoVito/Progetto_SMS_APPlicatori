@@ -72,7 +72,7 @@
                     android:id="@+id/data_fine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:enabled="false"
+                    android:enabled="true"
                     android:allowClickWhenDisabled="true"
                     android:inputType="text"
                     tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />

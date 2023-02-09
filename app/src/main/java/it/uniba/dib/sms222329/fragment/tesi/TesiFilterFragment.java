@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
@@ -21,10 +23,13 @@ import java.util.List;
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.database.Database;
+import it.uniba.dib.sms222329.fragment.tesiscelta.TesiSceltaListaGuestFragment;
 
 public class TesiFilterFragment extends BottomSheetDialogFragment {
 
     //Variabili e Oggetti
+    private boolean tesiCompletate;
+    private String query;
 
     //View Items
     private EditText relatore;
@@ -37,7 +42,9 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
     private SwitchMaterial ordinaAscendente;
     private Button avviaRicerca;
 
-    public TesiFilterFragment() {}
+    public TesiFilterFragment(boolean tesiCompletate) {
+        this.tesiCompletate = tesiCompletate;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +61,13 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
 
         avviaRicerca.setOnClickListener(view -> {
             Database db = new Database(getActivity().getApplicationContext());
-            String query = "SELECT * FROM " + Database.TESI + " WHERE ";
+            if(tesiCompletate){
+                query = "SELECT ts." + Database.TESISCELTA_ID + ", ts." + Database.TESISCELTA_DATAPUBBLICAZIONE + ", ts." + Database.TESISCELTA_ABSTRACT + ", ts." + Database.TESISCELTA_DOWNLOAD + ", ts." + Database.TESISCELTA_TESIID + ", ts." + Database.TESISCELTA_CORELATOREID + ", ts." + Database.TESISCELTA_STATOCORELATORE + ", ts." + Database.TESISCELTA_TESISTAID + ", ts." + Database.TESISCELTA_CAPACITATESISTA + ", t." + Database.TESI_TITOLO +
+                        " FROM " + Database.TESISCELTA + " ts, " + Database.TESI + " t " +
+                        " WHERE t." + Database.TESI_ID + "=ts." + Database.TESISCELTA_TESIID + " AND ";
+            } else {
+                query = "SELECT * FROM " + Database.TESI + " WHERE ";
+            }
 
             //Filtri
             if(!Utility.isEmptyTextbox(relatore)){
@@ -72,15 +85,29 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
             if(!Utility.isEmptyTextbox(numeroEsamiMancanti)){
                 query = AddToQueryNumeroEsamiMancanti(query, numeroEsamiMancanti);
             }
-            query = AddToQueryDisponibilita(query, disponibilita);
+            if(tesiCompletate){
+                query = AddToQueryCompletata();
+            } else {
+                query = AddToQueryDisponibilita(query, disponibilita);
+            }
 
             //Ordinamento
             query = AddToQueryOrderBy(query, campoOrdinamento);
             query = AddToQueryOrderType(query, ordinaAscendente);
 
             this.dismiss();
-            Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.content2, new TesiListaFragment(query));
+            if (tesiCompletate) {
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.content2, new TesiSceltaListaGuestFragment(query));
+            } else {
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.content2, new TesiListaFragment(query));
+            }
         });
+    }
+
+    private String AddToQueryCompletata() {
+        query += " " + Database.TESISCELTA_DATAPUBBLICAZIONE + "!='' ";
+        return query;
+
     }
 
     /**
@@ -99,6 +126,9 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
 
         if(Utility.accountLoggato == Utility.RELATORE){
             relatore.setText(String.valueOf(Utility.relatoreLoggato.getMatricola()), EditText.BufferType.EDITABLE);
+        }
+        if(tesiCompletate){
+            disponibilita.setVisibility(View.GONE);
         }
         disponibilita.setChecked(true);
     }
@@ -148,7 +178,7 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
      * @return  Restituisce la query aggiornata
      */
     private String AddToQueryArgomento(String query, EditText argomento){
-        query += " " + Database.TESI_ARGOMENTO + "LIKE('" + argomento.getText().toString() + "') AND";
+        query += " " + Database.TESI_ARGOMENTO + " LIKE('" + argomento.getText().toString() + "') AND";
         return query;
     }
 

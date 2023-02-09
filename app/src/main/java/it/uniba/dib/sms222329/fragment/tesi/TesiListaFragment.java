@@ -77,7 +77,7 @@ public class TesiListaFragment extends Fragment {
         });
 
         filtra.setOnClickListener(view1 -> {
-            TesiFilterFragment bottomSheet = new TesiFilterFragment();
+            TesiFilterFragment bottomSheet = new TesiFilterFragment(false);
             bottomSheet.show(getActivity().getSupportFragmentManager(), bottomSheet.getTag());
         });
 

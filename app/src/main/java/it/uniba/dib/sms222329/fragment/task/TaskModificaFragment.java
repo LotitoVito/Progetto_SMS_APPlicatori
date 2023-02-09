@@ -206,8 +206,10 @@ public class TaskModificaFragment extends Fragment {
     private void FillIfEmpty() {
         Utility.fillIfEmpty(titoloTask, task.getTitolo());
         Utility.fillIfEmpty(descrizioneTask, task.getDescrizione());
-        Utility.fillIfEmpty(dataFine, String.valueOf(task.getDataFine()));
-        dataSelezionata = LocalDate.parse(dataFine.getText().toString());
+        if(Utility.isEmptyTextbox(dataFine)){
+            Utility.fillIfEmpty(dataFine, String.valueOf(task.getDataFine()));
+            dataSelezionata  = LocalDate.parse(dataFine.getText().toString(), Utility.convertFromStringDate);
+        }
     }
 
     private void inizializzaFirebase() {
