@@ -3,6 +3,7 @@ package it.uniba.dib.sms222329.fragment.richiestatesi;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.constraintlayout.utils.widget.MotionLabel;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.google.android.material.textfield.TextInputEditText;
 
 import it.uniba.dib.sms222329.R;
+import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.RichiestaTesi;
 import it.uniba.dib.sms222329.database.Database;
 
@@ -27,6 +29,7 @@ public class RichiestaTesiDettagliFragment extends Fragment {
     //View Items
     private TextView titoloTesi;
     private TextView argomento;
+    private MotionLabel labelRelatore;
     private TextView relatore;
     private TextView tempistiche;
     private TextView esamiMancanti;
@@ -46,7 +49,7 @@ public class RichiestaTesiDettagliFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_accetta_richiesta_tesi, container, false);
+        return inflater.inflate(R.layout.fragment_richiesta_tesi_dettagli_risposta, container, false);
     }
 
     @Override
@@ -65,6 +68,7 @@ public class RichiestaTesiDettagliFragment extends Fragment {
         db = new Database(getActivity().getApplicationContext());
         titoloTesi = getView().findViewById(R.id.titoloTesi);
         argomento = getView().findViewById(R.id.argomentoTesi);
+        labelRelatore = getView().findViewById(R.id.label_nome);
         relatore = getView().findViewById(R.id.nome);
         tempistiche = getView().findViewById(R.id.tempistiche);
         esamiMancanti = getView().findViewById(R.id.esamiMancanti);
@@ -92,9 +96,11 @@ public class RichiestaTesiDettagliFragment extends Fragment {
         titoloTesi.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_TITOLO)));
         argomento.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)));
         tempistiche.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_TEMPISTICHE)));
-        esamiMancanti.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)));
+        esamiMancanti.setText("Requisito richiesto: " + cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)) +
+                "\nTesista: " + Utility.tesistaLoggato.getNumeroEsamiMancanti());
         capacitaRichiesta.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_SKILLRICHIESTE)));
-        media.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)));
+        media.setText("Requisito richiesto: " + cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)) +
+                "\nTesista: " + Utility.tesistaLoggato.getMedia());
 
         //Relatore
         Cursor cursorRelatore = db.RicercaDato("SELECT u." + Database.UTENTI_COGNOME + ", u." + Database.UTENTI_NOME + " " +
@@ -102,6 +108,7 @@ public class RichiestaTesiDettagliFragment extends Fragment {
                 "WHERE t." + Database.TESI_RELATOREID + "=r." + Database.RELATORE_ID + " AND r." + Database.RELATORE_UTENTEID + "=u." + Database.UTENTI_ID + " " +
                 "AND t." + Database.TESI_ID + "=" + richiesta.getIdTesi() + ";");
         cursorRelatore.moveToFirst();
+        labelRelatore.setText("Relatore");
         relatore.setText(cursorRelatore.getString(cursorRelatore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorRelatore.getString(cursorRelatore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
 
         capacitaEffettive.setText(richiesta.getCapacitàStudente());

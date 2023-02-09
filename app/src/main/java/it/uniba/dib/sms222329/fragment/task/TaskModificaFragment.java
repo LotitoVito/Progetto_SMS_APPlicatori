@@ -2,8 +2,6 @@ package it.uniba.dib.sms222329.fragment.task;
 
 import static android.app.Activity.RESULT_OK;
 
-import android.app.DownloadManager;
-import android.content.Context;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
@@ -14,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.utils.widget.MotionLabel;
 import androidx.fragment.app.Fragment;
 
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +32,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,7 +43,6 @@ import it.uniba.dib.sms222329.classi.Task;
 import it.uniba.dib.sms222329.classi.TesiScelta;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.TaskDatabase;
-import it.uniba.dib.sms222329.database.TesiSceltaDatabase;
 
 public class TaskModificaFragment extends Fragment {
 
@@ -86,7 +81,7 @@ public class TaskModificaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_crea_task, container, false);
+        return inflater.inflate(R.layout.fragment_task_crea_modifica, container, false);
     }
 
     @Override
@@ -223,7 +218,7 @@ public class TaskModificaFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()){
-                    if (TesiSceltaDatabase.DownloadTesiScelta(db, task).compareTo(data.getKey())==0){
+                    if (TaskDatabase.DownloadTask(db, task).compareTo(data.getKey())==0){
                         FileUpload genericFile = data.getValue(FileUpload.class);
                         materiale.setText(genericFile.toString());
                         file = genericFile;
@@ -276,7 +271,7 @@ public class TaskModificaFragment extends Fragment {
                     if(file==null){
                         downloadKey = databaseReference.push().getKey();
                     }else{
-                        downloadKey = TesiSceltaDatabase.DownloadTesiScelta(db,task);
+                        downloadKey = TaskDatabase.DownloadTask(db,task);
                         eliminaFile(file.getUrl());
                     }
                     if(Utility.accountLoggato == Utility.TESISTA) file = new FileUpload(Utility.tesistaLoggato.getIdUtente(), Utility.tesistaLoggato.getNome()+" "+Utility.tesistaLoggato.getCognome(), url.toString(), new Date());
@@ -284,8 +279,9 @@ public class TaskModificaFragment extends Fragment {
                     if(Utility.accountLoggato == Utility.CORELATORE) file = new FileUpload(Utility.coRelatoreLoggato.getIdUtente(), Utility.coRelatoreLoggato.getNome()+" "+Utility.coRelatoreLoggato.getCognome(), url.toString(), new Date());
                     materiale.setText(file.toString());
                     databaseReference.child(downloadKey).setValue(file);
-                    TesiSceltaDatabase.UploadTesiScelta(db, task,downloadKey);
-                    Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
+                    if(TaskDatabase.UploadTask(db, task,downloadKey)){
+                        Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
+                    }
                     //progressDialog.dismiss();
                 }).addOnProgressListener(snapshot -> {
                     //double progress=(100.0* snapshot.getBytesTransferred())/snapshot.getTotalByteCount();

@@ -60,7 +60,7 @@ public class TesiCreaModificaFragment extends Fragment {
             bottomNavigationView.getMenu().findItem(R.id.navigation_thesis).setChecked(true);
         }
 
-        return inflater.inflate(R.layout.fragment_gestione_tesi_relatore, container, false);
+        return inflater.inflate(R.layout.fragment_tesi_crea_modifica, container, false);
     }
 
     @Override

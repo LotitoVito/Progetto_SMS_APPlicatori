@@ -39,7 +39,7 @@ public class SegnalazioneCreaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_crea_segnalazione, container, false);
+        return inflater.inflate(R.layout.fragment_segnalazione_chat_crea, container, false);
     }
 
     @Override

@@ -61,7 +61,7 @@ public class RicevimentoCreaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_crea_ricevimento, container, false);
+        return inflater.inflate(R.layout.fragment_ricevimento_crea, container, false);
     }
 
     @Override

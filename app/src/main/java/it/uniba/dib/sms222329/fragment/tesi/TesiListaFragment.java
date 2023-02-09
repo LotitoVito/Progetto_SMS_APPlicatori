@@ -22,8 +22,6 @@ import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.ListaTesiDatabase;
-import it.uniba.dib.sms222329.fragment.tesi.TesiCreaModificaFragment;
-import it.uniba.dib.sms222329.fragment.tesi.TesiFilterFragment;
 import it.uniba.dib.sms222329.fragment.adapter.ListaTesiAdapter;
 
 public class TesiListaFragment extends Fragment {
@@ -54,7 +52,7 @@ public class TesiListaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tesi_relatore, container, false);
+        View view = inflater.inflate(R.layout.fragment_tesi_lista, container, false);
 
         BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.navigation);
         int selectedItemId = bottomNavigationView.getSelectedItemId();
@@ -112,7 +110,7 @@ public class TesiListaFragment extends Fragment {
         barraRicerca = getView().findViewById(R.id.search_view);
 
         barraRicerca.setQueryHint("Inserisci il titolo della tesi");
-        if(Utility.accountLoggato == Utility.TESISTA || Utility.accountLoggato == Utility.CORELATORE){
+        if(Utility.accountLoggato != Utility.RELATORE){
             addButton.setVisibility(View.GONE);
         }
     }

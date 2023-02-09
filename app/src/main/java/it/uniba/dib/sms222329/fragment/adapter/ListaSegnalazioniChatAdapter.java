@@ -89,12 +89,14 @@ public class ListaSegnalazioniChatAdapter extends BaseAdapter {
         idSegnalazione.setText(cursorUtente.getString(cursorUtente.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorUtente.getString(cursorUtente.getColumnIndexOrThrow(Database.UTENTI_NOME)));
 
         //Oggetto
-        TextView oggettoSegnalazione = convertView.findViewById(R.id.descrizione);
-        oggettoSegnalazione.setText(segnalazioni.get(i).getOggetto());
+        Cursor cursorTesi = db.RicercaDato("SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_ID + "=" + segnalazioni.get(i).getIdTesi() + ";");
+        cursorTesi.moveToFirst();
+        TextView tesi = convertView.findViewById(R.id.descrizione);
+        tesi.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_TITOLO)));
 
         //Terza riga
-        TextView riga = convertView.findViewById(R.id.sottotitolo);
-        riga.setVisibility(View.GONE);
+        TextView oggettoSegnalazione = convertView.findViewById(R.id.sottotitolo);
+        oggettoSegnalazione.setText(segnalazioni.get(i).getOggetto());
 
         //Apri chat
         LinearLayout item = convertView.findViewById(R.id.segnalazione);

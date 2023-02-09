@@ -93,7 +93,7 @@ public class TesiSceltaMiaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mia_tesi, container, false);
+        return inflater.inflate(R.layout.fragment_tesi_scelta_mia, container, false);
     }
 
     @Override
@@ -167,7 +167,9 @@ public class TesiSceltaMiaFragment extends Fragment {
         carica = getView().findViewById(R.id.carica);
         salvaModifica = getView().findViewById(R.id.salvaModifica);
 
-        getLastUpload();
+        if(richieste.getVisibility() == View.GONE){
+            getLastUpload();
+        }
     }
 
     /**

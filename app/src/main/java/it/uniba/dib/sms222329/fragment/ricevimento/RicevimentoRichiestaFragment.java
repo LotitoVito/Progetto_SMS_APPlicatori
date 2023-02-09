@@ -17,7 +17,6 @@ import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Ricevimento;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.RicevimentoDatabase;
-import it.uniba.dib.sms222329.fragment.ricevimento.RicevimentoCreaFragment;
 
 public class RicevimentoRichiestaFragment extends Fragment {
 
@@ -40,7 +39,7 @@ public class RicevimentoRichiestaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_richiesta_ricevimento, container, false);
+        return inflater.inflate(R.layout.fragment_ricevimento_richiesta_visualizza, container, false);
     }
 
     @Override

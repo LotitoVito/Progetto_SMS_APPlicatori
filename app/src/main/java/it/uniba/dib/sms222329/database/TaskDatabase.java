@@ -16,6 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import it.uniba.dib.sms222329.classi.Task;
+import it.uniba.dib.sms222329.classi.TesiScelta;
 
 public class TaskDatabase {
 
@@ -66,31 +67,29 @@ public class TaskDatabase {
         return false;
     }
 
-    public static boolean CaricaFile(Database dbClass, File file, int idTask) {
+    public static boolean UploadTask(Database dbClass, Task task, String valore){
         SQLiteDatabase db = dbClass.getWritableDatabase();
-        ByteArrayOutputStream bos = null;
-        Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
-        ByteArrayOutputStream array = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, array);
-        byte[] buffer = array.toByteArray();
-        /*try{
-            FileInputStream fis = new FileInputStream(file);
-            byte[] buffer = new byte[(int)file.length()];
-            bos = new ByteArrayOutputStream();
-            for (int len; (len = fis.read(buffer)) != -1;) {
-                bos.write(buffer, 0, len);
-            }
+        ContentValues tesiSceltaCv = new ContentValues();
 
-        }catch (Exception e){
-            e.printStackTrace();
-        }*/
+        tesiSceltaCv.put(Database.TASK_LINKMATERIALE, valore);
 
-        ContentValues fileCv = new ContentValues();
-        fileCv.put(Database.TASK_LINKMATERIALE, buffer);
-        long updateTask = db.update(Database.TASK, fileCv, Database.TASK_ID + "=" + idTask, null);
-        if(updateTask != -1){
+        long updateTesiScelta = db.update(Database.TESISCELTA, tesiSceltaCv, Database.TESISCELTA_ID + "=" + task.getIdTask(), null);
+        if(updateTesiScelta != -1){
             return true;
         }
         return false;
+    }
+
+    public static String DownloadTask(Database dbClass, Task task){
+        SQLiteDatabase db = dbClass.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " + Database.TASK_LINKMATERIALE +
+                " FROM " + Database.TASK +
+                " WHERE " + Database.TASK_ID + "=" + task.getIdTask() + ";", null);
+        cursor.moveToFirst();
+        String key = cursor.getString(cursor.getColumnIndexOrThrow(Database.TASK_LINKMATERIALE));
+        if(key == null) {
+            key = "Empty";
+        }
+        return key;
     }
 }

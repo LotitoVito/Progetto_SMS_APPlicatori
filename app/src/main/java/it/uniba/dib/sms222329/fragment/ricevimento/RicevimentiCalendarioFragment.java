@@ -50,7 +50,7 @@ public class RicevimentiCalendarioFragment extends Fragment implements CalendarA
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_relatore, container, false);
+        View view = inflater.inflate(R.layout.fragment_ricevimenti_calendario, container, false);
         return view;
     }
 

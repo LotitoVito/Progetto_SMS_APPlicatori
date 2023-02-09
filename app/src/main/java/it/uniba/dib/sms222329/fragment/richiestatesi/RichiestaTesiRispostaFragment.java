@@ -3,6 +3,7 @@ package it.uniba.dib.sms222329.fragment.richiestatesi;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.constraintlayout.utils.widget.MotionLabel;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ public class RichiestaTesiRispostaFragment extends Fragment {
     //View Items
     private TextView titoloTesi;
     private TextView argomento;
+    private MotionLabel labelTesista;
     private TextView tesista;
     private TextView tempistiche;
     private TextView esamiMancanti;
@@ -45,7 +47,7 @@ public class RichiestaTesiRispostaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_accetta_richiesta_tesi, container, false);
+        return inflater.inflate(R.layout.fragment_richiesta_tesi_dettagli_risposta, container, false);
     }
 
     @Override
@@ -87,6 +89,7 @@ public class RichiestaTesiRispostaFragment extends Fragment {
         db = new Database(getActivity().getApplicationContext());
         titoloTesi = getView().findViewById(R.id.titoloTesi);
         argomento = getView().findViewById(R.id.argomentoTesi);
+        labelTesista = getView().findViewById(R.id.label_nome);
         tesista = getView().findViewById(R.id.nome);
         tempistiche = getView().findViewById(R.id.tempistiche);
         esamiMancanti = getView().findViewById(R.id.esamiMancanti);
@@ -106,20 +109,23 @@ public class RichiestaTesiRispostaFragment extends Fragment {
         //Tesi
         Cursor cursorTesi = db.RicercaDato("SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_ID + "=" + richiesta.getIdTesi() + ";");
         cursorTesi.moveToFirst();
+        Cursor cursorTesista = db.RicercaDato("SELECT u." + Database.UTENTI_COGNOME + ", u." + Database.UTENTI_NOME + ", t." + Database.TESISTA_MEDIAVOTI + ", t." + Database.TESISTA_ESAMIMANCANTI + ", t." + Database.TESISTA_MATRICOLA +
+                " FROM " + Database.TESISTA + " t, " + Database.UTENTI + " u " +
+                " WHERE t." + Database.TESISTA_UTENTEID + "=u." + Database.UTENTI_ID + " " +
+                " AND t." + Database.TESISTA_ID + "=" + richiesta.getIdTesista() + ";");
+        cursorTesista.moveToFirst();
         titoloTesi.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_TITOLO)));
         argomento.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)));
         tempistiche.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_TEMPISTICHE)));
-        esamiMancanti.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)));
+        esamiMancanti.setText("Requisito richiesto: " + cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)) +
+                "\nTesista: " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_ESAMIMANCANTI)));
+        media.setText("Requisito richiesto: " + cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)) +
+                "\nTesista: " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_MEDIAVOTI)));
         capacitaRichiesta.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_SKILLRICHIESTE)));
-        media.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)));
 
         //Tesista
-        Cursor cursorTesista = db.RicercaDato("SELECT u." + Database.UTENTI_COGNOME + ", u." + Database.UTENTI_NOME + " " +
-                "FROM " + Database.TESISTA + " t, " + Database.UTENTI + " u " +
-                "WHERE t." + Database.TESISTA_UTENTEID + "=u." + Database.UTENTI_ID + " " +
-                "AND t." + Database.TESISTA_ID + "=" + richiesta.getIdTesista() + ";");
-        cursorTesista.moveToFirst();
-        tesista.setText(cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_NOME)));
+        labelTesista.setText("Tesista");
+        tesista.setText(cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_NOME)) + " " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_MATRICOLA)));
 
         //Richiesta
         capacitaEffettive.setText(richiesta.getCapacitàStudente());

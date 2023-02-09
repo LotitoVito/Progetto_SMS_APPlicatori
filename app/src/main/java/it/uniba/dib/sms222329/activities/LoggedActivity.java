@@ -44,7 +44,7 @@ public class LoggedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_utente_loggato);
+        setContentView(R.layout.activity_logged);
 
         utenteLoggato = (UtenteRegistrato) getIntent().getSerializableExtra("utentePassato");
 
@@ -72,7 +72,7 @@ public class LoggedActivity extends AppCompatActivity {
             }
             else if(utenteLoggato.getEmail().compareTo("guest")==0) {
                 Utility.accountLoggato = Utility.GUEST;
-                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new TesiSceltaListaGuestFragment());
+                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new TesiListaFragment());
                 setGuestBottomNavigation(new TesiListaFragment(),new TesiSceltaListaGuestFragment());
             }
         }catch (Exception e){
@@ -197,28 +197,39 @@ public class LoggedActivity extends AppCompatActivity {
         {
             Database db = new Database(this);
             Cursor cursor = db.RicercaDato("SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_ID + "=" + result.getContents() + ";");
-            cursor.moveToNext();
-            String messaggio = cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_TITOLO)) + "\n" + cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_ARGOMENTO));
+            if(cursor.moveToNext()){
+                String messaggio = cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_TITOLO)) + "\n" + cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_ARGOMENTO));
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.tesi);
-            builder.setMessage(messaggio);
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Tesi tesi = new Tesi(cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_ID)),
-                            cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_TITOLO)),
-                            cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)),
-                            cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_TEMPISTICHE)),
-                            cursor.getFloat(cursor.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)),
-                            cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)),
-                            cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_SKILLRICHIESTE)),
-                            cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_STATO))==1,
-                            cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_VISUALIZZAZIONI)),
-                            cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_RELATOREID)));
-                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new TesiVisualizzaFragment(tesi));
-                }
-            }).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.tesi);
+                builder.setMessage(messaggio);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Tesi tesi = new Tesi(cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_ID)),
+                                cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_TITOLO)),
+                                cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)),
+                                cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_TEMPISTICHE)),
+                                cursor.getFloat(cursor.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)),
+                                cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)),
+                                cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_SKILLRICHIESTE)),
+                                cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_STATO))==1,
+                                cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_VISUALIZZAZIONI)),
+                                cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_RELATOREID)));
+                        Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new TesiVisualizzaFragment(tesi));
+                    }
+                }).show();
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.tesi);
+                builder.setMessage("Il QRCode non corrisponde a nessuna tesi registrata");
+                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        dialogInterface.dismiss();
+                    }
+                });
+            }
         }
     });
 }

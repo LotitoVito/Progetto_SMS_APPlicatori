@@ -52,7 +52,7 @@ public class TesiVisualizzaFragment extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_visualizza_tesi, container, false);
+        return inflater.inflate(R.layout.fragment_tesi_visualizza, container, false);
     }
 
     @Override
@@ -102,7 +102,7 @@ public class TesiVisualizzaFragment extends BottomSheetDialogFragment {
         share = getView().findViewById(R.id.condividi);
         creaSegnalazione = getView().findViewById(R.id.crea_segnalazione);
 
-        if(Utility.accountLoggato == Utility.GUEST || Utility.relatoreLoggato.getIdRelatore() == tesi.getIdRelatore()){
+        if(Utility.accountLoggato == Utility.GUEST || (Utility.accountLoggato==Utility.RELATORE && Utility.relatoreLoggato.getIdRelatore() == tesi.getIdRelatore())){
             creaSegnalazione.setVisibility(View.GONE);
         }
     }
