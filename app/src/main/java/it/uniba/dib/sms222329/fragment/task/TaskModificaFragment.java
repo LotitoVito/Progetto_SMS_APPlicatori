@@ -43,6 +43,7 @@ import it.uniba.dib.sms222329.classi.Task;
 import it.uniba.dib.sms222329.classi.TesiScelta;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.TaskDatabase;
+import it.uniba.dib.sms222329.database.TesiSceltaDatabase;
 
 public class TaskModificaFragment extends Fragment {
 
@@ -281,9 +282,8 @@ public class TaskModificaFragment extends Fragment {
                     if(Utility.accountLoggato == Utility.CORELATORE) file = new FileUpload(Utility.coRelatoreLoggato.getIdUtente(), Utility.coRelatoreLoggato.getNome()+" "+Utility.coRelatoreLoggato.getCognome(), url.toString(), new Date());
                     materiale.setText(file.toString());
                     databaseReference.child(downloadKey).setValue(file);
-                    if(TaskDatabase.UploadTask(db, task,downloadKey)){
-                        Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
-                    }
+                    TaskDatabase.UploadTask(db, task, downloadKey);
+                    Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
                     //progressDialog.dismiss();
                 }).addOnProgressListener(snapshot -> {
                     //double progress=(100.0* snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
@@ -305,5 +305,4 @@ public class TaskModificaFragment extends Fragment {
             }
         });
     }
-
 }

@@ -42,7 +42,7 @@ public class ListaTaskDatabase {
                 e.printStackTrace();
             }
             taskEstratto.setDataFine(dataFine);
-            taskEstratto.setLinkMateriale(cursore.getBlob(cursore.getColumnIndexOrThrow(Database.TASK_LINKMATERIALE)));
+            taskEstratto.setLinkMateriale(cursore.getString(cursore.getColumnIndexOrThrow(Database.TASK_LINKMATERIALE)));
             taskEstratto.setStato(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TASK_STATO)));
             taskEstratto.setIdTesiScelta(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TASK_TESISCELTAID)));
 

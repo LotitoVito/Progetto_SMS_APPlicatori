@@ -56,7 +56,7 @@
                 android:id="@+id/data_richiesta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:enabled="true"
+                android:enabled="false"
                 android:allowClickWhenDisabled="true"
                 android:inputType="text"
                 tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
@@ -73,7 +73,7 @@
                 android:id="@+id/ora_richiesta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:enabled="true"
+                android:enabled="false"
                 android:allowClickWhenDisabled="true"
                 android:inputType="text"
                 tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />

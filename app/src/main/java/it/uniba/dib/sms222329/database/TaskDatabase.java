@@ -69,11 +69,11 @@ public class TaskDatabase {
 
     public static boolean UploadTask(Database dbClass, Task task, String valore){
         SQLiteDatabase db = dbClass.getWritableDatabase();
-        ContentValues tesiSceltaCv = new ContentValues();
+        ContentValues taskCv = new ContentValues();
 
-        tesiSceltaCv.put(Database.TASK_LINKMATERIALE, valore);
+        taskCv.put(Database.TASK_LINKMATERIALE, valore);
 
-        long updateTesiScelta = db.update(Database.TESISCELTA, tesiSceltaCv, Database.TESISCELTA_ID + "=" + task.getIdTask(), null);
+        long updateTesiScelta = db.update(Database.TASK, taskCv, Database.TASK_ID + "=" + task.getIdTask(), null);
         if(updateTesiScelta != -1){
             return true;
         }

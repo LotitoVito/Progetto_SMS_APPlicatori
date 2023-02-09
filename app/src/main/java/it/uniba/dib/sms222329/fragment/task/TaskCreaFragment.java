@@ -67,6 +67,7 @@ public class TaskCreaFragment extends Fragment {
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
     private  FileUpload file;
+    private String downloadKey;
 
     public TaskCreaFragment(TesiScelta tesiScelta) {
         this.tesiScelta = tesiScelta;
@@ -109,7 +110,7 @@ public class TaskCreaFragment extends Fragment {
 
         creaTask.setOnClickListener(view -> {
             if(!IsEmpty(titoloTask, descrizioneTask, dataFine)){
-                Task task = new Task(titoloTask.getText().toString().trim(), descrizioneTask.getText().toString().trim(), dataSelezionata, null, tesiScelta.getIdTesiScelta());
+                Task task = new Task(titoloTask.getText().toString().trim(), descrizioneTask.getText().toString().trim(), dataSelezionata, downloadKey, tesiScelta.getIdTesiScelta());
                 if(TaskDatabase.CreaTask(db, task)){
                     Toast.makeText(getActivity().getApplicationContext(), "Task creata con successo", Toast.LENGTH_SHORT).show();
                     Utility.goBack(getActivity());
@@ -143,7 +144,7 @@ public class TaskCreaFragment extends Fragment {
         caricaMateriale = getView().findViewById(R.id.carica_materiale);
         creaTask = getView().findViewById(R.id.salva_task);
 
-        getLastUpload();
+        materiale.setText("Nessun caricamento");
 
         labelStato.setVisibility(View.GONE);
         slider.setVisibility(View.GONE);
@@ -179,31 +180,6 @@ public class TaskCreaFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance("https://laureapp-f0334-default-rtdb.europe-west1.firebasedatabase.app/").getReference("uploads_materiale");
     }
 
-    private void getLastUpload() {
-        file = null;
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()){
-                    if (TesiSceltaDatabase.DownloadTesiScelta(db, tesiScelta).compareTo(data.getKey())==0){ //TODO deve prendere il task
-                        FileUpload genericFile = data.getValue(FileUpload.class);
-                        materiale.setText(genericFile.toString());
-                        file = genericFile;
-                        break;
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                materiale.setText("Errore");
-            }
-        });
-
-        if(file == null){
-            materiale.setText("Nessun caricamento");
-        }
-    }
-
     /**
      * Permette di aprire il picker di file
      */
@@ -234,7 +210,7 @@ public class TaskCreaFragment extends Fragment {
                     com.google.android.gms.tasks.Task<Uri> uriTask =taskSnapshot.getStorage().getDownloadUrl();
                     while(!uriTask.isComplete());
                     Uri url = uriTask.getResult();
-                    String downloadKey;
+
                     if(file==null){
                         downloadKey = databaseReference.push().getKey();
                     }else{
@@ -246,7 +222,6 @@ public class TaskCreaFragment extends Fragment {
                     if(Utility.accountLoggato == Utility.CORELATORE) file = new FileUpload(Utility.coRelatoreLoggato.getIdUtente(), Utility.coRelatoreLoggato.getNome()+" "+Utility.coRelatoreLoggato.getCognome(), url.toString(), new Date());
                     materiale.setText(file.toString());
                     databaseReference.child(downloadKey).setValue(file);
-                    TesiSceltaDatabase.UploadTesiScelta(db, tesiScelta,downloadKey); //TODO deve prendere il task
                     Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
                     //progressDialog.dismiss();
                 }).addOnProgressListener(snapshot -> {

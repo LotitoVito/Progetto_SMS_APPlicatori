@@ -23,7 +23,7 @@ public class Task {
     private String descrizione;
     private LocalDate dataInizio;
     private LocalDate dataFine;
-    private byte[] linkMateriale;
+    private String linkMateriale;
     private int stato;
     private int idTesiScelta;
 
@@ -43,7 +43,7 @@ public class Task {
      * @param stato
      * @param idTesiScelta
      */
-    public Task(int idTask, String titolo, String descrizione, LocalDate dataInizio, LocalDate dataFine, byte[] linkMateriale, int stato, int idTesiScelta) {
+    public Task(int idTask, String titolo, String descrizione, LocalDate dataInizio, LocalDate dataFine, String linkMateriale, int stato, int idTesiScelta) {
         this.idTask = idTask;
         this.titolo = titolo;
         this.descrizione = descrizione;
@@ -62,7 +62,7 @@ public class Task {
      * @param linkMateriale
      * @param idTesiScelta
      */
-    public Task(String titolo, String descrizione, LocalDate dataFine, byte[] linkMateriale, int idTesiScelta) {
+    public Task(String titolo, String descrizione, LocalDate dataFine, String linkMateriale, int idTesiScelta) {
         this.titolo = titolo;
         this.descrizione = descrizione;
         this.dataInizio = LocalDate.now();
@@ -92,9 +92,9 @@ public class Task {
 
     public void setDataFine(LocalDate dataFine) {this.dataFine = dataFine;}
 
-    public byte[] getLinkMateriale() {return linkMateriale;}
+    public String getLinkMateriale() {return linkMateriale;}
 
-    public void setLinkMateriale(byte[] linkMateriale) {this.linkMateriale = linkMateriale;}
+    public void setLinkMateriale(String linkMateriale) {this.linkMateriale = linkMateriale;}
 
     public int getStato() {return stato;}
 
