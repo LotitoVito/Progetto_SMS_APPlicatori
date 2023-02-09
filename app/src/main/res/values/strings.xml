@@ -30,7 +30,7 @@
     <string name="codiceFiscale">Tax identification number</string>
     <string name="registratiCome">Sign up as:</string>
     <string name="studente">Student</string>
-    <string name="relatore">Advisor</string>
+    <string name="relatore">ID Advisor</string>
     <string name="co_relatore">Co-advisor</string>
     <string name="avanti">Next</string>
     <string name="organizzazione">Company</string>

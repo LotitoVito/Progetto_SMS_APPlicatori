@@ -109,7 +109,7 @@ public class RicevimentoCreaFragment extends Fragment {
                     FillIfEmpty();
                     if(richiesta.ModificaRicevimento(db, dataSelezionata, orarioSelezionato)){
                         Toast.makeText(getActivity().getApplicationContext(), "Risposta inviata con successo", Toast.LENGTH_SHORT).show();
-                        Utility.goBack(getActivity());
+                        Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new RicevimentiCalendarioFragment());
                     } else {
                         Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
                     }

@@ -14,20 +14,6 @@
         android:orientation="vertical"
         android:padding="8dp">
 
-        <TextView
-            android:id="@+id/filtra"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="8dp"
-            android:clickable="true"
-            android:text="@string/filtra"
-            android:textColor="@color/primaryColor"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:drawableEndCompat="@drawable/ic_arrow"
-            tools:ignore="TouchTargetSizeCheck" />
-
         <ListView
             android:id="@+id/segnalazioniList"
             android:layout_width="match_parent"

@@ -47,10 +47,6 @@ public class SegnalazioneChatFragment extends Fragment {
         Init();
         RefreshList();
 
-        filtra.setOnClickListener(view1 -> {
-            SegnalazioneFilterFragment bottomSheet = new SegnalazioneFilterFragment();
-            bottomSheet.show(getActivity().getSupportFragmentManager(), bottomSheet.getTag());
-        });
     }
 
     /**

@@ -149,7 +149,6 @@ public class TaskModificaFragment extends Fragment {
                 caricaFile();
             }
         });
-
     }
 
     /**
@@ -199,12 +198,15 @@ public class TaskModificaFragment extends Fragment {
         descrizioneTask.setHint(task.getDescrizione());
         dataFine.setHint(task.getDataFine().format(Utility.showDate));
     }
+
     /**
      * Riempie i campi vuoti con il giusto valore se sono vuoti
      */
     private void FillIfEmpty() {
         Utility.fillIfEmpty(titoloTask, task.getTitolo());
         Utility.fillIfEmpty(descrizioneTask, task.getDescrizione());
+        Utility.fillIfEmpty(dataFine, String.valueOf(task.getDataFine()));
+        dataSelezionata = LocalDate.parse(dataFine.getText().toString());
     }
 
     private void inizializzaFirebase() {

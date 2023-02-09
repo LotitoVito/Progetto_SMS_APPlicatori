@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -135,6 +136,7 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
             query += " " + Database.TESI_RELATOREID + "=" + cursor.getInt(0) + " AND";
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(getActivity().getApplicationContext(), "Relatore non esistente", Toast.LENGTH_SHORT).show();
         }
         return query;
     }

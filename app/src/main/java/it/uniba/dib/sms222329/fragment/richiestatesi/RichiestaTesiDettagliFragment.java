@@ -76,7 +76,7 @@ public class RichiestaTesiDettagliFragment extends Fragment {
         capacitaEffettive = getView().findViewById(R.id.capacitaEffettive);
         media = getView().findViewById(R.id.media);
         messaggioTesista = getView().findViewById(R.id.messaggio);
-        testoRispostaRelatore = getView().findViewById(R.id.risposta_relatore);
+        testoRispostaRelatore = getView().findViewById(R.id.label_risposta_relatore);
         rispostaRelatore = getView().findViewById(R.id.risposta);
         accetta = getView().findViewById(R.id.accetta);
         rifiuta = getView().findViewById(R.id.rifiuta);

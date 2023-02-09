@@ -83,6 +83,11 @@ public class RicevimentoRichiestaFragment extends Fragment {
         accetta = getView().findViewById(R.id.accetta);
         rifiuta = getView().findViewById(R.id.rifiuta);
         cambiaRicevimento = getView().findViewById(R.id.riorganizza);
+
+        if(Utility.accountLoggato == Utility.TESISTA){
+            cambiaRicevimento.setVisibility(View.GONE);
+        }
+
     }
 
     /**
@@ -93,7 +98,7 @@ public class RicevimentoRichiestaFragment extends Fragment {
         Cursor cursor = db.RicercaDato("SELECT " + Database.TASK_TITOLO + ", " + Database.TASK_DESCRIZIONE + " FROM " + Database.TASK +
                 " WHERE " + Database.TASK_ID + "=" + richiesta.getIdTask() + ";");
         cursor.moveToFirst();
-        taskRicevimento.setText(cursor.getString(cursor.getColumnIndexOrThrow(Database.TASK_TITOLO)) + "\n" + cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)));
+        taskRicevimento.setText(cursor.getString(cursor.getColumnIndexOrThrow(Database.TASK_TITOLO)) + "\n" + cursor.getString(cursor.getColumnIndexOrThrow(Database.TASK_DESCRIZIONE)));
         dataRicevimento.setText(richiesta.getData().format(Utility.showDate) + " " + richiesta.getOrario());
     }
 }

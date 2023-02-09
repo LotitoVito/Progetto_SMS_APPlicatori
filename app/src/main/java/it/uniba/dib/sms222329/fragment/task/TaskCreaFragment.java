@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.utils.widget.MotionLabel;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -56,6 +57,7 @@ public class TaskCreaFragment extends Fragment {
     private TextInputEditText titoloTask;
     private TextInputEditText descrizioneTask;
     private TextInputEditText dataFine;
+    private MotionLabel labelStato;
     private Slider slider;
     private TextView materiale;
     private Button caricaMateriale;
@@ -135,6 +137,7 @@ public class TaskCreaFragment extends Fragment {
         titoloTask = getView().findViewById(R.id.titolo_task);
         descrizioneTask = getView().findViewById(R.id.descrizione_task);
         dataFine = getView().findViewById(R.id.data_fine);
+        labelStato = getView().findViewById(R.id.label_stato);
         slider = getView().findViewById(R.id.slider);
         materiale = getView().findViewById(R.id.materiale_nome);
         caricaMateriale = getView().findViewById(R.id.carica_materiale);
@@ -142,7 +145,7 @@ public class TaskCreaFragment extends Fragment {
 
         getLastUpload();
 
-
+        labelStato.setVisibility(View.GONE);
         slider.setVisibility(View.GONE);
     }
 

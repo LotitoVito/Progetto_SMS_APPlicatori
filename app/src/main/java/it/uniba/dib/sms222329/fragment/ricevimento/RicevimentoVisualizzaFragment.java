@@ -73,8 +73,8 @@ public class RicevimentoVisualizzaFragment extends Fragment {
         Cursor cursor = db.RicercaDato("SELECT " + Database.TASK_TITOLO + ", " + Database.TASK_DESCRIZIONE + " FROM " + Database.TASK +
                 " WHERE " + Database.TASK_ID + "=" + richiesta.getIdTask() + ";");
         cursor.moveToFirst();
-        taskRicevimento.setText(cursor.getString(cursor.getColumnIndexOrThrow(Database.TASK_TITOLO)) + "\n" + cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)));
-        dataRicevimento.setText(richiesta.getData().format(Utility.showDate) + " " + richiesta.getOrario().format(Utility.showDate));
+        taskRicevimento.setText(cursor.getString(cursor.getColumnIndexOrThrow(Database.TASK_TITOLO)) + "\n" + cursor.getString(cursor.getColumnIndexOrThrow(Database.TASK_DESCRIZIONE)));
+        dataRicevimento.setText(richiesta.getData().format(Utility.showDate) + " " + richiesta.getOrario());
 
         if(richiesta.getStato()==Ricevimento.ACCETTATO){
             stato.setText("Accettato");

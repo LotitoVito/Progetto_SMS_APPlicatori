@@ -107,9 +107,6 @@ public class TaskDettagliFragment extends Fragment {
                 caricaFile();
             }
         });
-
-
-
     }
 
 

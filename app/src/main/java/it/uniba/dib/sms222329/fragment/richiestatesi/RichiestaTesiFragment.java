@@ -89,7 +89,7 @@ public class RichiestaTesiFragment extends Fragment {
     private void SetTextAll(){
         titoloTesi.setText(tesi.getTitolo());
         argomentoTesi.setText(tesi.getArgomenti());
-        tempistiche.setText(tesi.getTempistiche());
+        tempistiche.setText(String.valueOf(tesi.getTempistiche()));
         Cursor cursor = db.RicercaDato("SELECT " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + " FROM " + Database.UTENTI + " u, " + Database.RELATORE + " r " +
                 "WHERE u." + Database.UTENTI_ID + "=r." + Database.RELATORE_UTENTEID + " AND r." + Database.RELATORE_ID + "=" + tesi.getIdRelatore() + ";" );
         cursor.moveToFirst();

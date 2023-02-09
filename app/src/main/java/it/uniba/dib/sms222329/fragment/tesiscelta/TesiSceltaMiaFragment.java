@@ -168,7 +168,9 @@ public class TesiSceltaMiaFragment extends Fragment {
         salvaModifica = getView().findViewById(R.id.salvaModifica);
 
         if(richieste.getVisibility() == View.GONE){
-            getLastUpload();
+            if(!getLastUpload()){
+                scarica.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -262,7 +264,7 @@ public class TesiSceltaMiaFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance("https://laureapp-f0334-default-rtdb.europe-west1.firebasedatabase.app/").getReference("uploads");
     }
 
-    private void getLastUpload() {
+    private boolean getLastUpload() {
         file = null;
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -284,7 +286,9 @@ public class TesiSceltaMiaFragment extends Fragment {
 
         if(file == null){
             ultimoCaricamento.setText("Nessun caricamento");
+            return false;
         }
+        return true;
     }
 
     /**

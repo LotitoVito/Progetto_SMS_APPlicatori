@@ -64,6 +64,10 @@ public class TaskListaFragment extends Fragment {
         if (Utility.accountLoggato == Utility.TESISTA) {
             creaTask.setVisibility(View.GONE);
         }
+
+        if(tesiScelta.getDataPubblicazione() != null){
+            creaTask.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -71,7 +75,7 @@ public class TaskListaFragment extends Fragment {
      */
     private void RefreshList(){
         List<Task> lista = ListaTaskDatabase.ListaTask(db, tesiScelta.getIdTesiScelta());
-        ListaTaskAdapter adapter = new ListaTaskAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+        ListaTaskAdapter adapter = new ListaTaskAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager(), tesiScelta);
         listaTask.setAdapter(adapter);
     }
 }

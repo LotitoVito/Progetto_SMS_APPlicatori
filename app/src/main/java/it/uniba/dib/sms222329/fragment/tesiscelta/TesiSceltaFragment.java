@@ -59,6 +59,7 @@ public class TesiSceltaFragment extends Fragment {
     private TextView riassunto;
     private TextView tempistiche;
     private TextView esamiMancanti;
+    private TextView media;
     private TextView capacitaRichiesta;
     private TextView capacitaEffettive;
     private TextView dataConsegna;
@@ -181,6 +182,7 @@ public class TesiSceltaFragment extends Fragment {
         riassunto = getView().findViewById(R.id.riassunto);
         tempistiche = getView().findViewById(R.id.tempistiche);
         esamiMancanti = getView().findViewById(R.id.esamiMancanti);
+        media = getView().findViewById(R.id.media);
         capacitaRichiesta = getView().findViewById(R.id.capacitaRichiesta);
         capacitaEffettive = getView().findViewById(R.id.capacitaEffettive);
         dataConsegna = getView().findViewById(R.id.dataConsegna);
@@ -198,7 +200,13 @@ public class TesiSceltaFragment extends Fragment {
         labelDataConsegna= getView().findViewById(R.id.label_data_consegna);
         labelaAbstract = getView().findViewById(R.id.label_abstract);
 
-        getLastUpload();
+        if(!getLastUpload()){
+            scaricaTesi.setVisibility(View.GONE);
+        }
+
+        if(tesiScelta.getDataPubblicazione() != null){
+            creaTask.setVisibility(View.GONE);
+        }
 
         if (Utility.accountLoggato == Utility.GUEST){
             SettaPerGuest();
@@ -214,19 +222,23 @@ public class TesiSceltaFragment extends Fragment {
      */
     private void SetTextAll(){
         //Tesista
-        Cursor cursorTesista = db.RicercaDato("SELECT u." + Database.UTENTI_NOME + ", u." + Database.UTENTI_COGNOME + " FROM " + Database.UTENTI + " u, " + Database.TESISTA + " t " +
-                "WHERE u." + Database.UTENTI_ID + "=t." + Database.TESISTA_UTENTEID + " AND t." + Database.TESISTA_ID + "=" + tesiScelta.getIdTesista() + ";");
+        Cursor cursorTesista = db.RicercaDato("SELECT u." + Database.UTENTI_NOME + ", u." + Database.UTENTI_COGNOME + ", t." + Database.TESISTA_ESAMIMANCANTI + ", t." + Database.TESISTA_MEDIAVOTI + ", t." + Database.TESISTA_MATRICOLA +
+                " FROM " + Database.UTENTI + " u, " + Database.TESISTA + " t " +
+                " WHERE u." + Database.UTENTI_ID + "=t." + Database.TESISTA_UTENTEID + " AND t." + Database.TESISTA_ID + "=" + tesiScelta.getIdTesista() + ";");
         cursorTesista.moveToFirst();
-        tesista.setText(cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_NOME)));
+        tesista.setText(cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_NOME)) + " " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_MATRICOLA)));
 
         //Tesi
-        Cursor cursorTesi = db.RicercaDato("SELECT t." + Database.TESI_TITOLO + ", t." + Database.TESI_ARGOMENTO + ", t." + Database.TESI_TEMPISTICHE + ", t." + Database.TESI_ESAMINECESSARI + ", t." + Database.TESI_SKILLRICHIESTE + " " +
-                "FROM " + Database.TESI + " t WHERE t." + Database.TESI_ID + "=" + tesiScelta.getIdTesi() + ";");
+        Cursor cursorTesi = db.RicercaDato("SELECT t." + Database.TESI_TITOLO + ", t." + Database.TESI_ARGOMENTO + ", t." + Database.TESI_TEMPISTICHE + ", t." + Database.TESI_ESAMINECESSARI + ", t." + Database.TESI_SKILLRICHIESTE + ", t." + Database.TESI_MEDIAVOTOMINIMA +
+                " FROM " + Database.TESI + " t WHERE t." + Database.TESI_ID + "=" + tesiScelta.getIdTesi() + ";");
         cursorTesi.moveToFirst();
         titoloTesi.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_TITOLO)));
         argomentoTesi.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)));
         tempistiche.setText(String.valueOf(cursorTesi.getInt(cursorTesi.getColumnIndexOrThrow(Database.TESI_TEMPISTICHE))));
-        esamiMancanti.setText(String.valueOf(cursorTesi.getInt(cursorTesi.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI))));
+        esamiMancanti.setText("Requisito richiesto: " + String.valueOf(cursorTesi.getInt(cursorTesi.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI))) +
+                "\nTesista: " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_ESAMIMANCANTI)));
+        media.setText("Requisito richiesto: " + cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)) +
+                "\nTesista: " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_MEDIAVOTI)));
         capacitaRichiesta.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_SKILLRICHIESTE)));
 
         //Corelatore
@@ -316,7 +328,7 @@ public class TesiSceltaFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance("https://laureapp-f0334-default-rtdb.europe-west1.firebasedatabase.app/").getReference("uploads");
     }
 
-    private void getLastUpload() {
+    private boolean getLastUpload() {
         file = null;
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -338,7 +350,9 @@ public class TesiSceltaFragment extends Fragment {
 
         if(file == null){
             tesiUpload.setText("Nessun caricamento");
+            return false;
         }
+        return true;
     }
 
     /**

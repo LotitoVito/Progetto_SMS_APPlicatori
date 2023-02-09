@@ -35,6 +35,7 @@ public class RichiestaTesiRispostaFragment extends Fragment {
     private TextView capacitaEffettive;
     private TextView media;
     private TextView messaggioTesista;
+    private TextView labelRispostaRelatore;
     private TextView rispostaRelatore;
     private Button accetta;
     private Button rifiuta;
@@ -97,9 +98,14 @@ public class RichiestaTesiRispostaFragment extends Fragment {
         capacitaEffettive = getView().findViewById(R.id.capacitaEffettive);
         media = getView().findViewById(R.id.media);
         messaggioTesista = getView().findViewById(R.id.messaggio);
+        labelRispostaRelatore = getView().findViewById(R.id.label_risposta_relatore);
         rispostaRelatore = getView().findViewById(R.id.risposta);
         accetta = getView().findViewById(R.id.accetta);
         rifiuta = getView().findViewById(R.id.rifiuta);
+
+        if(Utility.accountLoggato == Utility.RELATORE){
+            labelRispostaRelatore.setVisibility(View.GONE);
+        }
     }
 
     /**

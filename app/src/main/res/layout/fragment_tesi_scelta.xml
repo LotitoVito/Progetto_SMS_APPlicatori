@@ -80,9 +80,22 @@
                 android:layout_height="match_parent"
                 android:text="@string/numero_esami_mancanti" />
 
-
             <TextView
                 android:id="@+id/esamiMancanti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:text="studente/richiesti"
+                android:textSize="16sp" />
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/media" />
+
+            <TextView
+                android:id="@+id/media"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"

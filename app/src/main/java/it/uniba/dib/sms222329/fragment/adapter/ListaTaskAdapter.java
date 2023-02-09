@@ -15,6 +15,7 @@ import java.util.List;
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Task;
+import it.uniba.dib.sms222329.classi.TesiScelta;
 import it.uniba.dib.sms222329.fragment.task.TaskDettagliFragment;
 import it.uniba.dib.sms222329.fragment.task.TaskModificaFragment;
 
@@ -22,13 +23,15 @@ public class ListaTaskAdapter extends BaseAdapter {
 
     //Variabili e Oggetti
     private List<Task> task;
+    private TesiScelta tesiScelta;
     private LayoutInflater inflater;
     private FragmentManager manager;
 
-    public ListaTaskAdapter(Context context, List<Task> task, FragmentManager manager) {
+    public ListaTaskAdapter(Context context, List<Task> task, FragmentManager manager, TesiScelta tesiScelta) {
         this.task = task;
         this.inflater = LayoutInflater.from(context);
         this.manager = manager;
+        this.tesiScelta = tesiScelta;
     }
 
     @Override
@@ -76,6 +79,9 @@ public class ListaTaskAdapter extends BaseAdapter {
 
         //EditButton
         Button modifica = convertView.findViewById(R.id.modifica);
+        if(tesiScelta.getDataPubblicazione() != null){
+            modifica.setVisibility(View.GONE);
+        }
         modifica.setOnClickListener(view -> {
             Utility.replaceFragment(manager, R.id.container, new TaskModificaFragment(task.get(i)));
         });
