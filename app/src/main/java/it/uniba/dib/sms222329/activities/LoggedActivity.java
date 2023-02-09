@@ -73,7 +73,7 @@ public class LoggedActivity extends AppCompatActivity {
             else if(utenteLoggato.getEmail().compareTo("guest")==0) {
                 Utility.accountLoggato = Utility.GUEST;
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new TesiListaFragment());
-                setGuestBottomNavigation(new TesiListaFragment(),new TesiSceltaListaGuestFragment());
+                setGuestBottomNavigation(new TesiListaFragment(), new TesiSceltaListaGuestFragment());
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -136,7 +136,7 @@ public class LoggedActivity extends AppCompatActivity {
             // Handle item selection
             switch (item.getItemId()) {
                 case R.id.navigation_thesis:
-                   Utility.replaceFragment(getSupportFragmentManager(), R.id.container, thesisFragment);
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.content2, thesisFragment);
                     setTitle(R.string.tesi);
                     return true;
                 case R.id.navigation_student:

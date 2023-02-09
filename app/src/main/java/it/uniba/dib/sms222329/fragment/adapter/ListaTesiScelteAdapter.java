@@ -90,20 +90,13 @@ public class ListaTesiScelteAdapter extends BaseAdapter {
 
         Database db = new Database(context);
 
-        if(Utility.accountLoggato == Utility.GUEST){
-            //Titolo tesi
-            TextView titolo = convertView.findViewById(R.id.titolo);
-            titolo.setText(String.valueOf(tesiScelte.get(i).getTitolo()));
-        } else {
-            //Tesista
-            Cursor cursor = db.RicercaDato("SELECT u." + Database.UTENTI_COGNOME + ", u." + Database.UTENTI_NOME + " " +
-                    "FROM " + Database.TESISTA + " t, " + Database.UTENTI + " u " +
-                    "WHERE t." + Database.TESISTA_UTENTEID + "=u." + Database.UTENTI_ID + " " +
-                    "AND t." + Database.TESISTA_ID + "=" + tesiScelte.get(i).getIdTesista() + ";");
-            cursor.moveToFirst();
-            TextView idTesista = convertView.findViewById(R.id.titolo);
-            idTesista.setText(cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_NOME)));
-        }
+        Cursor cursorTesista = db.RicercaDato("SELECT u." + Database.UTENTI_COGNOME + ", u." + Database.UTENTI_NOME + " " +
+                "FROM " + Database.TESISTA + " t, " + Database.UTENTI + " u " +
+                "WHERE t." + Database.TESISTA_UTENTEID + "=u." + Database.UTENTI_ID + " " +
+                "AND t." + Database.TESISTA_ID + "=" + tesiScelte.get(i).getIdTesista() + ";");
+        cursorTesista.moveToFirst();
+        TextView idTesista = convertView.findViewById(R.id.titolo);
+        idTesista.setText(cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_NOME)));
 
         //Tesi
         Cursor cursor = db.RicercaDato("SELECT " + Database.TESI_TITOLO + " " +
