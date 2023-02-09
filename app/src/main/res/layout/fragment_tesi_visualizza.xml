@@ -89,6 +89,32 @@
             android:textSize="16sp"
             android:layout_weight="2"/>
 
+        <androidx.constraintlayout.utils.widget.MotionLabel
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/universita" />
+
+        <TextView
+            android:id="@+id/universita"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Università"
+            android:textSize="16sp"
+            android:layout_weight="2"/>
+
+        <androidx.constraintlayout.utils.widget.MotionLabel
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/corsoDiStudio" />
+
+        <TextView
+            android:id="@+id/corso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Corso di studi"
+            android:textSize="16sp"
+            android:layout_weight="2"/>
+
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/disponibilita"
             android:layout_width="match_parent"

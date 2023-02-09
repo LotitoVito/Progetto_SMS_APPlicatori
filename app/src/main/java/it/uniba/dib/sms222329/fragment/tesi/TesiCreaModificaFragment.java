@@ -1,28 +1,36 @@
 package it.uniba.dib.sms222329.fragment.tesi;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
 import it.uniba.dib.sms222329.classi.Tesi;
 import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.TesiDatabase;
+import it.uniba.dib.sms222329.fragment.adapter.ListaCorsiAdapter;
 
 public class TesiCreaModificaFragment extends Fragment {
 
@@ -38,6 +46,7 @@ public class TesiCreaModificaFragment extends Fragment {
     private TextInputEditText esamiMancanti;
     private TextInputEditText capacitaRichiesta;
     private TextInputEditText media;
+    private Spinner corsoStudi;
     private SwitchMaterial statoDisponibilita;
     private Button salva;
 
@@ -73,6 +82,7 @@ public class TesiCreaModificaFragment extends Fragment {
         super.onResume();
 
         Init();
+        SpinnerCreate();
 
         if(operazioneModifica){
 
@@ -81,7 +91,8 @@ public class TesiCreaModificaFragment extends Fragment {
                 FillAllEmpty();
                 if(tesi.ModificaTesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(), statoDisponibilita.isChecked(),
                         Integer.parseInt(tempistiche.getText().toString().trim()), Float.parseFloat(media.getText().toString().trim()),
-                        Integer.parseInt(esamiMancanti.getText().toString().trim()), capacitaRichiesta.getText().toString().trim(), db)){
+                        Integer.parseInt(esamiMancanti.getText().toString().trim()), capacitaRichiesta.getText().toString().trim(),
+                        RecuperaIdUniversitaCorso(), db)){
                     Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
                     Utility.goBack(getActivity());
                 } else{
@@ -89,14 +100,14 @@ public class TesiCreaModificaFragment extends Fragment {
                 }
             });
 
-        } else{
+        } else {
 
             salva.setOnClickListener(view -> {
                 if(!IsEmpty(titolo, argomenti, tempistiche, media, esamiMancanti, capacitaRichiesta)) {
                 Tesi tesi = new Tesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(),
                         statoDisponibilita.isChecked(), Utility.relatoreLoggato.getIdRelatore(), Integer.parseInt(tempistiche.getText().toString().trim()),
                         Integer.parseInt(media.getText().toString().trim()), Integer.parseInt(esamiMancanti.getText().toString().trim()),
-                        capacitaRichiesta.getText().toString().trim());
+                        capacitaRichiesta.getText().toString().trim(), RecuperaIdUniversitaCorso());
 
                     if (TesiDatabase.RegistrazioneTesi(tesi, db)) {
                         Toast.makeText(getActivity().getApplicationContext(), "Tesi registrata con successo", Toast.LENGTH_SHORT).show();
@@ -112,6 +123,49 @@ public class TesiCreaModificaFragment extends Fragment {
         }
     }
 
+    private void SpinnerCreate() {
+        Cursor cursor = db.RicercaDato("SELECT cs." + Database.CORSOSTUDI_NOME +
+                " FROM " + Database.CORSIRELATORE + " cr, " + Database.UNIVERSITACORSO + " uc, " + Database.CORSOSTUDI + " cs " +
+                " WHERE cr." + Database.CORSIRELATORE_UNIVERSITACORSOID + "=uc." + Database.UNIVERSITACORSO_ID + " AND uc." + Database.UNIVERSITACORSO_CORSOID + "=cs." + Database.CORSOSTUDI_ID +
+                " AND cr." + Database.CORSIRELATORE_RELATOREID + "=" + Utility.relatoreLoggato.getIdRelatore() + ";");
+
+        ArrayList<String> nomiCorsi = new ArrayList<String>();
+        while(cursor.moveToNext()){
+            nomiCorsi.add(cursor.getString(cursor.getColumnIndexOrThrow(Database.CORSOSTUDI_NOME)));
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter(getActivity().getApplicationContext(),android.R.layout.simple_spinner_item, nomiCorsi);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        corsoStudi.setAdapter(adapter);
+
+        if(operazioneModifica){
+            Cursor cursorCorso = db.RicercaDato("SELECT cs." + Database.CORSOSTUDI_NOME +
+                    " FROM " + Database.UNIVERSITACORSO + " uc, " + Database.CORSOSTUDI + " cs " +
+                    " WHERE uc." + Database.UNIVERSITACORSO_CORSOID + "=cs." + Database.CORSOSTUDI_ID +
+                    " AND uc." + Database.UNIVERSITACORSO_ID + "=" + tesi.getIdUniversitaCorso() + ";");
+            cursorCorso.moveToFirst();
+            corsoStudi.setSelection(adapter.getPosition(cursorCorso.getString(cursorCorso.getColumnIndexOrThrow(Database.CORSOSTUDI_NOME))));
+        }
+    }
+
+    private int RecuperaIdUniversitaCorso(){
+        //Recupero id universita
+        Cursor cursorUniversita = db.RicercaDato("SELECT uc." + Database.UNIVERSITACORSO_UNIVERSITAID +
+                " FROM " + Database.CORSIRELATORE + " cr, " + Database.UNIVERSITACORSO + " uc " +
+                " WHERE cr." + Database.CORSIRELATORE_UNIVERSITACORSOID + "=uc." + Database.UNIVERSITACORSO_ID +
+                " AND cr." + Database.CORSIRELATORE_RELATOREID + "=" + Utility.relatoreLoggato.getIdRelatore() + ";");
+        cursorUniversita.moveToNext();
+
+        //Recupero id universitacorso
+        Cursor cursor = db.RicercaDato("SELECT uc." + Database.UNIVERSITACORSO_ID +
+                " FROM " + Database.CORSOSTUDI + " cs, " + Database.UNIVERSITACORSO + " uc " +
+                " WHERE cs." + Database.CORSOSTUDI_ID + "=uc." + Database.UNIVERSITACORSO_CORSOID +
+                " AND cs." + Database.CORSOSTUDI_NOME + " LIKE ('" + corsoStudi.getSelectedItem().toString() + "') " +
+                " AND uc." + Database.UNIVERSITACORSO_UNIVERSITAID + "=" + cursorUniversita.getInt(cursorUniversita.getColumnIndexOrThrow(Database.UNIVERSITACORSO_UNIVERSITAID)) + ";");
+        cursor.moveToNext();
+        return cursor.getInt(cursor.getColumnIndexOrThrow(Database.UNIVERSITACORSO_ID));
+    }
+
     /**
      * Metodo di inizializzazione delle variabili
      */
@@ -123,6 +177,7 @@ public class TesiCreaModificaFragment extends Fragment {
         esamiMancanti = getView().findViewById(R.id.esamiMancanti);
         capacitaRichiesta = getView().findViewById(R.id.capacitaRichiesta);
         media = getView().findViewById(R.id.media_edit_text);
+        corsoStudi = getView().findViewById(R.id.corso);
         statoDisponibilita = getView().findViewById(R.id.disponibilita);
         salva = getView().findViewById(R.id.add);
     }
@@ -134,7 +189,7 @@ public class TesiCreaModificaFragment extends Fragment {
         titolo.setHint(tesi.getTitolo());
         argomenti.setHint(tesi.getArgomenti());
         tempistiche.setHint(String.valueOf(tesi.getTempistiche()));
-        esamiMancanti.setHint(String.valueOf(tesi.getEsamiMancantiNecessari()));
+        esamiMancanti.setHint(String.valueOf(tesi.getEsamiNecessari()));
         capacitaRichiesta.setHint(tesi.getCapacitaRichieste());
         media.setHint(String.valueOf(tesi.getMediaVotiMinima()));
         statoDisponibilita.setChecked(tesi.getStatoDisponibilita());
@@ -147,7 +202,7 @@ public class TesiCreaModificaFragment extends Fragment {
         Utility.fillIfEmpty(titolo, tesi.getTitolo());
         Utility.fillIfEmpty(argomenti, tesi.getArgomenti());
         Utility.fillIfEmpty(tempistiche, String.valueOf(tesi.getTempistiche()));
-        Utility.fillIfEmpty(esamiMancanti, String.valueOf(tesi.getEsamiMancantiNecessari()));
+        Utility.fillIfEmpty(esamiMancanti, String.valueOf(tesi.getEsamiNecessari()));
         Utility.fillIfEmpty(capacitaRichiesta, tesi.getCapacitaRichieste());
         Utility.fillIfEmpty(media, String.valueOf(tesi.getMediaVotiMinima()));
     }

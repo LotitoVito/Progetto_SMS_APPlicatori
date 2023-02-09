@@ -31,11 +31,12 @@ public class ListaTesiDatabase {
             tesiEstratta.setArgomenti(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)));
             tesiEstratta.setTempistiche(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_TEMPISTICHE)));
             tesiEstratta.setMediaVotiMinima(cursore.getFloat(cursore.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)));
-            tesiEstratta.setEsamiMancantiNecessari(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)));
+            tesiEstratta.setEsamiNecessari(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)));
             tesiEstratta.setCapacitaRichieste(cursore.getString(cursore.getColumnIndexOrThrow(Database.TESI_SKILLRICHIESTE)));
             tesiEstratta.setStatoDisponibilita(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_STATO)) != 0);
             tesiEstratta.setNumeroVisualizzazioni(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_VISUALIZZAZIONI)));
             tesiEstratta.setIdRelatore(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_RELATOREID)));
+            tesiEstratta.setIdUniversitaCorso(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TESI_UNIVERSITACORSOID)));
 
             listaTesiEstratte.add(tesiEstratta);
         }

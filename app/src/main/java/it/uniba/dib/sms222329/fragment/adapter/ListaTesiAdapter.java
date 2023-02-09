@@ -86,7 +86,8 @@ public class ListaTesiAdapter extends BaseAdapter {
         Button editButton = convertView.findViewById(R.id.modifica);
         if(Utility.accountLoggato == Utility.TESISTA && tesi.get(i).getStatoDisponibilita() == Tesi.DISPONIBILE &&
                 !db.VerificaDatoEsistente("SELECT * FROM " + Database.TESISCELTA + " WHERE " + Database.TESISCELTA_TESISTAID + "=" + Utility.tesistaLoggato.getIdTesista() + ";") &&
-                !db.VerificaDatoEsistente("SELECT * FROM " + Database.RICHIESTA + " WHERE " + Database.RICHIESTA_TESISTAID + "=" + Utility.tesistaLoggato.getIdTesista() + " AND " + Database.RICHIESTA_ACCETTATA + "=" + RichiestaTesi.IN_ATTESA + ";")){
+                !db.VerificaDatoEsistente("SELECT * FROM " + Database.RICHIESTA + " WHERE " + Database.RICHIESTA_TESISTAID + "=" + Utility.tesistaLoggato.getIdTesista() + " AND " + Database.RICHIESTA_ACCETTATA + "=" + RichiestaTesi.IN_ATTESA + ";") &&
+                db.VerificaDatoEsistente("SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_UNIVERSITACORSOID + "=" + Utility.tesistaLoggato.getIdUniversitaCorso() + ";")){
             editButton.setText("Richiedi");
             editButton.setOnClickListener(view -> {
                 Utility.replaceFragment(this.fragmentManager, R.id.container, new RichiestaTesiFragment(tesi.get(i)));

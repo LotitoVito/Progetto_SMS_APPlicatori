@@ -89,6 +89,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String TESI_STATO = "stato";
     public static final String TESI_VISUALIZZAZIONI = "visualizzazioni";
     public static final String TESI_RELATOREID = "relatore_id";
+    public static final String TESI_UNIVERSITACORSOID = "universita_corso_id";
 
     //Tabella Richiesta
     public static final String RICHIESTA = "richiesta";
@@ -232,6 +233,7 @@ public class Database extends SQLiteOpenHelper {
                         TESI_STATO + " BOOLEAN NOT NULL," +
                         TESI_VISUALIZZAZIONI + " INT NOT NULL," +
                         TESI_RELATOREID + " INT NOT NULL," +
+                        TESI_UNIVERSITACORSOID + " INT NOT NULL," +
                         "FOREIGN KEY (" + TESI_RELATOREID + ") REFERENCES " + RELATORE + "(" + RELATORE_ID + ") ON DELETE CASCADE);";
         db.execSQL(createTable);
         //RichiestaTesi

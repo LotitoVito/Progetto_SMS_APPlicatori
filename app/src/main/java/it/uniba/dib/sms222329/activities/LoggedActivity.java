@@ -215,7 +215,8 @@ public class LoggedActivity extends AppCompatActivity {
                                 cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_SKILLRICHIESTE)),
                                 cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_STATO))==1,
                                 cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_VISUALIZZAZIONI)),
-                                cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_RELATOREID)));
+                                cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_RELATOREID)),
+                                cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_UNIVERSITACORSOID)));
                         Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new TesiVisualizzaFragment(tesi));
                     }
                 }).show();

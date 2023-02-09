@@ -22,11 +22,12 @@ public class TesiDatabase {
         cvTesi.put(Database.TESI_ARGOMENTO, tesi.getArgomenti());
         cvTesi.put(Database.TESI_TEMPISTICHE, tesi.getTempistiche());
         cvTesi.put(Database.TESI_MEDIAVOTOMINIMA, tesi.getMediaVotiMinima());
-        cvTesi.put(Database.TESI_ESAMINECESSARI, tesi.getEsamiMancantiNecessari());
+        cvTesi.put(Database.TESI_ESAMINECESSARI, tesi.getEsamiNecessari());
         cvTesi.put(Database.TESI_SKILLRICHIESTE, tesi.getCapacitaRichieste());
         cvTesi.put(Database.TESI_STATO, tesi.getStatoDisponibilita());
         cvTesi.put(Database.TESI_VISUALIZZAZIONI, tesi.getNumeroVisualizzazioni());
         cvTesi.put(Database.TESI_RELATOREID, tesi.getIdRelatore());
+        cvTesi.put(Database.TESI_UNIVERSITACORSOID, tesi.getIdUniversitaCorso());
 
         try{
             long insertTesi = db.insert(Database.TESI, null, cvTesi);
@@ -53,9 +54,10 @@ public class TesiDatabase {
         cvTesi.put(Database.TESI_ARGOMENTO, tesi.getArgomenti());
         cvTesi.put(Database.TESI_TEMPISTICHE, tesi.getTempistiche());
         cvTesi.put(Database.TESI_MEDIAVOTOMINIMA, tesi.getMediaVotiMinima());
-        cvTesi.put(Database.TESI_ESAMINECESSARI, tesi.getEsamiMancantiNecessari());
+        cvTesi.put(Database.TESI_ESAMINECESSARI, tesi.getEsamiNecessari());
         cvTesi.put(Database.TESI_SKILLRICHIESTE, tesi.getCapacitaRichieste());
         cvTesi.put(Database.TESI_STATO, tesi.getStatoDisponibilita());
+        cvTesi.put(Database.TESI_UNIVERSITACORSOID, tesi.getIdUniversitaCorso());
         try{
             long updateTesi = db.update(Database.TESI, cvTesi, Database.TESI_ID + " = " + tesi.getIdTesi(), null);
             if(updateTesi != -1){

@@ -46,6 +46,36 @@
                 android:textSize="16sp" />
 
             <androidx.constraintlayout.utils.widget.MotionLabel
+                android:id="@+id/label_universita"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/universita" />
+
+            <TextView
+                android:id="@+id/universita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:text="Universita"
+                android:textSize="18sp" />
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:id="@+id/label_corso"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/corsoDiStudio" />
+
+            <TextView
+                android:id="@+id/corso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:text="Corso di studio"
+                android:textSize="18sp" />
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
                 android:id="@+id/label_abstract"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

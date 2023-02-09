@@ -101,6 +101,16 @@
             android:minHeight="48dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Spinner
+            android:id="@+id/corso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/btn_dropdown"
+            android:minHeight="48dp"
+            android:spinnerMode="dropdown"
+            tools:ignore="LabelFor"
+            android:layout_marginBottom="16dp" />
+
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/disponibilita"
             android:layout_width="match_parent"

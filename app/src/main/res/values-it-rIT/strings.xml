@@ -31,13 +31,16 @@
     <string name="codiceFiscale">Codice fiscale</string>
     <string name="registratiCome">Registrati come:</string>
     <string name="studente">Studente</string>
-    <string name="relatore">Matricola Relatore</string>
+    <string name="relatore">Relatore</string>
+    <string name="matricola_relatore">Matricola Relatore</string>
     <string name="co_relatore">Co-relatore</string>
     <string name="avanti">Avanti</string>
     <string name="organizzazione">Organizzazione</string>
     <string name="matricola">Matricola</string>
     <string name="modifica">Modifica</string>
     <string name="corsiDiStudio">Corsi di studio:</string>
+    <string name="corsoDiStudio">Corso</string>
+    <string name="universita">Università</string>
     <string name="cerca">Ricerca…</string>
     <string name="modalitaScura">Modalità notte</string>
     <string name="esci">Esci</string>

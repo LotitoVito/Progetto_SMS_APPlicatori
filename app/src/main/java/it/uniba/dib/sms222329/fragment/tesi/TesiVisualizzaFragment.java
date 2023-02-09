@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,8 @@ public class TesiVisualizzaFragment extends BottomSheetDialogFragment {
     private TextView esamiMancanti;
     private TextView capacitaRichiesta;
     private TextView media;
+    private TextView universita;
+    private TextView corso;
     private SwitchMaterial disponibilita;
     private ImageView qrCode;
     private Button share;
@@ -66,7 +69,7 @@ public class TesiVisualizzaFragment extends BottomSheetDialogFragment {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
             String sub = "Guarda questa Tesi!\nTitolo: " + tesi.getTitolo() +"\nArgomenti: " + tesi.getArgomenti() +"\nTempistiche in mesi: "
-                    + tesi.getTempistiche() + "\nMedia: " + tesi.getMediaVotiMinima() + "\nEsami necessari: " + tesi.getEsamiMancantiNecessari() +
+                    + tesi.getTempistiche() + "\nMedia: " + tesi.getMediaVotiMinima() + "\nEsami necessari: " + tesi.getEsamiNecessari() +
                     "\nCapacità richieste: " + tesi.getCapacitaRichieste();
             if(tesi.getStatoDisponibilita()){
                 sub += "\nDisponibile";
@@ -97,6 +100,8 @@ public class TesiVisualizzaFragment extends BottomSheetDialogFragment {
         esamiMancanti = getView().findViewById(R.id.esamiMancanti);
         capacitaRichiesta = getView().findViewById(R.id.capacitaRichiesta);
         media = getView().findViewById(R.id.media);
+        universita = getView().findViewById(R.id.universita);
+        corso = getView().findViewById(R.id.corso);
         disponibilita = getView().findViewById(R.id.disponibilita);
         qrCode = getView().findViewById(R.id.qrCode);
         share = getView().findViewById(R.id.condividi);
@@ -114,9 +119,24 @@ public class TesiVisualizzaFragment extends BottomSheetDialogFragment {
         titolo.setText(tesi.getTitolo());
         argomento.setText(tesi.getArgomenti());
         tempistiche.setText(String.valueOf(tesi.getTempistiche()));
-        esamiMancanti.setText(String.valueOf(tesi.getEsamiMancantiNecessari()));
+        esamiMancanti.setText(String.valueOf(tesi.getEsamiNecessari()));
         capacitaRichiesta.setText(tesi.getCapacitaRichieste());
         media.setText(String.valueOf(tesi.getMediaVotiMinima()));
+
+        Cursor cursorUniversita = db.RicercaDato("SELECT u." + Database.UNIVERSITA_NOME +
+                " FROM " + Database.UNIVERSITACORSO + " uc, " + Database.UNIVERSITA + " u " +
+                " WHERE uc." + Database.UNIVERSITACORSO_UNIVERSITAID + "=u." + Database.UNIVERSITA_ID +
+                " AND uc." + Database.UNIVERSITACORSO_ID + "=" + tesi.getIdUniversitaCorso() + ";");
+        cursorUniversita.moveToFirst();
+        universita.setText(cursorUniversita.getString(cursorUniversita.getColumnIndexOrThrow(Database.UNIVERSITA_NOME)));
+        Cursor cursorCorso = db.RicercaDato("SELECT cs." + Database.CORSOSTUDI_NOME +
+                " FROM " + Database.UNIVERSITACORSO + " uc, " + Database.CORSOSTUDI + " cs " +
+                " WHERE uc." + Database.UNIVERSITACORSO_CORSOID + "=cs." + Database.CORSOSTUDI_ID +
+                " AND uc." + Database.UNIVERSITACORSO_ID + "=" + tesi.getIdUniversitaCorso() + ";");
+        cursorCorso.moveToFirst();
+        Log.d("test", cursorCorso.getString(cursorCorso.getColumnIndexOrThrow(Database.CORSOSTUDI_NOME)));
+        corso.setText(cursorCorso.getString(cursorCorso.getColumnIndexOrThrow(Database.CORSOSTUDI_NOME)));
+
         disponibilita.setChecked(tesi.getStatoDisponibilita());
         qrCode.setImageBitmap(tesi.QRGenerator());
     }

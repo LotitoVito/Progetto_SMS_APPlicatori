@@ -56,6 +56,8 @@ public class TesiSceltaFragment extends Fragment {
     private TextView tesista;
     private TextView titoloTesi;
     private TextView argomentoTesi;
+    private TextView universita;
+    private TextView corso;
     private TextView riassunto;
     private TextView tempistiche;
     private TextView esamiMancanti;
@@ -179,6 +181,8 @@ public class TesiSceltaFragment extends Fragment {
         tesista = getView().findViewById(R.id.nomeStudente);
         titoloTesi = getView().findViewById(R.id.titoloTesi);
         argomentoTesi = getView().findViewById(R.id.argomentoTesi);
+        universita = getView().findViewById(R.id.universita);
+        corso = getView().findViewById(R.id.corso);
         riassunto = getView().findViewById(R.id.riassunto);
         tempistiche = getView().findViewById(R.id.tempistiche);
         esamiMancanti = getView().findViewById(R.id.esamiMancanti);
@@ -229,7 +233,7 @@ public class TesiSceltaFragment extends Fragment {
         tesista.setText(cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_NOME)) + " " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_MATRICOLA)));
 
         //Tesi
-        Cursor cursorTesi = db.RicercaDato("SELECT t." + Database.TESI_TITOLO + ", t." + Database.TESI_ARGOMENTO + ", t." + Database.TESI_TEMPISTICHE + ", t." + Database.TESI_ESAMINECESSARI + ", t." + Database.TESI_SKILLRICHIESTE + ", t." + Database.TESI_MEDIAVOTOMINIMA +
+        Cursor cursorTesi = db.RicercaDato("SELECT t." + Database.TESI_TITOLO + ", t." + Database.TESI_ARGOMENTO + ", t." + Database.TESI_TEMPISTICHE + ", t." + Database.TESI_ESAMINECESSARI + ", t." + Database.TESI_SKILLRICHIESTE + ", t." + Database.TESI_MEDIAVOTOMINIMA + ", t." + Database.TESI_UNIVERSITACORSOID +
                 " FROM " + Database.TESI + " t WHERE t." + Database.TESI_ID + "=" + tesiScelta.getIdTesi() + ";");
         cursorTesi.moveToFirst();
         titoloTesi.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_TITOLO)));
@@ -272,6 +276,21 @@ public class TesiSceltaFragment extends Fragment {
 
         //Capacita
         capacitaEffettive.setText(tesiScelta.getCapacitàStudente());
+
+        //Universita e Corso
+        Cursor cursorUniversita = db.RicercaDato("SELECT u." + Database.UNIVERSITA_NOME +
+                " FROM " + Database.UNIVERSITACORSO + " uc, " + Database.UNIVERSITA + " u " +
+                " WHERE uc." + Database.UNIVERSITACORSO_UNIVERSITAID + "=u." + Database.UNIVERSITA_ID +
+                " AND uc." + Database.UNIVERSITACORSO_ID + "=" + cursorTesi.getInt(cursorTesi.getColumnIndexOrThrow(Database.TESI_UNIVERSITACORSOID)) + ";");
+        cursorUniversita.moveToFirst();
+        universita.setText(cursorUniversita.getString(cursorUniversita.getColumnIndexOrThrow(Database.UNIVERSITA_NOME)));
+        Cursor cursorCorso = db.RicercaDato("SELECT cs." + Database.CORSOSTUDI_NOME +
+                " FROM " + Database.UNIVERSITACORSO + " uc, " + Database.CORSOSTUDI + " cs " +
+                " WHERE uc." + Database.UNIVERSITACORSO_CORSOID + "=cs." + Database.CORSOSTUDI_ID +
+                " AND uc." + Database.UNIVERSITACORSO_ID + "=" + cursorTesi.getInt(cursorTesi.getColumnIndexOrThrow(Database.TESI_UNIVERSITACORSOID)) + ";");
+        cursorCorso.moveToFirst();
+        Log.d("test", cursorCorso.getString(cursorCorso.getColumnIndexOrThrow(Database.CORSOSTUDI_NOME)));
+        corso.setText(cursorCorso.getString(cursorCorso.getColumnIndexOrThrow(Database.CORSOSTUDI_NOME)));
     }
 
     /**

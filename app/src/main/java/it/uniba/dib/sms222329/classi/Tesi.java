@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222329.classi;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -28,6 +29,7 @@ public class Tesi {
     private boolean statoDisponibilita;
     private int numeroVisualizzazioni;
     private int idRelatore;
+    private int idUniversitaCorso;
 
     /**
      * Costruttore vuoto
@@ -56,7 +58,7 @@ public class Tesi {
      * @param idRelatore
      */
     public Tesi(int id, String titolo, String argomenti, int tempistiche, float mediaVotiMinima, int esamiNecessari,
-                String capacitaRichieste, boolean statoDisponibilita, int numeroVisualizzazioni, int idRelatore) {
+                String capacitaRichieste, boolean statoDisponibilita, int numeroVisualizzazioni, int idRelatore, int idUniversitaCorso) {
         this.idTesi = id;
         this.titolo = titolo;
         this.argomenti = argomenti;
@@ -67,6 +69,7 @@ public class Tesi {
         this.statoDisponibilita = statoDisponibilita;
         this.numeroVisualizzazioni = numeroVisualizzazioni;
         this.idRelatore = idRelatore;
+        this.idUniversitaCorso = idUniversitaCorso;
     }
 
     /**
@@ -81,7 +84,7 @@ public class Tesi {
      * @param capacitaRichieste
      */
     public Tesi(String titolo, String argomenti, boolean statoDisponibilita, int idRelatore, int tempistiche,
-                float mediaVotiMinima, int esamiNecessari, String capacitaRichieste) {
+                float mediaVotiMinima, int esamiNecessari, String capacitaRichieste, int idUniversitaCorso) {
         this.titolo = titolo;
         this.argomenti = argomenti;
         this.statoDisponibilita = statoDisponibilita;
@@ -91,6 +94,7 @@ public class Tesi {
         this.mediaVotiMinima = mediaVotiMinima;
         this.esamiNecessari = esamiNecessari;
         this.capacitaRichieste = capacitaRichieste;
+        this.idUniversitaCorso = idUniversitaCorso;
     }
 
     /**
@@ -141,13 +145,18 @@ public class Tesi {
 
     public void setMediaVotiMinima(float mediaVotiMinima) {this.mediaVotiMinima = mediaVotiMinima;}
 
-    public int getEsamiMancantiNecessari() {return esamiNecessari;}
+    public int getEsamiNecessari() {return esamiNecessari;}
 
-    public void setEsamiMancantiNecessari(int esamiNecessari) {this.esamiNecessari = esamiNecessari;}
+    public void setEsamiNecessari(int esamiNecessari) {this.esamiNecessari = esamiNecessari;}
 
     public String getCapacitaRichieste() {return capacitaRichieste;}
 
     public void setCapacitaRichieste(String capacitaRichieste) {this.capacitaRichieste = capacitaRichieste;}
+
+    public int getIdUniversitaCorso() {return idUniversitaCorso;}
+
+    public void setIdUniversitaCorso(int idUniversitaCorso) {this.idUniversitaCorso = idUniversitaCorso;}
+
 
     /**
      * Metodo di modifica della tesi; modifica i valori dell'oggetto istanziato e richiama il metodo ModificaTesi()
@@ -163,7 +172,8 @@ public class Tesi {
      * @return  Restituisce true se l'aggiornamento sul database va a buon fine, nel caso contrario restituisce false.
      */
     public boolean ModificaTesi(String titolo, String argomenti, boolean statoDisponibilita, int tempistiche,
-                                float mediaVotiMinima, int esamiNecessari, String capacitaRichieste, Database db){
+                                float mediaVotiMinima, int esamiNecessari, String capacitaRichieste, int idUniversitaCorso,
+                                Database db){
         this.titolo = titolo;
         this.argomenti = argomenti;
         this.tempistiche = tempistiche;
@@ -171,6 +181,9 @@ public class Tesi {
         this.esamiNecessari = esamiNecessari;
         this.capacitaRichieste = capacitaRichieste;
         this.statoDisponibilita = statoDisponibilita;
+        this.idUniversitaCorso = idUniversitaCorso;
+
+        Log.d("test", String.valueOf(this.idUniversitaCorso));
 
         if(TesiDatabase.ModificaTesi(this, db)){
             return true;
