@@ -61,7 +61,6 @@ public class TesiListaFragment extends Fragment {
             bottomNavigationView.getMenu().findItem(R.id.navigation_thesis).setChecked(true);
         }
 
-
         return view;
     }
 

@@ -28,6 +28,7 @@ import it.uniba.dib.sms222329.fragment.tesiscelta.TesiSceltaListaGuestFragment;
 public class TesiFilterFragment extends BottomSheetDialogFragment {
 
     //Variabili e Oggetti
+    private Database db;
     private boolean tesiCompletate;
     private String query;
 
@@ -60,60 +61,54 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
         spinnerCreate(campoOrdinamento);
 
         avviaRicerca.setOnClickListener(view -> {
-            Database db = new Database(getActivity().getApplicationContext());
             if(tesiCompletate){
                 query = "SELECT ts." + Database.TESISCELTA_ID + ", ts." + Database.TESISCELTA_DATAPUBBLICAZIONE + ", ts." + Database.TESISCELTA_ABSTRACT + ", ts." + Database.TESISCELTA_DOWNLOAD + ", ts." + Database.TESISCELTA_TESIID + ", ts." + Database.TESISCELTA_CORELATOREID + ", ts." + Database.TESISCELTA_STATOCORELATORE + ", ts." + Database.TESISCELTA_TESISTAID + ", ts." + Database.TESISCELTA_CAPACITATESISTA + ", t." + Database.TESI_TITOLO +
                         " FROM " + Database.TESISCELTA + " ts, " + Database.TESI + " t " +
                         " WHERE t." + Database.TESI_ID + "=ts." + Database.TESISCELTA_TESIID + " AND ";
             } else {
-                query = "SELECT * FROM " + Database.TESI + " WHERE ";
+                query = "SELECT * FROM " + Database.TESI + " t WHERE ";
             }
 
             //Filtri
             if(!Utility.isEmptyTextbox(relatore)){
-                query = AddToQueryRelatore(query, relatore, db);
+                AddToQueryRelatore();
             }
             if(!Utility.isEmptyTextbox(argomento)){
-                query = AddToQueryArgomento(query, argomento);
+                AddToQueryArgomento();
             }
             if(!Utility.isEmptyTextbox(tempistiche)){
-                query = AddToQueryTempistiche(query, tempistiche);
+                AddToQueryTempistiche();
             }
             if(!Utility.isEmptyTextbox(media)){
-                query = AddToQueryMedia(query, media);
+                AddToQueryMedia();
             }
             if(!Utility.isEmptyTextbox(numeroEsamiMancanti)){
-                query = AddToQueryNumeroEsamiMancanti(query, numeroEsamiMancanti);
+                AddToQueryNumeroEsamiMancanti();
             }
             if(tesiCompletate){
-                query = AddToQueryCompletata();
+                AddToQueryCompletata();
             } else {
-                query = AddToQueryDisponibilita(query, disponibilita);
+                AddToQueryDisponibilita();
             }
 
             //Ordinamento
-            query = AddToQueryOrderBy(query, campoOrdinamento);
-            query = AddToQueryOrderType(query, ordinaAscendente);
+            AddToQueryOrderBy();
+            AddToQueryOrderType();
 
             this.dismiss();
             if (tesiCompletate) {
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.content2, new TesiSceltaListaGuestFragment(query));
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new TesiSceltaListaGuestFragment(query));
             } else {
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.content2, new TesiListaFragment(query));
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new TesiListaFragment(query));
             }
         });
-    }
-
-    private String AddToQueryCompletata() {
-        query += " " + Database.TESISCELTA_DATAPUBBLICAZIONE + "!='' ";
-        return query;
-
     }
 
     /**
      * Metodo di inizializzazione delle variabili
      */
     private void Init() {
+        db = new Database(getActivity().getApplicationContext());
         relatore = getView().findViewById(R.id.relatore);
         argomento = getView().findViewById(R.id.argomento);
         tempistiche = getView().findViewById(R.id.tempistiche);
@@ -135,7 +130,6 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
 
     /**
      * Crea lo spinner per l'ordinamento della lista delle proposte di tesi
-     * @param spinner
      */
     private void spinnerCreate(Spinner spinner){
         List<String> items = new ArrayList<>();
@@ -152,117 +146,91 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
 
     /**
      * Il metodo aggiunge alla query il vincolo del relatore se esiste
-     * @param query
-     * @param relatore
-     * @param db
-     * @return  Restituisce la query aggiornata
      */
-    private String AddToQueryRelatore(String query, EditText relatore, Database db){
+    private void AddToQueryRelatore(){
         try {
             Cursor cursor = db.RicercaDato("SELECT " + Database.RELATORE_ID + " FROM " + Database.RELATORE +
                     " WHERE " + Database.RELATORE_MATRICOLA + "=" + relatore.getText().toString() + ";");
             cursor.moveToNext();
 
-            query += " " + Database.TESI_RELATOREID + "=" + cursor.getInt(0) + " AND";
+            query += " t." + Database.TESI_RELATOREID + "=" + cursor.getInt(0) + " AND";
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(getActivity().getApplicationContext(), "Relatore non esistente", Toast.LENGTH_SHORT).show();
         }
-        return query;
     }
 
     /**
      * Il metodo aggiunge alla query il vincolo dell'argomento
-     * @param query
-     * @param argomento
-     * @return  Restituisce la query aggiornata
      */
-    private String AddToQueryArgomento(String query, EditText argomento){
-        query += " " + Database.TESI_ARGOMENTO + " LIKE('" + argomento.getText().toString() + "') AND";
-        return query;
+    private void AddToQueryArgomento(){
+        query += " t." + Database.TESI_ARGOMENTO + " LIKE('" + argomento.getText().toString() + "') AND";
     }
 
     /**
      * Il metodo aggiunge alla query il vincolo delle tempistiche minime
-     * @param query
-     * @param tempistiche
-     * @return  Restituisce la query aggiornata
      */
-    private String AddToQueryTempistiche(String query, EditText tempistiche){
-        query += " " + Database.TESI_TEMPISTICHE + ">" + tempistiche.getText().toString() + " AND";
-        return query;
+    private void AddToQueryTempistiche(){
+        query += " t." + Database.TESI_TEMPISTICHE + ">" + tempistiche.getText().toString() + " AND";
     }
 
     /**
      * Il metodo aggiunge alla query il vincolo della media minima
-     * @param query
-     * @param media
-     * @return  Restituisce la query aggiornata
      */
-    private String AddToQueryMedia(String query, EditText media){
-        query += " " + Database.TESI_MEDIAVOTOMINIMA + ">" + media.getText().toString() + " AND";
-        return query;
+    private void AddToQueryMedia(){
+        query += " t." + Database.TESI_MEDIAVOTOMINIMA + ">" + media.getText().toString() + " AND";
     }
 
     /**
      * Il metodo aggiunge alla query il vincolo del numero degli esami mancanti minimo
-     * @param query
-     * @param numeroEsamiMancanti
-     * @return  Restituisce la query aggiornata
      */
-    private String AddToQueryNumeroEsamiMancanti(String query, EditText numeroEsamiMancanti){
-        query += " " + Database.TESI_ESAMINECESSARI + ">" + numeroEsamiMancanti.getText().toString() + " AND";
-        return query;
+    private void AddToQueryNumeroEsamiMancanti(){
+        query += " t." + Database.TESI_ESAMINECESSARI + ">" + numeroEsamiMancanti.getText().toString() + " AND";
     }
 
     /**
      * Il metodo aggiunge alla query il vincolo della disponibilità
-     * @param query
-     * @param disponibilita
-     * @return  Restituisce la query aggiornata
      */
-    private String AddToQueryDisponibilita(String query, SwitchMaterial disponibilita){
+    private void AddToQueryDisponibilita(){
         if(disponibilita.isChecked()){
-            query += " " + Database.TESI_STATO + "=1 "; //TRUE
+            query += " t." + Database.TESI_STATO + "=1 "; //TRUE
         } else {
-            query += " " + Database.TESI_STATO + "=0 "; //FALSE
+            query += " t." + Database.TESI_STATO + "=0 "; //FALSE
         }
-        return query;
     }
 
     /**
      * Il metodo aggiunge alla query l'ordinamento in base al campo selezionato
-     * @param query
-     * @param campoOrdinamento
-     * @return  Restituisce la query aggiornata
      */
-    private String AddToQueryOrderBy(String query, Spinner campoOrdinamento) {
+    private void AddToQueryOrderBy() {
         if (campoOrdinamento.getSelectedItem().toString().compareTo("Titolo") == 0){
-            query += " ORDER BY " + Database.TESI_TITOLO;
+            query += " ORDER BY t." + Database.TESI_TITOLO;
         } else if (campoOrdinamento.getSelectedItem().toString().compareTo("Tempistiche") == 0){
-            query += " ORDER BY " + Database.TESI_TEMPISTICHE;
+            query += " ORDER BY t." + Database.TESI_TEMPISTICHE;
         } else if (campoOrdinamento.getSelectedItem().toString().compareTo("Media") == 0){
-            query += " ORDER BY " + Database.TESI_MEDIAVOTOMINIMA;
+            query += " ORDER BY t." + Database.TESI_MEDIAVOTOMINIMA;
         } else if (campoOrdinamento.getSelectedItem().toString().compareTo("Esami Necessari") == 0){
-            query += " ORDER BY " + Database.TESI_ESAMINECESSARI;
+            query += " ORDER BY t." + Database.TESI_ESAMINECESSARI;
         } else if (campoOrdinamento.getSelectedItem().toString().compareTo("Visualizzazioni") == 0){
-            query += " ORDER BY " + Database.TESI_VISUALIZZAZIONI;
+            query += " ORDER BY t." + Database.TESI_VISUALIZZAZIONI;
         }
-        return query;
+    }
+
+    /**
+     * Il metodo aggiunge alla query il vincolo di tesi completata
+     */
+    private void AddToQueryCompletata() {
+        query += " ts." + Database.TESISCELTA_DATAPUBBLICAZIONE + "!='' ";
     }
 
     /**
      * Il metodo aggiunge alla query il tipo  di ordinamento selezionato
-     * @param query
-     * @param ordinaAscendente
-     * @return
      */
-    private String AddToQueryOrderType(String query, SwitchMaterial ordinaAscendente) {
+    private void AddToQueryOrderType() {
         if(ordinaAscendente.isChecked()){
             query += " ASC;";
         } else {
             query += " DESC;";
         }
-        return query;
     }
 }
