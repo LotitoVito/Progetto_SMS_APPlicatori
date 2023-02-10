@@ -2,9 +2,13 @@ package it.uniba.dib.sms222329.fragment.tesiscelta;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +16,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.utils.widget.MotionLabel;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
@@ -51,6 +57,7 @@ public class TesiSceltaFragment extends Fragment {
     private Database db;
     private TesiScelta tesiScelta;
     private boolean richiesta;  //Usata per determinare se la view deve essere aprte come richiesta da accettare da parte del corelatore
+    private boolean operazioneDownload;
 
     //View Items
     private TextView tesista;
@@ -160,17 +167,38 @@ public class TesiSceltaFragment extends Fragment {
 
         scaricaTesi.setOnClickListener(view -> {
             if(file!=null){
-                if(Utility.CheckStorage(getActivity())) {
+                if(Utility.CheckStorage(getActivity(), this)) {
                     downloadFile();
+                } else {
+                    operazioneDownload = true;
                 }
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "Nessuno file caricato", Toast.LENGTH_SHORT).show();
             }
         });
 
         caricaTesi.setOnClickListener(view -> {
-            if(Utility.CheckStorage(getActivity())) {
+            if(Utility.CheckStorage(getActivity(), this)){
                 caricaFile();
+            } else {
+                operazioneDownload = false;
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode==Utility.REQUEST_PERMESSO_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            if (operazioneDownload){
+                downloadFile();
+            } else {
+                caricaFile();
+            }
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Permessi negati", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -204,14 +232,17 @@ public class TesiSceltaFragment extends Fragment {
         labelDataConsegna= getView().findViewById(R.id.label_data_consegna);
         labelaAbstract = getView().findViewById(R.id.label_abstract);
 
+        //Se manca il file togli pulsante download
         if(!getLastUpload()){
             scaricaTesi.setVisibility(View.GONE);
         }
 
+        //Se la tesi è stata consegnata toglio pulsante crea task
         if(tesiScelta.getDataPubblicazione() != null){
             creaTask.setVisibility(View.GONE);
         }
 
+        //Tipi di setting
         if (Utility.accountLoggato == Utility.GUEST){
             SettaPerGuest();
         } else if(Utility.accountLoggato == Utility.CORELATORE){
@@ -248,7 +279,6 @@ public class TesiSceltaFragment extends Fragment {
         //Corelatore
         Cursor cursoreCorelatore = db.RicercaDato("SELECT " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + " FROM " + Database.CORELATORE + " c, " + Database.UTENTI + " u " +
                 "WHERE u." + Database.UTENTI_ID + "=c." + Database.CORELATORE_UTENTEID + " AND c." + Database.CORELATORE_ID + "=" + tesiScelta.getIdCorelatore() + ";");
-        Log.d("test", String.valueOf(tesiScelta.getIdCorelatore()));
         if(cursoreCorelatore.moveToFirst()){
             if(tesiScelta.getStatoCorelatore()==TesiScelta.ACCETTATO){
                 corelatore.setText(cursoreCorelatore.getString(cursoreCorelatore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursoreCorelatore.getString(cursoreCorelatore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
@@ -267,6 +297,7 @@ public class TesiSceltaFragment extends Fragment {
             labelaAbstract.setVisibility(View.GONE);
         }
 
+        //Tesi completata
         if(tesiScelta.getDataPubblicazione() != null){
             dataConsegna.setText(tesiScelta.getDataPubblicazione().format(Utility.showDate));
         } else {
@@ -289,7 +320,6 @@ public class TesiSceltaFragment extends Fragment {
                 " WHERE uc." + Database.UNIVERSITACORSO_CORSOID + "=cs." + Database.CORSOSTUDI_ID +
                 " AND uc." + Database.UNIVERSITACORSO_ID + "=" + cursorTesi.getInt(cursorTesi.getColumnIndexOrThrow(Database.TESI_UNIVERSITACORSOID)) + ";");
         cursorCorso.moveToFirst();
-        Log.d("test", cursorCorso.getString(cursorCorso.getColumnIndexOrThrow(Database.CORSOSTUDI_NOME)));
         corso.setText(cursorCorso.getString(cursorCorso.getColumnIndexOrThrow(Database.CORSOSTUDI_NOME)));
     }
 
@@ -381,14 +411,14 @@ public class TesiSceltaFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select PDF Files..."), 1);
+        startActivityForResult(Intent.createChooser(intent, "Select PDF Files..."), Utility.REQUEST_CARICA_FILE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==1 && resultCode== RESULT_OK && data!= null && data.getData()!=null){
+        if(requestCode==Utility.REQUEST_CARICA_FILE && resultCode== RESULT_OK && data!= null && data.getData()!=null){
             uploadFiles(data.getData());
         }
     }
@@ -417,6 +447,7 @@ public class TesiSceltaFragment extends Fragment {
                     tesiUpload.setText(file.toString());
                     databaseReference.child(downloadKey).setValue(file);
                     TesiSceltaDatabase.UploadTesiScelta(db, tesiScelta,downloadKey);
+                    scaricaTesi.setVisibility(View.VISIBLE);
                     Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
                     //progressDialog.dismiss();
                 }).addOnProgressListener(snapshot -> {

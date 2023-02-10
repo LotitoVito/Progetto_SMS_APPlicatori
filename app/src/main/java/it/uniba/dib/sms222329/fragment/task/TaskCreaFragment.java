@@ -3,6 +3,7 @@ package it.uniba.dib.sms222329.fragment.task;
 import static android.app.Activity.RESULT_OK;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,11 +26,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -123,11 +121,21 @@ public class TaskCreaFragment extends Fragment {
         });
 
         caricaMateriale.setOnClickListener(view -> {
-            if(Utility.CheckStorage(getActivity())) {
+            if(Utility.CheckStorage(getActivity(), this)){
                 caricaFile();
             }
         });
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode==Utility.REQUEST_PERMESSO_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            caricaFile();
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Permessi negati", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -175,6 +183,9 @@ public class TaskCreaFragment extends Fragment {
         return risultato;
     }
 
+    /**
+     * Inizializza il database Firebase
+     */
     private void inizializzaFirebase() {
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance("https://laureapp-f0334-default-rtdb.europe-west1.firebasedatabase.app/").getReference("uploads_materiale");
@@ -187,18 +198,22 @@ public class TaskCreaFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select PDF Files..."), 1);
+        startActivityForResult(Intent.createChooser(intent, "Select PDF Files..."), Utility.REQUEST_CARICA_FILE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==1 && resultCode== RESULT_OK && data!= null && data.getData()!=null){
+        if(requestCode==Utility.REQUEST_CARICA_FILE && resultCode== RESULT_OK && data!= null && data.getData()!=null){
             uploadFiles(data.getData());
         }
     }
 
+    /**
+     * Carica file su firebase
+     * @param data
+     */
     private void uploadFiles(Uri data) {
         //final ProgressDialog progressDialog = new ProgressDialog(getActivity().getApplicationContext());
         //progressDialog.setTitle("Uploading...");
@@ -231,6 +246,10 @@ public class TaskCreaFragment extends Fragment {
 
     }
 
+    /**
+     * Elimina file da Firebase
+     * @param url
+     */
     private void eliminaFile(String url) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(url);
         storageReference.delete().addOnSuccessListener(aVoid -> {

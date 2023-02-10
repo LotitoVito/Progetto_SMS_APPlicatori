@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -96,19 +97,23 @@ public class TaskDettagliFragment extends Fragment {
 
         scaricaMateriale.setOnClickListener(view -> {
             if(file!=null){
-                if(Utility.CheckStorage(getActivity())) {
+                if(Utility.CheckStorage(getActivity(), this)) {
                     downloadFile();
                 }
             }
         });
-
-        caricaMateriale.setOnClickListener(view -> {
-            if(Utility.CheckStorage(getActivity())) {
-                caricaFile();
-            }
-        });
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode==Utility.REQUEST_PERMESSO_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            downloadFile();
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Permessi negati", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     /**
      * Metodo di inizializzazione delle variabili
@@ -190,73 +195,6 @@ public class TaskDettagliFragment extends Fragment {
         if(file == null){
             materiale.setText("Nessun caricamento");
         }
-    }
-
-    /**
-     * Permette di aprire il picker di file
-     */
-    private void caricaFile() {
-        Intent intent = new Intent();
-        intent.setType("application/pdf");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select PDF Files..."), 1);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode==1 && resultCode== RESULT_OK && data!= null && data.getData()!=null){
-            uploadFiles(data.getData());
-        }
-    }
-
-    private void uploadFiles(Uri data) {
-        //final ProgressDialog progressDialog = new ProgressDialog(getActivity().getApplicationContext());
-        //progressDialog.setTitle("Uploading...");
-        //progressDialog.show();
-
-        StorageReference reference = storageReference.child("Uploads/"+System.currentTimeMillis()+".pdf");
-        reference.putFile(data)
-                .addOnSuccessListener(taskSnapshot -> {
-                    com.google.android.gms.tasks.Task<Uri> uriTask =taskSnapshot.getStorage().getDownloadUrl();
-                    while(!uriTask.isComplete());
-                    Uri url = uriTask.getResult();
-                    String downloadKey;
-                    if(file==null){
-                        downloadKey = databaseReference.push().getKey();
-                    }else{
-                        downloadKey = TaskDatabase.DownloadTask(db,task);
-                        eliminaFile(file.getUrl());
-                    }
-                    if(Utility.accountLoggato == Utility.TESISTA) file = new FileUpload(Utility.tesistaLoggato.getIdUtente(), Utility.tesistaLoggato.getNome()+" "+Utility.tesistaLoggato.getCognome(), url.toString(), new Date());
-                    if(Utility.accountLoggato == Utility.RELATORE) file = new FileUpload(Utility.relatoreLoggato.getIdUtente(), Utility.relatoreLoggato.getNome()+" "+Utility.relatoreLoggato.getCognome(), url.toString(), new Date());
-                    if(Utility.accountLoggato == Utility.CORELATORE) file = new FileUpload(Utility.coRelatoreLoggato.getIdUtente(), Utility.coRelatoreLoggato.getNome()+" "+Utility.coRelatoreLoggato.getCognome(), url.toString(), new Date());
-                    materiale.setText(file.toString());
-                    databaseReference.child(downloadKey).setValue(file);
-                    if(TaskDatabase.UploadTask(db, task,downloadKey)){
-                        Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
-                    }
-                    //progressDialog.dismiss();
-                }).addOnProgressListener(snapshot -> {
-                    //double progress=(100.0* snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
-                    //progressDialog.setMessage("Uploaded:"+(int)progress+"%");
-                });
-
-    }
-
-    private void eliminaFile(String url) {
-        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(url);
-        storageReference.delete().addOnSuccessListener(aVoid -> {
-            // File deleted successfully
-            Log.e("firebasestorage", "onSuccess: deleted file");
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Uh-oh, an error occurred!
-                Log.e("firebasestorage", "onFailure: did not delete file");
-            }
-        });
     }
 
     private void downloadFile() {

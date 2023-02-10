@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 
 import java.time.format.DateTimeFormatter;
 
+import it.uniba.dib.sms222329.activities.LoggedActivity;
 import it.uniba.dib.sms222329.classi.CoRelatore;
 import it.uniba.dib.sms222329.classi.Relatore;
 import it.uniba.dib.sms222329.classi.Tesista;
@@ -42,8 +43,10 @@ public class Utility {
     /** Formato visualizzazione data e ora*/
     public static final DateTimeFormatter showDateTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
-
-    public static final int PERMESSO_STORAGE = 1;
+    /** Costante usata per il request code della richiesta dei permessi per lo storage */
+    public static final int REQUEST_PERMESSO_STORAGE = 1;
+    /** Costante usata per il reuqest code del caricamento dei file */
+    public static final int REQUEST_CARICA_FILE = 2;
 
     /** Account tesista loggato */
     public static Tesista tesistaLoggato;
@@ -56,6 +59,9 @@ public class Utility {
     /** Variabile usata per tener conto di quale account è loggato */
     public static int accountLoggato;
 
+    /**
+     * Costruttore
+     */
     private Utility() {}
 
     /**
@@ -118,14 +124,15 @@ public class Utility {
      * @param activity
      * @return  Restituisce true se è accessibile, altrimenti false
      */
-    public static boolean CheckStorage(Activity activity){
+    public static boolean CheckStorage(Activity activity, Fragment fragment){
         if(isExternalStorageAvailable() && !isExternalStorageReadOnly()){
-            if (Utility.CheckPermessi(activity)){
+            if(ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 return true;
-            } else{
-                Toast.makeText(activity.getApplicationContext(), "Permessi bloccati", Toast.LENGTH_SHORT).show();
+            } else {
+                RichiediPermessiScritturaMemoria(activity, fragment);
             }
-        } else{
+        } else {
             Toast.makeText(activity.getApplicationContext(), "Non è possibile accedere ai file", Toast.LENGTH_SHORT).show();
         }
         return false;
@@ -137,31 +144,27 @@ public class Utility {
      * @param activity
      * @return  Restituisce true se i permessi sono concessi, altrimenti false
      */
-    public static boolean CheckPermessi(Activity activity){
-        if(ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission_group.STORAGE) != PackageManager.PERMISSION_GRANTED){
-            if(ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission_group.STORAGE)){
-                new AlertDialog.Builder(activity.getApplicationContext())
-                        .setTitle("Permesso richiesto")
-                        .setMessage("Il permesso è richiestoper la gestione dei file")
-                        .setPositiveButton("Accetta", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, Utility.PERMESSO_STORAGE);
+    public static void RichiediPermessiScritturaMemoria(Activity activity, Fragment fragment){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+            new AlertDialog.Builder(activity)
+                    .setTitle("Permesso richiesto")
+                    .setMessage("Il permesso è richiesto per la gestione dei file")
+                    .setPositiveButton("Accetta", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            fragment.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Utility.REQUEST_PERMESSO_STORAGE);
 
-                            }
-                        })
-                        .setNegativeButton("Rifiuta", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .create().show();
-            } else {
-                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, Utility.PERMESSO_STORAGE);
-            }
+                        }
+                    })
+                    .setNegativeButton("Rifiuta", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).create().show();
+        } else {
+            fragment.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Utility.REQUEST_PERMESSO_STORAGE);
         }
-        return true;
     }
 
     /**

@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -57,6 +58,7 @@ public class TesiSceltaMiaFragment extends Fragment {
     //Variabili e Oggetti
     private Database db;
     private TesiScelta tesiScelta;
+    private boolean operazioneDownload; //usata per gestire le operazioni quando vengono accettati i permessi
 
     //View Items
     private LinearLayout richieste;
@@ -112,15 +114,19 @@ public class TesiSceltaMiaFragment extends Fragment {
 
             scarica.setOnClickListener(view -> {
                 if(file!=null){
-                    if(Utility.CheckStorage(getActivity())) {
+                    if(Utility.CheckStorage(getActivity(), this)) {
                         downloadFile();
+                    } else {
+                        operazioneDownload = true;
                     }
                 }
             });
 
             carica.setOnClickListener(view -> {
-                if(Utility.CheckStorage(getActivity())) {
+                if(Utility.CheckStorage(getActivity(), this)) {
                     caricaFile();
+                } else {
+                    operazioneDownload = false;
                 }
             });
 
@@ -136,6 +142,21 @@ public class TesiSceltaMiaFragment extends Fragment {
 
                 }
             });
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode==Utility.REQUEST_PERMESSO_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            if(operazioneDownload){
+                downloadFile();
+            } else {
+                caricaFile();
+            }
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Permessi negati", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -302,14 +323,14 @@ public class TesiSceltaMiaFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select PDF Files..."), 1);
+        startActivityForResult(Intent.createChooser(intent, "Select PDF Files..."), Utility.REQUEST_CARICA_FILE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==1 && resultCode== RESULT_OK && data!= null && data.getData()!=null){
+        if(requestCode==Utility.REQUEST_CARICA_FILE && resultCode== RESULT_OK && data!= null && data.getData()!=null){
             uploadFiles(data.getData());
         }
     }
@@ -369,5 +390,4 @@ public class TesiSceltaMiaFragment extends Fragment {
         request.setDestinationInExternalFilesDir(getContext(), Environment.DIRECTORY_DOWNLOADS, System.currentTimeMillis()+".pdf");
         downloadManager.enqueue(request);
     }
-
 }
