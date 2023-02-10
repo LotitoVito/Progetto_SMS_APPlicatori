@@ -67,6 +67,13 @@ public class TaskDatabase {
         return false;
     }
 
+    /**
+     * Metodo usato per salvare su database il link al file salvato su Firebase
+     * @param dbClass
+     * @param task
+     * @param valore
+     * @return  Restituisce true se l'operazione va a buon fine, altrimento false
+     */
     public static boolean UploadTask(Database dbClass, Task task, String valore){
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues taskCv = new ContentValues();
@@ -80,6 +87,12 @@ public class TaskDatabase {
         return false;
     }
 
+    /**
+     * Metodo usato per recuperare da database il link al file salvato su Firebase
+     * @param dbClass
+     * @param task
+     * @return  Restituisce true se l'operazione va a buon fine, altrimento false
+     */
     public static String DownloadTask(Database dbClass, Task task){
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT " + Database.TASK_LINKMATERIALE +

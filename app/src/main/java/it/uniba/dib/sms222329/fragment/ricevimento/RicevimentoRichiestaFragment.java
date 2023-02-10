@@ -1,5 +1,7 @@
 package it.uniba.dib.sms222329.fragment.ricevimento;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -50,25 +52,44 @@ public class RicevimentoRichiestaFragment extends Fragment {
         SetTextAll();
 
         accetta.setOnClickListener(view -> {
-            if(RicevimentoDatabase.AccettaRicevimento(db, richiesta)){
-                Toast.makeText(getActivity().getApplicationContext(), "Ricevimento accettato", Toast.LENGTH_SHORT).show();
-                Utility.goBack(getActivity());
-            }else{
-                Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
-            }
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("Conferma")
+                    .setMessage("Accettare ricevimento?")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            AccettaRicevimento();
+                        }
+                    })
+                    .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).create().show();
         });
 
         rifiuta.setOnClickListener(view -> {
-            if(RicevimentoDatabase.RifiutaRicevimento(db, richiesta)){
-                Toast.makeText(getActivity().getApplicationContext(), "Ricevimento rifiutato", Toast.LENGTH_SHORT).show();
-                Utility.goBack(getActivity());
-            } else{
-                Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
-            }
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("Conferma")
+                    .setMessage("Rifiutare ricevimento?")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            RifiutaRicevimento();
+                        }
+                    })
+                    .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).create().show();
         });
 
         cambiaRicevimento.setOnClickListener(view -> {
             Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new RicevimentoCreaFragment(richiesta));
+            this.onResume();
         });
     }
 
@@ -84,10 +105,10 @@ public class RicevimentoRichiestaFragment extends Fragment {
         rifiuta = getView().findViewById(R.id.rifiuta);
         cambiaRicevimento = getView().findViewById(R.id.riorganizza);
 
-        if(Utility.accountLoggato == Utility.TESISTA){
+        if(Utility.accountLoggato == Utility.TESISTA ||
+                (Utility.accountLoggato == Utility.RELATORE && richiesta.getStato()==Ricevimento.IN_ATTESA_TESISTA)){
             cambiaRicevimento.setVisibility(View.GONE);
         }
-
     }
 
     /**
@@ -100,5 +121,29 @@ public class RicevimentoRichiestaFragment extends Fragment {
         cursor.moveToFirst();
         taskRicevimento.setText(cursor.getString(cursor.getColumnIndexOrThrow(Database.TASK_TITOLO)) + "\n" + cursor.getString(cursor.getColumnIndexOrThrow(Database.TASK_DESCRIZIONE)));
         dataRicevimento.setText(richiesta.getData().format(Utility.showDate) + " " + richiesta.getOrario());
+    }
+
+    /**
+     * Metodo di accettazione del ricevimento
+     */
+    private void AccettaRicevimento(){
+        if(RicevimentoDatabase.AccettaRicevimento(db, richiesta)){
+            Toast.makeText(getActivity().getApplicationContext(), "Ricevimento accettato", Toast.LENGTH_SHORT).show();
+            Utility.goBack(getActivity());
+        }else{
+            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Metodo di rifiuto del ricevimento
+     */
+    private void RifiutaRicevimento(){
+        if(RicevimentoDatabase.RifiutaRicevimento(db, richiesta)){
+            Toast.makeText(getActivity().getApplicationContext(), "Ricevimento rifiutato", Toast.LENGTH_SHORT).show();
+            Utility.goBack(getActivity());
+        } else{
+            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+        }
     }
 }

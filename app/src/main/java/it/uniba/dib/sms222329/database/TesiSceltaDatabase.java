@@ -154,6 +154,12 @@ public class TesiSceltaDatabase {
         return false;
     }
 
+    /**
+     * Metodo usato per recuperare il link del file pdf salvato su firebase di una tesi scelta speicifica su database
+     * @param dbClass
+     * @param tesiScelta
+     * @return
+     */
     public static String DownloadTesiScelta(Database dbClass, TesiScelta tesiScelta){
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT " + Database.TESISCELTA_DOWNLOAD +

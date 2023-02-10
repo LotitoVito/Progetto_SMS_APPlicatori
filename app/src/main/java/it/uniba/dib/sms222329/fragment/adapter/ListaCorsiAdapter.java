@@ -92,5 +92,4 @@ public class ListaCorsiAdapter extends BaseAdapter {
 
         return convertView;
     }
-
 }

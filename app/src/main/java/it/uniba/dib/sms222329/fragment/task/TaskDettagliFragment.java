@@ -167,11 +167,17 @@ public class TaskDettagliFragment extends Fragment {
         materiale.setText(String.valueOf(task.getLinkMateriale()));
     }
 
+    /**
+     * Metodo di inizializzazione di Firebase
+     */
     private void inizializzaFirebase() {
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance("https://laureapp-f0334-default-rtdb.europe-west1.firebasedatabase.app/").getReference("uploads_materiale");
     }
 
+    /**
+     * Metodo per recuperare l'ultimo file caricato se è stato caricato
+     */
     private void getLastUpload() {
         file = null;
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -197,6 +203,9 @@ public class TaskDettagliFragment extends Fragment {
         }
     }
 
+    /**
+     * Metodo per il download dell'ultimo file caricato
+     */
     private void downloadFile() {
         DownloadManager downloadManager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
         Uri uri = Uri.parse(file.getUrl());

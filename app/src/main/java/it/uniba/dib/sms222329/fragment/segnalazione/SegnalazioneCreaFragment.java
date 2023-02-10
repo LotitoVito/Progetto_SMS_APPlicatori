@@ -1,5 +1,7 @@
 package it.uniba.dib.sms222329.fragment.segnalazione;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -25,6 +27,7 @@ public class SegnalazioneCreaFragment extends Fragment {
     //Variabili e Oggetti
     private Database db;
     private Tesi tesi;
+    private int idUtente;
 
     //View Items
     private TextInputEditText oggetto;
@@ -49,17 +52,24 @@ public class SegnalazioneCreaFragment extends Fragment {
         Init();
 
         inviaMessaggio.setOnClickListener(view -> {
-            int idUtente = getIdUtenteLoggato();
+            idUtente = getIdUtenteLoggato();
             if(idUtente != -1){
                 if(!IsEmpty(oggetto, messaggioTesto)){
-                    SegnalazioneChat chat = new SegnalazioneChat(oggetto.getText().toString().trim(), tesi.getIdTesi());
-                    SegnalazioneMessaggio messaggio = new SegnalazioneMessaggio(messaggioTesto.getText().toString().trim(), idUtente);
-                    if(SegnalazioneDatabase.AvviaChat(db, chat, messaggio)){
-                        Toast.makeText(getActivity().getApplicationContext(), "Segnalazione creata con successo", Toast.LENGTH_SHORT).show();
-                        Utility.goBack(getActivity());
-                    } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
-                    }
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("Conferma")
+                            .setMessage("Inviare la segnalazione?")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    CreaSegnalazioneChat();
+                                }
+                            })
+                            .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).create().show();
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Compila i campi obbligatori", Toast.LENGTH_SHORT).show();
                 }
@@ -114,5 +124,19 @@ public class SegnalazioneCreaFragment extends Fragment {
             risultato = Utility.coRelatoreLoggato.getIdUtente();
         }
         return risultato;
+    }
+
+    /**
+     * Metodo di creazione di una segnalazione
+     */
+    private void CreaSegnalazioneChat(){
+        SegnalazioneChat chat = new SegnalazioneChat(oggetto.getText().toString().trim(), tesi.getIdTesi());
+        SegnalazioneMessaggio messaggio = new SegnalazioneMessaggio(messaggioTesto.getText().toString().trim(), idUtente);
+        if(SegnalazioneDatabase.AvviaChat(db, chat, messaggio)){
+            Toast.makeText(getActivity().getApplicationContext(), "Segnalazione creata con successo", Toast.LENGTH_SHORT).show();
+            Utility.goBack(getActivity());
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+        }
     }
 }

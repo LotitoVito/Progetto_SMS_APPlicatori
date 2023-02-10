@@ -1,16 +1,21 @@
 package it.uniba.dib.sms222329.activities;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.journeyapps.barcodescanner.ScanContract;
@@ -28,7 +33,7 @@ import it.uniba.dib.sms222329.fragment.ImpostazioniFragment;
 import it.uniba.dib.sms222329.fragment.utente.UtenteProfiloFragment;
 import it.uniba.dib.sms222329.fragment.tesi.TesiVisualizzaFragment;
 import it.uniba.dib.sms222329.fragment.ricevimento.RicevimentiCalendarioFragment;
-import it.uniba.dib.sms222329.fragment.segnalazione.SegnalazioneChatFragment;
+import it.uniba.dib.sms222329.fragment.segnalazione.SegnalazioneChatListaFragment;
 import it.uniba.dib.sms222329.fragment.tesi.TesiListaFragment;
 import it.uniba.dib.sms222329.fragment.tesiscelta.TesiSceltaListaFragment;
 import it.uniba.dib.sms222329.fragment.tesiscelta.TesiSceltaMiaFragment;
@@ -56,21 +61,21 @@ public class LoggedActivity extends AppCompatActivity {
                 Utility.tesistaLoggato = TesistaDatabase.IstanziaTesista(utenteLoggato, db);
                 Utility.accountLoggato = Utility.TESISTA;
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new RicevimentiCalendarioFragment());
-                setBottomNavigation(new TesiListaFragment(), new SegnalazioneChatFragment(), new RicevimentiCalendarioFragment(), new TesiSceltaMiaFragment());
+                setBottomNavigation(new TesiListaFragment(), new SegnalazioneChatListaFragment(), new RicevimentiCalendarioFragment(), new TesiSceltaMiaFragment());
             }
             else if (utenteLoggato.getTipoUtente() == Utility.RELATORE){
                 Utility.utenteLoggato = utenteLoggato;
                 Utility.relatoreLoggato = RelatoreDatabase.IstanziaRelatore(utenteLoggato, db);
                 Utility.accountLoggato = Utility.RELATORE;
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new RicevimentiCalendarioFragment());
-                setBottomNavigation(new TesiListaFragment(), new SegnalazioneChatFragment(), new RicevimentiCalendarioFragment(), new TesiSceltaListaFragment());
+                setBottomNavigation(new TesiListaFragment(), new SegnalazioneChatListaFragment(), new RicevimentiCalendarioFragment(), new TesiSceltaListaFragment());
             }
             else if (utenteLoggato.getTipoUtente() == Utility.CORELATORE){
                 Utility.utenteLoggato = utenteLoggato;
                 Utility.coRelatoreLoggato = CoRelatoreDatabase.IstanziaCoRelatore(utenteLoggato, db);
                 Utility.accountLoggato = Utility.CORELATORE;
                 Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new RicevimentiCalendarioFragment());
-                setBottomNavigation(new TesiListaFragment(), new SegnalazioneChatFragment(), new RicevimentiCalendarioFragment(), new TesiSceltaListaFragment());
+                setBottomNavigation(new TesiListaFragment(), new SegnalazioneChatListaFragment(), new RicevimentiCalendarioFragment(), new TesiSceltaListaFragment());
             }
             else if(utenteLoggato.getEmail().compareTo("guest")==0) {
                 Utility.accountLoggato = Utility.GUEST;
@@ -125,7 +130,8 @@ public class LoggedActivity extends AppCompatActivity {
 
     /**
      * Metodo usato per settare la nav bar del guest
-     * @param thesisFragment    fragment per la tab lista delle tesi
+     * @param thesisFragment
+     * @param studentFragment
      */
     private void setGuestBottomNavigation(Fragment thesisFragment, Fragment studentFragment) {
         bottomNavigationView = findViewById(R.id.navigation);
@@ -183,17 +189,23 @@ public class LoggedActivity extends AppCompatActivity {
     }
 
     /**
-     * Metodo usato per lo scanQR, permette di mostrare la tesi trovata tramite QR se l'utente conferma la richiesta di visualizzazione
+     * Metodo usato per lo scanQR, permette di mostrare la tesi trovata tramite QR
+     * se l'utente conferma la richiesta di visualizzazione
      */
     private void scanQR(){
-        ScanOptions options = new ScanOptions();
-        options.setPrompt("Volume up per usare il flash");
-        options.setBeepEnabled(true);
-        options.setOrientationLocked(true);
-        options.setCaptureActivity(CaptureAct.class);
-        barLauncher.launch(options);
+        if(CheckPermessiFotocamera()){
+            ScanOptions options = new ScanOptions();
+            options.setPrompt("Volume up per usare il flash");
+            options.setBeepEnabled(true);
+            options.setOrientationLocked(true);
+            options.setCaptureActivity(CaptureAct.class);
+            barLauncher.launch(options);
+        }
     }
 
+    /**
+     * Avvia l'activity di scanning ddl QRCode
+     */
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result->{
         if(result.getContents()!=null)
         {
@@ -235,4 +247,46 @@ public class LoggedActivity extends AppCompatActivity {
             }
         }
     });
+
+    /**
+     * Il metodo verifica i permessi per l'utilizzo della fotocamera, se non sono ancora stati concessi li chiede all'utente
+     * @return  restituisce true se i concessi sono già stati concessi, altrimenti false
+     */
+    private boolean CheckPermessiFotocamera() {
+        if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)){
+                new AlertDialog.Builder(this)
+                        .setTitle("Permesso richiesto")
+                        .setMessage("Il permesso è richiesto per l'utilizzo della fotocamera allo scopo della scannerizzazione dei QRCode")
+                        .setPositiveButton("Accetta", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(LoggedActivity.this, new String[]{Manifest.permission.CAMERA}, Utility.REQUEST_CAMERA);
+
+                            }
+                        })
+                        .setNegativeButton("Rifiuta", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, Utility.REQUEST_CAMERA);
+            }
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode==Utility.REQUEST_CAMERA && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            scanQR();
+        } else {
+            Toast.makeText(this, "Permessi negati", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

@@ -1,5 +1,7 @@
 package it.uniba.dib.sms222329.fragment.tesista;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -35,6 +37,8 @@ public class TesistaRegistraFragment extends Fragment {
     //Variabili e Oggetti
     private Database db;
     private UtenteRegistrato accountGenerale;
+    private String idUniversita;
+    private String idCorsoStudio;
 
     //View Items
     private TextInputEditText matricola;
@@ -60,28 +64,56 @@ public class TesistaRegistraFragment extends Fragment {
 
         Init();
         GestisciSpinner(spinnerUniversita);
+
         registerButton.setOnClickListener(view -> {
-            String idUniversita = RecuperaIdSpinner(spinnerUniversita, Database.UNIVERSITA);
-            String idCorsoStudio = RecuperaIdSpinner(spinnerCorsoStudi,Database.CORSOSTUDI);
+            idUniversita = RecuperaIdSpinner(spinnerUniversita, Database.UNIVERSITA);
+            idCorsoStudio = RecuperaIdSpinner(spinnerCorsoStudi,Database.CORSOSTUDI);
+
             if(!IsEmpty(matricola, media, numeroEsamiMancanti)){
-            Tesista account = new Tesista(matricola.getText().toString().trim(), accountGenerale.getNome(),
-                    accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(), accountGenerale.getEmail(),
-                    accountGenerale.getPassword(), 1, Integer.parseInt(media.getText().toString().trim()),
-                    Integer.parseInt(numeroEsamiMancanti.getText().toString().trim()), RecuperaUniversitaCorso(idUniversita, idCorsoStudio));
-                if (!db.VerificaDatoEsistente("SELECT " + Database.TESISTA_MATRICOLA + " FROM " + Database.TESISTA + " WHERE " + Database.TESISTA_MATRICOLA + " = '"+ account.getMatricola() +"';")){
-                    if(UtenteRegistratoDatabase.RegistrazioneUtente(account, db) && TesistaDatabase.RegistrazioneTesista(account, db)){
-                        Intent mainActivity = new Intent(getActivity().getApplicationContext(), MainActivity.class);
-                        startActivity(mainActivity);
-                    } else{
-                        Toast.makeText(getActivity().getApplicationContext(), "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
-                    }
-                } else{
-                    Toast.makeText(getActivity().getApplicationContext(), "Matricola già esistente", Toast.LENGTH_SHORT).show();
+                if(Integer.parseInt(media.getText().toString())<0 || Integer.parseInt(media.getText().toString())>30){
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("Conferma")
+                            .setMessage("Creare account Tesista?")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Registra();
+                                }
+                            })
+                            .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).create().show();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "La media non è compresa tra 0 e 30", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    /**
+     * Metodo per la registrazione del tesista
+     */
+    private void Registra(){
+        Tesista account = new Tesista(matricola.getText().toString().trim(), accountGenerale.getNome(),
+                accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(), accountGenerale.getEmail(),
+                accountGenerale.getPassword(), 1, Integer.parseInt(media.getText().toString().trim()),
+                Integer.parseInt(numeroEsamiMancanti.getText().toString().trim()), RecuperaUniversitaCorso(idUniversita, idCorsoStudio));
+        if (!db.VerificaDatoEsistente("SELECT " + Database.TESISTA_MATRICOLA + " FROM " + Database.TESISTA + " WHERE " + Database.TESISTA_MATRICOLA + " = '"+ account.getMatricola() +"';")){
+            if(UtenteRegistratoDatabase.RegistrazioneUtente(account, db) && TesistaDatabase.RegistrazioneTesista(account, db)){
+                Intent mainActivity = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                mainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(mainActivity);
+            } else{
+                Toast.makeText(getActivity().getApplicationContext(), "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
+            }
+        } else{
+            Toast.makeText(getActivity().getApplicationContext(), "Matricola già esistente", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**

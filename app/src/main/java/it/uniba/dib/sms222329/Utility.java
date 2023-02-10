@@ -47,6 +47,8 @@ public class Utility {
     public static final int REQUEST_PERMESSO_STORAGE = 1;
     /** Costante usata per il reuqest code del caricamento dei file */
     public static final int REQUEST_CARICA_FILE = 2;
+    /** Costante usata per il reuqest della richiesta dei permessi per la fotocamera */
+    public static final int REQUEST_CAMERA = 3;
 
     /** Account tesista loggato */
     public static Tesista tesistaLoggato;
@@ -120,7 +122,7 @@ public class Utility {
     }
 
     /**
-     * Metodo usato per verificare se la memoria esterna è accessibile
+     * Metodo usato per verificare se la memoria esterna è accessibile e nel caso manchino i permessi li richiede con un altro metodo
      * @param activity
      * @return  Restituisce true se è accessibile, altrimenti false
      */
@@ -139,8 +141,7 @@ public class Utility {
     }
 
     /**
-     * Metodo usato per verificare se i permessi di accesso alla memoria esterna sono già stati concessi; se non sono ancora stati concessi
-     * effettua la richiesta all'utente
+     * Metodo per effettuare la richiesta all'utente dei permessi per lo storage spiegando anche il motivo per cui servono
      * @param activity
      * @return  Restituisce true se i permessi sono concessi, altrimenti false
      */

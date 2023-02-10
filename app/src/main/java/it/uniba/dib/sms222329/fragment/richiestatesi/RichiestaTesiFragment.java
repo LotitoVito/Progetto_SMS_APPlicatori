@@ -1,5 +1,7 @@
 package it.uniba.dib.sms222329.fragment.richiestatesi;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -56,14 +58,21 @@ public class RichiestaTesiFragment extends Fragment {
 
         invia.setOnClickListener(view -> {
             if (!IsEmpty(messaggio, capacitaTesista)) {
-                RichiestaTesi richiesta = new RichiestaTesi(messaggio.getText().toString().trim(), capacitaTesista.getText().toString().trim(),
-                        tesi.getIdTesi(), Utility.tesistaLoggato.getIdTesista());
-                if(RichiestaTesiDatabase.RichiestaTesi(richiesta, db)){
-                    Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
-                    Utility.goBack(getActivity());
-                } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
-                }
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Conferma")
+                        .setMessage("Inviare la richiesta di tesi?")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                RichiestaTesi();
+                            }
+                        })
+                        .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), "Compila i campi obbligatori", Toast.LENGTH_SHORT).show();
             }
@@ -115,5 +124,19 @@ public class RichiestaTesiFragment extends Fragment {
         }
 
         return risultato;
+    }
+
+    /**
+     * Metodo di richiesta della tesi da parte del tesista
+     */
+    private void RichiestaTesi(){
+        RichiestaTesi richiesta = new RichiestaTesi(messaggio.getText().toString().trim(), capacitaTesista.getText().toString().trim(),
+                tesi.getIdTesi(), Utility.tesistaLoggato.getIdTesista());
+        if(RichiestaTesiDatabase.RichiestaTesi(richiesta, db)){
+            Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
+            Utility.goBack(getActivity());
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+        }
     }
 }

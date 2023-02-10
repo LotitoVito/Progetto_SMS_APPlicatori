@@ -215,11 +215,17 @@ public class TaskModificaFragment extends Fragment {
         }
     }
 
+    /**
+     * Metodo di inizializzazione di Firebase
+     */
     private void inizializzaFirebase() {
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance("https://laureapp-f0334-default-rtdb.europe-west1.firebasedatabase.app/").getReference("uploads_materiale");
     }
 
+    /**
+     * Metodo di recuper dell'ultimo file caricato se è stato caricato
+     */
     private void getLastUpload() {
         file = null;
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -264,6 +270,10 @@ public class TaskModificaFragment extends Fragment {
         }
     }
 
+    /**
+     * Metodo per l'upload di un file su Firebase
+     * @param data
+     */
     private void uploadFiles(Uri data) {
         //final ProgressDialog progressDialog = new ProgressDialog(getActivity().getApplicationContext());
         //progressDialog.setTitle("Uploading...");
@@ -296,6 +306,10 @@ public class TaskModificaFragment extends Fragment {
                 });
     }
 
+    /**
+     * Metodo per l'eliminazione dell'ultimo file da Firebase per il rimpiazzo di uno nuovo
+     * @param url
+     */
     private void eliminaFile(String url) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(url);
         storageReference.delete().addOnSuccessListener(aVoid -> {

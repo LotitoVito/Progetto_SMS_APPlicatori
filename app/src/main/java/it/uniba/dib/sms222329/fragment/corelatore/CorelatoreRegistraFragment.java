@@ -1,8 +1,12 @@
 package it.uniba.dib.sms222329.fragment.corelatore;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -16,6 +20,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.Utility;
+import it.uniba.dib.sms222329.activities.LoggedActivity;
 import it.uniba.dib.sms222329.activities.MainActivity;
 import it.uniba.dib.sms222329.classi.CoRelatore;
 import it.uniba.dib.sms222329.classi.UtenteRegistrato;
@@ -49,15 +54,22 @@ public class CorelatoreRegistraFragment extends Fragment {
 
         Init();
         registerButton.setOnClickListener(view -> {
-            if(!isEmpty(organizzaione)){
-                CoRelatore account = new CoRelatore(accountGenerale.getNome(), accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(),
-                        accountGenerale.getEmail(), accountGenerale.getPassword(), 3, organizzaione.getText().toString().trim());
-                if(UtenteRegistratoDatabase.RegistrazioneUtente(account, db) && CoRelatoreDatabase.RegistrazioneCoRelatore(account, db)){
-                    Intent mainActivity = new Intent(getActivity().getApplicationContext(), MainActivity.class);
-                    startActivity(mainActivity);
-                } else{
-                    Toast.makeText(getActivity().getApplicationContext(), "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
-                }
+            if(!isEmpty(organizzaione)) {
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Conferma")
+                        .setMessage("Creare un nuovo accounr Corelatore?")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Registra();
+                            }
+                        })
+                        .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
             }
@@ -85,5 +97,20 @@ public class CorelatoreRegistraFragment extends Fragment {
             textbox.setError("Obbligatorio");
         }
         return risultato;
+    }
+
+    /**
+     * Metodo di registrazione del corelatore
+     */
+    private void Registra(){
+        CoRelatore account = new CoRelatore(accountGenerale.getNome(), accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(),
+                accountGenerale.getEmail(), accountGenerale.getPassword(), 3, organizzaione.getText().toString().trim());
+        if(UtenteRegistratoDatabase.RegistrazioneUtente(account, db) && CoRelatoreDatabase.RegistrazioneCoRelatore(account, db)){
+            Intent mainActivity = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+            mainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(mainActivity);
+        } else{
+            Toast.makeText(getActivity().getApplicationContext(), "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
+        }
     }
 }

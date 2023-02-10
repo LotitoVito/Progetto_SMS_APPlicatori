@@ -1,6 +1,8 @@
 package it.uniba.dib.sms222329.fragment.ricevimento;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 
@@ -107,21 +109,38 @@ public class RicevimentoCreaFragment extends Fragment {
             if(LocalDate.now().compareTo(dataSelezionata) < 0){
                 if (Utility.accountLoggato != Utility.TESISTA) {
                     FillIfEmpty();
-                    if(richiesta.ModificaRicevimento(db, dataSelezionata, orarioSelezionato)){
-                        Toast.makeText(getActivity().getApplicationContext(), "Risposta inviata con successo", Toast.LENGTH_SHORT).show();
-                        Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new RicevimentiCalendarioFragment());
-                    } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
-                    }
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("Conferma")
+                            .setMessage("Modificare il ricevimento?")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ModificaRicevimento();
+                                }
+                            })
+                            .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).create().show();
                 } else {
                     if(!IsEmpty(data, ora, messaggio)){
-                        Ricevimento richiesta = new Ricevimento(dataSelezionata, orarioSelezionato, task.getIdTask(), Ricevimento.IN_ATTESA_RELATORE, messaggio.getText().toString().trim());
-                        if(RicevimentoDatabase.RichiestaRicevimento(db, richiesta)){
-                            Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
-                            Utility.goBack(getActivity());
-                        } else {
-                            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
-                        }
+                        new AlertDialog.Builder(getActivity())
+                                .setTitle("Conferma")
+                                .setMessage("Inviare richiesta ricevimento?")
+                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        CreaRicevimento();
+                                    }
+                                })
+                                .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                }).create().show();
                     } else {
                         Toast.makeText(getActivity().getApplicationContext(), "Compila i campi obbligatori", Toast.LENGTH_SHORT).show();
                     }
@@ -145,6 +164,8 @@ public class RicevimentoCreaFragment extends Fragment {
         if(Utility.accountLoggato==Utility.RELATORE){
             messaggio.setVisibility(View.GONE);
             FillIfEmpty();
+            dataSelezionata  = LocalDate.parse(data.getText().toString(), Utility.convertFromStringDate);
+            orarioSelezionato = LocalTime.parse(ora.getText().toString());
         }
     }
 
@@ -180,5 +201,30 @@ public class RicevimentoCreaFragment extends Fragment {
     private void FillIfEmpty() {
         Utility.fillIfEmpty(data, String.valueOf(richiesta.getData()));
         Utility.fillIfEmpty(ora, String.valueOf(richiesta.getOrario()));
+    }
+
+    /**
+     * Metodo di modifica del ricevimento da parte del relatore
+     */
+    private void ModificaRicevimento(){
+        if(richiesta.ModificaRicevimento(db, dataSelezionata, orarioSelezionato)){
+            Toast.makeText(getActivity().getApplicationContext(), "Risposta inviata con successo", Toast.LENGTH_SHORT).show();
+            Utility.goBack(getActivity());
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Metodo di creazione dle ricevimento da parte del tesista
+     */
+    private void CreaRicevimento(){
+        Ricevimento richiesta = new Ricevimento(dataSelezionata, orarioSelezionato, task.getIdTask(), Ricevimento.IN_ATTESA_RELATORE, messaggio.getText().toString().trim());
+        if(RicevimentoDatabase.RichiestaRicevimento(db, richiesta)){
+            Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
+            Utility.goBack(getActivity());
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+        }
     }
 }

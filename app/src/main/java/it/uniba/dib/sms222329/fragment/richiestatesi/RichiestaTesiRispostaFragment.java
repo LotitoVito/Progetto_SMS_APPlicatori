@@ -1,5 +1,7 @@
 package it.uniba.dib.sms222329.fragment.richiestatesi;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -60,13 +62,21 @@ public class RichiestaTesiRispostaFragment extends Fragment {
 
         accetta.setOnClickListener(view -> {
             if(!db.VerificaDatoEsistente("SELECT * FROM " + Database.TESISCELTA + " WHERE " + Database.TESISCELTA_TESISTAID + "=" + richiesta.getIdTesista() + ";")){
-                richiesta.setStato(RichiestaTesi.ACCETTATO);
-                if(richiesta.AccettaRichiestaTesi(rispostaRelatore.getText().toString().trim(), db)){
-                    Toast.makeText(getActivity().getApplicationContext(), "Richiesta accettata con successo", Toast.LENGTH_SHORT).show();
-                    Utility.goBack(getActivity());
-                } else{
-                    Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
-                }
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Conferma")
+                        .setMessage("Accettare il tesista?")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                AccettaRichiestaTesi();
+                            }
+                        })
+                        .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), "Il tesista è già registrato per una tesi", Toast.LENGTH_SHORT).show();
             }
@@ -74,12 +84,21 @@ public class RichiestaTesiRispostaFragment extends Fragment {
         });
 
         rifiuta.setOnClickListener(view -> {
-            if(richiesta.RifiutaRichiestaTesi(rispostaRelatore.getText().toString().trim(), db)){
-                Toast.makeText(getActivity().getApplicationContext(), "Richiesta rifiutata con successo", Toast.LENGTH_SHORT).show();
-                Utility.goBack(getActivity());
-            } else{
-                Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
-            }
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("Conferma")
+                    .setMessage("Rifiutare il tesista?")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            RifiutaRichiestaTesi();
+                        }
+                    })
+                    .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).create().show();
         });
     }
 
@@ -136,5 +155,24 @@ public class RichiestaTesiRispostaFragment extends Fragment {
         //Richiesta
         capacitaEffettive.setText(richiesta.getCapacitàStudente());
         messaggioTesista.setText(richiesta.getMessaggio());
+    }
+
+    private void AccettaRichiestaTesi(){
+        richiesta.setStato(RichiestaTesi.ACCETTATO);
+        if(richiesta.AccettaRichiestaTesi(rispostaRelatore.getText().toString().trim(), db)){
+            Toast.makeText(getActivity().getApplicationContext(), "Richiesta accettata con successo", Toast.LENGTH_SHORT).show();
+            Utility.goBack(getActivity());
+        } else{
+            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void RifiutaRichiestaTesi(){
+        if(richiesta.RifiutaRichiestaTesi(rispostaRelatore.getText().toString().trim(), db)){
+            Toast.makeText(getActivity().getApplicationContext(), "Richiesta rifiutata con successo", Toast.LENGTH_SHORT).show();
+            Utility.goBack(getActivity());
+        } else{
+            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+        }
     }
 }

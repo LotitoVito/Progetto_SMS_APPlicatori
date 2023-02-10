@@ -21,7 +21,7 @@ import it.uniba.dib.sms222329.database.Database;
 import it.uniba.dib.sms222329.database.ListaSegnalazioniChatDatabase;
 import it.uniba.dib.sms222329.fragment.adapter.ListaSegnalazioniChatAdapter;
 
-public class SegnalazioneChatFragment extends Fragment {
+public class SegnalazioneChatListaFragment extends Fragment {
 
     //Variabili e Oggetti
     private Database db;
@@ -30,7 +30,7 @@ public class SegnalazioneChatFragment extends Fragment {
     private ListView listView;
     private TextView filtra;
 
-    public SegnalazioneChatFragment() {
+    public SegnalazioneChatListaFragment() {
     }
 
     @Override

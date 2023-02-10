@@ -325,8 +325,6 @@ public class Database extends SQLiteOpenHelper {
         }
         //Popolamento tabella Universita-CorsiStudio
         PopolamentoUniCorsi(db);
-        //Popolamento ricevimenti
-        //Test(db);
     }
 
     //Viene chiamato nel caso di aggiornamento della versione del database
@@ -393,91 +391,5 @@ public class Database extends SQLiteOpenHelper {
         cv.put(UNIVERSITACORSO_UNIVERSITAID, 3);
         cv.put(UNIVERSITACORSO_CORSOID, 3);
         db.insert(UNIVERSITACORSO, null, cv);
-    }
-
-    private void Test(SQLiteDatabase db){
-        //Segnalazione
-        ContentValues cvSegnalazione = new ContentValues();
-        cvSegnalazione.put(SEGNALAZIONECHAT_TESISCELTAID, 1);
-        cvSegnalazione.put(SEGNALAZIONECHAT_OGGETTO, "aaaaaaaa");
-        db.insert(SEGNALAZIONECHAT, null, cvSegnalazione);
-
-        cvSegnalazione.put(SEGNALAZIONECHAT_TESISCELTAID, 2);
-        cvSegnalazione.put(SEGNALAZIONECHAT_OGGETTO, "bbb");
-        db.insert(SEGNALAZIONECHAT, null, cvSegnalazione);
-
-        cvSegnalazione.put(SEGNALAZIONECHAT_TESISCELTAID, 3);
-        cvSegnalazione.put(SEGNALAZIONECHAT_OGGETTO, "ccc");
-        db.insert(SEGNALAZIONECHAT, null, cvSegnalazione);
-
-        //Messaggi
-        ContentValues cvMessaggi = new ContentValues();
-        cvMessaggi.put(MESSAGGISEGNALAZIONE_UTENTEID, 1);
-        cvMessaggi.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "aaa");
-        cvMessaggi.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-03 08:47:00");
-        cvMessaggi.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 1);
-        db.insert(MESSAGGISEGNALAZIONE, null, cvMessaggi);
-
-        cvMessaggi.put(MESSAGGISEGNALAZIONE_UTENTEID, 2);
-        cvMessaggi.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "bbb");
-        cvMessaggi.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-03 08:50:20");
-        cvMessaggi.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 1);
-        db.insert(MESSAGGISEGNALAZIONE, null, cvMessaggi);
-
-        cvMessaggi.put(MESSAGGISEGNALAZIONE_UTENTEID, 1);
-        cvMessaggi.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "ccc");
-        cvMessaggi.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-03 08:48:45");
-        cvMessaggi.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 1);
-        db.insert(MESSAGGISEGNALAZIONE, null, cvMessaggi);
-
-        cvMessaggi.put(MESSAGGISEGNALAZIONE_UTENTEID, 1);
-        cvMessaggi.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "ddd");
-        cvMessaggi.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-03 12:45:23");
-        cvMessaggi.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 2);
-        db.insert(MESSAGGISEGNALAZIONE, null, cvMessaggi);
-
-        //Ricevimenti
-        ContentValues cvRicevimenti = new ContentValues();
-        cvRicevimenti.put(RICEVIMENTI_TASKID, 1);
-        cvRicevimenti.put(RICEVIMENTI_DATA, "2023-02-04");
-        cvRicevimenti.put(RICEVIMENTI_ORARIO, "16:50");
-        cvRicevimenti.put(RICEVIMENTI_ACCETTAZIONE, Ricevimento.IN_ATTESA_RELATORE);
-        cvRicevimenti.put(RICEVIMENTI_MESSAGGIO, "A");
-        db.insert(RICEVIMENTI, null, cvRicevimenti);
-
-        //Richieste
-        ContentValues cvRichieste = new ContentValues();
-        cvRichieste.put(RICHIESTA_TESIID, 1);
-        cvRichieste.put(RICHIESTA_TESISTAID, 1);
-        cvRichieste.put(RICHIESTA_MESSAGGIO, "aaaa");
-        cvRichieste.put(RICHIESTA_CAPACITASTUDENTE, "A");
-        cvRichieste.put(RICHIESTA_ACCETTATA, RichiestaTesi.IN_ATTESA);
-        db.insert(RICHIESTA, null, cvRichieste);
-
-        cvRichieste.put(RICHIESTA_TESIID, 1);
-        cvRichieste.put(RICHIESTA_TESISTAID, 2);
-        cvRichieste.put(RICHIESTA_MESSAGGIO, "bbbb");
-        cvRichieste.put(RICHIESTA_CAPACITASTUDENTE, "B");
-        cvRichieste.put(RICHIESTA_ACCETTATA, RichiestaTesi.IN_ATTESA);
-        db.insert(RICHIESTA, null, cvRichieste);
-
-        cvRichieste.put(RICHIESTA_TESIID, 1);
-        cvRichieste.put(RICHIESTA_TESISTAID, 2);
-        cvRichieste.put(RICHIESTA_MESSAGGIO, "abbbbaaa");
-        cvRichieste.put(RICHIESTA_CAPACITASTUDENTE, "C");
-        cvRichieste.put(RICHIESTA_ACCETTATA, RichiestaTesi.IN_ATTESA);
-        db.insert(RICHIESTA, null, cvRichieste);
-
-        //TesiScelte
-        ContentValues cvTesiScelte = new ContentValues();
-        cvTesiScelte.put(TESISCELTA_TESIID, 1);
-        cvTesiScelte.put(TESISCELTA_TESISTAID, 1);
-        cvTesiScelte.put(TESISCELTA_CORELATOREID, 1);
-        db.insert(TESISCELTA, null, cvTesiScelte);
-
-        cvTesiScelte.put(TESISCELTA_TESIID, 2);
-        cvTesiScelte.put(TESISCELTA_TESISTAID, 2);
-        cvTesiScelte.put(TESISCELTA_CORELATOREID, 1);
-        db.insert(TESISCELTA, null, cvTesiScelte);
     }
 }

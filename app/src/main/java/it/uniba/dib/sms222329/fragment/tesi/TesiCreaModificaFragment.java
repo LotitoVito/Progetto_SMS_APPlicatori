@@ -1,5 +1,7 @@
 package it.uniba.dib.sms222329.fragment.tesi;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -88,15 +90,19 @@ public class TesiCreaModificaFragment extends Fragment {
 
             FillAllEmpty();
             salva.setOnClickListener(view -> {
-                FillAllEmpty();
-                if(tesi.ModificaTesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(), statoDisponibilita.isChecked(),
-                        Integer.parseInt(tempistiche.getText().toString().trim()), Float.parseFloat(media.getText().toString().trim()),
-                        Integer.parseInt(esamiMancanti.getText().toString().trim()), capacitaRichiesta.getText().toString().trim(),
-                        RecuperaIdUniversitaCorso(), db)){
-                    Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
-                    Utility.goBack(getActivity());
-                } else{
-                    Toast.makeText(getActivity().getApplicationContext(), "Modifica fallita", Toast.LENGTH_SHORT).show();
+                if(Integer.parseInt(media.getText().toString())<0 || Integer.parseInt(media.getText().toString())>30){
+                    FillAllEmpty();
+                    if(tesi.ModificaTesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(), statoDisponibilita.isChecked(),
+                            Integer.parseInt(tempistiche.getText().toString().trim()), Float.parseFloat(media.getText().toString().trim()),
+                            Integer.parseInt(esamiMancanti.getText().toString().trim()), capacitaRichiesta.getText().toString().trim(),
+                            RecuperaIdUniversitaCorso(), db)){
+                        Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
+                        Utility.goBack(getActivity());
+                    } else{
+                        Toast.makeText(getActivity().getApplicationContext(), "Modifica fallita", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "La media non è compresa tra 0 e 30", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -104,16 +110,24 @@ public class TesiCreaModificaFragment extends Fragment {
 
             salva.setOnClickListener(view -> {
                 if(!IsEmpty(titolo, argomenti, tempistiche, media, esamiMancanti, capacitaRichiesta)) {
-                Tesi tesi = new Tesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(),
-                        statoDisponibilita.isChecked(), Utility.relatoreLoggato.getIdRelatore(), Integer.parseInt(tempistiche.getText().toString().trim()),
-                        Integer.parseInt(media.getText().toString().trim()), Integer.parseInt(esamiMancanti.getText().toString().trim()),
-                        capacitaRichiesta.getText().toString().trim(), RecuperaIdUniversitaCorso());
-
-                    if (TesiDatabase.RegistrazioneTesi(tesi, db)) {
-                        Toast.makeText(getActivity().getApplicationContext(), "Tesi registrata con successo", Toast.LENGTH_SHORT).show();
-                        Utility.goBack(getActivity());
+                    if(Integer.parseInt(media.getText().toString())<0 || Integer.parseInt(media.getText().toString())>30){
+                        new AlertDialog.Builder(getActivity())
+                                .setTitle("Conferma")
+                                .setMessage("Creare la proposta di tesi?")
+                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        CreaTesi();
+                                    }
+                                })
+                                .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                }).create().show();
                     } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "Registrazione fallita", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), "La media non è compresa tra 0 e 30", Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     Toast.makeText(getActivity().getApplicationContext(), "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
@@ -123,6 +137,26 @@ public class TesiCreaModificaFragment extends Fragment {
         }
     }
 
+    /**
+     * Metodo di creazione di una proposta di tesi
+     */
+    private void CreaTesi(){
+        Tesi tesi = new Tesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(),
+                statoDisponibilita.isChecked(), Utility.relatoreLoggato.getIdRelatore(), Integer.parseInt(tempistiche.getText().toString().trim()),
+                Integer.parseInt(media.getText().toString().trim()), Integer.parseInt(esamiMancanti.getText().toString().trim()),
+                capacitaRichiesta.getText().toString().trim(), RecuperaIdUniversitaCorso());
+
+        if (TesiDatabase.RegistrazioneTesi(tesi, db)) {
+            Toast.makeText(getActivity().getApplicationContext(), "Tesi registrata con successo", Toast.LENGTH_SHORT).show();
+            Utility.goBack(getActivity());
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Registrazione fallita", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Metodo per la gestione dello spinner dei corsi di studio del relatore da impostare per la tesi
+     */
     private void SpinnerCreate() {
         Cursor cursor = db.RicercaDato("SELECT cs." + Database.CORSOSTUDI_NOME +
                 " FROM " + Database.CORSIRELATORE + " cr, " + Database.UNIVERSITACORSO + " uc, " + Database.CORSOSTUDI + " cs " +
@@ -148,6 +182,10 @@ public class TesiCreaModificaFragment extends Fragment {
         }
     }
 
+    /**
+     * Metodo per il recupero dell'id della coppia universita (del tesista) e corso selezionato
+     * @return  restituisce l'id della coppia universita-corso
+     */
     private int RecuperaIdUniversitaCorso(){
         //Recupero id universita
         Cursor cursorUniversita = db.RicercaDato("SELECT uc." + Database.UNIVERSITACORSO_UNIVERSITAID +

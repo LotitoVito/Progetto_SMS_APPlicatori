@@ -2,8 +2,10 @@ package it.uniba.dib.sms222329.fragment.tesiscelta;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -132,16 +134,38 @@ public class TesiSceltaMiaFragment extends Fragment {
 
             salvaModifica.setOnClickListener(view -> {
                 if(!IsEmpty(abTesi)){
-                    if(tesiScelta.ConsegnaTesiScelta(db, abTesi.getText().toString().trim())){
-                        Toast.makeText(getActivity().getApplicationContext(), "Consegna avvenuta con successo", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
-                    }
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("Conferma")
+                            .setMessage("Comsegnare la tesi?")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ConsegnaTesi();
+                                }
+                            })
+                            .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).create().show();
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Compila i campi obbligatori", Toast.LENGTH_SHORT).show();
 
                 }
             });
+        }
+    }
+
+    /**
+     * Metodo per consegnare la tesi completata
+     */
+    private void ConsegnaTesi(){
+        if(tesiScelta.ConsegnaTesiScelta(db, abTesi.getText().toString().trim())){
+            Toast.makeText(getActivity().getApplicationContext(), "Consegna avvenuta con successo", Toast.LENGTH_SHORT).show();
+            this.onResume();
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -284,11 +308,18 @@ public class TesiSceltaMiaFragment extends Fragment {
         return risultato;
     }
 
+    /**
+     * Metodo per inizializzare Firebase
+     */
     private void inizializzaFirebase() {
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance("https://laureapp-f0334-default-rtdb.europe-west1.firebasedatabase.app/").getReference("uploads");
     }
 
+    /**
+     * Metodo per recuperare l'ultimo file caricato su Firebase se è stato caricato
+     * @return  true se trova un file, altrimenti false
+     */
     private boolean getLastUpload() {
         file = null;
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -335,6 +366,10 @@ public class TesiSceltaMiaFragment extends Fragment {
         }
     }
 
+    /**
+     * Metodo per l'upload di file su Firebase
+     * @param data
+     */
     private void uploadFiles(Uri data) {
         //final ProgressDialog progressDialog = new ProgressDialog(getActivity().getApplicationContext());
         //progressDialog.setTitle("Uploading...");
@@ -368,6 +403,10 @@ public class TesiSceltaMiaFragment extends Fragment {
 
     }
 
+    /**
+     * Metodo per eliminare l'ultimo file caricato su Firebase per rimpiazzarlo con uno nuovo
+     * @param url
+     */
     private void eliminaFile(String url) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(url);
         storageReference.delete().addOnSuccessListener(aVoid -> {
@@ -382,6 +421,9 @@ public class TesiSceltaMiaFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo per effettuare il download dell'ultimo file caricato su Firebase
+     */
     private void downloadFile() {
         DownloadManager downloadManager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
         Uri uri = Uri.parse(file.getUrl());

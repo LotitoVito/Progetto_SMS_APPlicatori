@@ -149,8 +149,10 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
      */
     private void AddToQueryRelatore(){
         try {
-            Cursor cursor = db.RicercaDato("SELECT " + Database.RELATORE_ID + " FROM " + Database.RELATORE +
-                    " WHERE " + Database.RELATORE_MATRICOLA + "=" + relatore.getText().toString() + ";");
+            Cursor cursor = db.RicercaDato("SELECT " + Database.RELATORE_ID + " " +
+                    "FROM " + Database.RELATORE + " r, " + Database.UTENTI + "u " +
+                    " WHERE r." + Database.RELATORE_UTENTEID + "=u." + Database.UTENTI_ID +
+                    " AND " + Database.UTENTI_EMAIL + " LIKE('" + relatore.getText().toString() + "');");
             cursor.moveToNext();
 
             query += " t." + Database.TESI_RELATOREID + "=" + cursor.getInt(0) + " AND";

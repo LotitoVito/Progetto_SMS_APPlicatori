@@ -1,5 +1,7 @@
 package it.uniba.dib.sms222329.fragment.relatore;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -36,6 +38,7 @@ public class RelatoreRegistraFragment extends Fragment {
     //Variabili e Oggetti
     private Database db;
     private UtenteRegistrato accountGenerale;
+    private ArrayList<Integer> corsiRelatore;
 
     //View Items
     private Button registerButton;
@@ -62,22 +65,24 @@ public class RelatoreRegistraFragment extends Fragment {
         registerButton.setOnClickListener(view -> {
             String idUniversita = RecuperaIdSpinner();
             List idCorsiSelezionati = RecuperaIdCorsi();
-            ArrayList<Integer> corsiRelatore = RecuperaUniversitaCorso(idUniversita, idCorsiSelezionati);
+            corsiRelatore = RecuperaUniversitaCorso(idUniversita, idCorsiSelezionati);
 
-            if(!isEmpty(matricola) && corsiRelatore.size()!=0){
-            Relatore account = new Relatore(matricola.getText().toString().trim(), accountGenerale.getNome(),
-                    accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(), accountGenerale.getEmail(),
-                    accountGenerale.getPassword(), 2, corsiRelatore);
-                if(!db.VerificaDatoEsistente("SELECT " + Database.RELATORE_MATRICOLA + " FROM " + Database.RELATORE + " WHERE " + Database.RELATORE_MATRICOLA + " = '"+ account.getMatricola() +"';")){
-                    if(UtenteRegistratoDatabase.RegistrazioneUtente(account, db) && RelatoreDatabase.RegistrazioneRelatore(account, db)){
-                        Intent mainActivity = new Intent(getActivity().getApplicationContext(), MainActivity.class);
-                        startActivity(mainActivity);
-                    } else{
-                        Toast.makeText(getActivity().getApplicationContext(), "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    Toast.makeText(getActivity().getApplicationContext(), "Matricola già esistente", Toast.LENGTH_SHORT).show();
-                }
+            if(isEmpty(matricola) && corsiRelatore.size()!=0) {
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Conferma")
+                        .setMessage("Creare un nuovo account Relatore?")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Registra();
+                            }
+                        })
+                        .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
             }
@@ -96,6 +101,26 @@ public class RelatoreRegistraFragment extends Fragment {
 
         String query = "SELECT " + Database.UNIVERSITA_NOME + " FROM " + Database.UNIVERSITA + ";";
         spinnerCreate();
+    }
+
+    /**
+     * Metodo di registrazione del relatore
+     */
+    private void Registra(){
+        Relatore account = new Relatore(matricola.getText().toString().trim(), accountGenerale.getNome(),
+                accountGenerale.getCognome(), accountGenerale.getCodiceFiscale(), accountGenerale.getEmail(),
+                accountGenerale.getPassword(), 2, corsiRelatore);
+        if(!db.VerificaDatoEsistente("SELECT " + Database.RELATORE_MATRICOLA + " FROM " + Database.RELATORE + " WHERE " + Database.RELATORE_MATRICOLA + " = '"+ account.getMatricola() +"';")){
+            if(UtenteRegistratoDatabase.RegistrazioneUtente(account, db) && RelatoreDatabase.RegistrazioneRelatore(account, db)){
+                Intent mainActivity = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                mainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(mainActivity);
+            } else{
+                Toast.makeText(getActivity().getApplicationContext(), "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(getActivity().getApplicationContext(), "Matricola già esistente", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -205,6 +230,11 @@ public class RelatoreRegistraFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo usato per verificare se la textbox sia vuota e nel caso contrassegnarlo
+     * @param textbox
+     * @return  restituisce true se vuota, altrimento false
+     */
     private boolean isEmpty(EditText textbox){
         boolean risultato = false;
         if(Utility.isEmptyTextbox(textbox)){

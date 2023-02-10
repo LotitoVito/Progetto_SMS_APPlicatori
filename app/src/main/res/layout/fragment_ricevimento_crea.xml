@@ -56,8 +56,10 @@
                 android:id="@+id/data_richiesta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:enabled="false"
-                android:allowClickWhenDisabled="true"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:inputType="text"
                 tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
 
@@ -73,8 +75,10 @@
                 android:id="@+id/ora_richiesta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:enabled="false"
-                android:allowClickWhenDisabled="true"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:inputType="text"
                 tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
 

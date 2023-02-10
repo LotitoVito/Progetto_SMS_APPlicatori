@@ -11,10 +11,18 @@ public class FileUpload {
     String url;
     Date date;
 
-    public  FileUpload(){
+    /**
+     * Costruttore vuoto
+     */
+    public FileUpload(){}
 
-    }
-
+    /**
+     * Costruttore usato per salvare i file su firebase
+     * @param idUtente
+     * @param nome
+     * @param url
+     * @param date
+     */
     public FileUpload(int idUtente, String nome, String url, Date date) {
         this.idUtente = idUtente;
         this.nome = nome;

@@ -2,6 +2,8 @@ package it.uniba.dib.sms222329.fragment.task;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.icu.text.SimpleDateFormat;
@@ -108,13 +110,21 @@ public class TaskCreaFragment extends Fragment {
 
         creaTask.setOnClickListener(view -> {
             if(!IsEmpty(titoloTask, descrizioneTask, dataFine)){
-                Task task = new Task(titoloTask.getText().toString().trim(), descrizioneTask.getText().toString().trim(), dataSelezionata, downloadKey, tesiScelta.getIdTesiScelta());
-                if(TaskDatabase.CreaTask(db, task)){
-                    Toast.makeText(getActivity().getApplicationContext(), "Task creata con successo", Toast.LENGTH_SHORT).show();
-                    Utility.goBack(getActivity());
-                } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
-                }
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Conferma")
+                        .setMessage("Creare task per il tesista?")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                CreaTask();
+                            }
+                        })
+                        .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), "Compilare i campi obbligatori", Toast.LENGTH_SHORT).show();
             }
@@ -125,6 +135,19 @@ public class TaskCreaFragment extends Fragment {
                 caricaFile();
             }
         });
+    }
+
+    /**
+     * Metodo di creazione di un task per una tesi scelta
+     */
+    private void CreaTask(){
+        Task task = new Task(titoloTask.getText().toString().trim(), descrizioneTask.getText().toString().trim(), dataSelezionata, downloadKey, tesiScelta.getIdTesiScelta());
+        if(TaskDatabase.CreaTask(db, task)){
+            Toast.makeText(getActivity().getApplicationContext(), "Task creata con successo", Toast.LENGTH_SHORT).show();
+            Utility.goBack(getActivity());
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
