@@ -56,7 +56,7 @@ public class RelatoreModificaFragment extends Fragment {
         super.onResume();
 
         Init();
-        SetHintAll();
+        FillAllEmpty();
         GestisciSpinner(universita);
 
         conferma.setOnClickListener(view -> {
@@ -93,18 +93,6 @@ public class RelatoreModificaFragment extends Fragment {
         conferma = getView().findViewById(R.id.conferma);
 
         spinnerCreate();
-    }
-
-    /**
-     * Imposta il testo per ogni elemento della view come suggerimento
-     */
-    private void SetHintAll(){
-        nome.setHint(Utility.relatoreLoggato.getNome());
-        cognome.setHint(Utility.relatoreLoggato.getCognome());
-        mail.setHint(Utility.relatoreLoggato.getEmail());
-        password.setHint(Utility.relatoreLoggato.getPassword());
-        codFisc.setHint(Utility.relatoreLoggato.getCodiceFiscale());
-        matricola.setHint(Utility.relatoreLoggato.getMatricola());
     }
 
     /**

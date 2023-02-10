@@ -86,7 +86,7 @@ public class TesiCreaModificaFragment extends Fragment {
 
         if(operazioneModifica){
 
-            SetAllHint();
+            FillAllEmpty();
             salva.setOnClickListener(view -> {
                 FillAllEmpty();
                 if(tesi.ModificaTesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(), statoDisponibilita.isChecked(),
@@ -180,19 +180,6 @@ public class TesiCreaModificaFragment extends Fragment {
         corsoStudi = getView().findViewById(R.id.corso);
         statoDisponibilita = getView().findViewById(R.id.disponibilita);
         salva = getView().findViewById(R.id.add);
-    }
-
-    /**
-     * Imposta il testo per ogni elemento della view come suggerimento
-     */
-    private void SetAllHint(){
-        titolo.setHint(tesi.getTitolo());
-        argomenti.setHint(tesi.getArgomenti());
-        tempistiche.setHint(String.valueOf(tesi.getTempistiche()));
-        esamiMancanti.setHint(String.valueOf(tesi.getEsamiNecessari()));
-        capacitaRichiesta.setHint(tesi.getCapacitaRichieste());
-        media.setHint(String.valueOf(tesi.getMediaVotiMinima()));
-        statoDisponibilita.setChecked(tesi.getStatoDisponibilita());
     }
 
     /**

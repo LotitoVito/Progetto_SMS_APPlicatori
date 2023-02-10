@@ -209,6 +209,7 @@ public class TesiSceltaMiaFragment extends Fragment {
      * Imposta il testo per ogni elemento della view in base ai casi
      */
     private void SetTextAll() {
+        //Relatore
         Cursor cursorRelatore = db.RicercaDato("SELECT u." + Database.UTENTI_COGNOME + ", u." + Database.UTENTI_NOME + " " +
                 "FROM " + Database.UTENTI + " u, " + Database.RELATORE + " r, " + Database.TESI + " t, " + Database.TESISCELTA + " ts " +
                 "WHERE ts." + Database.TESISCELTA_TESIID + "=t." + Database.TESI_ID + " AND t." + Database.TESI_RELATOREID + "=r." + Database.RELATORE_ID + " AND r." + Database.RELATORE_UTENTEID + "=u." + Database.UTENTI_ID + " " +
@@ -216,6 +217,7 @@ public class TesiSceltaMiaFragment extends Fragment {
         cursorRelatore.moveToFirst();
         relatore.setText(cursorRelatore.getString(cursorRelatore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorRelatore.getString(cursorRelatore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
 
+        //Tesi
         Cursor cursorTesi = db.RicercaDato("SELECT t." + Database.TESI_TITOLO + ", t." + Database.TESI_ARGOMENTO + ", t." + Database.TESI_TEMPISTICHE + " " +
                 "FROM " + Database.TESI + " t, " + Database.TESISCELTA +" ts " +
                 "WHERE ts." + Database.TESISCELTA_TESIID + "=t." + Database.TESI_ID + " AND " + Database.TESISCELTA_TESIID + "=" + tesiScelta.getIdTesi() + ";");
@@ -224,6 +226,7 @@ public class TesiSceltaMiaFragment extends Fragment {
         argomentoTesi.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)));
         tempistiche.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_TEMPISTICHE)));
 
+        //Abstract e DataPubblicazione
         abTesi.setText(tesiScelta.getRiassunto());
         if(tesiScelta.getDataPubblicazione() != null){
             dataConsegna.setText(tesiScelta.getDataPubblicazione().format(Utility.showDate));
@@ -231,6 +234,7 @@ public class TesiSceltaMiaFragment extends Fragment {
             dataConsegna.setText("Tesi non ancora consegnata");
         }
 
+        //Corelatore
         Cursor cursorCorelatore = db.RicercaDato("SELECT u." + Database.UTENTI_COGNOME + ", u." + Database.UTENTI_NOME + ", u." + Database.UTENTI_EMAIL + " " +
                 "FROM " + Database.UTENTI + " u, " + Database.CORELATORE + " cr, " + Database.TESISCELTA + " ts " +
                 "WHERE ts." + Database.TESISCELTA_CORELATOREID + "=cr." + Database.CORELATORE_ID + " AND cr." + Database.CORELATORE_UTENTEID+ "=u." + Database.UTENTI_ID + " " +

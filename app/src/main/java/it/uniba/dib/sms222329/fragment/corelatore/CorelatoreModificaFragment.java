@@ -44,7 +44,7 @@ public class CorelatoreModificaFragment extends Fragment {
         super.onResume();
 
         Init();
-        SetAllHint();
+        FillAllEmpty();
 
         editButton.setOnClickListener(view -> {
             FillAllEmpty();
@@ -55,18 +55,6 @@ public class CorelatoreModificaFragment extends Fragment {
                 Utility.goBack(getActivity());
             }
         });
-    }
-
-    /**
-     * Imposta il testo per ogni elemento della view come suggerimento
-     */
-    private void SetAllHint() {
-        nome.setHint(Utility.coRelatoreLoggato.getNome());
-        cognome.setHint(Utility.coRelatoreLoggato.getCognome());
-        mail.setHint(Utility.coRelatoreLoggato.getEmail());
-        password.setHint(Utility.coRelatoreLoggato.getPassword());
-        codFisc.setHint(Utility.coRelatoreLoggato.getCodiceFiscale());
-        org.setHint(Utility.coRelatoreLoggato.getOrganizzazione());
     }
 
     /**

@@ -55,7 +55,7 @@ public class TesistaModificaFragment extends Fragment {
         super.onResume();
 
         Init();
-        SetHintAll();
+        FillAllEmpty();
         GestisciSpinner(spinnerUniversita);
 
         registerButton.setOnClickListener(view -> {
@@ -99,20 +99,6 @@ public class TesistaModificaFragment extends Fragment {
                 "FROM " + Database.UNIVERSITACORSO + " uc , " + Database.UNIVERSITA + " u " +
                 "WHERE uc." + Database.UNIVERSITACORSO_UNIVERSITAID + "=u." + Database.UNIVERSITA_ID + " AND uc." + Database.UNIVERSITACORSO_ID + " = '"+ Utility.tesistaLoggato.getIdUniversitaCorso() +"';";
         spinnerCreate(spinnerUniversita, queryValori, queryValoreRegistrato);
-    }
-
-    /**
-     * Imposta il testo per ogni elemento della view come suggerimento
-     */
-    private void SetHintAll(){
-        nome.setHint(Utility.tesistaLoggato.getNome());
-        cognome.setHint(Utility.tesistaLoggato.getCognome());
-        mail.setHint(Utility.tesistaLoggato.getEmail());
-        password.setHint(Utility.tesistaLoggato.getPassword());
-        codFisc.setHint(Utility.tesistaLoggato.getCodiceFiscale());
-        matricola.setHint(Utility.tesistaLoggato.getMatricola());
-        media.setHint(String.valueOf(Utility.tesistaLoggato.getMedia()));
-        numeroEsamiMancanti.setHint(String.valueOf(Utility.tesistaLoggato.getNumeroEsamiMancanti()));
     }
 
     /**

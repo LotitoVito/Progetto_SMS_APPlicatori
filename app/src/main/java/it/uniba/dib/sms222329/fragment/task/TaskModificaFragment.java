@@ -90,7 +90,7 @@ public class TaskModificaFragment extends Fragment {
         super.onResume();
 
         Init();
-        SetHintAll();
+        FillAllEmpty();
 
         dataFine.setOnClickListener(view1 -> {
             MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
@@ -124,7 +124,7 @@ public class TaskModificaFragment extends Fragment {
         });
 
         modificaTask.setOnClickListener(view -> {
-            FillIfEmpty();
+            FillAllEmpty();
             if(Utility.accountLoggato == Utility.RELATORE){
                 if(task.ModificaTask(titoloTask.getText().toString().trim(), descrizioneTask.getText().toString().trim(), dataSelezionata, (int) (sliderStato.getValue()/25), db)){        //settare slider
                     Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
@@ -192,18 +192,9 @@ public class TaskModificaFragment extends Fragment {
     }
 
     /**
-     * Imposta il testo per ogni elemento della view come suggerimento
-     */
-    private void SetHintAll(){
-        titoloTask.setHint(task.getTitolo());
-        descrizioneTask.setHint(task.getDescrizione());
-        dataFine.setHint(task.getDataFine().format(Utility.showDate));
-    }
-
-    /**
      * Riempie i campi vuoti con il giusto valore se sono vuoti
      */
-    private void FillIfEmpty() {
+    private void FillAllEmpty() {
         Utility.fillIfEmpty(titoloTask, task.getTitolo());
         Utility.fillIfEmpty(descrizioneTask, task.getDescrizione());
         if(Utility.isEmptyTextbox(dataFine)){
