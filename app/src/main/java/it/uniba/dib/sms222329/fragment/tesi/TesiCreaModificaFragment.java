@@ -90,7 +90,7 @@ public class TesiCreaModificaFragment extends Fragment {
 
             FillAllEmpty();
             salva.setOnClickListener(view -> {
-                if(Integer.parseInt(media.getText().toString())<0 || Integer.parseInt(media.getText().toString())>30){
+                if(Integer.parseInt(media.getText().toString())>=18 && Integer.parseInt(media.getText().toString())<=30){
                     FillAllEmpty();
                     if(tesi.ModificaTesi(titolo.getText().toString().trim(), argomenti.getText().toString().trim(), statoDisponibilita.isChecked(),
                             Integer.parseInt(tempistiche.getText().toString().trim()), Float.parseFloat(media.getText().toString().trim()),
@@ -110,7 +110,7 @@ public class TesiCreaModificaFragment extends Fragment {
 
             salva.setOnClickListener(view -> {
                 if(!IsEmpty(titolo, argomenti, tempistiche, media, esamiMancanti, capacitaRichiesta)) {
-                    if(Integer.parseInt(media.getText().toString())<0 || Integer.parseInt(media.getText().toString())>30){
+                    if(Integer.parseInt(media.getText().toString())>=18 && Integer.parseInt(media.getText().toString())<=30){
                         new AlertDialog.Builder(getActivity())
                                 .setTitle("Conferma")
                                 .setMessage("Creare la proposta di tesi?")

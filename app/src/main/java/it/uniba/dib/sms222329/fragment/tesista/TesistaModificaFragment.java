@@ -66,13 +66,17 @@ public class TesistaModificaFragment extends Fragment {
             int corso= RecuperaUniversitaCorso(idUniversita, idCorsoStudio);
 
             //Modifica
-            if (Utility.tesistaLoggato.modTesista(matricola.getText().toString(), nome.getText().toString(),
-                    cognome.getText().toString(), mail.getText().toString(),
-                    password.getText().toString(),Float.parseFloat(media.getText().toString()),
-                    Integer.parseInt(numeroEsamiMancanti.getText().toString()),
-                    codFisc.getText().toString(), corso, db)){
-                Toast.makeText(getActivity().getApplicationContext(),R.string.modifica_successo,Toast.LENGTH_SHORT).show();
-                Utility.goBack(getActivity());
+                if(Integer.parseInt(media.getText().toString())>=18 && Integer.parseInt(media.getText().toString())<=30){
+                    if (Utility.tesistaLoggato.modTesista(matricola.getText().toString(), nome.getText().toString(),
+                            cognome.getText().toString(), mail.getText().toString(),
+                            password.getText().toString(),Float.parseFloat(media.getText().toString()),
+                            Integer.parseInt(numeroEsamiMancanti.getText().toString()),
+                            codFisc.getText().toString(), corso, db)){
+                        Toast.makeText(getActivity().getApplicationContext(),R.string.modifica_successo,Toast.LENGTH_SHORT).show();
+                        Utility.goBack(getActivity());
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.media_errore, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

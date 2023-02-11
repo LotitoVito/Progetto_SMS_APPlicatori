@@ -98,6 +98,7 @@ public class Ricevimento {
     public boolean ModificaRicevimento(Database db, LocalDate data, LocalTime orario){
         this.data = data;
         this.orario = orario;
+        this.stato = IN_ATTESA_TESISTA;
 
         if(RicevimentoDatabase.ModificaRicevimento(db, this)){
             return true;

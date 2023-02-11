@@ -89,7 +89,6 @@ public class RicevimentoRichiestaFragment extends Fragment {
 
         cambiaRicevimento.setOnClickListener(view -> {
             Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new RicevimentoCreaFragment(richiesta));
-            this.onResume();
         });
     }
 

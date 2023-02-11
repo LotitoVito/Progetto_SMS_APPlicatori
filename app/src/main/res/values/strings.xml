@@ -127,7 +127,7 @@
     <string name="login_fallito">Access failed</string>
     <string name="recupero_password_riuscito">Password resetted</string>
     <string name="recupero_password_password_error">Passwords don\'t match</string>
-    <string name="recupero_password_email_error">Emails don\'t match/Email doesn't exist</string>
+    <string name="recupero_password_email_error">Emails don \' t match or Email doesn\'t exist</string>
     <string name="stringa_upload">-Uploaded from: %1$s the %2$s</string>
     <string name="storage_errore_accesso">Impossible to access to the files</string>
     <string name="ricevimento_accettato">Accepted</string>

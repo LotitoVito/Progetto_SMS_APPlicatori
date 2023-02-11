@@ -67,7 +67,7 @@ public class RelatoreRegistraFragment extends Fragment {
             List idCorsiSelezionati = RecuperaIdCorsi();
             corsiRelatore = RecuperaUniversitaCorso(idUniversita, idCorsiSelezionati);
 
-            if(isEmpty(matricola) && corsiRelatore.size()!=0) {
+            if(!isEmpty(matricola) && corsiRelatore.size()!=0) {
                 new AlertDialog.Builder(getActivity())
                         .setTitle(R.string.conferma)
                         .setMessage(R.string.registrazione_account_relatore)

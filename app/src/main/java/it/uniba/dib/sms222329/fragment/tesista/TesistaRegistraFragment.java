@@ -70,7 +70,7 @@ public class TesistaRegistraFragment extends Fragment {
             idCorsoStudio = RecuperaIdSpinner(spinnerCorsoStudi,Database.CORSOSTUDI);
 
             if(!IsEmpty(matricola, media, numeroEsamiMancanti)){
-                if(Integer.parseInt(media.getText().toString())<0 || Integer.parseInt(media.getText().toString())>30){
+                if(Integer.parseInt(media.getText().toString())>=18 && Integer.parseInt(media.getText().toString())<=30){
                     new AlertDialog.Builder(getActivity())
                             .setTitle(R.string.conferma)
                             .setMessage(R.string.registrazione_account_tesista)
@@ -112,7 +112,7 @@ public class TesistaRegistraFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), R.string.registrazione_fallita, Toast.LENGTH_SHORT).show();
             }
         } else{
-            Toast.makeText(getActivity().getApplicationContext(), R.string.matricola, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.matricola_esistente, Toast.LENGTH_SHORT).show();
         }
     }
 

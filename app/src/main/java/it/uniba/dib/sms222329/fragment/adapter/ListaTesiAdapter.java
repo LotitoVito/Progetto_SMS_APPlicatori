@@ -77,7 +77,7 @@ public class ListaTesiAdapter extends BaseAdapter {
         //Stato
         TextView statoTesi = convertView.findViewById(R.id.sottotitolo);
         if (tesi.get(i).getStatoDisponibilita()){
-            statoTesi.setText(context.getResources().getString(R.string.tesi_completate));
+            statoTesi.setText(context.getResources().getString(R.string.tesi_disponibile));
         } else {
             statoTesi.setText(context.getResources().getString(R.string.tesi_non_disponibile));
         }
