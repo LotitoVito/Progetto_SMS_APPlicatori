@@ -68,8 +68,6 @@ public class RichiestaTesiDatabase {
         SQLiteDatabase db = dbClass.getWritableDatabase();
         ContentValues cvRisposta = new ContentValues();
 
-        Log.d("test", String.valueOf(risposta.getStato()));
-
         cvRisposta.put(Database.RICHIESTA_ACCETTATA, risposta.getStato());
         cvRisposta.put(Database.RICHIESTA_RISPOSTA, risposta.getRisposta());
 

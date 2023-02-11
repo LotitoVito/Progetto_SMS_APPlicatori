@@ -53,15 +53,15 @@ public class RicevimentoRichiestaFragment extends Fragment {
 
         accetta.setOnClickListener(view -> {
             new AlertDialog.Builder(getActivity())
-                    .setTitle("Conferma")
-                    .setMessage("Accettare ricevimento?")
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    .setTitle(R.string.conferma)
+                    .setMessage(R.string.ricevimento_accettare)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             AccettaRicevimento();
                         }
                     })
-                    .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.indietro, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -71,15 +71,15 @@ public class RicevimentoRichiestaFragment extends Fragment {
 
         rifiuta.setOnClickListener(view -> {
             new AlertDialog.Builder(getActivity())
-                    .setTitle("Conferma")
-                    .setMessage("Rifiutare ricevimento?")
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    .setTitle(R.string.conferma)
+                    .setMessage(R.string.ricevimento_rifiutare)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             RifiutaRicevimento();
                         }
                     })
-                    .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.indietro, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -128,10 +128,10 @@ public class RicevimentoRichiestaFragment extends Fragment {
      */
     private void AccettaRicevimento(){
         if(RicevimentoDatabase.AccettaRicevimento(db, richiesta)){
-            Toast.makeText(getActivity().getApplicationContext(), "Ricevimento accettato", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.ricevimento_accettare_successo, Toast.LENGTH_SHORT).show();
             Utility.goBack(getActivity());
         }else{
-            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.operazione_fallita, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -140,10 +140,10 @@ public class RicevimentoRichiestaFragment extends Fragment {
      */
     private void RifiutaRicevimento(){
         if(RicevimentoDatabase.RifiutaRicevimento(db, richiesta)){
-            Toast.makeText(getActivity().getApplicationContext(), "Ricevimento rifiutato", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.ricevimento_rifiutare_successo, Toast.LENGTH_SHORT).show();
             Utility.goBack(getActivity());
         } else{
-            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.operazione_fallita, Toast.LENGTH_SHORT).show();
         }
     }
 }

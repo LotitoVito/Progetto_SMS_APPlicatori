@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                 UtenteLoggato.putExtra("utentePassato", Utente);
                 startActivity(UtenteLoggato);
             } else {
-                Toast.makeText(this, "Accesso non riuscito", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.login_fallito, Toast.LENGTH_SHORT).show();
             }
         });
 

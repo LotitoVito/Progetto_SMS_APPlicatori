@@ -40,16 +40,16 @@ public class RecuperoPasswordActivity extends AppCompatActivity {
             if(!IsEmpty(emailIns1, emailIns2, passswordIns1, passswordIns2))  {
                 if (UtenteRegistratoDatabase.ControlloMail(emailIns1.getText().toString().trim(), emailIns2.getText().toString().trim(), db)) {
                     if (UtenteRegistratoDatabase.ResetPassword(passswordIns1.getText().toString().trim(), passswordIns2.getText().toString().trim(), emailIns1.getText().toString().trim(), db)) {
-                        Toast.makeText(this, "Password ripristinata", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.recupero_password_riuscito, Toast.LENGTH_SHORT).show();
                         Utility.goBack(this);
                     } else {
-                        Toast.makeText(this, "Le password non corrispondono", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.recupero_password_password_error, Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(this, "Le email non corrispondono / email inesistente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.recupero_password_email_error, Toast.LENGTH_SHORT).show();
                 }
             } else{
-                Toast.makeText(this, "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.campi_vuoti_errore, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -66,19 +66,19 @@ public class RecuperoPasswordActivity extends AppCompatActivity {
         boolean risultato = false;
 
         if(Utility.isEmptyTextbox(emailIns1)){
-            emailIns1.setError("Obbligatorio");
+            emailIns1.setError(this.getResources().getString(R.string.campo_obbligatorio));
             risultato = true;
         }
         if(Utility.isEmptyTextbox(emailIns2)){
-            emailIns2.setError("Obbligatorio");
+            emailIns2.setError(this.getResources().getString(R.string.campo_obbligatorio));
             risultato = true;
         }
         if(Utility.isEmptyTextbox(passswordIns1)){
-            passswordIns1.setError("Obbligatorio");
+            passswordIns1.setError(this.getResources().getString(R.string.campo_obbligatorio));
             risultato = true;
         }
         if(Utility.isEmptyTextbox(passswordIns2)){
-            passswordIns2.setError("Obbligatorio");
+            passswordIns2.setError(this.getResources().getString(R.string.campo_obbligatorio));
             risultato = true;
         }
         return risultato;

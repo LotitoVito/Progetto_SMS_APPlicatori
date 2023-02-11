@@ -183,8 +183,6 @@ public class Tesi {
         this.statoDisponibilita = statoDisponibilita;
         this.idUniversitaCorso = idUniversitaCorso;
 
-        Log.d("test", String.valueOf(this.idUniversitaCorso));
-
         if(TesiDatabase.ModificaTesi(this, db)){
             return true;
         }

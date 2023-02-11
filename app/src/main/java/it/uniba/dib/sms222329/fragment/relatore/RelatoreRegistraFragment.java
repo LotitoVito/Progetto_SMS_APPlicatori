@@ -69,22 +69,22 @@ public class RelatoreRegistraFragment extends Fragment {
 
             if(isEmpty(matricola) && corsiRelatore.size()!=0) {
                 new AlertDialog.Builder(getActivity())
-                        .setTitle("Conferma")
-                        .setMessage("Creare un nuovo account Relatore?")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        .setTitle(R.string.conferma)
+                        .setMessage(R.string.registrazione_account_relatore)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Registra();
                             }
                         })
-                        .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.indietro, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                             }
                         }).create().show();
             } else {
-                Toast.makeText(getActivity().getApplicationContext(), "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.campi_vuoti_errore, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -116,10 +116,10 @@ public class RelatoreRegistraFragment extends Fragment {
                 mainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(mainActivity);
             } else{
-                Toast.makeText(getActivity().getApplicationContext(), "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.registrazione_fallita, Toast.LENGTH_SHORT).show();
             }
         }else{
-            Toast.makeText(getActivity().getApplicationContext(), "Matricola già esistente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.matricola_esistente, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -238,9 +238,9 @@ public class RelatoreRegistraFragment extends Fragment {
     private boolean isEmpty(EditText textbox){
         boolean risultato = false;
         if(Utility.isEmptyTextbox(textbox)){
-            textbox.setError("Obbligatorio");
-            return true;
+            textbox.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            risultato = true;
         }
-        return false;
+        return risultato;
     }
 }

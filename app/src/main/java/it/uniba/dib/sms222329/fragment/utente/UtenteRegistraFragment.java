@@ -58,13 +58,13 @@ public class UtenteRegistraFragment extends Fragment {
                     if (!db.VerificaDatoEsistente("SELECT " + Database.UTENTI_EMAIL + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + " = '" + account.getEmail() + "';")) {
                         loadNextFragment(account);
                     } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "Email già esistente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.email_esistente, Toast.LENGTH_SHORT).show();
                     }
                 } else{
-                    Toast.makeText(getActivity().getApplicationContext(), "Codice Fiscale già esistente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.codice_fiscale_esistente, Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(getActivity().getApplicationContext(), "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.campi_vuoti_errore, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -117,23 +117,23 @@ public class UtenteRegistraFragment extends Fragment {
 
         if(Utility.isEmptyTextbox(nome)){
             risultato = true;
-            nome.setError("Obbligatorio");
+            nome.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(cognome)){
             risultato = true;
-            cognome.setError("Obbligatorio");
+            cognome.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(codiceFiscale)){
             risultato = true;
-            codiceFiscale.setError("Obbligatorio");
+            codiceFiscale.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(email)){
             risultato = true;
-            email.setError("Obbligatorio");
+            email.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(password)){
             risultato = true;
-            password.setError("Obbligatorio");
+            password.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         return risultato;
     }

@@ -28,7 +28,6 @@ public class SegnalazioneChatListaFragment extends Fragment {
 
     //View Items
     private ListView listView;
-    private TextView filtra;
 
     public SegnalazioneChatListaFragment() {
     }
@@ -55,7 +54,6 @@ public class SegnalazioneChatListaFragment extends Fragment {
     private void Init() {
          db = new Database(getContext());
          listView = getActivity().findViewById(R.id.segnalazioniList);
-         filtra = getView().findViewById(R.id.filtra);
     }
 
     /**

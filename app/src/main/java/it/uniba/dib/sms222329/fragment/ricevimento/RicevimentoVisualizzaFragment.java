@@ -77,13 +77,13 @@ public class RicevimentoVisualizzaFragment extends Fragment {
         dataRicevimento.setText(richiesta.getData().format(Utility.showDate) + " " + richiesta.getOrario());
 
         if(richiesta.getStato()==Ricevimento.ACCETTATO){
-            stato.setText("Accettato");
+            stato.setText(R.string.ricevimento_accettato);
         } else if(richiesta.getStato()==Ricevimento.RIFIUTATO){
-            stato.setText("Rifiutato");
+            stato.setText(R.string.ricevimento_rifiutato);
         } else if(richiesta.getStato()==Ricevimento.IN_ATTESA_RELATORE){
-            stato.setText("In attesa risposta relatore");
+            stato.setText(R.string.ricevimento_attesa_relatore);
         } else if(richiesta.getStato()==Ricevimento.IN_ATTESA_TESISTA){
-            stato.setText("In attesa risposta tesista");
+            stato.setText(R.string.ricevimento_attesa_tesista);
         }
     }
 }

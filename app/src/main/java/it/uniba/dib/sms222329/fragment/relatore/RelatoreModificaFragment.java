@@ -71,7 +71,7 @@ public class RelatoreModificaFragment extends Fragment {
             if (Utility.relatoreLoggato.modRelatore(matricola.getText().toString().trim(),nome.getText().toString().trim(),
                     cognome.getText().toString().trim(), codFisc.getText().toString().trim(),mail.getText().toString().trim(),
                     password.getText().toString().trim(), corsiRelatore, db)) {
-                Toast.makeText(getActivity().getApplicationContext(),"Modificata effettuata con successo",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(),R.string.modifica_successo,Toast.LENGTH_SHORT).show();
                 Utility.goBack(getActivity());
             }
         });

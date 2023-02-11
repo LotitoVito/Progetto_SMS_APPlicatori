@@ -56,25 +56,25 @@ public class SegnalazioneCreaFragment extends Fragment {
             if(idUtente != -1){
                 if(!IsEmpty(oggetto, messaggioTesto)){
                     new AlertDialog.Builder(getActivity())
-                            .setTitle("Conferma")
-                            .setMessage("Inviare la segnalazione?")
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            .setTitle(R.string.conferma)
+                            .setMessage(R.string.segnalazione_crea_conferma)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     CreaSegnalazioneChat();
                                 }
                             })
-                            .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.indietro, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                 }
                             }).create().show();
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Compila i campi obbligatori", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.campi_vuoti_errore, Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.operazione_fallita, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -90,11 +90,11 @@ public class SegnalazioneCreaFragment extends Fragment {
 
         if(Utility.isEmptyTextbox(oggetto)){
             risultato = true;
-            oggetto.setError("Obbligatorio");
+            oggetto.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(messaggioTesto)){
             risultato = true;
-            messaggioTesto.setError("Obbligatorio");
+            messaggioTesto.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
 
         return risultato;
@@ -133,10 +133,10 @@ public class SegnalazioneCreaFragment extends Fragment {
         SegnalazioneChat chat = new SegnalazioneChat(oggetto.getText().toString().trim(), tesi.getIdTesi());
         SegnalazioneMessaggio messaggio = new SegnalazioneMessaggio(messaggioTesto.getText().toString().trim(), idUtente);
         if(SegnalazioneDatabase.AvviaChat(db, chat, messaggio)){
-            Toast.makeText(getActivity().getApplicationContext(), "Segnalazione creata con successo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.segnalazione_crea_successo, Toast.LENGTH_SHORT).show();
             Utility.goBack(getActivity());
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.operazione_fallita, Toast.LENGTH_SHORT).show();
         }
     }
 }

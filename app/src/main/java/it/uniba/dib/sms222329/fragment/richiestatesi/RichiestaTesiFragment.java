@@ -59,22 +59,22 @@ public class RichiestaTesiFragment extends Fragment {
         invia.setOnClickListener(view -> {
             if (!IsEmpty(messaggio, capacitaTesista)) {
                 new AlertDialog.Builder(getActivity())
-                        .setTitle("Conferma")
-                        .setMessage("Inviare la richiesta di tesi?")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        .setTitle(R.string.conferma)
+                        .setMessage(R.string.richiesta_tesi_conferma)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 RichiestaTesi();
                             }
                         })
-                        .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.indietro, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                             }
                         }).create().show();
             } else {
-                Toast.makeText(getActivity().getApplicationContext(), "Compila i campi obbligatori", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.campi_vuoti_errore, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -102,7 +102,7 @@ public class RichiestaTesiFragment extends Fragment {
         Cursor cursor = db.RicercaDato("SELECT " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + " FROM " + Database.UTENTI + " u, " + Database.RELATORE + " r " +
                 "WHERE u." + Database.UTENTI_ID + "=r." + Database.RELATORE_UTENTEID + " AND r." + Database.RELATORE_ID + "=" + tesi.getIdRelatore() + ";" );
         cursor.moveToFirst();
-        relatore.setText("Relatore: " + cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_NOME)));
+        relatore.setText(R.string.relatore + ": " + cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_NOME)));
     }
 
     /**
@@ -116,11 +116,11 @@ public class RichiestaTesiFragment extends Fragment {
 
         if(Utility.isEmptyTextbox(messaggio)){
             risultato = true;
-            messaggio.setError("Obbligatorio");
+            messaggio.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(capacitaTesista)){
             risultato = true;
-            capacitaTesista.setError("Obbligatorio");
+            capacitaTesista.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
 
         return risultato;
@@ -133,10 +133,10 @@ public class RichiestaTesiFragment extends Fragment {
         RichiestaTesi richiesta = new RichiestaTesi(messaggio.getText().toString().trim(), capacitaTesista.getText().toString().trim(),
                 tesi.getIdTesi(), Utility.tesistaLoggato.getIdTesista());
         if(RichiestaTesiDatabase.RichiestaTesi(richiesta, db)){
-            Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.richiesta_tesi_sucesso, Toast.LENGTH_SHORT).show();
             Utility.goBack(getActivity());
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.operazione_fallita, Toast.LENGTH_SHORT).show();
         }
     }
 }

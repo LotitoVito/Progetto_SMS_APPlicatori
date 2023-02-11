@@ -87,13 +87,13 @@ public class ListaRicevimentiAdapter extends BaseAdapter {
         TextView stato = convertView.findViewById(R.id.sottotitolo);
         String disponibilita = "";
         if (ricevimenti.get(i).getStato()==Ricevimento.ACCETTATO){
-            disponibilita = "Accettato";
+            disponibilita = context.getResources().getString(R.string.ricevimento_accettato);
         } else if (ricevimenti.get(i).getStato()==Ricevimento.RIFIUTATO) {
-            disponibilita = "Rifiutato";
+            disponibilita = context.getResources().getString(R.string.ricevimento_rifiutato);
         } else if (ricevimenti.get(i).getStato()==Ricevimento.IN_ATTESA_RELATORE){
-            disponibilita = "In attesa della risposta del relatore";
+            disponibilita = context.getResources().getString(R.string.ricevimento_attesa_relatore);
         } else if (ricevimenti.get(i).getStato()==Ricevimento.IN_ATTESA_TESISTA){
-            disponibilita = "In attesa della risposta del tesista";
+            disponibilita = context.getResources().getString(R.string.ricevimento_attesa_tesista);
         }
         stato.setText(disponibilita);
 

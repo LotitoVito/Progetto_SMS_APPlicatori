@@ -81,7 +81,7 @@ public class ListaRichiesteTesiAdapter extends BaseAdapter {
 
             //EditButton
             Button rispondi = convertView.findViewById(R.id.modifica);
-            rispondi.setText("Rispondi");
+            rispondi.setText(context.getResources().getString(R.string.rispondi));
             rispondi.setOnClickListener(view -> {
                 Utility.replaceFragment(manager, R.id.container, new RichiestaTesiRispostaFragment(richieste.get(i)));
             });
@@ -109,9 +109,9 @@ public class ListaRichiesteTesiAdapter extends BaseAdapter {
             //Stato
             TextView stato = convertView.findViewById(R.id.sottotitolo);
             if(richieste.get(i).getStato() == RichiestaTesi.IN_ATTESA){
-                stato.setText("Richiesta in attesa di approvazione");
+                stato.setText(context.getResources().getString(R.string.richiesta_tesi_attesa));
             } else if(richieste.get(i).getStato() == RichiestaTesi.RIFIUTATO) {
-                stato.setText("Richiesta rifiutata");
+                stato.setText(context.getResources().getString(R.string.richiesta_tesi_rifiutata));
             }
 
             //EditButton

@@ -50,8 +50,6 @@ public class ListaSegnalazioniMessaggiAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.message_item, viewGroup, false);
         }
 
-        Log.d("test", String.valueOf(idUtenteLoggato));
-
         //Messaggio Inviato e Ricevuto
         LinearLayout inviato = convertView.findViewById(R.id.messaggio_inviato);
         TextView messaggioInviato = convertView.findViewById(R.id.testo_inviato);

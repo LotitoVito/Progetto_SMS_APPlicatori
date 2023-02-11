@@ -149,7 +149,7 @@ public class LoggedActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_student:
                     Utility.replaceFragment(getSupportFragmentManager(), R.id.container, studentFragment);
-                    setTitle(R.string.mythesis);
+                    setTitle(R.string.tesi_completate);
                     return true;
                 case R.id.navigation_camera:
                     scanQR();
@@ -195,7 +195,7 @@ public class LoggedActivity extends AppCompatActivity {
     private void scanQR(){
         if(CheckPermessiFotocamera()){
             ScanOptions options = new ScanOptions();
-            options.setPrompt("Volume up per usare il flash");
+            options.setPrompt(this.getResources().getString(R.string.scan_qr_flash));
             options.setBeepEnabled(true);
             options.setOrientationLocked(true);
             options.setCaptureActivity(CaptureAct.class);
@@ -217,7 +217,7 @@ public class LoggedActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(R.string.tesi);
                 builder.setMessage(messaggio);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Tesi tesi = new Tesi(cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_ID)),
@@ -237,7 +237,7 @@ public class LoggedActivity extends AppCompatActivity {
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(R.string.tesi);
-                builder.setMessage("Il QRCode non corrisponde a nessuna tesi registrata");
+                builder.setMessage(R.string.scan_qr_error_qr);
                 builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
@@ -256,16 +256,16 @@ public class LoggedActivity extends AppCompatActivity {
         if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)){
                 new AlertDialog.Builder(this)
-                        .setTitle("Permesso richiesto")
-                        .setMessage("Il permesso è richiesto per l'utilizzo della fotocamera allo scopo della scannerizzazione dei QRCode")
-                        .setPositiveButton("Accetta", new DialogInterface.OnClickListener() {
+                        .setTitle(R.string.permesso_richiesta)
+                        .setMessage(R.string.permesso_camera)
+                        .setPositiveButton(R.string.accetta, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 ActivityCompat.requestPermissions(LoggedActivity.this, new String[]{Manifest.permission.CAMERA}, Utility.REQUEST_CAMERA);
 
                             }
                         })
-                        .setNegativeButton("Rifiuta", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.rifiuta, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -286,7 +286,7 @@ public class LoggedActivity extends AppCompatActivity {
         if(requestCode==Utility.REQUEST_CAMERA && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
             scanQR();
         } else {
-            Toast.makeText(this, "Permessi negati", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.permesso_negato, Toast.LENGTH_SHORT).show();
         }
     }
 }

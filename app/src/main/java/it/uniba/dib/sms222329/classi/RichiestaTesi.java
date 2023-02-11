@@ -123,8 +123,6 @@ public class RichiestaTesi {
         this.stato = ACCETTATO;
         this.risposta = risposta;
 
-        Log.d("test", String.valueOf(this.stato));
-
         if(RichiestaTesiDatabase.AccettaRichiestaTesi(this, db)){
             return true;
         }

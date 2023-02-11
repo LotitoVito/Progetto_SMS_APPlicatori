@@ -135,7 +135,7 @@ public class Utility {
                 RichiediPermessiScritturaMemoria(activity, fragment);
             }
         } else {
-            Toast.makeText(activity.getApplicationContext(), "Non è possibile accedere ai file", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity.getApplicationContext(), R.string.storage_errore_accesso, Toast.LENGTH_SHORT).show();
         }
         return false;
     }
@@ -148,16 +148,16 @@ public class Utility {
     public static void RichiediPermessiScritturaMemoria(Activity activity, Fragment fragment){
         if(ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
             new AlertDialog.Builder(activity)
-                    .setTitle("Permesso richiesto")
-                    .setMessage("Il permesso è richiesto per la gestione dei file")
-                    .setPositiveButton("Accetta", new DialogInterface.OnClickListener() {
+                    .setTitle(R.string.permesso_richiesta)
+                    .setMessage(R.string.permesso_storage)
+                    .setPositiveButton(R.string.accetta, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             fragment.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Utility.REQUEST_PERMESSO_STORAGE);
 
                         }
                     })
-                    .setNegativeButton("Rifiuta", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.rifiuta, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();

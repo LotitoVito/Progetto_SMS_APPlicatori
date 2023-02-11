@@ -72,25 +72,25 @@ public class TesistaRegistraFragment extends Fragment {
             if(!IsEmpty(matricola, media, numeroEsamiMancanti)){
                 if(Integer.parseInt(media.getText().toString())<0 || Integer.parseInt(media.getText().toString())>30){
                     new AlertDialog.Builder(getActivity())
-                            .setTitle("Conferma")
-                            .setMessage("Creare account Tesista?")
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            .setTitle(R.string.conferma)
+                            .setMessage(R.string.registrazione_account_tesista)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Registra();
                                 }
                             })
-                            .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.indietro, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                 }
                             }).create().show();
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "La media non è compresa tra 0 e 30", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.media_errore, Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(getActivity().getApplicationContext(), "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.campi_vuoti_errore, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -109,10 +109,10 @@ public class TesistaRegistraFragment extends Fragment {
                 mainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(mainActivity);
             } else{
-                Toast.makeText(getActivity().getApplicationContext(), "Registrazione non riuscita", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.registrazione_fallita, Toast.LENGTH_SHORT).show();
             }
         } else{
-            Toast.makeText(getActivity().getApplicationContext(), "Matricola già esistente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.matricola, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -213,15 +213,15 @@ public class TesistaRegistraFragment extends Fragment {
 
         if(Utility.isEmptyTextbox(matricola)){
             risultato = true;
-            matricola.setError("Obbligatorio");
+            matricola.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(media)){
             risultato = true;
-            media.setError("Obbligatorio");
+            media.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(numeroEsamiMancanti)){
             risultato = true;
-            numeroEsamiMancanti.setError("Obbligatorio");
+            numeroEsamiMancanti.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         return risultato;
     }

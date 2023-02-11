@@ -88,11 +88,11 @@ public class UtenteProfiloFragment extends Fragment {
         codiceFiscale.setText(utente.getCodiceFiscale());
         email.setText(utente.getEmail());
         if(ruoloLoggato == Utility.TESISTA){
-            ruoloTv.setText("Tesista");
+            ruoloTv.setText(R.string.tesista);
         } else if (ruoloLoggato == Utility.RELATORE){
-            ruoloTv.setText("Relatore");
+            ruoloTv.setText(R.string.relatore);
         }else if(ruoloLoggato == Utility.CORELATORE){
-            ruoloTv.setText("Corelatore");
+            ruoloTv.setText(R.string.co_relatore);
         }
     }
 }

@@ -74,7 +74,7 @@ public class RicevimentoCreaFragment extends Fragment {
 
         data.setOnClickListener(view1 -> {
             MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
-            materialDateBuilder.setTitleText("SELECT A DATE");
+            materialDateBuilder.setTitleText(R.string.seleziona_data_picker);
             final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
 
             materialDatePicker.show(getActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
@@ -110,15 +110,15 @@ public class RicevimentoCreaFragment extends Fragment {
                 if (Utility.accountLoggato != Utility.TESISTA) {
                     FillIfEmpty();
                     new AlertDialog.Builder(getActivity())
-                            .setTitle("Conferma")
-                            .setMessage("Modificare il ricevimento?")
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            .setTitle(R.string.conferma)
+                            .setMessage(R.string.ricevimento_modifica)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     ModificaRicevimento();
                                 }
                             })
-                            .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.indietro, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
@@ -127,26 +127,26 @@ public class RicevimentoCreaFragment extends Fragment {
                 } else {
                     if(!IsEmpty(data, ora, messaggio)){
                         new AlertDialog.Builder(getActivity())
-                                .setTitle("Conferma")
-                                .setMessage("Inviare richiesta ricevimento?")
-                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                .setTitle(R.string.conferma)
+                                .setMessage(R.string.ricevimento_crea)
+                                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         CreaRicevimento();
                                     }
                                 })
-                                .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                                .setNegativeButton(R.string.indietro, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();
                                     }
                                 }).create().show();
                     } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "Compila i campi obbligatori", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.campi_vuoti_errore, Toast.LENGTH_SHORT).show();
                     }
                 }
             } else {
-                Toast.makeText(getActivity().getApplicationContext(), "La data scelta è uguale o inferiore ad oggi", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.data_inferiore_oggi, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -181,15 +181,15 @@ public class RicevimentoCreaFragment extends Fragment {
 
         if(Utility.isEmptyTextbox(data)){
             risultato = true;
-            data.setError("Obbligatorio");
+            data.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(ora)){
             risultato = true;
-            ora.setError("Obbligatorio");
+            ora.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(messaggio)){
             risultato = true;
-            messaggio.setError("Obbligatorio");
+            messaggio.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
 
         return risultato;
@@ -208,10 +208,10 @@ public class RicevimentoCreaFragment extends Fragment {
      */
     private void ModificaRicevimento(){
         if(richiesta.ModificaRicevimento(db, dataSelezionata, orarioSelezionato)){
-            Toast.makeText(getActivity().getApplicationContext(), "Risposta inviata con successo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.ricevimento_modifica_successo, Toast.LENGTH_SHORT).show();
             Utility.goBack(getActivity());
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.operazione_fallita, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -221,10 +221,10 @@ public class RicevimentoCreaFragment extends Fragment {
     private void CreaRicevimento(){
         Ricevimento richiesta = new Ricevimento(dataSelezionata, orarioSelezionato, task.getIdTask(), Ricevimento.IN_ATTESA_RELATORE, messaggio.getText().toString().trim());
         if(RicevimentoDatabase.RichiestaRicevimento(db, richiesta)){
-            Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.ricevimento_crea_successo, Toast.LENGTH_SHORT).show();
             Utility.goBack(getActivity());
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.operazione_fallita, Toast.LENGTH_SHORT).show();
         }
     }
 }

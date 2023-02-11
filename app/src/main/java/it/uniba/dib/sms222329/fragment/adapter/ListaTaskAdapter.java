@@ -26,12 +26,14 @@ public class ListaTaskAdapter extends BaseAdapter {
     private TesiScelta tesiScelta;
     private LayoutInflater inflater;
     private FragmentManager manager;
+    private Context context;
 
     public ListaTaskAdapter(Context context, List<Task> task, FragmentManager manager, TesiScelta tesiScelta) {
         this.task = task;
         this.inflater = LayoutInflater.from(context);
         this.manager = manager;
         this.tesiScelta = tesiScelta;
+        this.context = context;
     }
 
     @Override
@@ -61,20 +63,20 @@ public class ListaTaskAdapter extends BaseAdapter {
 
         //Data Inizio
         TextView dataInizio = convertView.findViewById(R.id.descrizione);
-        dataInizio.setText("Data Assegnazione: " + task.get(i).getDataInizio().format(Utility.showDate));
+        dataInizio.setText(context.getResources().getString(R.string.task_data_assegnazione, task.get(i).getDataInizio().format(Utility.showDate)));
 
         //Stato
         TextView stato = convertView.findViewById(R.id.sottotitolo);
         if(task.get(i).getStato() == Task.ASSEGNATO){
-            stato.setText("Assegnato");
+            stato.setText(context.getResources().getString(R.string.task_assegnato));
         } else if(task.get(i).getStato() == Task.INIZIATO){
-            stato.setText("Iniziato");
+            stato.setText(context.getResources().getString(R.string.task_iniziato));
         } else if(task.get(i).getStato() == Task.IN_COMPLEMAMENTO){
-            stato.setText("In completamento");
+            stato.setText(context.getResources().getString(R.string.task_in_completamento));
         } else if(task.get(i).getStato() == Task.IN_REVISIONE){
-            stato.setText("In revisione");
+            stato.setText(context.getResources().getString(R.string.task_in_revisione));
         } else if(task.get(i).getStato() == Task.COMPLETATO){
-            stato.setText("Completato");
+            stato.setText(context.getResources().getString(R.string.task_completato));
         }
 
         //EditButton

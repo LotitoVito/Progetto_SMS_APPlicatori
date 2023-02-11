@@ -71,7 +71,7 @@ public class TesistaModificaFragment extends Fragment {
                     password.getText().toString(),Float.parseFloat(media.getText().toString()),
                     Integer.parseInt(numeroEsamiMancanti.getText().toString()),
                     codFisc.getText().toString(), corso, db)){
-                Toast.makeText(getActivity().getApplicationContext(),"modifica riuscita",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(),R.string.modifica_successo,Toast.LENGTH_SHORT).show();
                 Utility.goBack(getActivity());
             }
         });

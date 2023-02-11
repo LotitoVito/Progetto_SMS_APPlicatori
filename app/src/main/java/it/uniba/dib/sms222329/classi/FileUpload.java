@@ -1,8 +1,12 @@
 package it.uniba.dib.sms222329.classi;
 
 
+import android.content.Context;
+
 import java.time.LocalDate;
 import java.util.Date;
+
+import it.uniba.dib.sms222329.R;
 
 public class FileUpload {
 
@@ -10,6 +14,7 @@ public class FileUpload {
     String nome;
     String url;
     Date date;
+    Context context;
 
     /**
      * Costruttore vuoto
@@ -23,11 +28,12 @@ public class FileUpload {
      * @param url
      * @param date
      */
-    public FileUpload(int idUtente, String nome, String url, Date date) {
+    public FileUpload(int idUtente, String nome, String url, Date date, Context context) {
         this.idUtente = idUtente;
         this.nome = nome;
         this.url = url;
         this.date = date;
+        this.context = context;
     }
 
     public int getIdUtente() {
@@ -64,6 +70,6 @@ public class FileUpload {
 
     @Override
     public String toString() {
-        return "-Caricato da:"+nome+" il "+ date;
+        return context.getResources().getString(R.string.stringa_upload, nome, date);
     }
 }

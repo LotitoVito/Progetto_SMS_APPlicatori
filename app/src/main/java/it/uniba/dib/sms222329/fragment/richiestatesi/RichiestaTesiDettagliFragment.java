@@ -108,7 +108,7 @@ public class RichiestaTesiDettagliFragment extends Fragment {
                 "WHERE t." + Database.TESI_RELATOREID + "=r." + Database.RELATORE_ID + " AND r." + Database.RELATORE_UTENTEID + "=u." + Database.UTENTI_ID + " " +
                 "AND t." + Database.TESI_ID + "=" + richiesta.getIdTesi() + ";");
         cursorRelatore.moveToFirst();
-        labelRelatore.setText("Relatore");
+        labelRelatore.setText(getActivity().getApplicationContext().getResources().getString(R.string.relatore));
         relatore.setText(cursorRelatore.getString(cursorRelatore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorRelatore.getString(cursorRelatore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
 
         capacitaEffettive.setText(richiesta.getCapacitàStudente());
@@ -116,7 +116,7 @@ public class RichiestaTesiDettagliFragment extends Fragment {
         if(richiesta.getRisposta() != null){
             testoRispostaRelatore.setText(richiesta.getRisposta());
         } else {
-            testoRispostaRelatore.setText("In attesa della risposta del relatore");
+            testoRispostaRelatore.setText(R.string.richiesta_tesi_attesa);
         }
     }
 }

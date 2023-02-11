@@ -77,9 +77,9 @@ public class ListaTesiAdapter extends BaseAdapter {
         //Stato
         TextView statoTesi = convertView.findViewById(R.id.sottotitolo);
         if (tesi.get(i).getStatoDisponibilita()){
-            statoTesi.setText("Disponibile");
+            statoTesi.setText(context.getResources().getString(R.string.tesi_completate));
         } else {
-            statoTesi.setText("Non Disponibile");
+            statoTesi.setText(context.getResources().getString(R.string.tesi_non_disponibile));
         }
 
         //Edit Button
@@ -88,7 +88,7 @@ public class ListaTesiAdapter extends BaseAdapter {
                 !db.VerificaDatoEsistente("SELECT * FROM " + Database.TESISCELTA + " WHERE " + Database.TESISCELTA_TESISTAID + "=" + Utility.tesistaLoggato.getIdTesista() + ";") &&
                 !db.VerificaDatoEsistente("SELECT * FROM " + Database.RICHIESTA + " WHERE " + Database.RICHIESTA_TESISTAID + "=" + Utility.tesistaLoggato.getIdTesista() + " AND " + Database.RICHIESTA_ACCETTATA + "=" + RichiestaTesi.IN_ATTESA + ";") &&
                 db.VerificaDatoEsistente("SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_UNIVERSITACORSOID + "=" + Utility.tesistaLoggato.getIdUniversitaCorso() + ";")){
-            editButton.setText("Richiedi");
+            editButton.setText(context.getResources().getString(R.string.richiedi));
             editButton.setOnClickListener(view -> {
                 Utility.replaceFragment(this.fragmentManager, R.id.container, new RichiestaTesiFragment(tesi.get(i)));
             });

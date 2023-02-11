@@ -51,7 +51,7 @@ public class CorelatoreModificaFragment extends Fragment {
 
             if (Utility.coRelatoreLoggato.modCoRelatore(nome.getText().toString(), cognome.getText().toString(), mail.getText().toString(),
                     password.getText().toString(), codFisc.getText().toString(), org.getText().toString(), db)){
-                Toast.makeText(getActivity().getApplicationContext(),"Modifica effettuata con successo",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(),R.string.modifica_successo,Toast.LENGTH_SHORT).show();
                 Utility.goBack(getActivity());
             }
         });
