@@ -25,7 +25,7 @@ public class SegnalazioneDatabase {
 
         long insertChat = db.insert(Database.SEGNALAZIONECHAT, null, chatCv);
         if(insertChat != -1){
-            String query = "SELECT MAX(" + Database.SEGNALAZIONECHAT_ID + ") FROM " + Database.SEGNALAZIONECHAT + " WHERE " + Database.SEGNALAZIONECHAT_OGGETTO + " = '"+ chat.getOggetto() +"' AND " + Database.SEGNALAZIONECHAT_TESISCELTAID + " = '"+ chat.getIdTesi() +"';";
+            String query = "SELECT MAX(" + Database.SEGNALAZIONECHAT_ID + ") FROM " + Database.SEGNALAZIONECHAT + " WHERE " + Database.SEGNALAZIONECHAT_OGGETTO + " LIKE('"+ chat.getOggetto() +"') AND " + Database.SEGNALAZIONECHAT_TESISCELTAID + " = "+ chat.getIdTesi() +";";
             Cursor cursor = db.rawQuery(query, null);
             cursor.moveToNext();
 

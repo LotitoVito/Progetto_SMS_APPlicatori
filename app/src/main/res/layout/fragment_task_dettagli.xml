@@ -123,7 +123,7 @@
                 android:id="@+id/label_ricevimento"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@string/richiedi"
+                android:text="@string/richiedi_ricevimento"
                 android:textColor="@color/red"
                 android:layout_gravity="center"/>
 

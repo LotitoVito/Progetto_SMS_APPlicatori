@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,7 @@ public class TesistaModificaFragment extends Fragment {
             int corso= RecuperaUniversitaCorso(idUniversita, idCorsoStudio);
 
             //Modifica
-                if(Integer.parseInt(media.getText().toString())>=18 && Integer.parseInt(media.getText().toString())<=30){
+                if(Float.parseFloat(media.getText().toString())>=18 && Float.parseFloat(media.getText().toString())<=30){
                     if (Utility.tesistaLoggato.modTesista(matricola.getText().toString(), nome.getText().toString(),
                             cognome.getText().toString(), mail.getText().toString(),
                             password.getText().toString(),Float.parseFloat(media.getText().toString()),

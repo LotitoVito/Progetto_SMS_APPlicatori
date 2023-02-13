@@ -151,7 +151,7 @@ public class TaskDettagliFragment extends Fragment {
     private void SetTextAll() {
         titoloTask.setText(task.getTitolo());
         descrizioneTask.setText(task.getDescrizione());
-        dateInizioFine.setText(R.string.task_data_inizio + task.getDataInizio().format(Utility.showDate) + " - " + R.string.task_data_fine + task.getDataFine().format(Utility.showDate));
+        dateInizioFine.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_data_inizio) + task.getDataInizio().format(Utility.showDate) + " - " + getActivity().getApplicationContext().getResources().getString(R.string.task_data_fine) + task.getDataFine().format(Utility.showDate));
 
         if(sliderStato.getValue()==0){
             testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_assegnato));
@@ -193,7 +193,7 @@ public class TaskDettagliFragment extends Fragment {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                materiale.setText("Errore");
+                materiale.setText(getActivity().getApplicationContext().getResources().getString(R.string.errore));
             }
         });
 

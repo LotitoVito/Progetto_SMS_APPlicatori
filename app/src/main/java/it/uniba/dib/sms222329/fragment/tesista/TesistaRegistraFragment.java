@@ -70,7 +70,7 @@ public class TesistaRegistraFragment extends Fragment {
             idCorsoStudio = RecuperaIdSpinner(spinnerCorsoStudi,Database.CORSOSTUDI);
 
             if(!IsEmpty(matricola, media, numeroEsamiMancanti)){
-                if(Integer.parseInt(media.getText().toString())>=18 && Integer.parseInt(media.getText().toString())<=30){
+                if(Float.parseFloat(media.getText().toString())>=18 && Float.parseFloat(media.getText().toString())<=30){
                     new AlertDialog.Builder(getActivity())
                             .setTitle(R.string.conferma)
                             .setMessage(R.string.registrazione_account_tesista)

@@ -2,6 +2,7 @@ package it.uniba.dib.sms222329.fragment.adapter;
 
 import androidx.fragment.app.FragmentManager;
 import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,7 +88,7 @@ public class ListaTesiAdapter extends BaseAdapter {
         if(Utility.accountLoggato == Utility.TESISTA && tesi.get(i).getStatoDisponibilita() == Tesi.DISPONIBILE &&
                 !db.VerificaDatoEsistente("SELECT * FROM " + Database.TESISCELTA + " WHERE " + Database.TESISCELTA_TESISTAID + "=" + Utility.tesistaLoggato.getIdTesista() + ";") &&
                 !db.VerificaDatoEsistente("SELECT * FROM " + Database.RICHIESTA + " WHERE " + Database.RICHIESTA_TESISTAID + "=" + Utility.tesistaLoggato.getIdTesista() + " AND " + Database.RICHIESTA_ACCETTATA + "=" + RichiestaTesi.IN_ATTESA + ";") &&
-                db.VerificaDatoEsistente("SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_UNIVERSITACORSOID + "=" + Utility.tesistaLoggato.getIdUniversitaCorso() + ";")){
+                tesi.get(i).getIdUniversitaCorso() == Utility.tesistaLoggato.getIdUniversitaCorso()){
             editButton.setText(context.getResources().getString(R.string.richiedi));
             editButton.setOnClickListener(view -> {
                 Utility.replaceFragment(this.fragmentManager, R.id.container, new RichiestaTesiFragment(tesi.get(i)));
