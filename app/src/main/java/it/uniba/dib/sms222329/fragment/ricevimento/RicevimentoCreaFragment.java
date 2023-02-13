@@ -100,8 +100,8 @@ public class RicevimentoCreaFragment extends Fragment {
             materialTimePicker.show(getActivity().getSupportFragmentManager(), "MATERIAL_TIME_PICKER");
 
             materialTimePicker.addOnPositiveButtonClickListener(selection -> {
-                ora.setText(materialTimePicker.getHour()+":"+materialTimePicker.getMinute());
-                orarioSelezionato = LocalTime.parse(materialTimePicker.getHour() + ":" + materialTimePicker.getMinute());
+                ora.setText(String.format("%02d:%02d", materialTimePicker.getHour(), materialTimePicker.getMinute()));
+                orarioSelezionato = LocalTime.parse(String.format("%02d:%02d", materialTimePicker.getHour(), materialTimePicker.getMinute()));
             });
         });
 

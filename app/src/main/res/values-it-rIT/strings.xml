@@ -180,7 +180,9 @@
     <string name="media_errore">La media non è compresa tra 18 e 30</string>
     <string name="segnalazione_crea_conferma">Creare la segnalazione?</string>
     <string name="segnalazione_crea_successo">Segnalazione creata con successo</string>
-
+    <string name="impostaLingua">Seleziona lingua</string>
+    <string name="italiano">Italiano</string>
+    <string name="inglese">Inglese</string>
 
 
 </resources>

@@ -5,9 +5,14 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.view.View;
+
+import java.util.Locale;
 
 import it.uniba.dib.sms222329.R;
 import it.uniba.dib.sms222329.classi.UtenteRegistrato;
@@ -26,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isChecked = prefs.getBoolean("dark_mode", false);
         this.runOnUiThread(() -> AppCompatDelegate.setDefaultNightMode(isChecked ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO));
+
     }
 
     @Override
@@ -52,4 +58,14 @@ public class MainActivity extends AppCompatActivity {
             startActivity(guest);
         });
     }
+
+    public void setLocal(String lingua){
+        Resources resources = getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(new Locale(lingua));
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+        onConfigurationChanged(config);
+    }
+
 }
