@@ -327,7 +327,6 @@ public class Database extends SQLiteOpenHelper {
         PopolamentoUniCorsi(db);
     }
 
-    //Viene chiamato nel caso di aggiornamento della versione del database
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1){}
 

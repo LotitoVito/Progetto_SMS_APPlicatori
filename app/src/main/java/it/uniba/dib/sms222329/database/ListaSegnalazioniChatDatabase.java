@@ -37,11 +37,6 @@ public class ListaSegnalazioniChatDatabase {
             segnalazioneChatEstratta.setOggetto(cursore.getString(cursore.getColumnIndexOrThrow(Database.SEGNALAZIONECHAT_OGGETTO)));
             segnalazioneChatEstratta.setIdTesi(cursore.getInt(cursore.getColumnIndexOrThrow(Database.SEGNALAZIONECHAT_TESISCELTAID)));
 
-            /*Log.d("Segnalazione ID", String.valueOf(segnalazioneChatEstratta.getIdSegnalazioneChat()));
-            Log.d("Segnalazione Oggetto", segnalazioneChatEstratta.getOggetto());
-            Log.d("Segnalazione idTesiScelta", String.valueOf(segnalazioneChatEstratta.getIdTesi()));
-            Log.d("Tesi NNNNNNNNNNNNNNNNNNNNN", "\n\n\n\n");*/
-
             listaSegnalazioniEstratte.add(segnalazioneChatEstratta);
         }
         return listaSegnalazioniEstratte;
@@ -73,11 +68,6 @@ public class ListaSegnalazioniChatDatabase {
             segnalazioneChatEstratta.setIdSegnalazioneChat(cursore.getInt(cursore.getColumnIndexOrThrow(Database.SEGNALAZIONECHAT_ID)));
             segnalazioneChatEstratta.setOggetto(cursore.getString(cursore.getColumnIndexOrThrow(Database.SEGNALAZIONECHAT_OGGETTO)));
             segnalazioneChatEstratta.setIdTesi(cursore.getInt(cursore.getColumnIndexOrThrow(Database.SEGNALAZIONECHAT_TESISCELTAID)));
-
-            /*Log.d("Segnalazione ID", String.valueOf(cursore.getInt(cursore.getColumnIndexOrThrow(Database.SEGNALAZIONECHAT_ID))));
-            Log.d("Segnalazione Oggetto", cursore.getString(cursore.getColumnIndexOrThrow(Database.SEGNALAZIONECHAT_OGGETTO)));
-            Log.d("Segnalazione idTesiScelta", String.valueOf(cursore.getInt(cursore.getColumnIndexOrThrow(Database.SEGNALAZIONECHAT_TESISCELTAID))));
-            Log.d("Tesi NNNNNNNNNNNNNNNNNNNNN", "\n\n\n\n");*/
 
             listaSegnalazioniEstratte.add(segnalazioneChatEstratta);
         }

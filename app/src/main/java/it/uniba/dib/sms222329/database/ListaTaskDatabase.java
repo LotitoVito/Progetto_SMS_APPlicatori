@@ -46,15 +46,6 @@ public class ListaTaskDatabase {
             taskEstratto.setStato(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TASK_STATO)));
             taskEstratto.setIdTesiScelta(cursore.getInt(cursore.getColumnIndexOrThrow(Database.TASK_TESISCELTAID)));
 
-            /*Log.d("Task ID", String.valueOf(taskEstratto.getIdTask()));
-            Log.d("Task descrizione", taskEstratto.getDescrizione());
-            Log.d("Task inizio data", String.valueOf(taskEstratto.getDataInizio()));
-            Log.d("Task fine data", String.valueOf(taskEstratto.getDataFine()));
-            Log.d("Task link materiale", String.valueOf(taskEstratto.getLinkMateriale()));
-            Log.d("Task stato", String.valueOf(taskEstratto.getStato()));
-            Log.d("Task id tesi scelta", String.valueOf(taskEstratto.getIdTesiScelta()));
-            Log.d("Tesi NNNNNNNNNNNNNNNNNNNNN", "\n\n\n\n");*/
-
             listaTaskEstratti.add(taskEstratto);
 
         }
