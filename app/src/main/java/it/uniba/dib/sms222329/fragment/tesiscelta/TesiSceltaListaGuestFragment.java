@@ -87,9 +87,9 @@ public class TesiSceltaListaGuestFragment extends Fragment {
      */
     private void Init() {
         db = new Database(getActivity().getApplicationContext());
-        listaTesiScelte = getView().findViewById(R.id.tesiList);
-        barraRicerca = getView().findViewById(R.id.search_view);
-        filtra = getView().findViewById(R.id.filtra);
+        listaTesiScelte = getView().findViewById(R.id.tesiCompleteList);
+        barraRicerca = getView().findViewById(R.id.search_view_tesi);
+        filtra = getView().findViewById(R.id.filtra_tesi);
 
         barraRicerca.setQueryHint("Inserisci il titolo della tesi");
     }

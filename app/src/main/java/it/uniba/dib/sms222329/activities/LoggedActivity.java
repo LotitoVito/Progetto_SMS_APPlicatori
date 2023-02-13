@@ -139,12 +139,14 @@ public class LoggedActivity extends AppCompatActivity {
         bottomNavigationView.getMenu().clear();
         bottomNavigationView.inflateMenu(R.menu.nav_guest);
 
+
+
         // Set a listener for item selection
         bottomNavigationView.setOnItemSelectedListener(item -> {
             // Handle item selection
             switch (item.getItemId()) {
                 case R.id.navigation_thesis:
-                    Utility.replaceFragment(getSupportFragmentManager(), R.id.content2, thesisFragment);
+                    Utility.replaceFragment(getSupportFragmentManager(), R.id.container, thesisFragment);
                     setTitle(R.string.tesi);
                     return true;
                 case R.id.navigation_student:
@@ -163,11 +165,17 @@ public class LoggedActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_actionbar, menu);
+        if(utenteLoggato.getEmail().compareTo("guest")==0) {
+            menu.removeItem(R.id.navigation_profile);
+            return true;
+        }
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.navigation_profile:

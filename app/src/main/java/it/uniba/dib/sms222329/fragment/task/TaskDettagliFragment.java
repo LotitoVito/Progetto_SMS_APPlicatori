@@ -164,7 +164,6 @@ public class TaskDettagliFragment extends Fragment {
         } else if(sliderStato.getValue()==100){
             testoStato.setText("Completato");
         }
-        materiale.setText(String.valueOf(task.getLinkMateriale()));
     }
 
     /**

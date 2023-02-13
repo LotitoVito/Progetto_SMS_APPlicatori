@@ -2,6 +2,7 @@ package it.uniba.dib.sms222329.classi;
 
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -70,6 +71,6 @@ public class FileUpload {
 
     @Override
     public String toString() {
-        return context.getResources().getString(R.string.stringa_upload, nome, date);
+        return "-"+nome+" "+date;
     }
 }

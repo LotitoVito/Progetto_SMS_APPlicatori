@@ -319,7 +319,7 @@ public class TesiSceltaFragment extends Fragment {
         labelaAbstract = getView().findViewById(R.id.label_abstract);
 
         //Se manca il file togli pulsante download
-        if(!getLastUpload()){
+        if(getLastUpload()){
             scaricaTesi.setVisibility(View.GONE);
         }
 

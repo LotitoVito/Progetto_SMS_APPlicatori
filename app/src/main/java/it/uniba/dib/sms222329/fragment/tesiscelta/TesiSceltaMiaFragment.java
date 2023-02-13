@@ -213,7 +213,7 @@ public class TesiSceltaMiaFragment extends Fragment {
         salvaModifica = getView().findViewById(R.id.salvaModifica);
 
         if(richieste.getVisibility() == View.GONE){
-            if(!getLastUpload()){
+            if(getLastUpload()){
                 scarica.setVisibility(View.GONE);
             }
         }
@@ -343,8 +343,9 @@ public class TesiSceltaMiaFragment extends Fragment {
         if(file == null){
             ultimoCaricamento.setText("Nessun caricamento");
             return false;
+        }else{
+            return true;
         }
-        return true;
     }
 
     /**
