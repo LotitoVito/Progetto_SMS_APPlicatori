@@ -122,15 +122,15 @@ public class TesiSceltaFragment extends Fragment {
         aggiungiCorelatore.setOnClickListener(view -> {
             if(Utility.accountLoggato == Utility.CORELATORE){
                 new AlertDialog.Builder(getActivity())
-                        .setTitle("Conferma")
-                        .setMessage("Accettare collaborazione per questa tesi?")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        .setTitle(R.string.conferma)
+                        .setMessage(R.string.richiesta_collaboarzione_richiesta_accetta)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 AccettaCollaborazione();
                             }
                         })
-                        .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.indietro, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -139,22 +139,22 @@ public class TesiSceltaFragment extends Fragment {
             } else {
                 if(db.VerificaDatoEsistente("SELECT " + Database.UTENTI_EMAIL + " FROM " + Database.UTENTI + " WHERE " + Database.UTENTI_EMAIL + "='" + richiestaCorelatore.getText().toString().trim() + "';")){
                     new AlertDialog.Builder(getActivity())
-                            .setTitle("Conferma")
-                            .setMessage("Inviare richiesta di collaborazione al corelatore indicato?")
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            .setTitle(R.string.conferma)
+                            .setMessage(R.string.richiesta_collaboarzione_richiesta)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     AggiungiCorelatore();
                                 }
                             })
-                            .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.indietro, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                 }
                             }).create().show();
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Il corelatore inserito non esiste", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.corelatore_errore, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -162,15 +162,15 @@ public class TesiSceltaFragment extends Fragment {
         rimuoviCorelatore.setOnClickListener(view -> {
             if(Utility.accountLoggato == Utility.CORELATORE){
                 new AlertDialog.Builder(getActivity())
-                        .setTitle("Conferma")
-                        .setMessage("Rifiutare collaborazione?")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        .setTitle(R.string.conferma)
+                        .setMessage(R.string.richiesta_collaboarzione_richiesta_rifiuta)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 RifiutaCollaborazione();
                             }
                         })
-                        .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.indietro, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -178,15 +178,15 @@ public class TesiSceltaFragment extends Fragment {
                         }).create().show();
             } else {
                 new AlertDialog.Builder(getActivity())
-                        .setTitle("Conferma")
-                        .setMessage("Rimuove il corelatore dalla tesi?")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        .setTitle(R.string.conferma)
+                        .setMessage(R.string.corelatore_rimosso_richiesta)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 RimuoviCorelatore();
                             }
                         })
-                        .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.indietro, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -211,7 +211,7 @@ public class TesiSceltaFragment extends Fragment {
                     operazioneDownload = true;
                 }
             } else {
-                Toast.makeText(getActivity().getApplicationContext(), "Nessuno file caricato", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.no_file, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -229,10 +229,10 @@ public class TesiSceltaFragment extends Fragment {
      */
     private void AggiungiCorelatore(){
         if(tesiScelta.AggiungiCorelatore(db, richiestaCorelatore.getText().toString().trim())){
-            Toast.makeText(getActivity().getApplicationContext(), "Richiesta inviata con successo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.richiesta_collaboarzione_inviata, Toast.LENGTH_SHORT).show();
             this.onResume();
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Il corelatore inserito non esiste o errore imprevisto", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.richiesta_collaboarzione_errore, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -241,10 +241,10 @@ public class TesiSceltaFragment extends Fragment {
      */
     private void RimuoviCorelatore(){
         if(tesiScelta.RimuoviCorelatore(db)){
-            Toast.makeText(getActivity().getApplicationContext(), "Corelatore rimosso con successo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.corelatore_rimosso_successo, Toast.LENGTH_SHORT).show();
             this.onResume();
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.operazione_fallita, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -253,10 +253,10 @@ public class TesiSceltaFragment extends Fragment {
      */
     private void AccettaCollaborazione(){
         if(tesiScelta.AccettaRichiesta(db)){
-            Toast.makeText(getActivity().getApplicationContext(), "Richiesta accettata", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.richiesta_collaboarzione_accettata, Toast.LENGTH_SHORT).show();
             Utility.goBack(getActivity());
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), " Operazione fallita", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.operazione_fallita, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -265,10 +265,10 @@ public class TesiSceltaFragment extends Fragment {
      */
     private void RifiutaCollaborazione(){
         if(tesiScelta.RifiutaRichiesta(db)){
-            Toast.makeText(getActivity().getApplicationContext(), "Richiesta rifiutata", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.richiesta_collaboarzione_rifiutata, Toast.LENGTH_SHORT).show();
             Utility.goBack(getActivity());
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.operazione_fallita, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -283,7 +283,7 @@ public class TesiSceltaFragment extends Fragment {
                 caricaFile();
             }
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Permessi negati", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.permesso_negato, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -356,10 +356,10 @@ public class TesiSceltaFragment extends Fragment {
         titoloTesi.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_TITOLO)));
         argomentoTesi.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)));
         tempistiche.setText(String.valueOf(cursorTesi.getInt(cursorTesi.getColumnIndexOrThrow(Database.TESI_TEMPISTICHE))));
-        esamiMancanti.setText("Requisito richiesto: " + String.valueOf(cursorTesi.getInt(cursorTesi.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI))) +
-                "\nTesista: " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_ESAMIMANCANTI)));
-        media.setText("Requisito richiesto: " + cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)) +
-                "\nTesista: " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_MEDIAVOTI)));
+        esamiMancanti.setText(R.string.requisito_richiesto + " : " + cursorTesi.getInt(cursorTesi.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)) +
+                "\n" + R.string.tesista + " : " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_ESAMIMANCANTI)));
+        media.setText(R.string.requisito_richiesto + " : " + cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)) +
+                "\n" + R.string.tesista + " : " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_MEDIAVOTI)));
         capacitaRichiesta.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_SKILLRICHIESTE)));
 
         //Corelatore
@@ -370,7 +370,7 @@ public class TesiSceltaFragment extends Fragment {
                 corelatore.setText(cursoreCorelatore.getString(cursoreCorelatore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursoreCorelatore.getString(cursoreCorelatore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
                 emailCorelatore.setText(cursoreCorelatore.getString(cursoreCorelatore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
             } else if(tesiScelta.getStatoCorelatore()==TesiScelta.IN_ATTESA) {
-                corelatore.setText("In attesa di approvazione");
+                corelatore.setText(getActivity().getApplicationContext().getResources().getString(R.string.attesa_approvazione));
                 emailCorelatore.setText(cursoreCorelatore.getString(cursoreCorelatore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
             }
         }
@@ -434,8 +434,8 @@ public class TesiSceltaFragment extends Fragment {
         emailCorelatore.setVisibility(View.GONE);
         richiestaCorelatore.setVisibility(View.GONE);
         if (richiesta) {
-            aggiungiCorelatore.setText("Accetta");
-            rimuoviCorelatore.setText("Rifiuta");
+            aggiungiCorelatore.setText(getActivity().getApplicationContext().getResources().getString(R.string.accetta));
+            rimuoviCorelatore.setText(getActivity().getApplicationContext().getResources().getString(R.string.rifiuta));
             creaTask.setVisibility(View.GONE);
             mostraTask.setVisibility(View.GONE);
             scaricaTesi.setVisibility(View.GONE);
@@ -504,7 +504,7 @@ public class TesiSceltaFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select PDF Files..."), Utility.REQUEST_CARICA_FILE);
+        startActivityForResult(Intent.createChooser(intent, getActivity().getApplicationContext().getResources().getString(R.string.seleziona_pdf)), Utility.REQUEST_CARICA_FILE);
     }
 
     @Override
@@ -545,7 +545,7 @@ public class TesiSceltaFragment extends Fragment {
                     databaseReference.child(downloadKey).setValue(file);
                     TesiSceltaDatabase.UploadTesiScelta(db, tesiScelta,downloadKey);
                     scaricaTesi.setVisibility(View.VISIBLE);
-                    Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.file_caricato_successo, Toast.LENGTH_SHORT);
                     //progressDialog.dismiss();
                 }).addOnProgressListener(snapshot -> {
                     //double progress=(100.0* snapshot.getBytesTransferred())/snapshot.getTotalByteCount();

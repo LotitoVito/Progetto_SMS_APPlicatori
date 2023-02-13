@@ -33,6 +33,7 @@
     <string name="studente">Studente</string>
     <string name="relatore">Relatore</string>
     <string name="matricola_relatore">Matricola Relatore</string>
+    <string name="email_relatore">Email Relatore</string>
     <string name="co_relatore">Co-relatore</string>
     <string name="avanti">Avanti</string>
     <string name="organizzazione">Organizzazione</string>
@@ -183,6 +184,36 @@
     <string name="impostaLingua">Seleziona lingua</string>
     <string name="italiano">Italiano</string>
     <string name="inglese">Inglese</string>
-
+    <string name="seleziona_pdf">Seleziona un file PDF</string>
+    <string name="file_caricato_successo">File caricato con successo</string>
+    <string name="task_crea_richiesta">Creare task per il tesista?</string>
+    <string name="task_crea_successo">Task creato con successo</string>
+    <string name="no_file">Nessun file caricato</string>
+    <string name="task_data_inizio">Data inizio: </string>
+    <string name="task_data_fine">Data fine: </string>
+    <string name="task_modifica_successo">Task modificato con successo</string>
+    <string name="tesi_registra_successo">Tesi registrata con successo</string>
+    <string name="tesi_modifica_successo">Tesi modificata con successo</string>
+    <string name="tesi_registra_richiesta">Creare la proposta di tesi?</string>
+    <string name="visualizzazioni">Visualizzazioni</string>
+    <string name="relatore_non_esiste">Relatore non esistente</string>
+    <string name="inserisci_titolo_tesi">Inserisci il titolo della tesi</string>
+    <string name="condividi_chooser">Condividi con: </string>
+    <string name="condividi_messaggio">Guarda questa Tesi!</string>
+    <string name="attesa_approvazione">In attesa di approvazione</string>
+    <string name="richiesta_collaboarzione_rifiutata">Richiesta rifiutata</string>
+    <string name="richiesta_collaboarzione_accettata">Richiesta accettata</string>
+    <string name="richiesta_collaboarzione_errore">Il corelatore inserito non esiste o errore imprevisto</string>
+    <string name="richiesta_collaboarzione_inviata">Richiesta inviata con successo</string>
+    <string name="corelatore_rimosso_successo">Corelatore rimosso con successo</string>
+    <string name="richiesta_collaboarzione_richiesta">Inviare richiesta di collaborazione al corelatore indicato?</string>
+    <string name="richiesta_collaboarzione_richiesta_accetta">Accettare collaborazione per questa tesi?</string>
+    <string name="richiesta_collaboarzione_richiesta_rifiuta">Rifiutare collaborazione?</string>
+    <string name="corelatore_rimosso_richiesta">Rimuove il corelatore dalla tesi?</string>
+    <string name="corelatore_errore">Il corelatore non esiste</string>
+    <string name="corelatore_non_disponibile">Il corelatore non è ancora disponibile</string>
+    <string name="errore">Errore</string>
+    <string name="tesi_consegna_successo">La consegna è avvenuta con successo</string>
+    <string name="tesi_consegna_richiesta">Consegnare la tesi?</string>
 
 </resources>

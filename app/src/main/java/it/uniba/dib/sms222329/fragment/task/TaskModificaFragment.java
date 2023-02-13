@@ -95,7 +95,7 @@ public class TaskModificaFragment extends Fragment {
 
         dataFine.setOnClickListener(view1 -> {
             MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
-            materialDateBuilder.setTitleText("SELECT A DATE");
+            materialDateBuilder.setTitleText(getActivity().getApplicationContext().getResources().getString(R.string.seleziona_data));
             final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
 
             materialDatePicker.show(getActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
@@ -112,15 +112,15 @@ public class TaskModificaFragment extends Fragment {
 
         sliderStato.addOnChangeListener((slider, value, fromUser) -> {
             if(value==0){
-                testoStato.setText("Assegnato");
+                testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_assegnato));
             } else if(value==25){
-                testoStato.setText("Iniziato");
+                testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_iniziato));
             } else if(value==50){
-                testoStato.setText("In completamento");
+                testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_in_completamento));
             } else if(value==75){
-                testoStato.setText("In revisione");
+                testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_in_revisione));
             } else if(value==100){
-                testoStato.setText("Completato");
+                testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_completato));
             }
         });
 
@@ -128,19 +128,19 @@ public class TaskModificaFragment extends Fragment {
             FillAllEmpty();
             if(Utility.accountLoggato == Utility.RELATORE){
                 if(task.ModificaTask(titoloTask.getText().toString().trim(), descrizioneTask.getText().toString().trim(), dataSelezionata, (int) (sliderStato.getValue()/25), db)){        //settare slider
-                    Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.task_modifica_successo, Toast.LENGTH_SHORT).show();
                     Utility.goBack(getActivity());
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.operazione_fallita, Toast.LENGTH_SHORT).show();
                 }
             }
 
             if(Utility.accountLoggato == Utility.TESISTA){
                 if(task.ModificaTask((int) (sliderStato.getValue()/25), db)){        //settare slider
-                    Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.task_modifica_successo, Toast.LENGTH_SHORT).show();
                     Utility.goBack(getActivity());
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.operazione_fallita, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -160,7 +160,7 @@ public class TaskModificaFragment extends Fragment {
         if(requestCode==Utility.REQUEST_PERMESSO_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
             caricaFile();
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Permessi negati", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.permesso_negato, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -189,15 +189,15 @@ public class TaskModificaFragment extends Fragment {
         sliderStato.setValue((float) (25.0 * task.getStato()));
 
         if(sliderStato.getValue()==0){
-            testoStato.setText("Assegnato");
+            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_assegnato));
         } else if(sliderStato.getValue()==25){
-            testoStato.setText("Iniziato");
+            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_iniziato));
         } else if(sliderStato.getValue()==50){
-            testoStato.setText("In completamento");
+            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_in_completamento));
         } else if(sliderStato.getValue()==75){
-            testoStato.setText("In revisione");
+            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_in_revisione));
         } else if(sliderStato.getValue()==100){
-            testoStato.setText("Completato");
+            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_completato));
         }
 
         getLastUpload();
@@ -247,7 +247,7 @@ public class TaskModificaFragment extends Fragment {
         });
 
         if(file == null){
-            materiale.setText("Nessun caricamento");
+            materiale.setText(getActivity().getApplicationContext().getResources().getString(R.string.no_file));
         }
     }
 
@@ -258,7 +258,7 @@ public class TaskModificaFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select PDF Files..."), Utility.REQUEST_CARICA_FILE);
+        startActivityForResult(Intent.createChooser(intent, getActivity().getApplicationContext().getResources().getString(R.string.seleziona_pdf)), Utility.REQUEST_CARICA_FILE);
     }
 
     @Override
@@ -298,7 +298,7 @@ public class TaskModificaFragment extends Fragment {
                     materiale.setText(file.toString());
                     databaseReference.child(downloadKey).setValue(file);
                     TaskDatabase.UploadTask(db, task, downloadKey);
-                    Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.file_caricato_successo, Toast.LENGTH_SHORT);
                     //progressDialog.dismiss();
                 }).addOnProgressListener(snapshot -> {
                     //double progress=(100.0* snapshot.getBytesTransferred())/snapshot.getTotalByteCount();

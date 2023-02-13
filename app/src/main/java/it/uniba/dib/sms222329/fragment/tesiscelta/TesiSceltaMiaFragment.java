@@ -135,22 +135,22 @@ public class TesiSceltaMiaFragment extends Fragment {
             salvaModifica.setOnClickListener(view -> {
                 if(!IsEmpty(abTesi)){
                     new AlertDialog.Builder(getActivity())
-                            .setTitle("Conferma")
-                            .setMessage("Comsegnare la tesi?")
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            .setTitle(R.string.conferma)
+                            .setMessage(R.string.tesi_consegna_richiesta)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     ConsegnaTesi();
                                 }
                             })
-                            .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.indietro, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                 }
                             }).create().show();
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Compila i campi obbligatori", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.campi_vuoti_errore, Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -162,10 +162,10 @@ public class TesiSceltaMiaFragment extends Fragment {
      */
     private void ConsegnaTesi(){
         if(tesiScelta.ConsegnaTesiScelta(db, abTesi.getText().toString().trim())){
-            Toast.makeText(getActivity().getApplicationContext(), "Consegna avvenuta con successo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.tesi_consegna_successo, Toast.LENGTH_SHORT).show();
             this.onResume();
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.operazione_fallita, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -180,7 +180,7 @@ public class TesiSceltaMiaFragment extends Fragment {
                 caricaFile();
             }
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Permessi negati", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.permesso_negato, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -288,7 +288,7 @@ public class TesiSceltaMiaFragment extends Fragment {
             nomeCorelatore.setText(cursorCorelatore.getString(cursorCorelatore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorCorelatore.getString(cursorCorelatore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
             emailCorelatore.setText(cursorCorelatore.getString(cursorCorelatore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
         } else {
-            nomeCorelatore.setText("Non ancora disponibile");
+            nomeCorelatore.setText(R.string.corelatore_non_disponibile);
             emailCorelatore.setVisibility(View.GONE);
         }
     }
@@ -303,7 +303,7 @@ public class TesiSceltaMiaFragment extends Fragment {
 
         if(Utility.isEmptyTextbox(abTesi)){
             risultato = true;
-            abTesi.setError("Obbligatorio");
+            abTesi.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         return risultato;
     }
@@ -336,12 +336,12 @@ public class TesiSceltaMiaFragment extends Fragment {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                ultimoCaricamento.setText("Errore");
+                ultimoCaricamento.setText(R.string.errore);
             }
         });
 
         if(file == null){
-            ultimoCaricamento.setText("Nessun caricamento");
+            ultimoCaricamento.setText(R.string.no_file);
             return false;
         }else{
             return true;
@@ -355,7 +355,7 @@ public class TesiSceltaMiaFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select PDF Files..."), Utility.REQUEST_CARICA_FILE);
+        startActivityForResult(Intent.createChooser(intent, getActivity().getApplicationContext().getResources().getString(R.string.seleziona_pdf)), Utility.REQUEST_CARICA_FILE);
     }
 
     @Override
@@ -395,7 +395,7 @@ public class TesiSceltaMiaFragment extends Fragment {
                     ultimoCaricamento.setText(file.toString());
                     databaseReference.child(downloadKey).setValue(file);
                     TesiSceltaDatabase.UploadTesiScelta(db, tesiScelta,downloadKey);
-                    Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.file_caricato_successo, Toast.LENGTH_SHORT);
                     //progressDialog.dismiss();
                 }).addOnProgressListener(snapshot -> {
                     //double progress=(100.0* snapshot.getBytesTransferred())/snapshot.getTotalByteCount();

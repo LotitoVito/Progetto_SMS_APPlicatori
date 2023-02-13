@@ -32,6 +32,7 @@
     <string name="studente">Student</string>
     <string name="relatore">Advisor</string>
     <string name="matricola_relatore">ID Advisor</string>
+    <string name="email_relatore">Advisor\'s Email</string>
     <string name="co_relatore">Co-advisor</string>
     <string name="avanti">Next</string>
     <string name="organizzazione">Company</string>
@@ -182,5 +183,36 @@
     <string name="impostaLingua">Seleziona lingua</string>
     <string name="italiano">Italiano</string>
     <string name="inglese">Inglese</string>
+    <string name="seleziona_pdf">Select a PDF File</string>
+    <string name="file_caricato_successo">File uploaded successfully</string>
+    <string name="task_crea_richiesta">Create a new task for the student?</string>
+    <string name="task_crea_successo">Task successfully created</string>
+    <string name="no_file">No uploaded file</string>
+    <string name="task_data_inizio">Start Date: </string>
+    <string name="task_data_fine">Deadline date: </string>
+    <string name="task_modifica_successo">Task successfully modified</string>
+    <string name="tesi_registra_successo">Thesis successfully registered</string>
+    <string name="tesi_modifica_successo">Thesis successfully modified</string>
+    <string name="tesi_registra_richiesta">Create a new thesis?</string>
+    <string name="visualizzazioni">Views</string>
+    <string name="relatore_non_esiste">Advisor doesn\'t exist</string>
+    <string name="inserisci_titolo_tesi">Insert thesis title</string>
+    <string name="condividi_chooser">Share with: </string>
+    <string name="condividi_messaggio">Take a look at this thesis!</string>
+    <string name="attesa_approvazione">Waiting for approval</string>
+    <string name="richiesta_collaboarzione_rifiutata">Request denied</string>
+    <string name="richiesta_collaboarzione_accettata">Request accepted</string>
+    <string name="richiesta_collaboarzione_errore">The coadvisor doesn\'t exist or sudden error</string>
+    <string name="richiesta_collaboarzione_inviata">Request successfully sended</string>
+    <string name="corelatore_rimosso_successo">Coadvisor successfully removed</string>
+    <string name="richiesta_collaboarzione_richiesta">Send request to coadvisor?</string>
+    <string name="richiesta_collaboarzione_richiesta_accetta">Accept collaboration?</string>
+    <string name="richiesta_collaboarzione_richiesta_rifiuta">Refuse collaboration?</string>
+    <string name="corelatore_rimosso_richiesta">Remove coadvisor from thesis?</string>
+    <string name="corelatore_errore">The coadvisor doesn\'t exist</string>
+    <string name="corelatore_non_disponibile">The coadvisor is still not available</string>
+    <string name="errore">Error</string>
+    <string name="tesi_consegna_successo">Thesis handed successfully</string>
+    <string name="tesi_consegna_richiesta">Hand the thesis?</string>
 
 </resources>

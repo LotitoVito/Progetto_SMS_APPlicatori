@@ -96,13 +96,13 @@ public class TesiCreaModificaFragment extends Fragment {
                             Integer.parseInt(tempistiche.getText().toString().trim()), Float.parseFloat(media.getText().toString().trim()),
                             Integer.parseInt(esamiMancanti.getText().toString().trim()), capacitaRichiesta.getText().toString().trim(),
                             RecuperaIdUniversitaCorso(), db)){
-                        Toast.makeText(getActivity().getApplicationContext(), "Modifica effettuata con successo", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.tesi_modifica_successo, Toast.LENGTH_SHORT).show();
                         Utility.goBack(getActivity());
                     } else{
-                        Toast.makeText(getActivity().getApplicationContext(), "Modifica fallita", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.operazione_fallita, Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "La media non è compresa tra 0 e 30", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.media_errore, Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -112,25 +112,25 @@ public class TesiCreaModificaFragment extends Fragment {
                 if(!IsEmpty(titolo, argomenti, tempistiche, media, esamiMancanti, capacitaRichiesta)) {
                     if(Integer.parseInt(media.getText().toString())>=18 && Integer.parseInt(media.getText().toString())<=30){
                         new AlertDialog.Builder(getActivity())
-                                .setTitle("Conferma")
-                                .setMessage("Creare la proposta di tesi?")
-                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                .setTitle(R.string.conferma)
+                                .setMessage(R.string.tesi_registra_richiesta)
+                                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         CreaTesi();
                                     }
                                 })
-                                .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                                .setNegativeButton(R.string.indietro, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();
                                     }
                                 }).create().show();
                     } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "La media non è compresa tra 0 e 30", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.media_errore, Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    Toast.makeText(getActivity().getApplicationContext(), "Compilare tutti i campi obbligatori", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.campi_vuoti_errore, Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -147,10 +147,10 @@ public class TesiCreaModificaFragment extends Fragment {
                 capacitaRichiesta.getText().toString().trim(), RecuperaIdUniversitaCorso());
 
         if (TesiDatabase.RegistrazioneTesi(tesi, db)) {
-            Toast.makeText(getActivity().getApplicationContext(), "Tesi registrata con successo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.tesi_registra_successo, Toast.LENGTH_SHORT).show();
             Utility.goBack(getActivity());
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Registrazione fallita", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.operazione_fallita, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -247,27 +247,27 @@ public class TesiCreaModificaFragment extends Fragment {
 
         if(Utility.isEmptyTextbox(titolo)){
             risultato = true;
-            titolo.setError("Obbligatorio");
+            titolo.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(argomenti)){
             risultato = true;
-            argomenti.setError("Obbligatorio");
+            argomenti.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(tempistiche)){
             risultato = true;
-            tempistiche.setError("Obbligatorio");
+            tempistiche.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(media)){
             risultato = true;
-            media.setError("Obbligatorio");
+            media.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(esamiMancanti)){
             risultato = true;
-            esamiMancanti.setError("Obbligatorio");
+            esamiMancanti.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(capacitaRichiesta)){
             risultato = true;
-            capacitaRichiesta.setError("Obbligatorio");
+            capacitaRichiesta.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         return risultato;
     }

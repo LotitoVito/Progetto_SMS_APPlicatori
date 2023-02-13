@@ -93,7 +93,7 @@ public class TaskCreaFragment extends Fragment {
 
         dataFine.setOnClickListener(view1 -> {
             MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
-            materialDateBuilder.setTitleText("SELECT A DATE");
+            materialDateBuilder.setTitleText(getActivity().getApplicationContext().getResources().getString(R.string.seleziona_data));
             final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
 
             materialDatePicker.show(getActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
@@ -111,22 +111,22 @@ public class TaskCreaFragment extends Fragment {
         creaTask.setOnClickListener(view -> {
             if(!IsEmpty(titoloTask, descrizioneTask, dataFine)){
                 new AlertDialog.Builder(getActivity())
-                        .setTitle("Conferma")
-                        .setMessage("Creare task per il tesista?")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        .setTitle(R.string.conferma)
+                        .setMessage(R.string.task_crea_richiesta)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 CreaTask();
                             }
                         })
-                        .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.indietro, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                             }
                         }).create().show();
             } else {
-                Toast.makeText(getActivity().getApplicationContext(), "Compilare i campi obbligatori", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.campi_vuoti_errore, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -143,10 +143,10 @@ public class TaskCreaFragment extends Fragment {
     private void CreaTask(){
         Task task = new Task(titoloTask.getText().toString().trim(), descrizioneTask.getText().toString().trim(), dataSelezionata, downloadKey, tesiScelta.getIdTesiScelta());
         if(TaskDatabase.CreaTask(db, task)){
-            Toast.makeText(getActivity().getApplicationContext(), "Task creata con successo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.task_crea_successo, Toast.LENGTH_SHORT).show();
             Utility.goBack(getActivity());
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Operazione fallita", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.operazione_fallita, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -157,7 +157,7 @@ public class TaskCreaFragment extends Fragment {
         if(requestCode==Utility.REQUEST_PERMESSO_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
             caricaFile();
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Permessi negati", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.permesso_negato, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -193,15 +193,15 @@ public class TaskCreaFragment extends Fragment {
 
         if(Utility.isEmptyTextbox(titolo)){
             risultato = true;
-            titolo.setError("Obbligatorio");
+            titolo.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(argomento)){
             risultato = true;
-            argomento.setError("Obbligatorio");
+            argomento.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(dataFine)){
             risultato = true;
-            dataFine.setError("Obbligatorio");
+            dataFine.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
         }
         return risultato;
     }
@@ -221,7 +221,7 @@ public class TaskCreaFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select PDF Files..."), Utility.REQUEST_CARICA_FILE);
+        startActivityForResult(Intent.createChooser(intent, getActivity().getApplicationContext().getResources().getString(R.string.seleziona_pdf)), Utility.REQUEST_CARICA_FILE);
     }
 
     @Override
@@ -260,7 +260,7 @@ public class TaskCreaFragment extends Fragment {
                     if(Utility.accountLoggato == Utility.CORELATORE) file = new FileUpload(Utility.coRelatoreLoggato.getIdUtente(), Utility.coRelatoreLoggato.getNome()+" "+Utility.coRelatoreLoggato.getCognome(), url.toString(), new Date(), getActivity().getApplicationContext());
                     materiale.setText(file.toString());
                     databaseReference.child(downloadKey).setValue(file);
-                    Toast.makeText(getActivity().getApplicationContext(), "File Uploaded!", Toast.LENGTH_SHORT);
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.file_caricato_successo, Toast.LENGTH_SHORT);
                     //progressDialog.dismiss();
                 }).addOnProgressListener(snapshot -> {
                     //double progress=(100.0* snapshot.getBytesTransferred())/snapshot.getTotalByteCount();

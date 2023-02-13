@@ -68,19 +68,23 @@ public class TesiVisualizzaFragment extends BottomSheetDialogFragment {
         share.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
-            String sub = "Guarda questa Tesi!\nTitolo: " + tesi.getTitolo() +"\nArgomenti: " + tesi.getArgomenti() +"\nTempistiche in mesi: "
-                    + tesi.getTempistiche() + "\nMedia: " + tesi.getMediaVotiMinima() + "\nEsami necessari: " + tesi.getEsamiNecessari() +
-                    "\nCapacità richieste: " + tesi.getCapacitaRichieste();
+            String sub = R.string.condividi_messaggio +
+                    "\n" + R.string.titolo + " : " + tesi.getTitolo() +
+                    "\n" + R.string.argomenti + " : " + tesi.getArgomenti() +
+                    "\n" + R.string.tempistiche + " : " + tesi.getTempistiche() +
+                    "\n" + R.string.media + " : " + tesi.getMediaVotiMinima() +
+                    "\n" + R.string.numero_esami_mancanti + " : " + tesi.getEsamiNecessari() +
+                    "\n" + R.string.capacitaRichiesta + " : " + tesi.getCapacitaRichieste();
             if(tesi.getStatoDisponibilita()){
-                sub += "\nDisponibile";
+                sub += "\n" + R.string.tesi_disponibile;
             } else{
-                sub += "\nDisponibile";
+                sub += "\n" + R.string.tesi_non_disponibile;
             }
             Cursor cursor = db.RicercaDato("SELECT " + Database.RELATORE_MATRICOLA + " FROM " + Database.RELATORE + ";");
             cursor.moveToNext();
-            sub += "\nMatricola Relatore: " + cursor.getString(cursor.getColumnIndexOrThrow(Database.RELATORE_MATRICOLA));
+            sub += "\n" + R.string.matricola_relatore + " : " + cursor.getString(cursor.getColumnIndexOrThrow(Database.RELATORE_MATRICOLA));
             intent.putExtra(Intent.EXTRA_TEXT, sub);
-            startActivity(Intent.createChooser(intent, "Condividi con:"));
+            startActivity(Intent.createChooser(intent, getActivity().getApplicationContext().getResources().getString(R.string.condividi_chooser)));
         });
 
         creaSegnalazione.setOnClickListener(view -> {
@@ -134,7 +138,6 @@ public class TesiVisualizzaFragment extends BottomSheetDialogFragment {
                 " WHERE uc." + Database.UNIVERSITACORSO_CORSOID + "=cs." + Database.CORSOSTUDI_ID +
                 " AND uc." + Database.UNIVERSITACORSO_ID + "=" + tesi.getIdUniversitaCorso() + ";");
         cursorCorso.moveToFirst();
-        Log.d("test", cursorCorso.getString(cursorCorso.getColumnIndexOrThrow(Database.CORSOSTUDI_NOME)));
         corso.setText(cursorCorso.getString(cursorCorso.getColumnIndexOrThrow(Database.CORSOSTUDI_NOME)));
 
         disponibilita.setChecked(tesi.getStatoDisponibilita());

@@ -133,11 +133,11 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
      */
     private void spinnerCreate(Spinner spinner){
         List<String> items = new ArrayList<>();
-        items.add("Titolo");
-        items.add("Tempistiche");
-        items.add("Media");
-        items.add("Esami Necessari");
-        items.add("Visualizzazioni");
+        items.add(getActivity().getApplicationContext().getResources().getString(R.string.titolo));
+        items.add(getActivity().getApplicationContext().getResources().getString(R.string.tempistiche));
+        items.add(getActivity().getApplicationContext().getResources().getString(R.string.media));
+        items.add(getActivity().getApplicationContext().getResources().getString(R.string.numero_esami_mancanti));
+        items.add(getActivity().getApplicationContext().getResources().getString(R.string.visualizzazioni));
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -158,7 +158,7 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
             query += " t." + Database.TESI_RELATOREID + "=" + cursor.getInt(0) + " AND";
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getActivity().getApplicationContext(), "Relatore non esistente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.relatore_non_esiste, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -205,15 +205,15 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
      * Il metodo aggiunge alla query l'ordinamento in base al campo selezionato
      */
     private void AddToQueryOrderBy() {
-        if (campoOrdinamento.getSelectedItem().toString().compareTo("Titolo") == 0){
+        if (campoOrdinamento.getSelectedItem().toString().compareTo(getActivity().getApplicationContext().getResources().getString(R.string.titolo)) == 0){
             query += " ORDER BY t." + Database.TESI_TITOLO;
-        } else if (campoOrdinamento.getSelectedItem().toString().compareTo("Tempistiche") == 0){
+        } else if (campoOrdinamento.getSelectedItem().toString().compareTo(getActivity().getApplicationContext().getResources().getString(R.string.tempistiche)) == 0){
             query += " ORDER BY t." + Database.TESI_TEMPISTICHE;
-        } else if (campoOrdinamento.getSelectedItem().toString().compareTo("Media") == 0){
+        } else if (campoOrdinamento.getSelectedItem().toString().compareTo(getActivity().getApplicationContext().getResources().getString(R.string.media)) == 0){
             query += " ORDER BY t." + Database.TESI_MEDIAVOTOMINIMA;
-        } else if (campoOrdinamento.getSelectedItem().toString().compareTo("Esami Necessari") == 0){
+        } else if (campoOrdinamento.getSelectedItem().toString().compareTo(getActivity().getApplicationContext().getResources().getString(R.string.numero_esami_mancanti)) == 0){
             query += " ORDER BY t." + Database.TESI_ESAMINECESSARI;
-        } else if (campoOrdinamento.getSelectedItem().toString().compareTo("Visualizzazioni") == 0){
+        } else if (campoOrdinamento.getSelectedItem().toString().compareTo(getActivity().getApplicationContext().getResources().getString(R.string.visualizzazioni)) == 0){
             query += " ORDER BY t." + Database.TESI_VISUALIZZAZIONI;
         }
     }

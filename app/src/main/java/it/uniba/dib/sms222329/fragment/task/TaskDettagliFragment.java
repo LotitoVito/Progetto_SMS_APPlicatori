@@ -111,7 +111,7 @@ public class TaskDettagliFragment extends Fragment {
         if(requestCode==Utility.REQUEST_PERMESSO_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
             downloadFile();
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Permessi negati", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.permesso_negato, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -151,18 +151,18 @@ public class TaskDettagliFragment extends Fragment {
     private void SetTextAll() {
         titoloTask.setText(task.getTitolo());
         descrizioneTask.setText(task.getDescrizione());
-        dateInizioFine.setText("Data inizio: " + task.getDataInizio().format(Utility.showDate) + " - Data fine: " + task.getDataFine().format(Utility.showDate));
+        dateInizioFine.setText(R.string.task_data_inizio + task.getDataInizio().format(Utility.showDate) + " - " + R.string.task_data_fine + task.getDataFine().format(Utility.showDate));
 
         if(sliderStato.getValue()==0){
-            testoStato.setText("Assegnato");
+            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_assegnato));
         } else if(sliderStato.getValue()==25){
-            testoStato.setText("Iniziato");
+            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_iniziato));
         } else if(sliderStato.getValue()==50){
-            testoStato.setText("In completamento");
+            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_in_completamento));
         } else if(sliderStato.getValue()==75){
-            testoStato.setText("In revisione");
+            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_in_revisione));
         } else if(sliderStato.getValue()==100){
-            testoStato.setText("Completato");
+            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_completato));
         }
     }
 
@@ -198,7 +198,7 @@ public class TaskDettagliFragment extends Fragment {
         });
 
         if(file == null){
-            materiale.setText("Nessun caricamento");
+            materiale.setText(getActivity().getApplicationContext().getResources().getString(R.string.no_file));
         }
     }
 
