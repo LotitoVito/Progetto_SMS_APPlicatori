@@ -9,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Item 1"
+        android:textColor="@color/primaryColor"
         android:checked="false"
         />
 

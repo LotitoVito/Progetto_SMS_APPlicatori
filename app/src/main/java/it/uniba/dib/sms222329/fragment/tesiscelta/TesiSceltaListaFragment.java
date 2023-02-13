@@ -53,14 +53,6 @@ public class TesiSceltaListaFragment extends Fragment {
 
         Init();
 
-        u_richieste = getActivity().findViewById(R.id.u_richieste);
-        u_tesisti = getActivity().findViewById(R.id.u_tesisti);
-
-        defaultColor = richieste.getTextColors().getDefaultColor();
-        u_defaultColor = view.getDrawingCacheBackgroundColor();
-
-        richieste.setTextColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
-        u_richieste.setBackgroundColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
 
         if(Utility.accountLoggato == Utility.RELATORE){
             CaricaListaRichiesteRelatore();

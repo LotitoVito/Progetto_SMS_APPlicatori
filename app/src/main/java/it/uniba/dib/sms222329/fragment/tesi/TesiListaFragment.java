@@ -110,7 +110,7 @@ public class TesiListaFragment extends Fragment {
         listView = getActivity().findViewById(R.id.tesiList);
         barraRicerca = getView().findViewById(R.id.search_view);
 
-        barraRicerca.setQueryHint(getActivity().getApplicationContext().getResources().getString(R.string.inserisci_titolo_tesi));
+        barraRicerca.setQueryHint(getResources().getString(R.string.inserisci_titolo_tesi));
         if(Utility.accountLoggato != Utility.RELATORE){
             addButton.setVisibility(View.GONE);
         }

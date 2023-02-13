@@ -29,7 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    tools:ignore="TextContrastCheck" />
+                    tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -38,11 +38,12 @@
                 android:id="@+id/universita"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:background="@android:drawable/btn_dropdown"
+                android:contentDescription="@string/universita"
                 android:minHeight="48dp"
                 android:spinnerMode="dropdown"
-                tools:ignore="LabelFor"
-                android:layout_marginBottom="16dp" />
+                tools:ignore="LabelFor" />
 
             <TextView
                 android:id="@+id/corsiInsegnati"

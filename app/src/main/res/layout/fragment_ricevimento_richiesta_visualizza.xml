@@ -24,6 +24,7 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_weight="1"
+
             />
 
         <TextView
@@ -32,11 +33,13 @@
             android:layout_height="wrap_content"
             android:text="Messaggio scritto dallo studente"
             android:textSize="16sp"
-            android:layout_weight="2"/>
+            android:layout_weight="2"
+            android:layout_marginBottom="16dp"/>
 
         <androidx.constraintlayout.utils.widget.MotionLabel
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:textSize="18sp"
             android:text="@string/task" />
 
         <TextView
@@ -46,12 +49,14 @@
             android:text="Task a cui il messaggio fa riferimento"
             android:textSize="18sp"
             android:layout_weight="1"
+            android:layout_marginBottom="8dp"
             />
 
 
         <androidx.constraintlayout.utils.widget.MotionLabel
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:textSize="18sp"
             android:text="@string/data_proposta" />
 
         <TextView
@@ -61,6 +66,7 @@
             android:text="Lunedì 5 febbraio 2022 ore 09:00"
             android:textSize="18sp"
             android:layout_weight="1"
+            android:layout_marginBottom="18dp"
             />
 
         <TextView
@@ -69,13 +75,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:clickable="true"
-            android:gravity="end|center"
+            android:gravity="center"
             android:minHeight="48dp"
             android:text="@string/riorganizza"
             android:textColor="@color/primaryColor"
             android:textSize="20sp"
-            android:textStyle="bold" />
-
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
 
 
         <LinearLayout

@@ -4,13 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.task.TaskListaFragment"
-    android:padding="8dp">
+    >
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/lista_task"
         tools:listitem="@layout/generic_item"
+        android:padding="8dp"
         />
 
 
@@ -18,9 +19,10 @@
         android:id="@+id/crea_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:src="@android:drawable/ic_input_add"
         android:layout_gravity="end|bottom"
-        />
+        android:clickable="true"
+        android:contentDescription="@string/crea_task"
+        android:src="@android:drawable/ic_input_add"
+        tools:ignore="ImageContrastCheck" />
 
 </FrameLayout>

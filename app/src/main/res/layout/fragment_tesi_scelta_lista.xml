@@ -15,67 +15,42 @@
         android:weightSum="10"
         tools:ignore="UselessParent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="4">
-        <TextView
-            android:id="@+id/richieste"
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:text="@string/richieste"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:clickable="true"/>
+            android:id="@+id/richieste"
 
-        <TextView
-            android:id="@+id/tesisti"
+            />
+
+
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:text="@string/tesisti"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:clickable="true"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="4">
+            android:text="@string/tesisti"
+            android:id="@+id/tesisti"
+            />
 
-            <View
-                android:id="@+id/u_richieste"
-                android:layout_width="wrap_content"
-                android:layout_height="4dp"
-                android:layout_weight="2"
-                android:gravity="center"
-                />
+    </com.google.android.material.tabs.TabLayout>
 
-            <View
-                android:id="@+id/u_tesisti"
-                android:layout_width="wrap_content"
-                android:layout_height="4dp"
-                android:layout_weight="2"
-                android:gravity="center" />
 
-        </LinearLayout>
 
         <ListView
             android:id="@+id/tesistiList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
+
             tools:listitem="@layout/generic_item"
             />
 
 
 
     </LinearLayout>
+
+
 </FrameLayout>

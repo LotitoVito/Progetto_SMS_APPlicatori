@@ -14,17 +14,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical"
+            android:background="@color/primaryColorLight"
+            android:elevation="8dp"
+            android:layout_marginBottom="8dp"
             android:padding="8dp">
-
-
-            <TextView
-                android:id="@+id/nomeStudente"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/studente"
-                android:textColor="@color/primaryColor"
-                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/titoloTesi"
@@ -32,9 +33,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Titolo tesi richiesta"
-                android:textColor="@color/primaryColor"
+                android:textColor="@color/white"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
 
             <TextView
                 android:id="@+id/argomentoTesi"
@@ -42,13 +46,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="2"
+                android:textColor="@color/black"
                 android:text="Descrizione tesi"
                 android:textSize="16sp" />
+
+
 
             <androidx.constraintlayout.utils.widget.MotionLabel
                 android:id="@+id/label_universita"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textColor="@color/white"
                 android:text="@string/universita" />
 
             <TextView
@@ -58,12 +66,14 @@
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:text="Universita"
+                android:textColor="@color/black"
                 android:textSize="18sp" />
 
             <androidx.constraintlayout.utils.widget.MotionLabel
                 android:id="@+id/label_corso"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textColor="@color/white"
                 android:text="@string/corsoDiStudio" />
 
             <TextView
@@ -73,27 +83,13 @@
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:text="Corso di studio"
+                android:textColor="@color/black"
                 android:textSize="18sp" />
-
-            <androidx.constraintlayout.utils.widget.MotionLabel
-                android:id="@+id/label_abstract"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/argomenti" />
-
-            <TextView
-                android:id="@+id/riassunto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_weight="1"
-                android:text="abstract tesi"
-                android:textSize="18sp" />
-
 
             <androidx.constraintlayout.utils.widget.MotionLabel
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textColor="@color/white"
                 android:text="@string/tempistiche" />
 
             <TextView
@@ -103,7 +99,62 @@
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:text="Description"
+                android:textColor="@color/black"
                 android:textSize="18sp" />
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:id="@+id/label_data_consegna"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:text="@string/data_prevista" />
+
+            <TextView
+                android:id="@+id/dataConsegna"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="data consegna"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"/>
+
+
+            <androidx.constraintlayout.utils.widget.MotionLabel
+                android:id="@+id/label_abstract"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:text="@string/argomenti" />
+
+            <TextView
+                android:id="@+id/riassunto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:text="abstract tesi"
+                android:textSize="16sp"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+        <TextView
+                android:id="@+id/nomeStudente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Nome tesista"
+                android:textColor="@color/primaryColor"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
 
             <androidx.constraintlayout.utils.widget.MotionLabel
                 android:layout_width="wrap_content"
@@ -152,8 +203,8 @@
                     android:layout_weight="1"
                     android:text="@string/skillStudente" />
 
-
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -179,22 +230,6 @@
                     android:textSize="16sp" />
 
             </LinearLayout>
-
-
-            <androidx.constraintlayout.utils.widget.MotionLabel
-                android:id="@+id/label_data_consegna"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/data_prevista" />
-
-            <TextView
-                android:id="@+id/dataConsegna"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_weight="2"
-                android:text="data consegna"
-                android:textSize="16sp" />
 
             <androidx.constraintlayout.utils.widget.MotionLabel
                 android:id="@+id/label_corelatore"
@@ -334,7 +369,7 @@
                     android:text="@string/carica_tesi" />
 
             </LinearLayout>
-
+        </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

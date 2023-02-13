@@ -18,8 +18,10 @@
             android:id="@+id/lingua"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="130dp"
+            android:minWidth="160dp"
             android:minHeight="48dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/impostaLingua"
 
             ></Spinner>
 
@@ -27,14 +29,19 @@
             android:id="@+id/toggle_dark_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="160dp"
             android:text="@string/modalitaScura"
+            android:textSize="18sp"
             app:thumbTint="@color/primaryColor"
-            app:trackTint="@color/secondaryColorDark"/>
+            app:trackTint="@color/secondaryColorDark"
+            android:layout_marginBottom="16dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/log_out"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/red"
+            android:minWidth="160dp"
             android:text="@string/esci" />
 
     </LinearLayout>

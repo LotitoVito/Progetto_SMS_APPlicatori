@@ -107,7 +107,7 @@
     <string name="opzionale">*Opzionale</string>
     <string name="richiesta_ricevimento">Richiesta ricevimento</string>
     <string name="data_proposta">Proposta data ricevimento</string>
-    <string name="riorganizza">Cambia data riceviemento</string>
+    <string name="riorganizza">Cambia data ricevimento</string>
     <string name="orario">Inserisci ora</string>
     <string name="seleziona_data">Inserisci data</string>
     <string name="crea_segnalazione">Crea segnalazione</string>

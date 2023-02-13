@@ -114,7 +114,7 @@
     <string name="richiesta_tesi">Thesis</string>
     <string name="ab_tesi">Abstract</string>
     <string name="descrivi_skill">Describe your skills</string>
-    <string name="ultimo_caricamento">Ultimo caricamento</string>
+    <string name="ultimo_caricamento">Last upload</string>
     <string name="tesi_completate">Completed Thesis</string>
     <string name="ok">Ok</string>
     <string name="campi_vuoti_errore">Fill al the required fields</string>

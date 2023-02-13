@@ -23,9 +23,10 @@
             android:minWidth="150dp"
             android:textSize="18sp"
             android:layout_gravity="end"
-            android:text="Ciao sono un messaggio e se divento troppo lungo mi adatto"
+            android:text="Ciao"
             android:paddingTop="8dp"
             android:paddingLeft="8dp"
+            android:layout_marginEnd="16dp"
             android:textColor="@color/white"
            />
 
@@ -61,11 +62,10 @@
             android:maxWidth="300dp"
             android:minWidth="150dp"
             android:textSize="18sp"
-            android:text="Ciao sono un messaggio e se divento troppo lungo mi adatto
-Ciao sono un messaggio e se divento troppo lungo mi adatto"
+            android:text="Ciao"
             android:paddingTop="8dp"
-            android:paddingRight="8dp"
-            android:paddingLeft="24dp"
+            android:layout_marginStart="16dp"
+            android:paddingLeft="8dp"
             android:textColor="@color/white"
             />
 

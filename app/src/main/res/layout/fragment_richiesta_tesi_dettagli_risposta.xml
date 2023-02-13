@@ -54,7 +54,7 @@
             android:text="Nome studente"
             android:textSize="18sp"
             android:layout_weight="1"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             />
 
 
@@ -70,7 +70,7 @@
             android:text="Description"
             android:textSize="18sp"
             android:layout_weight="1"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             />
 
         <androidx.constraintlayout.utils.widget.MotionLabel
@@ -86,7 +86,7 @@
             android:text="studente/richiesti"
             android:textSize="16sp"
             android:layout_weight="1"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="16dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -163,7 +163,7 @@
             android:text="Description"
             android:textSize="18sp"
             android:layout_weight="1"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             />
 
         <androidx.constraintlayout.utils.widget.MotionLabel
@@ -179,7 +179,7 @@
             android:text="Risposta relatore"
             android:textSize="18sp"
             android:layout_weight="1"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             />
 
         <com.google.android.material.textfield.TextInputLayout

@@ -34,21 +34,6 @@
             android:text="Descrizione tesi"
             android:textSize="16sp" />
 
-
-        <androidx.constraintlayout.utils.widget.MotionLabel
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/tempistiche" />
-
-        <TextView
-            android:id="@+id/tempistiche"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:text="Description"
-            android:textSize="18sp" />
-
         <TextView
             android:id="@+id/nome_relatore"
             android:layout_width="match_parent"
@@ -56,17 +41,31 @@
             android:text="@string/relatore"
             android:textColor="@color/primaryColor"
             android:textSize="24sp"
-            android:layout_marginBottom="8dp"/>
+           />
 
         <TextView
+            android:id="@+id/rel_nome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/richiesta_tesi"
-            android:textColor="@color/primaryColor"
-            android:textSize="24sp"
-            android:textStyle="bold"
             android:layout_weight="1"
-            />
+            android:text="Description"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"/>
+
+        <androidx.constraintlayout.utils.widget.MotionLabel
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/capacitaRichiesta" />
+
+        <TextView
+            android:id="@+id/capacita_richieste"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Description"
+            android:textSize="18sp"
+            android:layout_marginBottom="24dp" />
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
