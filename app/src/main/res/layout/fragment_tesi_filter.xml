@@ -46,7 +46,7 @@
                    android:layout_width="match_parent"
                    android:layout_height="48dp"
                    android:importantForAutofill="no"
-                   android:inputType="number"
+                   android:inputType="text"
                    tools:ignore="VisualLintTextFieldSize" />
 
            </LinearLayout>

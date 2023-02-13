@@ -99,7 +99,7 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
             if (tesiCompletate) {
                 Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new TesiSceltaListaGuestFragment(query));
             } else {
-                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.container, new TesiListaFragment(query));
+                Utility.replaceFragment(getActivity().getSupportFragmentManager(), R.id.content2, new TesiListaFragment(query));
             }
         });
     }
@@ -149,8 +149,8 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
      */
     private void AddToQueryRelatore(){
         try {
-            Cursor cursor = db.RicercaDato("SELECT " + Database.RELATORE_ID + " " +
-                    "FROM " + Database.RELATORE + " r, " + Database.UTENTI + "u " +
+            Cursor cursor = db.RicercaDato("SELECT r." + Database.RELATORE_ID + " " +
+                    "FROM " + Database.RELATORE + " r, " + Database.UTENTI + " u " +
                     " WHERE r." + Database.RELATORE_UTENTEID + "=u." + Database.UTENTI_ID +
                     " AND " + Database.UTENTI_EMAIL + " LIKE('" + relatore.getText().toString() + "');");
             cursor.moveToNext();
@@ -173,21 +173,21 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
      * Il metodo aggiunge alla query il vincolo delle tempistiche minime
      */
     private void AddToQueryTempistiche(){
-        query += " t." + Database.TESI_TEMPISTICHE + ">" + tempistiche.getText().toString() + " AND";
+        query += " t." + Database.TESI_TEMPISTICHE + ">=" + tempistiche.getText().toString() + " AND";
     }
 
     /**
      * Il metodo aggiunge alla query il vincolo della media minima
      */
     private void AddToQueryMedia(){
-        query += " t." + Database.TESI_MEDIAVOTOMINIMA + ">" + media.getText().toString() + " AND";
+        query += " t." + Database.TESI_MEDIAVOTOMINIMA + ">=" + media.getText().toString() + " AND";
     }
 
     /**
      * Il metodo aggiunge alla query il vincolo del numero degli esami mancanti minimo
      */
     private void AddToQueryNumeroEsamiMancanti(){
-        query += " t." + Database.TESI_ESAMINECESSARI + ">" + numeroEsamiMancanti.getText().toString() + " AND";
+        query += " t." + Database.TESI_ESAMINECESSARI + ">=" + numeroEsamiMancanti.getText().toString() + " AND";
     }
 
     /**
