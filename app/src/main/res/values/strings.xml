@@ -180,9 +180,9 @@
     <string name="media_errore">GPA is not included between 18 and 30</string>
     <string name="segnalazione_crea_conferma">Create report?</string>
     <string name="segnalazione_crea_successo">Report successfully created</string>
-    <string name="impostaLingua">Seleziona lingua</string>
-    <string name="italiano">Italiano</string>
-    <string name="inglese">Inglese</string>
+    <string name="impostaLingua">Select language</string>
+    <string name="italiano">Italian</string>
+    <string name="inglese">English</string>
     <string name="seleziona_pdf">Select a PDF File</string>
     <string name="file_caricato_successo">File uploaded successfully</string>
     <string name="task_crea_richiesta">Create a new task for the student?</string>
