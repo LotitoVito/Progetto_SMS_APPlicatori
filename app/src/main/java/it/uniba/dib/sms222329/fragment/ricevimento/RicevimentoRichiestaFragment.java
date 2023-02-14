@@ -104,9 +104,13 @@ public class RicevimentoRichiestaFragment extends Fragment {
         rifiuta = getView().findViewById(R.id.rifiuta);
         cambiaRicevimento = getView().findViewById(R.id.riorganizza);
 
-        if(Utility.accountLoggato == Utility.TESISTA ||
-                (Utility.accountLoggato == Utility.RELATORE && richiesta.getStato()==Ricevimento.IN_ATTESA_TESISTA)){
+        if(Utility.accountLoggato == Utility.TESISTA ){
             cambiaRicevimento.setVisibility(View.GONE);
+        }
+        if(Utility.accountLoggato == Utility.RELATORE && richiesta.getStato()==Ricevimento.IN_ATTESA_TESISTA){
+            cambiaRicevimento.setVisibility(View.GONE);
+            accetta.setVisibility(View.GONE);
+            rifiuta.setVisibility(View.GONE);
         }
     }
 

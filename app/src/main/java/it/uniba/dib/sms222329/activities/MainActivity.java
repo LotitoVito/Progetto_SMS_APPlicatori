@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -32,7 +31,10 @@ public class MainActivity extends AppCompatActivity {
         boolean isChecked = prefs.getBoolean("dark_mode", false);
         this.runOnUiThread(() -> AppCompatDelegate.setDefaultNightMode(isChecked ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO));
 
-
+        SharedPreferences prefsLanguage = getSharedPreferences("LanguagePrefs",0);
+        String language = prefsLanguage.getString("Language", "en");
+        setLocal(language);
+        setContentView(R.layout.activity_main);
     }
 
     @Override

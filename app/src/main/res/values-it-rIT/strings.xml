@@ -101,7 +101,8 @@
     <string name="materiale">Materiale</string>
     <string name="tesi">Tesi</string>
     <string name="descrizione">Descrizione</string>
-    <string name="data_consegna">gg/m/a</string>
+    <string name="data_consegna_formato">gg/m/a</string>
+    <string name="data_consegna">Data Consegna</string>
     <string name="messaggio">Messaggio</string>
     <string name="risposta">Risposta</string>
     <string name="opzionale">*Opzionale</string>

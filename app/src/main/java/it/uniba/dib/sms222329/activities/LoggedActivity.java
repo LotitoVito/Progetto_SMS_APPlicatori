@@ -203,7 +203,7 @@ public class LoggedActivity extends AppCompatActivity {
     private void scanQR(){
         if(CheckPermessiFotocamera()){
             ScanOptions options = new ScanOptions();
-            options.setPrompt(this.getResources().getString(R.string.scan_qr_flash));
+            options.setPrompt(getResources().getString(R.string.scan_qr_flash));
             options.setBeepEnabled(true);
             options.setOrientationLocked(true);
             options.setCaptureActivity(CaptureAct.class);
@@ -220,28 +220,18 @@ public class LoggedActivity extends AppCompatActivity {
             Database db = new Database(this);
             Cursor cursor = db.RicercaDato("SELECT * FROM " + Database.TESI + " WHERE " + Database.TESI_ID + "=" + result.getContents() + ";");
             if(cursor.moveToNext()){
-                String messaggio = cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_TITOLO)) + "\n" + cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_ARGOMENTO));
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle(R.string.tesi);
-                builder.setMessage(messaggio);
-                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Tesi tesi = new Tesi(cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_ID)),
-                                cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_TITOLO)),
-                                cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)),
-                                cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_TEMPISTICHE)),
-                                cursor.getFloat(cursor.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)),
-                                cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)),
-                                cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_SKILLRICHIESTE)),
-                                cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_STATO))==1,
-                                cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_VISUALIZZAZIONI)),
-                                cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_RELATOREID)),
-                                cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_UNIVERSITACORSOID)));
-                        Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new TesiVisualizzaFragment(tesi));
-                    }
-                }).show();
+                Tesi tesi = new Tesi(cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_TITOLO)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_TEMPISTICHE)),
+                        cursor.getFloat(cursor.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(Database.TESI_SKILLRICHIESTE)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_STATO))==1,
+                        cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_VISUALIZZAZIONI)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_RELATOREID)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESI_UNIVERSITACORSOID)));
+                Utility.replaceFragment(getSupportFragmentManager(), R.id.container, new TesiVisualizzaFragment(tesi));
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(R.string.tesi);

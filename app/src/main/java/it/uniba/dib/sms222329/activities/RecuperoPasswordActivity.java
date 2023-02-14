@@ -66,19 +66,19 @@ public class RecuperoPasswordActivity extends AppCompatActivity {
         boolean risultato = false;
 
         if(Utility.isEmptyTextbox(emailIns1)){
-            emailIns1.setError(this.getResources().getString(R.string.campo_obbligatorio));
+            emailIns1.setError(getResources().getString(R.string.campo_obbligatorio));
             risultato = true;
         }
         if(Utility.isEmptyTextbox(emailIns2)){
-            emailIns2.setError(this.getResources().getString(R.string.campo_obbligatorio));
+            emailIns2.setError(getResources().getString(R.string.campo_obbligatorio));
             risultato = true;
         }
         if(Utility.isEmptyTextbox(passswordIns1)){
-            passswordIns1.setError(this.getResources().getString(R.string.campo_obbligatorio));
+            passswordIns1.setError(getResources().getString(R.string.campo_obbligatorio));
             risultato = true;
         }
         if(Utility.isEmptyTextbox(passswordIns2)){
-            passswordIns2.setError(this.getResources().getString(R.string.campo_obbligatorio));
+            passswordIns2.setError(getResources().getString(R.string.campo_obbligatorio));
             risultato = true;
         }
         return risultato;

@@ -2,7 +2,6 @@ package it.uniba.dib.sms222329.fragment.tesiscelta;
 
 import static android.app.Activity.RESULT_OK;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
@@ -16,8 +15,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.utils.widget.MotionLabel;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
@@ -85,6 +82,7 @@ public class TesiSceltaFragment extends Fragment {
     private MotionLabel labelCorelatore;
     private MotionLabel labelDataConsegna;
     private MotionLabel labelaAbstract;
+    private Button condividi;
 
     //Firebase
     private StorageReference storageReference;
@@ -222,6 +220,49 @@ public class TesiSceltaFragment extends Fragment {
                 operazioneDownload = false;
             }
         });
+
+        condividi.setOnClickListener(view -> {
+            CondividiFunction();
+        });
+    }
+
+    private void CondividiFunction() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+
+        //Tesi
+        String sub = getResources().getString(R.string.condividi_messaggio) +
+                "\n\n" + getResources().getString(R.string.titolo) + " : " + tesiScelta.getTitolo() +
+                "\n" + getResources().getString(R.string.data_consegna) + " : " + tesiScelta.getDataPubblicazione()+
+                "\n" + getResources().getString(R.string.ab_tesi) + " : " + tesiScelta.getRiassunto();
+
+        //Relatore
+        Cursor cursorRelatore = db.RicercaDato("SELECT " + Database.RELATORE_MATRICOLA + " FROM " + Database.RELATORE + ";");
+        cursorRelatore.moveToNext();
+        sub += "\n\n" + getResources().getString(R.string.matricola_relatore) + " : " + cursorRelatore.getString(cursorRelatore.getColumnIndexOrThrow(Database.RELATORE_MATRICOLA));
+
+        //Corelatore
+        Cursor cursoreCorelatore = db.RicercaDato("SELECT " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + ", " + Database.UTENTI_EMAIL + " FROM " + Database.CORELATORE + " c, " + Database.UTENTI + " u " +
+                "WHERE u." + Database.UTENTI_ID + "=c." + Database.CORELATORE_UTENTEID + " AND c." + Database.CORELATORE_ID + "=" + tesiScelta.getIdCorelatore() + ";");
+        if(cursoreCorelatore.moveToFirst()){
+            if(tesiScelta.getStatoCorelatore()==TesiScelta.ACCETTATO){
+                sub +=    "\n\n" + getResources().getString(R.string.co_relatore) + " : " + cursoreCorelatore.getString(cursoreCorelatore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursoreCorelatore.getString(cursoreCorelatore.getColumnIndexOrThrow(Database.UTENTI_NOME)) +
+                        "\n" + getResources().getString(R.string.email_co_relatore) + " : " + cursoreCorelatore.getString(cursoreCorelatore.getColumnIndexOrThrow(Database.UTENTI_EMAIL));
+            } else if(tesiScelta.getStatoCorelatore()==TesiScelta.IN_ATTESA) {
+                sub += "\n\n" + getResources().getString(R.string.co_relatore) + " : " + R.string.corelatore_non_disponibile;
+            }
+        }
+
+        //Tesista
+        Cursor cursorTesista = db.RicercaDato("SELECT u." + Database.UTENTI_NOME + ", u." + Database.UTENTI_COGNOME + ", t." + Database.TESISTA_ESAMIMANCANTI + ", t." + Database.TESISTA_MEDIAVOTI + ", t." + Database.TESISTA_MATRICOLA +
+                " FROM " + Database.UTENTI + " u, " + Database.TESISTA + " t " +
+                " WHERE u." + Database.UTENTI_ID + "=t." + Database.TESISTA_UTENTEID + " AND t." + Database.TESISTA_ID + "=" + tesiScelta.getIdTesista() + ";");
+        cursorTesista.moveToFirst();
+        sub += "\n\n" + getResources().getString(R.string.tesista) + " : " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_NOME)) + " " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_MATRICOLA)) +
+                "\n" + getResources().getString(R.string.skillStudente) + " : " + tesiScelta.getCapacitàStudente();
+
+        intent.putExtra(Intent.EXTRA_TEXT, sub);
+        startActivity(Intent.createChooser(intent, getResources().getString(R.string.condividi_chooser)));
     }
 
     /**
@@ -317,6 +358,7 @@ public class TesiSceltaFragment extends Fragment {
         tesiUpload = getView().findViewById(R.id.tesi_upload);
         labelDataConsegna= getView().findViewById(R.id.label_data_consegna);
         labelaAbstract = getView().findViewById(R.id.label_abstract);
+        condividi = getView().findViewById(R.id.share);
 
         //Se manca il file togli pulsante download
         if(getLastUpload()){
@@ -347,7 +389,7 @@ public class TesiSceltaFragment extends Fragment {
                 " FROM " + Database.UTENTI + " u, " + Database.TESISTA + " t " +
                 " WHERE u." + Database.UTENTI_ID + "=t." + Database.TESISTA_UTENTEID + " AND t." + Database.TESISTA_ID + "=" + tesiScelta.getIdTesista() + ";");
         cursorTesista.moveToFirst();
-        tesista.setText(cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_NOME)) + " " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_MATRICOLA)));
+        tesista.setText(cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_NOME)) + "\n" + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_MATRICOLA)));
 
         //Tesi
         Cursor cursorTesi = db.RicercaDato("SELECT t." + Database.TESI_TITOLO + ", t." + Database.TESI_ARGOMENTO + ", t." + Database.TESI_TEMPISTICHE + ", t." + Database.TESI_ESAMINECESSARI + ", t." + Database.TESI_SKILLRICHIESTE + ", t." + Database.TESI_MEDIAVOTOMINIMA + ", t." + Database.TESI_UNIVERSITACORSOID +
@@ -456,6 +498,7 @@ public class TesiSceltaFragment extends Fragment {
         creaTask.setVisibility(View.GONE);
         mostraTask.setVisibility(View.GONE);
         caricaTesi.setVisibility(View.GONE);
+        condividi.setVisibility(View.VISIBLE);
     }
 
     /**

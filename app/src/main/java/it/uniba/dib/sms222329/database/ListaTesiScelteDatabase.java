@@ -98,7 +98,7 @@ public class ListaTesiScelteDatabase {
      */
     public static List<TesiScelta> ListaTesiScelteCorelatore(Database dbClass, int idCorelatore) {
         String query = "SELECT * FROM " + Database.TESISCELTA + " " +
-                "WHERE " + Database.TESISCELTA_CORELATOREID + "=" + idCorelatore + ";";
+                "WHERE " + Database.TESISCELTA_CORELATOREID + "=" + idCorelatore + " AND " + Database.TESISCELTA_STATOCORELATORE + "=" + TesiScelta.ACCETTATO + ";";
 
         SQLiteDatabase db = dbClass.getReadableDatabase();
         Cursor cursore = db.rawQuery(query, null);

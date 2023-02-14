@@ -68,21 +68,21 @@ public class TesiVisualizzaFragment extends BottomSheetDialogFragment {
         share.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
-            String sub = R.string.condividi_messaggio +
-                    "\n" + R.string.titolo + " : " + tesi.getTitolo() +
-                    "\n" + R.string.argomenti + " : " + tesi.getArgomenti() +
-                    "\n" + R.string.tempistiche + " : " + tesi.getTempistiche() +
-                    "\n" + R.string.media + " : " + tesi.getMediaVotiMinima() +
-                    "\n" + R.string.numero_esami_mancanti + " : " + tesi.getEsamiNecessari() +
-                    "\n" + R.string.capacitaRichiesta + " : " + tesi.getCapacitaRichieste();
+            String sub = getResources().getString(R.string.condividi_messaggio) +
+                    "\n" + getResources().getString(R.string.titolo) + " : " + tesi.getTitolo() +
+                    "\n" + getResources().getString(R.string.argomenti) + " : " + tesi.getArgomenti() +
+                    "\n" + getResources().getString(R.string.tempistiche) + " : " + tesi.getTempistiche() +
+                    "\n" + getResources().getString(R.string.media) + " : " + tesi.getMediaVotiMinima() +
+                    "\n" + getResources().getString(R.string.numero_esami_mancanti) + " : " + tesi.getEsamiNecessari() +
+                    "\n" + getResources().getString(R.string.capacitaRichiesta) + " : " + tesi.getCapacitaRichieste();
             if(tesi.getStatoDisponibilita()){
-                sub += "\n" + R.string.tesi_disponibile;
+                sub += "\n" + getResources().getString(R.string.tesi_disponibile);
             } else{
-                sub += "\n" + R.string.tesi_non_disponibile;
+                sub += "\n" + getResources().getString(R.string.tesi_non_disponibile);
             }
             Cursor cursor = db.RicercaDato("SELECT " + Database.RELATORE_MATRICOLA + " FROM " + Database.RELATORE + ";");
             cursor.moveToNext();
-            sub += "\n" + R.string.matricola_relatore + " : " + cursor.getString(cursor.getColumnIndexOrThrow(Database.RELATORE_MATRICOLA));
+            sub += "\n" + getResources().getString(R.string.matricola_relatore) + " : " + cursor.getString(cursor.getColumnIndexOrThrow(Database.RELATORE_MATRICOLA));
             intent.putExtra(Intent.EXTRA_TEXT, sub);
             startActivity(Intent.createChooser(intent, getResources().getString(R.string.condividi_chooser)));
         });

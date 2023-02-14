@@ -289,7 +289,15 @@
                 android:backgroundTint="@color/red"
                 android:text="@string/elimina" />
 
-
+            <Button
+                android:id="@+id/share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:text="@string/condividi"
+                android:visibility="gone"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
