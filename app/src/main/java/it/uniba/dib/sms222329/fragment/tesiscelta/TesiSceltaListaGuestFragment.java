@@ -99,7 +99,7 @@ public class TesiSceltaListaGuestFragment extends Fragment {
      */
     private void RefreshList(){
         List<TesiScelta> list = ListaTesiScelteDatabase.ListaTesiScelteCompletateDatabase(db, query);
-        adapter = new ListaTesiScelteAdapter(getActivity().getApplicationContext(), list, getActivity().getSupportFragmentManager());
+        adapter = new ListaTesiScelteAdapter(getActivity(), list, getActivity().getSupportFragmentManager());
         listaTesiScelte.setAdapter(adapter);
     }
 }

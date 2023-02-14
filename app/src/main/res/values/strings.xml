@@ -144,7 +144,7 @@
     <string name="task_in_completamento">Working</string>
     <string name="task_in_revisione">Reviewing</string>
     <string name="task_completato">Completed</string>
-    <string name="richiedi">Richiedi</string>
+    <string name="richiedi">Request</string>
     <string name="tesi_disponibile">Available</string>
     <string name="tesi_non_disponibile">Not available</string>
     <string name="modifica_successo">Modified with success</string>
@@ -162,7 +162,7 @@
     <string name="ricevimento_modifica_successo">Answer successfully sended</string>
     <string name="ricevimento_accettare">Accept appointment?</string>
     <string name="ricevimento_accettare_successo">Appointment accepted</string>
-    <string name="ricevimento_rifiutare">Rifiutare ricevimento?</string>
+    <string name="ricevimento_rifiutare">Deny appointment</string>
     <string name="ricevimento_rifiutare_successo">Appointment refused</string>
     <string name="data_inferiore_oggi">The selected date is inferiori or equal to today\'s</string>
     <string name="operazione_fallita">Failed operation</string>

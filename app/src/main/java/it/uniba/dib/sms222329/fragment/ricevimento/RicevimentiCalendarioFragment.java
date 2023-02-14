@@ -135,15 +135,15 @@ public class RicevimentiCalendarioFragment extends Fragment implements CalendarA
     private void RefreshListDataSelezionata(){
         if(Utility.accountLoggato == Utility.TESISTA){
             List<Ricevimento> lista = ListaRicevimentiDatabase.ListaRicevimentiGiornalieriTesista(db, selectedDate.toString(), Utility.tesistaLoggato.getIdTesista());
-            ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+            ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity(), lista, getActivity().getSupportFragmentManager());
             listaRicevimenti.setAdapter(adapter);
         } else if(Utility.accountLoggato == Utility.RELATORE){
             List<Ricevimento> lista = ListaRicevimentiDatabase.ListaRicevimentiGiornalieriRelatore(db, selectedDate.toString(), Utility.relatoreLoggato.getIdRelatore());
-            ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+            ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity(), lista, getActivity().getSupportFragmentManager());
             listaRicevimenti.setAdapter(adapter);
         } else if(Utility.accountLoggato == Utility.CORELATORE){
             List<Ricevimento> lista = ListaRicevimentiDatabase.ListaRicevimentiGiornalieriCorelatore(db, selectedDate.toString(), Utility.coRelatoreLoggato.getIdCorelatore());
-            ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+            ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity(), lista, getActivity().getSupportFragmentManager());
             listaRicevimenti.setAdapter(adapter);
         }
     }
@@ -151,15 +151,15 @@ public class RicevimentiCalendarioFragment extends Fragment implements CalendarA
     private void RefreshList(){
         if(Utility.accountLoggato == Utility.TESISTA){
             List<Ricevimento> lista = ListaRicevimentiDatabase.ListaRicevimentiTesista(db, Utility.tesistaLoggato.getIdTesista());
-            ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+            ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity(), lista, getActivity().getSupportFragmentManager());
             listaRicevimenti.setAdapter(adapter);
         } else if(Utility.accountLoggato == Utility.RELATORE){
             List<Ricevimento> lista = ListaRicevimentiDatabase.ListaRicevimentiRelatore(db, Utility.relatoreLoggato.getIdRelatore());
-            ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+            ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity(), lista, getActivity().getSupportFragmentManager());
             listaRicevimenti.setAdapter(adapter);
         } else if(Utility.accountLoggato == Utility.CORELATORE){
             List<Ricevimento> lista = ListaRicevimentiDatabase.ListaRicevimentiCorelatore(db, Utility.coRelatoreLoggato.getIdCorelatore());
-            ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+            ListaRicevimentiAdapter adapter = new ListaRicevimentiAdapter(getActivity(), lista, getActivity().getSupportFragmentManager());
             listaRicevimenti.setAdapter(adapter);
         }
     }

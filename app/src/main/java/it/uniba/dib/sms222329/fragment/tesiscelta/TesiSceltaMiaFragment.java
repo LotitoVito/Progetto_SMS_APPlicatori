@@ -224,7 +224,7 @@ public class TesiSceltaMiaFragment extends Fragment {
      */
     private void RefreshList(){
         List<RichiestaTesi> lista = ListaRichiesteTesiDatabase.ListaRichiesteTesiTesista(db, Utility.tesistaLoggato.getIdTesista());
-        ListaRichiesteTesiAdapter adapter = new ListaRichiesteTesiAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+        ListaRichiesteTesiAdapter adapter = new ListaRichiesteTesiAdapter(getActivity(), lista, getActivity().getSupportFragmentManager());
         listaRichieste.setAdapter(adapter);
     }
 

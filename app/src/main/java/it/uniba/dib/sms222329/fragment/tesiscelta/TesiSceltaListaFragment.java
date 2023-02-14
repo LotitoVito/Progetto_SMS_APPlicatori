@@ -97,7 +97,7 @@ public class TesiSceltaListaFragment extends Fragment {
      */
     private void CaricaListaRichiesteRelatore(){
         List<RichiestaTesi> lista = ListaRichiesteTesiDatabase.ListaRichiesteTesiRelatore(db, Utility.relatoreLoggato.getIdRelatore());
-        ListaRichiesteTesiAdapter adapter = new ListaRichiesteTesiAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+        ListaRichiesteTesiAdapter adapter = new ListaRichiesteTesiAdapter(getActivity(), lista, getActivity().getSupportFragmentManager());
         listView.setAdapter(adapter);
     }
 
@@ -106,7 +106,7 @@ public class TesiSceltaListaFragment extends Fragment {
      */
     private void CaricaListaRichiesteCorelatore(){
         List<TesiScelta> lista = ListaTesiScelteDatabase.ListaRichiesteTesiCorelatore(db, Utility.coRelatoreLoggato.getIdCorelatore());
-        ListaTesiScelteAdapter adapter = new ListaTesiScelteAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager(), true);
+        ListaTesiScelteAdapter adapter = new ListaTesiScelteAdapter(getActivity(), lista, getActivity().getSupportFragmentManager(), true);
         listView.setAdapter(adapter);
     }
 
@@ -115,7 +115,7 @@ public class TesiSceltaListaFragment extends Fragment {
      */
     private void CaricaListaTesistiRelatore(){
         List<TesiScelta> lista = ListaTesiScelteDatabase.ListaTesiScelteRelatoreDatabase(db, Utility.relatoreLoggato.getIdRelatore());
-        ListaTesiScelteAdapter adapter = new ListaTesiScelteAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+        ListaTesiScelteAdapter adapter = new ListaTesiScelteAdapter(getActivity(), lista, getActivity().getSupportFragmentManager());
         listView.setAdapter(adapter);
     }
 
@@ -124,7 +124,7 @@ public class TesiSceltaListaFragment extends Fragment {
      */
     private void CaricaListaTesistiCorelatore(){
         List<TesiScelta> lista = ListaTesiScelteDatabase.ListaTesiScelteCorelatore(db, Utility.coRelatoreLoggato.getIdCorelatore());
-        ListaTesiScelteAdapter adapter = new ListaTesiScelteAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
+        ListaTesiScelteAdapter adapter = new ListaTesiScelteAdapter(getActivity(), lista, getActivity().getSupportFragmentManager());
         listView.setAdapter(adapter);
     }
 }

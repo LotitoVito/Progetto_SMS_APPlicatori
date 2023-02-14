@@ -99,7 +99,7 @@ public class ListaRicevimentiAdapter extends BaseAdapter {
 
         //EditButton
         Button modifica = convertView.findViewById(R.id.modifica);
-        modifica.setText("Rispondi");
+        modifica.setText(context.getString(R.string.rispondi));
         if(Utility.accountLoggato == Utility.CORELATORE ||
                 ricevimenti.get(i).getStato()==Ricevimento.ACCETTATO || ricevimenti.get(i).getStato()==Ricevimento.RIFIUTATO ||
                 (Utility.accountLoggato == Utility.TESISTA && ricevimenti.get(i).getStato()==Ricevimento.IN_ATTESA_RELATORE) ||

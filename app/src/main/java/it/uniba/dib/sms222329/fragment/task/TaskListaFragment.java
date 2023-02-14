@@ -75,7 +75,7 @@ public class TaskListaFragment extends Fragment {
      */
     private void RefreshList(){
         List<Task> lista = ListaTaskDatabase.ListaTask(db, tesiScelta.getIdTesiScelta());
-        ListaTaskAdapter adapter = new ListaTaskAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager(), tesiScelta);
+        ListaTaskAdapter adapter = new ListaTaskAdapter(getActivity(), lista, getActivity().getSupportFragmentManager(), tesiScelta);
         listaTask.setAdapter(adapter);
     }
 }

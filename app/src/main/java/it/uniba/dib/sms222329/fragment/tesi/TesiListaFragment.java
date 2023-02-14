@@ -121,7 +121,7 @@ public class TesiListaFragment extends Fragment {
      */
     private void RefreshList(){
         List<Tesi> listaTesi = ListaTesiDatabase.ListaTesi(queryFiltri, db);
-        adapterLista = new ListaTesiAdapter(getActivity().getApplicationContext(), listaTesi, getActivity().getSupportFragmentManager());
+        adapterLista = new ListaTesiAdapter(getActivity(), listaTesi, getActivity().getSupportFragmentManager());
         listView.setAdapter(adapterLista);
     }
 }
