@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,8 @@ public class RicevimentiCalendarioFragment extends Fragment implements CalendarA
     //Variabili e Oggetto
     private Database db;
     public static LocalDate selectedDate;
+    public static boolean justCreated;
+    public static LocalDate lastSelectedDate;
 
     //View Items
     private ListView listaRicevimenti;
@@ -86,6 +89,7 @@ public class RicevimentiCalendarioFragment extends Fragment implements CalendarA
         listaRicevimenti = getView().findViewById(R.id.lista_ricevimenti);
         calendarRecyclerView = getView().findViewById(R.id.calendarRecyclerView);
         monthYearText = getView().findViewById(R.id.mese_corrente);
+        this.justCreated = true;
     }
 
     /**
@@ -111,9 +115,17 @@ public class RicevimentiCalendarioFragment extends Fragment implements CalendarA
     {
         if(date != null)
         {
+            justCreated = false;
             selectedDate = date;
-            RefreshListDataSelezionata();
+            if(selectedDate==lastSelectedDate){
+                RefreshList();
+            } else {
+                RefreshListDataSelezionata();
+            }
             setWeekView();
+        }
+        if(selectedDate==lastSelectedDate){
+            RefreshList();
         }
     }
 

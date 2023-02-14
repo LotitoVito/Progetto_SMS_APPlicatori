@@ -3,9 +3,11 @@ package it.uniba.dib.sms222329.fragment.tesi;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +44,8 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
     private Spinner campoOrdinamento;
     private SwitchMaterial ordinaAscendente;
     private Button avviaRicerca;
+    private Spinner universita;
+    private Spinner corso;
 
     public TesiFilterFragment(boolean tesiCompletate) {
         this.tesiCompletate = tesiCompletate;
@@ -58,7 +62,9 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
         super.onResume();
 
         Init();
-        spinnerCreate(campoOrdinamento);
+        spinnerOrdinamentoCreate();
+        spinnerCreate(universita, "SELECT " + Database.UNIVERSITA_NOME + " FROM " + Database.UNIVERSITA + ";");
+        GestisciSpinner();
 
         avviaRicerca.setOnClickListener(view -> {
             if(tesiCompletate){
@@ -85,6 +91,7 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
             if(!Utility.isEmptyTextbox(numeroEsamiMancanti)){
                 AddToQueryNumeroEsamiMancanti();
             }
+            AddToQueryUniversitaCorso();
             if(tesiCompletate){
                 AddToQueryCompletata();
             } else {
@@ -94,6 +101,8 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
             //Ordinamento
             AddToQueryOrderBy();
             AddToQueryOrderType();
+
+            Log.d("test", query);
 
             this.dismiss();
             if (tesiCompletate) {
@@ -117,7 +126,9 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
         disponibilita = getView().findViewById(R.id.disponibilita);
         campoOrdinamento = getView().findViewById(R.id.ordinaper);
         ordinaAscendente = getView().findViewById(R.id.ordina);
-        avviaRicerca = getView().findViewById(R.id.avviaRicerca); //ok
+        universita = getView().findViewById(R.id.universita_filtro);
+        corso = getView().findViewById(R.id.corso_filtro);
+        avviaRicerca = getView().findViewById(R.id.avviaRicerca);
 
         if(Utility.accountLoggato == Utility.RELATORE){
             relatore.setText(String.valueOf(Utility.relatoreLoggato.getMatricola()), EditText.BufferType.EDITABLE);
@@ -131,7 +142,7 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
     /**
      * Crea lo spinner per l'ordinamento della lista delle proposte di tesi
      */
-    private void spinnerCreate(Spinner spinner){
+    private void spinnerOrdinamentoCreate(){
         List<String> items = new ArrayList<>();
         items.add(getActivity().getApplicationContext().getResources().getString(R.string.titolo));
         items.add(getActivity().getApplicationContext().getResources().getString(R.string.tempistiche));
@@ -141,7 +152,69 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        campoOrdinamento.setAdapter(adapter);
+    }
+
+    /**
+     * Crea lo spinner passato come parametro con i valori della query, usato per universita e corso
+     * @param spinner
+     * @param query
+     */
+    private void spinnerCreate(Spinner spinner, String query){
+        //Recupera i nomi dalla query
+        Cursor cursor = db.getReadableDatabase().rawQuery(query, null);
+        List<String> items = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            String item = cursor.getString(0);
+            items.add(item);
+        }
+        cursor.close();
+
+        //Adapter
+        ArrayAdapter<String> adapter = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, items);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+    }
+
+    /**
+     * Gestisce lo spinner università cambiando i valori dello spinner corsi in base al valore selezionato
+     */
+    private void GestisciSpinner(){
+        universita.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int idUniversita = RecuperaIdSpinner(universita, Database.UNIVERSITA);
+
+                //Recupera id corsi in base all'universita scelta
+                Cursor risultato = db.RicercaDato("SELECT " + Database.UNIVERSITACORSO_CORSOID + " FROM " + Database.UNIVERSITACORSO + " WHERE " + Database.UNIVERSITACORSO_UNIVERSITAID + " = "+ idUniversita +";");
+                List<String> idRisultati = new ArrayList<>();
+                while(risultato.moveToNext()){
+                    idRisultati.add(risultato.getString(0));
+                }
+
+                //Crea spinner corsi
+                String query = "SELECT " + Database.CORSOSTUDI_NOME + " FROM " + Database.CORSOSTUDI + " WHERE " + Database.CORSOSTUDI_ID + " IN (" + idRisultati.toString().replace("[", "").replace("]", "") + ");";
+                spinnerCreate(corso, query);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
+            }
+        });
+    }
+
+    /**
+     * Recupera l'id dal database del valore dello spinner selezionato
+     * @param spinner
+     * @param tabella
+     * @return  Restituisce l'id del valore selezionato
+     */
+    private int RecuperaIdSpinner(Spinner spinner, String tabella){
+        Cursor idCursor;
+        idCursor = db.RicercaDato("SELECT id FROM "+ tabella +" WHERE nome = '"+ spinner.getSelectedItem().toString() +"';");
+        idCursor.moveToNext();
+        return idCursor.getInt(0);
     }
 
     /**
@@ -191,6 +264,21 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
     }
 
     /**
+     * Il metodo aggiunge alla query il tipo  di ordinamento selezionato
+     */
+    private void AddToQueryUniversitaCorso() {
+        int idUniversita = RecuperaIdSpinner(universita, Database.UNIVERSITA);
+        int idCorso = RecuperaIdSpinner(corso,Database.CORSOSTUDI);
+        Cursor cursor = db.RicercaDato("SELECT " + Database.UNIVERSITACORSO_ID + " FROM " + Database.UNIVERSITACORSO +
+                " WHERE " + Database.UNIVERSITACORSO_CORSOID + "=" + idCorso + " AND " + Database.UNIVERSITACORSO_UNIVERSITAID + "=" + idUniversita + ";");
+        if(cursor.moveToFirst()){
+            query += " t." + Database.TESI_UNIVERSITACORSOID + "=" + cursor.getInt(cursor.getColumnIndexOrThrow(Database.UNIVERSITACORSO_ID)) + " AND ";
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Non esistono tesi di questo corso", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
      * Il metodo aggiunge alla query il vincolo della disponibilità
      */
     private void AddToQueryDisponibilita(){
@@ -235,4 +323,5 @@ public class TesiFilterFragment extends BottomSheetDialogFragment {
             query += " DESC;";
         }
     }
+
 }

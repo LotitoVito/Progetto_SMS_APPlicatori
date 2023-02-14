@@ -53,7 +53,6 @@ public class TesiSceltaListaFragment extends Fragment {
 
         Init();
 
-
         if(Utility.accountLoggato == Utility.RELATORE){
             CaricaListaRichiesteRelatore();
         } else {
@@ -63,7 +62,6 @@ public class TesiSceltaListaFragment extends Fragment {
         richieste.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SettaRichieste();
                 if(Utility.accountLoggato == Utility.RELATORE){
                     CaricaListaRichiesteRelatore();
                 } else {
@@ -75,7 +73,6 @@ public class TesiSceltaListaFragment extends Fragment {
         tesisti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SettaTesisti();
                 if(Utility.accountLoggato == Utility.RELATORE) {
                     CaricaListaTesistiRelatore();
                 } else {
@@ -130,25 +127,5 @@ public class TesiSceltaListaFragment extends Fragment {
         List<TesiScelta> lista = ListaTesiScelteDatabase.ListaTesiScelteCorelatore(db, Utility.coRelatoreLoggato.getIdCorelatore());
         ListaTesiScelteAdapter adapter = new ListaTesiScelteAdapter(getActivity().getApplicationContext(), lista, getActivity().getSupportFragmentManager());
         listView.setAdapter(adapter);
-    }
-
-    /**
-     * Setta la view per le richieste
-     */
-    private void SettaRichieste(){
-        tesisti.setTextColor(defaultColor);
-        richieste.setTextColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
-        u_richieste.setBackgroundColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
-        u_tesisti.setBackgroundColor(u_defaultColor);
-    }
-
-    /**
-     * Setta la view per le tesi scelte
-     */
-    private void SettaTesisti(){
-        tesisti.setTextColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
-        richieste.setTextColor(defaultColor);
-        u_tesisti.setBackgroundColor(getResources().getColor(R.color.primaryColor, getActivity().getTheme()));
-        u_richieste.setBackgroundColor(u_defaultColor);
     }
 }

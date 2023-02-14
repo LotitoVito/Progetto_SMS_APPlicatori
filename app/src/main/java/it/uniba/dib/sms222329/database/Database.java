@@ -302,29 +302,8 @@ public class Database extends SQLiteOpenHelper {
                         RICEVIMENTI_MESSAGGIO + "  VARCHAR(255)," +
                         "FOREIGN KEY (" + RICEVIMENTI_TASKID + ") REFERENCES " + TASK + "(" + TASK_ID + ") ON DELETE CASCADE);";
         db.execSQL(createTable);
-        //Popolamento tabella ruoli
-        ContentValues cvRuoli = new ContentValues();
-        String[] listaRuoli = {"Tesista", "Relatore", "CoRelatore"};
-        for(int i=0; i<listaRuoli.length; i++){
-            cvRuoli.put(RUOLI_RUOLO, listaRuoli[i]);
-            db.insert(RUOLI, null, cvRuoli);
-        }
-        //Popolamento tabella Universita
-        ContentValues cvUniversita = new ContentValues();
-        String[] listaUniversita = {"UniBa", "UniCa", "UniNa"};
-        for(int i=0; i<listaUniversita.length; i++){
-            cvUniversita.put(UNIVERSITA_NOME, listaUniversita[i]);
-            db.insert(UNIVERSITA, null, cvUniversita);
-        }
-        //Popolamento tabella CorsiStudio
-        ContentValues cvCorsiStudio = new ContentValues();
-        String[] listaCorsiStudio = {"ITPS", "Chimica", "Matematica"};
-        for(int i=0; i<listaCorsiStudio.length; i++){
-            cvCorsiStudio.put(CORSOSTUDI_NOME, listaCorsiStudio[i]);
-            db.insert(CORSOSTUDI, null, cvCorsiStudio);
-        }
-        //Popolamento tabella Universita-CorsiStudio
-        PopolamentoUniCorsi(db);
+        //Popolamento di base
+        Popolamento(db);
     }
 
     @Override
@@ -356,39 +335,406 @@ public class Database extends SQLiteOpenHelper {
         return cursore;
     }
 
-    /**
-     * Metodo usato per popolare la tabella UNIVERSITACORSO
-     * @param db
-     */
-    private void PopolamentoUniCorsi(SQLiteDatabase db){
-        ContentValues cv = new ContentValues();
+    private void Popolamento(SQLiteDatabase db){
+        //Corelatore
+        ContentValues cvCorelatore = new ContentValues();
 
-        cv.put(UNIVERSITACORSO_UNIVERSITAID, 1);
-        cv.put(UNIVERSITACORSO_CORSOID, 1);
-        db.insert(UNIVERSITACORSO, null, cv);
+        cvCorelatore.put(CORELATORE_ORGANIZZAZIONE, "Exprivia");
+        cvCorelatore.put(CORELATORE_UTENTEID, 6);
+        db.insert(CORELATORE, null, cvCorelatore);
 
-        cv.put(UNIVERSITACORSO_UNIVERSITAID, 1);
-        cv.put(UNIVERSITACORSO_CORSOID, 3);
-        db.insert(UNIVERSITACORSO, null, cv);
+        //CorsiRelatore
+        ContentValues cvCorsiRelatore = new ContentValues();
 
-        cv.put(UNIVERSITACORSO_UNIVERSITAID, 2);
-        cv.put(UNIVERSITACORSO_CORSOID, 1);
-        db.insert(UNIVERSITACORSO, null, cv);
+        cvCorsiRelatore.put(CORSIRELATORE_RELATOREID, 1);
+        cvCorsiRelatore.put(CORSIRELATORE_UNIVERSITACORSOID, 3);
+        db.insert(CORSIRELATORE, null, cvCorsiRelatore);
 
-        cv.put(UNIVERSITACORSO_UNIVERSITAID, 2);
-        cv.put(UNIVERSITACORSO_CORSOID, 2);
-        db.insert(UNIVERSITACORSO, null, cv);
+        cvCorsiRelatore.put(CORSIRELATORE_RELATOREID, 2);
+        cvCorsiRelatore.put(CORSIRELATORE_UNIVERSITACORSOID, 1);
+        db.insert(CORSIRELATORE, null, cvCorsiRelatore);
 
-        cv.put(UNIVERSITACORSO_UNIVERSITAID, 3);
-        cv.put(UNIVERSITACORSO_CORSOID, 1);
-        db.insert(UNIVERSITACORSO, null, cv);
+        cvCorsiRelatore.put(CORSIRELATORE_RELATOREID, 2);
+        cvCorsiRelatore.put(CORSIRELATORE_UNIVERSITACORSOID, 2);
+        db.insert(CORSIRELATORE, null, cvCorsiRelatore);
 
-        cv.put(UNIVERSITACORSO_UNIVERSITAID, 3);
-        cv.put(UNIVERSITACORSO_CORSOID, 2);
-        db.insert(UNIVERSITACORSO, null, cv);
+        cvCorsiRelatore.put(CORSIRELATORE_RELATOREID, 3);
+        cvCorsiRelatore.put(CORSIRELATORE_UNIVERSITACORSOID, 6);
+        db.insert(CORSIRELATORE, null, cvCorsiRelatore);
 
-        cv.put(UNIVERSITACORSO_UNIVERSITAID, 3);
-        cv.put(UNIVERSITACORSO_CORSOID, 3);
-        db.insert(UNIVERSITACORSO, null, cv);
+        cvCorsiRelatore.put(CORSIRELATORE_RELATOREID, 3);
+        cvCorsiRelatore.put(CORSIRELATORE_UNIVERSITACORSOID, 7);
+        db.insert(CORSIRELATORE, null, cvCorsiRelatore);
+
+        //CorsoStudi
+        ContentValues cvCorsi = new ContentValues();
+
+        cvCorsi.put(CORSOSTUDI_NOME, "ITPS");
+        db.insert(CORSOSTUDI, null, cvCorsi);
+
+        cvCorsi.put(CORSOSTUDI_NOME, "Chimica");
+        db.insert(CORSOSTUDI, null, cvCorsi);
+
+        cvCorsi.put(CORSOSTUDI_NOME, "Matematica");
+        db.insert(CORSOSTUDI, null, cvCorsi);
+
+        //SegnalazioneMessaggi
+        ContentValues cvMessaggi = new ContentValues();
+
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "Salve prof, vorrei chiederle quali sistemi la tesi permettera' di analizzare");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-13 17:09:59");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_UTENTEID, 1);
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 1);
+        db.insert(MESSAGGISEGNALAZIONE, null, cvMessaggi);
+
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "Salve prof, la contatto per sapere se la tesi tornera' disponibile o se esistono tesi simili");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-13 17:23:07");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_UTENTEID, 3);
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 2);
+        db.insert(MESSAGGISEGNALAZIONE, null, cvMessaggi);
+
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "Gentile proof, sono Palladino Mario da Exprivia, ci piacerebbe collaborare per quest tesi se ce ne fosse occasione");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-13 18:08:16");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_UTENTEID, 6);
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 3);
+        db.insert(MESSAGGISEGNALAZIONE, null, cvMessaggi);
+
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "Signor Palladino le Mando la richiesta di collaborazione");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-13 18:08:51");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_UTENTEID, 5);
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 3);
+        db.insert(MESSAGGISEGNALAZIONE, null, cvMessaggi);
+
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_MESSAGGIO, "Gentile alunno, I sistemi da analizzare sono a scelta");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_TIMESTAMP, "2023-02-13 18:09:16");
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_UTENTEID, 5);
+        cvMessaggi.put(MESSAGGISEGNALAZIONE_SEGNALAZIONEID, 1);
+        db.insert(MESSAGGISEGNALAZIONE, null, cvMessaggi);
+
+        //Relatore
+        ContentValues cvRelatore = new ContentValues();
+
+        cvRelatore.put(RELATORE_MATRICOLA, 789569);
+        cvRelatore.put(RELATORE_UTENTEID, 4);
+        db.insert(RELATORE, null, cvRelatore);
+
+        cvRelatore.put(RELATORE_MATRICOLA, 745256);
+        cvRelatore.put(RELATORE_UTENTEID, 5);
+        db.insert(RELATORE, null, cvRelatore);
+
+        cvRelatore.put(RELATORE_MATRICOLA, 256554);
+        cvRelatore.put(RELATORE_UTENTEID, 7);
+        db.insert(RELATORE, null, cvRelatore);
+
+        //Ricevimenti
+        ContentValues cvRicevimenti = new ContentValues();
+
+        cvRicevimenti.put(RICEVIMENTI_DATA, "2023-02-20");
+        cvRicevimenti.put(RICEVIMENTI_ORARIO, "16:10");
+        cvRicevimenti.put(RICEVIMENTI_TASKID, 2);
+        cvRicevimenti.put(RICEVIMENTI_ACCETTAZIONE, 3);
+        cvRicevimenti.put(RICEVIMENTI_MESSAGGIO, "Domande sul materiale di studio");
+        db.insert(RICEVIMENTI, null, cvRicevimenti);
+
+        cvRicevimenti.put(RICEVIMENTI_DATA, "2023-02-14");
+        cvRicevimenti.put(RICEVIMENTI_ORARIO, "17:25");
+        cvRicevimenti.put(RICEVIMENTI_TASKID, 5);
+        cvRicevimenti.put(RICEVIMENTI_ACCETTAZIONE, 1);
+        cvRicevimenti.put(RICEVIMENTI_MESSAGGIO, "Discussione sulla verifica delle ipotesi");
+        db.insert(RICEVIMENTI, null, cvRicevimenti);
+
+        //RichiestaTesi
+        ContentValues cvRichiesta = new ContentValues();
+
+        cvRichiesta.put(RICHIESTA_MESSAGGIO, "Salve prof, vorrei far richiesta per la tesi");
+        cvRichiesta.put(RICHIESTA_CAPACITASTUDENTE, "Ho conoscenze avanzate di cyber security");
+        cvRichiesta.put(RICHIESTA_TESIID, 1);
+        cvRichiesta.put(RICHIESTA_TESISTAID, 1);
+        cvRichiesta.put(RICHIESTA_ACCETTATA, 2);
+        cvRichiesta.put(RICHIESTA_RISPOSTA, (String) null);
+        db.insert(RICHIESTA, null, cvRichiesta);
+
+        cvRichiesta.put(RICHIESTA_MESSAGGIO, "Vorrei far richiesta per la tesi");
+        cvRichiesta.put(RICHIESTA_CAPACITASTUDENTE, "Ho conoscenze avanzate di chimica verde");
+        cvRichiesta.put(RICHIESTA_TESIID, 4);
+        cvRichiesta.put(RICHIESTA_TESISTAID, 2);
+        cvRichiesta.put(RICHIESTA_ACCETTATA, 2);
+        cvRichiesta.put(RICHIESTA_RISPOSTA, "");
+        db.insert(RICHIESTA, null, cvRichiesta);
+
+        //Ruoli
+        ContentValues cvRuoli = new ContentValues();
+
+        cvRuoli.put(RUOLI_RUOLO, "Tesista");
+        db.insert(RUOLI, null, cvRuoli);
+
+        cvRuoli.put(RUOLI_RUOLO, "Relatore");
+        db.insert(RUOLI, null, cvRuoli);
+
+        cvRuoli.put(RUOLI_RUOLO, "CoRelatore");
+        db.insert(RUOLI, null, cvRuoli);
+
+        //SegnalazioneChat
+        ContentValues cvChat = new ContentValues();
+
+        cvChat.put(SEGNALAZIONECHAT_OGGETTO, "Domanda sistemi da analizzare");
+        cvChat.put(SEGNALAZIONECHAT_TESISCELTAID, 1);
+        db.insert(SEGNALAZIONECHAT, null, cvChat);
+
+        cvChat.put(SEGNALAZIONECHAT_OGGETTO, "Domanda disponibilita");
+        cvChat.put(SEGNALAZIONECHAT_TESISCELTAID, 3);
+        db.insert(SEGNALAZIONECHAT, null, cvChat);
+
+        cvChat.put(SEGNALAZIONECHAT_OGGETTO, "Richiesta collaborazione");
+        cvChat.put(SEGNALAZIONECHAT_TESISCELTAID, 1);
+        db.insert(SEGNALAZIONECHAT, null, cvChat);
+
+        //Task
+        ContentValues cvTask = new ContentValues();
+
+        cvTask.put(TASK_TITOLO, "Recupero materiale di studio");
+        cvTask.put(TASK_DESCRIZIONE, "Recuperare i sistemi piu' avanzati di sicurezza informatica a scelta");
+        cvTask.put(TASK_DATAINIZIO, "2023-02-13");
+        cvTask.put(TASK_DATAFINE, "2023-02-15");
+        cvTask.put(TASK_LINKMATERIALE, "-NOAui7PDwAynTJk7kVY");
+        cvTask.put(TASK_STATO, 4);
+        cvTask.put(TASK_TESISCELTAID, 1);
+        db.insert(TASK, null, cvTask);
+
+        cvTask.put(TASK_TITOLO, "Studio del materiale");
+        cvTask.put(TASK_DESCRIZIONE, "Studiare il material precedentemente recuperato");
+        cvTask.put(TASK_DATAINIZIO, "2023-02-13");
+        cvTask.put(TASK_DATAFINE, "2023-02-22");
+        cvTask.put(TASK_STATO, 3);
+        cvTask.put(TASK_TESISCELTAID, 1);
+        db.insert(TASK, null, cvTask);
+
+        cvTask.put(TASK_TITOLO, "Studio preliminare");
+        cvTask.put(TASK_DESCRIZIONE, "Si studino i problemi che causano l'inquinamento da parte delle industrie");
+        cvTask.put(TASK_DATAINIZIO, "2023-02-13");
+        cvTask.put(TASK_DATAFINE, "2023-01-25");
+        cvTask.put(TASK_STATO, 4);
+        cvTask.put(TASK_TESISCELTAID, 2);
+        db.insert(TASK, null, cvTask);
+
+        cvTask.put(TASK_TITOLO, "Ipotesi tecniche");
+        cvTask.put(TASK_DESCRIZIONE, "Si ipotizzino alcune tecniche che possano rimediare ai problemi trovati precedentemente");
+        cvTask.put(TASK_DATAINIZIO, "2023-02-13");
+        cvTask.put(TASK_DATAFINE, "2023-02-01");
+        cvTask.put(TASK_LINKMATERIALE, "-NOAwqhbbRBVWupN3eGO");
+        cvTask.put(TASK_STATO, 0);
+        cvTask.put(TASK_TESISCELTAID, 2);
+        db.insert(TASK, null, cvTask);
+
+        cvTask.put(TASK_TITOLO, "Verifica ipotesi");
+        cvTask.put(TASK_DESCRIZIONE, "Si verifichino le ipotesi pensate precedentemente");
+        cvTask.put(TASK_DATAINIZIO, "2023-02-13");
+        cvTask.put(TASK_DATAFINE, "2023-02-07");
+        cvTask.put(TASK_STATO, 4);
+        cvTask.put(TASK_TESISCELTAID, 2);
+        db.insert(TASK, null, cvTask);
+
+        cvTask.put(TASK_TITOLO, "Conclusioni");
+        cvTask.put(TASK_DESCRIZIONE, "Si scrivano le conclusioni sullo studio effettuato");
+        cvTask.put(TASK_DATAINIZIO, "2023-02-13");
+        cvTask.put(TASK_DATAFINE, "2023-02-15");
+        cvTask.put(TASK_STATO, 4);
+        cvTask.put(TASK_TESISCELTAID, 2);
+        db.insert(TASK, null, cvTask);
+
+        //Tesi
+        ContentValues cvTesi = new ContentValues();
+
+        cvTesi.put(TESI_TITOLO, "Analisi della sicurezza informatica per la protezione dei dati sensibili");
+        cvTesi.put(TESI_ARGOMENTO, "La tesi prevede l'analisi della sicurezza di sistemi informativi moderni per la protezione dei dati sensibili");
+        cvTesi.put(TESI_TEMPISTICHE, 4);
+        cvTesi.put(TESI_MEDIAVOTOMINIMA, 24.0);
+        cvTesi.put(TESI_ESAMINECESSARI, 5);
+        cvTesi.put(TESI_SKILLRICHIESTE, "Conoscenze base sulla cyber security");
+        cvTesi.put(TESI_STATO, 1);
+        cvTesi.put(TESI_VISUALIZZAZIONI, 5);
+        cvTesi.put(TESI_RELATOREID, 2);
+        cvTesi.put(TESI_UNIVERSITACORSOID, 1);
+        db.insert(TESI, null, cvTesi);
+
+        cvTesi.put(TESI_TITOLO, "Studio della teoria dei numeri e applicazioni nella crittografia");
+        cvTesi.put(TESI_ARGOMENTO, "La tesi approfondira' le tecniche della crittografia");
+        cvTesi.put(TESI_TEMPISTICHE, 3);
+        cvTesi.put(TESI_MEDIAVOTOMINIMA, 26.0);
+        cvTesi.put(TESI_ESAMINECESSARI, 4);
+        cvTesi.put(TESI_SKILLRICHIESTE, "Il tesista deve avere delle conosenze matematiche di livello medioIl tesista deve avere delle conosenze matematiche di livello medio");
+        cvTesi.put(TESI_STATO, 1);
+        cvTesi.put(TESI_VISUALIZZAZIONI, 4);
+        cvTesi.put(TESI_RELATOREID, 2);
+        cvTesi.put(TESI_UNIVERSITACORSOID, 2);
+        db.insert(TESI, null, cvTesi);
+
+        cvTesi.put(TESI_TITOLO, "Studio delle tecniche di compressione dei dati per migliorare la velocita'");
+        cvTesi.put(TESI_ARGOMENTO, "La tesi permettera' di studiare nel dettaglio le tecniche gia' esistenti e di migliorarle");
+        cvTesi.put(TESI_TEMPISTICHE, 3);
+        cvTesi.put(TESI_MEDIAVOTOMINIMA, 25.0);
+        cvTesi.put(TESI_ESAMINECESSARI, 2);
+        cvTesi.put(TESI_SKILLRICHIESTE, "Conoscenze base della compressione dei dati");
+        cvTesi.put(TESI_STATO, 0);
+        cvTesi.put(TESI_VISUALIZZAZIONI, 7);
+        cvTesi.put(TESI_RELATOREID, 1);
+        cvTesi.put(TESI_UNIVERSITACORSOID, 3);
+        db.insert(TESI, null, cvTesi);
+
+        cvTesi.put(TESI_TITOLO, "Chimica verde: analisi delle strategie per ridurre l'impatto ambientale delle industrie chimiche");
+        cvTesi.put(TESI_ARGOMENTO, "La tesi verte sullo studio di nuove tecniche adatte all ridurre l'inquinamento provocato dalle industries chimiche");
+        cvTesi.put(TESI_TEMPISTICHE, 6);
+        cvTesi.put(TESI_MEDIAVOTOMINIMA, 28.0);
+        cvTesi.put(TESI_ESAMINECESSARI, 1);
+        cvTesi.put(TESI_SKILLRICHIESTE, "Conoscenze avanzate di chimica verde");
+        cvTesi.put(TESI_STATO, 1);
+        cvTesi.put(TESI_VISUALIZZAZIONI, 0);
+        cvTesi.put(TESI_RELATOREID, 3);
+        cvTesi.put(TESI_UNIVERSITACORSOID, 6);
+        db.insert(TESI, null, cvTesi);
+
+        //TesiScelta
+        ContentValues cvTesiScelta = new ContentValues();
+
+        cvTesiScelta.put(TESISCELTA_TESIID, 1);
+        cvTesiScelta.put(TESISCELTA_CORELATOREID, 1);
+        cvTesiScelta.put(TESISCELTA_STATOCORELATORE, 1);
+        cvTesiScelta.put(TESISCELTA_TESISTAID, 1);
+        cvTesiScelta.put(TESISCELTA_CAPACITATESISTA, "Ho conoscenze avanzate di cyber security");
+        db.insert(TESISCELTA, null, cvTesiScelta);
+
+        cvTesiScelta.put(TESISCELTA_DATAPUBBLICAZIONE, "2023-02-13");
+        cvTesiScelta.put(TESISCELTA_ABSTRACT, "La tesi condotta have riportato...");
+        cvTesiScelta.put(TESISCELTA_DOWNLOAD, "-NOAwurzFpzWQ5qto7rK");
+        cvTesiScelta.put(TESISCELTA_TESIID, 4);
+        cvTesiScelta.put(TESISCELTA_TESISTAID, 2);
+        cvTesiScelta.put(TESISCELTA_CAPACITATESISTA, "Ho conoscenze avanzate di chimica verde");
+        db.insert(TESISCELTA, null, cvTesiScelta);
+
+        //Tesista
+        ContentValues cvTesista = new ContentValues();
+
+        cvTesista.put(TESISTA_MATRICOLA, 717828);
+        cvTesista.put(TESISTA_MEDIAVOTI, 25.0);
+        cvTesista.put(TESISTA_ESAMIMANCANTI, 5);
+        cvTesista.put(TESISTA_UTENTEID, 1);
+        cvTesista.put(TESISTA_UNIVERSITACORSOID, 1);
+        db.insert(TESISTA, null, cvTesista);
+
+        cvTesista.put(TESISTA_MATRICOLA, 856896);
+        cvTesista.put(TESISTA_MEDIAVOTI, 26.0);
+        cvTesista.put(TESISTA_ESAMIMANCANTI, 3);
+        cvTesista.put(TESISTA_UTENTEID, 2);
+        cvTesista.put(TESISTA_UNIVERSITACORSOID, 6);
+        db.insert(TESISTA, null, cvTesista);
+
+        cvTesista.put(TESISTA_MATRICOLA, 741564);
+        cvTesista.put(TESISTA_MEDIAVOTI, 23.0);
+        cvTesista.put(TESISTA_ESAMIMANCANTI, 6);
+        cvTesista.put(TESISTA_UTENTEID, 3);
+        cvTesista.put(TESISTA_UNIVERSITACORSOID, 3);
+        db.insert(TESISTA, null, cvTesista);
+
+        //Universita
+        ContentValues cvUniversita = new ContentValues();
+
+        cvUniversita.put(UNIVERSITA_NOME, "UniBa");
+        db.insert(UNIVERSITA, null, cvUniversita);
+
+        cvUniversita.put(UNIVERSITA_NOME, "UniCa");
+        db.insert(UNIVERSITA, null, cvUniversita);
+
+        cvUniversita.put(UNIVERSITA_NOME, "UniNa");
+        db.insert(UNIVERSITA, null, cvUniversita);
+
+        //UniversitaCorso
+        ContentValues cvUniCorso = new ContentValues();
+
+        cvUniCorso.put(UNIVERSITACORSO_UNIVERSITAID, 1);
+        cvUniCorso.put(UNIVERSITACORSO_CORSOID, 1);
+        db.insert(UNIVERSITACORSO, null, cvUniCorso);
+
+        cvUniCorso.put(UNIVERSITACORSO_UNIVERSITAID, 1);
+        cvUniCorso.put(UNIVERSITACORSO_CORSOID, 3);
+        db.insert(UNIVERSITACORSO, null, cvUniCorso);
+
+        cvUniCorso.put(UNIVERSITACORSO_UNIVERSITAID, 2);
+        cvUniCorso.put(UNIVERSITACORSO_CORSOID, 1);
+        db.insert(UNIVERSITACORSO, null, cvUniCorso);
+
+        cvUniCorso.put(UNIVERSITACORSO_UNIVERSITAID, 2);
+        cvUniCorso.put(UNIVERSITACORSO_CORSOID, 2);
+        db.insert(UNIVERSITACORSO, null, cvUniCorso);
+
+        cvUniCorso.put(UNIVERSITACORSO_UNIVERSITAID, 3);
+        cvUniCorso.put(UNIVERSITACORSO_CORSOID, 1);
+        db.insert(UNIVERSITACORSO, null, cvUniCorso);
+
+        cvUniCorso.put(UNIVERSITACORSO_UNIVERSITAID, 3);
+        cvUniCorso.put(UNIVERSITACORSO_CORSOID, 2);
+        db.insert(UNIVERSITACORSO, null, cvUniCorso);
+
+        cvUniCorso.put(UNIVERSITACORSO_UNIVERSITAID, 3);
+        cvUniCorso.put(UNIVERSITACORSO_CORSOID, 3);
+        db.insert(UNIVERSITACORSO, null, cvUniCorso);
+
+        //Utenti
+        ContentValues cvUtenti = new ContentValues();
+
+        cvUtenti.put(UTENTI_NOME, "Vito");
+        cvUtenti.put(UTENTI_COGNOME, "Lotito");
+        cvUtenti.put(UTENTI_EMAIL, "vito@gmail.com");
+        cvUtenti.put(UTENTI_CODICEFISCALE, "LTTVTI");
+        cvUtenti.put(UTENTI_PASSWORD, "vitopassword");
+        cvUtenti.put(UTENTI_RUOLOID, 1);
+        db.insert(UTENTI, null, cvUtenti);
+
+        cvUtenti.put(UTENTI_NOME, "Marco");
+        cvUtenti.put(UTENTI_COGNOME, "Scarpa");
+        cvUtenti.put(UTENTI_EMAIL, "marco@gmail.com");
+        cvUtenti.put(UTENTI_CODICEFISCALE, "MRCSCA");
+        cvUtenti.put(UTENTI_PASSWORD, "marcopassword");
+        cvUtenti.put(UTENTI_RUOLOID, 1);
+        db.insert(UTENTI, null, cvUtenti);
+
+        cvUtenti.put(UTENTI_NOME, "Roberto");
+        cvUtenti.put(UTENTI_COGNOME, "Tondi");
+        cvUtenti.put(UTENTI_EMAIL, "roberto@gmail.com");
+        cvUtenti.put(UTENTI_CODICEFISCALE, "RBETNO");
+        cvUtenti.put(UTENTI_PASSWORD, "robertopassword");
+        cvUtenti.put(UTENTI_RUOLOID, 1);
+        db.insert(UTENTI, null, cvUtenti);
+
+        cvUtenti.put(UTENTI_NOME, "Michele");
+        cvUtenti.put(UTENTI_COGNOME, "Cabiddu");
+        cvUtenti.put(UTENTI_EMAIL, "michele@gmail.com");
+        cvUtenti.put(UTENTI_CODICEFISCALE, "MCHCBA");
+        cvUtenti.put(UTENTI_PASSWORD, "michelepassword");
+        cvUtenti.put(UTENTI_RUOLOID, 2);
+        db.insert(UTENTI, null, cvUtenti);
+
+        cvUtenti.put(UTENTI_NOME, "Giuseppe");
+        cvUtenti.put(UTENTI_COGNOME, "Damiano");
+        cvUtenti.put(UTENTI_EMAIL, "giuseppe@gmail.com");
+        cvUtenti.put(UTENTI_CODICEFISCALE, "GSEDMA");
+        cvUtenti.put(UTENTI_PASSWORD, "giuseppepassword");
+        cvUtenti.put(UTENTI_RUOLOID, 2);
+        db.insert(UTENTI, null, cvUtenti);
+
+        cvUtenti.put(UTENTI_NOME, "Mario");
+        cvUtenti.put(UTENTI_COGNOME, "Palladino");
+        cvUtenti.put(UTENTI_EMAIL, "mario@gmail.com");
+        cvUtenti.put(UTENTI_CODICEFISCALE, "MRIPLA");
+        cvUtenti.put(UTENTI_PASSWORD, "mariopassword");
+        cvUtenti.put(UTENTI_RUOLOID, 3);
+        db.insert(UTENTI, null, cvUtenti);
+
+        cvUtenti.put(UTENTI_NOME, "Federico");
+        cvUtenti.put(UTENTI_COGNOME, "Rossi");
+        cvUtenti.put(UTENTI_EMAIL, "federico@gmail.com");
+        cvUtenti.put(UTENTI_CODICEFISCALE, "FDERSO");
+        cvUtenti.put(UTENTI_PASSWORD, "federicopassword");
+        cvUtenti.put(UTENTI_RUOLOID, 2);
+        db.insert(UTENTI, null, cvUtenti);
     }
 }

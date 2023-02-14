@@ -238,6 +238,7 @@ public class TesiSceltaMiaFragment extends Fragment {
             String data = cursor.getString(cursor.getColumnIndexOrThrow(Database.TESISCELTA_DATAPUBBLICAZIONE));
             LocalDate dataPubblicazione = null;
             if(data != null){
+                Log.d("test", data);
                 dataPubblicazione = LocalDate.parse(data, Utility.convertFromStringDate);
             }
             TesiScelta tesi = new TesiScelta(cursor.getInt(cursor.getColumnIndexOrThrow(Database.TESISCELTA_TESIID)),

@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222329.fragment.calendario;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,8 +50,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
         else
         {
             holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
-            if(date.equals(RicevimentiCalendarioFragment.selectedDate) && !date.equals(LocalDate.now()))
+            if(date.equals(RicevimentiCalendarioFragment.selectedDate) && !RicevimentiCalendarioFragment.justCreated
+                    && RicevimentiCalendarioFragment.selectedDate != RicevimentiCalendarioFragment.lastSelectedDate){
                 holder.parentView.setBackgroundColor(Color.LTGRAY);
+                RicevimentiCalendarioFragment.lastSelectedDate = date;
+            }
         }
     }
 

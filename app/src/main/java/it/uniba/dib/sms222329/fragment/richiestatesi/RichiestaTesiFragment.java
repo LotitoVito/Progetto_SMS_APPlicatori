@@ -33,7 +33,7 @@ public class RichiestaTesiFragment extends Fragment {
     //View Items
     private TextView titoloTesi;
     private TextView argomentoTesi;
-    private TextView tempistiche;
+    private TextView capacitaRichieste;
     private TextView relatore;
     private TextInputEditText messaggio;
     private TextInputEditText capacitaTesista;
@@ -86,8 +86,8 @@ public class RichiestaTesiFragment extends Fragment {
         db = new Database(getActivity().getApplicationContext());
         titoloTesi = getView().findViewById(R.id.titoloTesi);
         argomentoTesi = getView().findViewById(R.id.argomentoTesi);
-        tempistiche = getView().findViewById(R.id.tempistiche);
-        relatore = getView().findViewById(R.id.nome_relatore);
+        relatore = getView().findViewById(R.id.relatore_nome);
+        capacitaRichieste = getView().findViewById(R.id.capacita_richieste);
         messaggio = getView().findViewById(R.id.messaggio);
         capacitaTesista = getView().findViewById(R.id.skill_richieste);
         invia = getView().findViewById(R.id.invia);
@@ -98,7 +98,7 @@ public class RichiestaTesiFragment extends Fragment {
     private void SetTextAll(){
         titoloTesi.setText(tesi.getTitolo());
         argomentoTesi.setText(tesi.getArgomenti());
-        tempistiche.setText(String.valueOf(tesi.getTempistiche()));
+        capacitaRichieste.setText(tesi.getCapacitaRichieste());
         Cursor cursor = db.RicercaDato("SELECT " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + " FROM " + Database.UTENTI + " u, " + Database.RELATORE + " r " +
                 "WHERE u." + Database.UTENTI_ID + "=r." + Database.RELATORE_UTENTEID + " AND r." + Database.RELATORE_ID + "=" + tesi.getIdRelatore() + ";" );
         cursor.moveToFirst();
