@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -564,9 +565,8 @@ public class TesiSceltaFragment extends Fragment {
      * @param data
      */
     private void uploadFiles(Uri data) {
-        //final ProgressDialog progressDialog = new ProgressDialog(getActivity().getApplicationContext());
-        //progressDialog.setTitle("Uploading...");
-        //progressDialog.show();
+        final LinearProgressIndicator linearProgressIndicator = getActivity().findViewById(R.id.progress);
+        linearProgressIndicator.setVisibility(View.VISIBLE);
 
         StorageReference reference = storageReference.child("Uploads/"+System.currentTimeMillis()+".pdf");
         reference.putFile(data)
@@ -588,11 +588,11 @@ public class TesiSceltaFragment extends Fragment {
                     databaseReference.child(downloadKey).setValue(file);
                     TesiSceltaDatabase.UploadTesiScelta(db, tesiScelta,downloadKey);
                     scaricaTesi.setVisibility(View.VISIBLE);
-                    Toast.makeText(getActivity().getApplicationContext(), R.string.file_caricato_successo, Toast.LENGTH_SHORT);
-                    //progressDialog.dismiss();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.file_caricato_successo, Toast.LENGTH_SHORT);linearProgressIndicator.setVisibility(View.GONE);
+                    linearProgressIndicator.setVisibility(View.GONE);
                 }).addOnProgressListener(snapshot -> {
-                    //double progress=(100.0* snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
-                    //progressDialog.setMessage("Uploaded:"+(int)progress+"%");
+                    double progress=(100.0* snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
+                    linearProgressIndicator.setProgress((int) progress, true);
                 });
 
     }

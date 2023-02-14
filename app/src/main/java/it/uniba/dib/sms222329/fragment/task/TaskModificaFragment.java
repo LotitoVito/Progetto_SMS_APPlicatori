@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
@@ -275,9 +276,8 @@ public class TaskModificaFragment extends Fragment {
      * @param data
      */
     private void uploadFiles(Uri data) {
-        //final ProgressDialog progressDialog = new ProgressDialog(getActivity().getApplicationContext());
-        //progressDialog.setTitle("Uploading...");
-        //progressDialog.show();
+        final LinearProgressIndicator linearProgressIndicator = getActivity().findViewById(R.id.progress);
+        linearProgressIndicator.setVisibility(View.VISIBLE);
 
         StorageReference reference = storageReference.child("Uploads/"+System.currentTimeMillis()+".pdf");
         reference.putFile(data)
@@ -299,10 +299,10 @@ public class TaskModificaFragment extends Fragment {
                     databaseReference.child(downloadKey).setValue(file);
                     TaskDatabase.UploadTask(db, task, downloadKey);
                     Toast.makeText(getActivity().getApplicationContext(), R.string.file_caricato_successo, Toast.LENGTH_SHORT);
-                    //progressDialog.dismiss();
+                    linearProgressIndicator.setVisibility(View.GONE);
                 }).addOnProgressListener(snapshot -> {
-                    //double progress=(100.0* snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
-                    //progressDialog.setMessage("Uploaded:"+(int)progress+"%");
+                    double progress=(100.0* snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
+                    linearProgressIndicator.setProgress((int) progress, true);
                 });
     }
 

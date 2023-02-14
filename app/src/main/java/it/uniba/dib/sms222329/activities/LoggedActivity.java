@@ -283,7 +283,7 @@ public class LoggedActivity extends AppCompatActivity {
 
         if(requestCode==Utility.REQUEST_CAMERA && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
             scanQR();
-        } else {
+        } else if(requestCode == Utility.REQUEST_CAMERA) {
             Toast.makeText(this, R.string.permesso_negato, Toast.LENGTH_SHORT).show();
         }
     }
