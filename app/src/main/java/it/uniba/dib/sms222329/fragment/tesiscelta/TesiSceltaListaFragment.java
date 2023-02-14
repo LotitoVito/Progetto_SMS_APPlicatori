@@ -6,11 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
 
@@ -29,16 +32,9 @@ public class TesiSceltaListaFragment extends Fragment {
 
     //Variabili e Oggetti
     private Database db;
-    private int defaultColor;
-    private int u_defaultColor;
-
     //View Items
     private ListView listView;
-    private TextView richieste;
-    private TextView tesisti;
-    private View u_richieste;
-    private  View u_tesisti;
-
+    private TabLayout tabLayout;
     public TesiSceltaListaFragment() {}
 
     @Override
@@ -53,34 +49,39 @@ public class TesiSceltaListaFragment extends Fragment {
 
         Init();
 
-        if(Utility.accountLoggato == Utility.RELATORE){
-            CaricaListaRichiesteRelatore();
-        } else {
-            CaricaListaRichiesteCorelatore();
-        }
-
-        richieste.setOnClickListener(new View.OnClickListener() {
+        tabLayout = getActivity().findViewById(R.id.tab_layout);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View view) {
-                if(Utility.accountLoggato == Utility.RELATORE){
-                    CaricaListaRichiesteRelatore();
-                } else {
-                    CaricaListaRichiesteCorelatore();
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch ( tab.getPosition()){
+                    case 0:
+                        if(Utility.accountLoggato == Utility.RELATORE){
+                            CaricaListaRichiesteRelatore();
+                        } else {
+                            CaricaListaRichiesteCorelatore();
+                        }
+                        break;
+                    case 1:
+                        if(Utility.accountLoggato == Utility.RELATORE) {
+                            CaricaListaTesistiRelatore();
+                        } else {
+                            CaricaListaTesistiCorelatore();
+                        }
+                        break;
                 }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
             }
         });
 
-        tesisti.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(Utility.accountLoggato == Utility.RELATORE) {
-                    CaricaListaTesistiRelatore();
-                } else {
-                    CaricaListaTesistiCorelatore();
-                }
-            }
-        });
-
+        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.richieste)));
+        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.tesisti)));
     }
 
     /**
@@ -89,8 +90,6 @@ public class TesiSceltaListaFragment extends Fragment {
     private void Init(){
         db = new Database(getActivity().getApplicationContext());
         listView = getView().findViewById(R.id.tesistiList);
-        richieste = getActivity().findViewById(R.id.richieste);
-        tesisti = getActivity().findViewById(R.id.tesisti);
     }
 
     /**
