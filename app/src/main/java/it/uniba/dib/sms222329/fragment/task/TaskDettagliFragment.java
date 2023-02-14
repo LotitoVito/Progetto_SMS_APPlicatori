@@ -151,18 +151,18 @@ public class TaskDettagliFragment extends Fragment {
     private void SetTextAll() {
         titoloTask.setText(task.getTitolo());
         descrizioneTask.setText(task.getDescrizione());
-        dateInizioFine.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_data_inizio) + task.getDataInizio().format(Utility.showDate) + " - " + getActivity().getApplicationContext().getResources().getString(R.string.task_data_fine) + task.getDataFine().format(Utility.showDate));
+        dateInizioFine.setText(getResources().getString(R.string.task_data_inizio) + task.getDataInizio().format(Utility.showDate) + " - " + getResources().getString(R.string.task_data_fine) + task.getDataFine().format(Utility.showDate));
 
         if(sliderStato.getValue()==0){
-            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_assegnato));
+            testoStato.setText(getResources().getString(R.string.task_assegnato));
         } else if(sliderStato.getValue()==25){
-            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_iniziato));
+            testoStato.setText(getResources().getString(R.string.task_iniziato));
         } else if(sliderStato.getValue()==50){
-            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_in_completamento));
+            testoStato.setText(getResources().getString(R.string.task_in_completamento));
         } else if(sliderStato.getValue()==75){
-            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_in_revisione));
+            testoStato.setText(getResources().getString(R.string.task_in_revisione));
         } else if(sliderStato.getValue()==100){
-            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_completato));
+            testoStato.setText(getResources().getString(R.string.task_completato));
         }
     }
 
@@ -193,12 +193,12 @@ public class TaskDettagliFragment extends Fragment {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                materiale.setText(getActivity().getApplicationContext().getResources().getString(R.string.errore));
+                materiale.setText(getResources().getString(R.string.errore));
             }
         });
 
         if(file == null){
-            materiale.setText(getActivity().getApplicationContext().getResources().getString(R.string.no_file));
+            materiale.setText(getResources().getString(R.string.no_file));
         }
     }
 

@@ -247,27 +247,27 @@ public class TesiCreaModificaFragment extends Fragment {
 
         if(Utility.isEmptyTextbox(titolo)){
             risultato = true;
-            titolo.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            titolo.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(argomenti)){
             risultato = true;
-            argomenti.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            argomenti.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(tempistiche)){
             risultato = true;
-            tempistiche.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            tempistiche.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(media)){
             risultato = true;
-            media.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            media.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(esamiMancanti)){
             risultato = true;
-            esamiMancanti.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            esamiMancanti.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(capacitaRichiesta)){
             risultato = true;
-            capacitaRichiesta.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            capacitaRichiesta.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         return risultato;
     }

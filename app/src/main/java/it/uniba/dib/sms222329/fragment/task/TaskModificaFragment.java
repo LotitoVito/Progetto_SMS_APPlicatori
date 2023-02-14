@@ -95,7 +95,7 @@ public class TaskModificaFragment extends Fragment {
 
         dataFine.setOnClickListener(view1 -> {
             MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
-            materialDateBuilder.setTitleText(getActivity().getApplicationContext().getResources().getString(R.string.seleziona_data));
+            materialDateBuilder.setTitleText(getResources().getString(R.string.seleziona_data));
             final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
 
             materialDatePicker.show(getActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
@@ -112,15 +112,15 @@ public class TaskModificaFragment extends Fragment {
 
         sliderStato.addOnChangeListener((slider, value, fromUser) -> {
             if(value==0){
-                testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_assegnato));
+                testoStato.setText(getResources().getString(R.string.task_assegnato));
             } else if(value==25){
-                testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_iniziato));
+                testoStato.setText(getResources().getString(R.string.task_iniziato));
             } else if(value==50){
-                testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_in_completamento));
+                testoStato.setText(getResources().getString(R.string.task_in_completamento));
             } else if(value==75){
-                testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_in_revisione));
+                testoStato.setText(getResources().getString(R.string.task_in_revisione));
             } else if(value==100){
-                testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_completato));
+                testoStato.setText(getResources().getString(R.string.task_completato));
             }
         });
 
@@ -189,15 +189,15 @@ public class TaskModificaFragment extends Fragment {
         sliderStato.setValue((float) (25.0 * task.getStato()));
 
         if(sliderStato.getValue()==0){
-            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_assegnato));
+            testoStato.setText(getResources().getString(R.string.task_assegnato));
         } else if(sliderStato.getValue()==25){
-            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_iniziato));
+            testoStato.setText(getResources().getString(R.string.task_iniziato));
         } else if(sliderStato.getValue()==50){
-            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_in_completamento));
+            testoStato.setText(getResources().getString(R.string.task_in_completamento));
         } else if(sliderStato.getValue()==75){
-            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_in_revisione));
+            testoStato.setText(getResources().getString(R.string.task_in_revisione));
         } else if(sliderStato.getValue()==100){
-            testoStato.setText(getActivity().getApplicationContext().getResources().getString(R.string.task_completato));
+            testoStato.setText(getResources().getString(R.string.task_completato));
         }
 
         getLastUpload();
@@ -247,7 +247,7 @@ public class TaskModificaFragment extends Fragment {
         });
 
         if(file == null){
-            materiale.setText(getActivity().getApplicationContext().getResources().getString(R.string.no_file));
+            materiale.setText(getResources().getString(R.string.no_file));
         }
     }
 
@@ -258,7 +258,7 @@ public class TaskModificaFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, getActivity().getApplicationContext().getResources().getString(R.string.seleziona_pdf)), Utility.REQUEST_CARICA_FILE);
+        startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.seleziona_pdf)), Utility.REQUEST_CARICA_FILE);
     }
 
     @Override

@@ -84,7 +84,7 @@ public class TesiVisualizzaFragment extends BottomSheetDialogFragment {
             cursor.moveToNext();
             sub += "\n" + R.string.matricola_relatore + " : " + cursor.getString(cursor.getColumnIndexOrThrow(Database.RELATORE_MATRICOLA));
             intent.putExtra(Intent.EXTRA_TEXT, sub);
-            startActivity(Intent.createChooser(intent, getActivity().getApplicationContext().getResources().getString(R.string.condividi_chooser)));
+            startActivity(Intent.createChooser(intent, getResources().getString(R.string.condividi_chooser)));
         });
 
         creaSegnalazione.setOnClickListener(view -> {

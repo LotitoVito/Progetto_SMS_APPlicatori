@@ -181,15 +181,15 @@ public class RicevimentoCreaFragment extends Fragment {
 
         if(Utility.isEmptyTextbox(data)){
             risultato = true;
-            data.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            data.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(ora)){
             risultato = true;
-            ora.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            ora.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(messaggio)){
             risultato = true;
-            messaggio.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            messaggio.setError(getResources().getString(R.string.campo_obbligatorio));
         }
 
         return risultato;

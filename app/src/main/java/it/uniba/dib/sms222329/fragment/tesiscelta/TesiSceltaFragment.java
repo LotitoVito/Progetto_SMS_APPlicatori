@@ -356,10 +356,10 @@ public class TesiSceltaFragment extends Fragment {
         titoloTesi.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_TITOLO)));
         argomentoTesi.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)));
         tempistiche.setText(String.valueOf(cursorTesi.getInt(cursorTesi.getColumnIndexOrThrow(Database.TESI_TEMPISTICHE))));
-        esamiMancanti.setText(getActivity().getApplicationContext().getResources().getString(R.string.requisito_richiesto) + " : " + cursorTesi.getInt(cursorTesi.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)) +
-                "\n" + getActivity().getApplicationContext().getResources().getString(R.string.tesista) + " : " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_ESAMIMANCANTI)));
-        media.setText(getActivity().getApplicationContext().getResources().getString(R.string.requisito_richiesto) + " : " + cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)) +
-                "\n" + getActivity().getApplicationContext().getResources().getString(R.string.tesista) + " : " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_MEDIAVOTI)));
+        esamiMancanti.setText(getResources().getString(R.string.requisito_richiesto) + " : " + cursorTesi.getInt(cursorTesi.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)) +
+                "\n" + getResources().getString(R.string.tesista) + " : " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_ESAMIMANCANTI)));
+        media.setText(getResources().getString(R.string.requisito_richiesto) + " : " + cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)) +
+                "\n" + getResources().getString(R.string.tesista) + " : " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_MEDIAVOTI)));
         capacitaRichiesta.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_SKILLRICHIESTE)));
 
         //Corelatore
@@ -370,7 +370,7 @@ public class TesiSceltaFragment extends Fragment {
                 corelatore.setText(cursoreCorelatore.getString(cursoreCorelatore.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursoreCorelatore.getString(cursoreCorelatore.getColumnIndexOrThrow(Database.UTENTI_NOME)));
                 emailCorelatore.setText(cursoreCorelatore.getString(cursoreCorelatore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
             } else if(tesiScelta.getStatoCorelatore()==TesiScelta.IN_ATTESA) {
-                corelatore.setText(getActivity().getApplicationContext().getResources().getString(R.string.attesa_approvazione));
+                corelatore.setText(getResources().getString(R.string.attesa_approvazione));
                 emailCorelatore.setText(cursoreCorelatore.getString(cursoreCorelatore.getColumnIndexOrThrow(Database.UTENTI_EMAIL)));
             }
         }
@@ -434,8 +434,8 @@ public class TesiSceltaFragment extends Fragment {
         emailCorelatore.setVisibility(View.GONE);
         richiestaCorelatore.setVisibility(View.GONE);
         if (richiesta) {
-            aggiungiCorelatore.setText(getActivity().getApplicationContext().getResources().getString(R.string.accetta));
-            rimuoviCorelatore.setText(getActivity().getApplicationContext().getResources().getString(R.string.rifiuta));
+            aggiungiCorelatore.setText(getResources().getString(R.string.accetta));
+            rimuoviCorelatore.setText(getResources().getString(R.string.rifiuta));
             creaTask.setVisibility(View.GONE);
             mostraTask.setVisibility(View.GONE);
             scaricaTesi.setVisibility(View.GONE);
@@ -504,7 +504,7 @@ public class TesiSceltaFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, getActivity().getApplicationContext().getResources().getString(R.string.seleziona_pdf)), Utility.REQUEST_CARICA_FILE);
+        startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.seleziona_pdf)), Utility.REQUEST_CARICA_FILE);
     }
 
     @Override

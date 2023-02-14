@@ -91,7 +91,7 @@ public class TesiSceltaListaGuestFragment extends Fragment {
         barraRicerca = getView().findViewById(R.id.search_view_tesi);
         filtra = getView().findViewById(R.id.filtra_tesi);
 
-        barraRicerca.setQueryHint(getActivity().getApplicationContext().getResources().getString(R.string.inserisci_titolo_tesi));
+        barraRicerca.setQueryHint(getResources().getString(R.string.inserisci_titolo_tesi));
     }
 
     /**

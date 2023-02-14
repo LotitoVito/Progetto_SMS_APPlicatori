@@ -304,7 +304,7 @@ public class TesiSceltaMiaFragment extends Fragment {
 
         if(Utility.isEmptyTextbox(abTesi)){
             risultato = true;
-            abTesi.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            abTesi.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         return risultato;
     }
@@ -356,7 +356,7 @@ public class TesiSceltaMiaFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, getActivity().getApplicationContext().getResources().getString(R.string.seleziona_pdf)), Utility.REQUEST_CARICA_FILE);
+        startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.seleziona_pdf)), Utility.REQUEST_CARICA_FILE);
     }
 
     @Override

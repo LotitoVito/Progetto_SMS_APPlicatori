@@ -102,7 +102,7 @@ public class RichiestaTesiFragment extends Fragment {
         Cursor cursor = db.RicercaDato("SELECT " + Database.UTENTI_NOME + ", " + Database.UTENTI_COGNOME + " FROM " + Database.UTENTI + " u, " + Database.RELATORE + " r " +
                 "WHERE u." + Database.UTENTI_ID + "=r." + Database.RELATORE_UTENTEID + " AND r." + Database.RELATORE_ID + "=" + tesi.getIdRelatore() + ";" );
         cursor.moveToFirst();
-        relatore.setText(getActivity().getApplicationContext().getResources().getString(R.string.relatore) + ": " + cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_NOME)));
+        relatore.setText(getResources().getString(R.string.relatore) + ": " + cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(Database.UTENTI_NOME)));
     }
 
     /**
@@ -116,11 +116,11 @@ public class RichiestaTesiFragment extends Fragment {
 
         if(Utility.isEmptyTextbox(messaggio)){
             risultato = true;
-            messaggio.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            messaggio.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(capacitaTesista)){
             risultato = true;
-            capacitaTesista.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            capacitaTesista.setError(getResources().getString(R.string.campo_obbligatorio));
         }
 
         return risultato;

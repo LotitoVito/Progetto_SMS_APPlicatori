@@ -238,7 +238,7 @@ public class RelatoreRegistraFragment extends Fragment {
     private boolean isEmpty(EditText textbox){
         boolean risultato = false;
         if(Utility.isEmptyTextbox(textbox)){
-            textbox.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            textbox.setError(getResources().getString(R.string.campo_obbligatorio));
             risultato = true;
         }
         return risultato;

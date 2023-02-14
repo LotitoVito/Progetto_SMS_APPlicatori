@@ -142,14 +142,14 @@ public class RichiestaTesiRispostaFragment extends Fragment {
         titoloTesi.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_TITOLO)));
         argomento.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_ARGOMENTO)));
         tempistiche.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_TEMPISTICHE)));
-        esamiMancanti.setText(getActivity().getApplicationContext().getResources().getString(R.string.requisito_richiesto) + cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)) +
-                "\n" + getActivity().getApplicationContext().getResources().getString(R.string.tesista) + ": " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_ESAMIMANCANTI)));
-        media.setText(getActivity().getApplicationContext().getResources().getString(R.string.requisito_richiesto) + cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)) +
-                "\n" + getActivity().getApplicationContext().getResources().getString(R.string.tesista) + ": " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_MEDIAVOTI)));
+        esamiMancanti.setText(getResources().getString(R.string.requisito_richiesto) + cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_ESAMINECESSARI)) +
+                "\n" + getResources().getString(R.string.tesista) + ": " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_ESAMIMANCANTI)));
+        media.setText(getResources().getString(R.string.requisito_richiesto) + cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_MEDIAVOTOMINIMA)) +
+                "\n" + getResources().getString(R.string.tesista) + ": " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_MEDIAVOTI)));
         capacitaRichiesta.setText(cursorTesi.getString(cursorTesi.getColumnIndexOrThrow(Database.TESI_SKILLRICHIESTE)));
 
         //Tesista
-        labelTesista.setText(getActivity().getApplicationContext().getResources().getString(R.string.tesista));
+        labelTesista.setText(getResources().getString(R.string.tesista));
         tesista.setText(cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_COGNOME)) + " " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.UTENTI_NOME)) + " " + cursorTesista.getString(cursorTesista.getColumnIndexOrThrow(Database.TESISTA_MATRICOLA)));
 
         //Richiesta

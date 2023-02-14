@@ -91,7 +91,7 @@ public class CorelatoreRegistraFragment extends Fragment {
         boolean risultato = false;
         if(Utility.isEmptyTextbox(textbox)){
             risultato = true;
-            textbox.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            textbox.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         return risultato;
     }

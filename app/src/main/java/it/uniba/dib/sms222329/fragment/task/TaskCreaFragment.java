@@ -93,7 +93,7 @@ public class TaskCreaFragment extends Fragment {
 
         dataFine.setOnClickListener(view1 -> {
             MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
-            materialDateBuilder.setTitleText(getActivity().getApplicationContext().getResources().getString(R.string.seleziona_data));
+            materialDateBuilder.setTitleText(getResources().getString(R.string.seleziona_data));
             final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
 
             materialDatePicker.show(getActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
@@ -193,15 +193,15 @@ public class TaskCreaFragment extends Fragment {
 
         if(Utility.isEmptyTextbox(titolo)){
             risultato = true;
-            titolo.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            titolo.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(argomento)){
             risultato = true;
-            argomento.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            argomento.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(dataFine)){
             risultato = true;
-            dataFine.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            dataFine.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         return risultato;
     }
@@ -221,7 +221,7 @@ public class TaskCreaFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, getActivity().getApplicationContext().getResources().getString(R.string.seleziona_pdf)), Utility.REQUEST_CARICA_FILE);
+        startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.seleziona_pdf)), Utility.REQUEST_CARICA_FILE);
     }
 
     @Override

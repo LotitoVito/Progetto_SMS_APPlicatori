@@ -90,11 +90,11 @@ public class SegnalazioneCreaFragment extends Fragment {
 
         if(Utility.isEmptyTextbox(oggetto)){
             risultato = true;
-            oggetto.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            oggetto.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(messaggioTesto)){
             risultato = true;
-            messaggioTesto.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            messaggioTesto.setError(getResources().getString(R.string.campo_obbligatorio));
         }
 
         return risultato;

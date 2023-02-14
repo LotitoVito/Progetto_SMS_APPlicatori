@@ -117,23 +117,23 @@ public class UtenteRegistraFragment extends Fragment {
 
         if(Utility.isEmptyTextbox(nome)){
             risultato = true;
-            nome.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            nome.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(cognome)){
             risultato = true;
-            cognome.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            cognome.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(codiceFiscale)){
             risultato = true;
-            codiceFiscale.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            codiceFiscale.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(email)){
             risultato = true;
-            email.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            email.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(password)){
             risultato = true;
-            password.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            password.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         return risultato;
     }

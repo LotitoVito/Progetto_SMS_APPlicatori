@@ -213,15 +213,15 @@ public class TesistaRegistraFragment extends Fragment {
 
         if(Utility.isEmptyTextbox(matricola)){
             risultato = true;
-            matricola.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            matricola.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(media)){
             risultato = true;
-            media.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            media.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         if(Utility.isEmptyTextbox(numeroEsamiMancanti)){
             risultato = true;
-            numeroEsamiMancanti.setError(getActivity().getApplicationContext().getResources().getString(R.string.campo_obbligatorio));
+            numeroEsamiMancanti.setError(getResources().getString(R.string.campo_obbligatorio));
         }
         return risultato;
     }
