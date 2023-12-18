@@ -1,0 +1,52 @@
+TESISTI
+vituz@gmail.com vituzpassword
+marco@gmail.com marcopassword
+roberto@gmail.com robertopassword
+
+RELATORI
+michele@gmail.com michelepassword
+giuseppe@gmail.com giuseppepassword
+federico@gmail.com federicopassword
+
+CORELATORE
+mario@gmail.com mariopassword
+
+TESISTI
+vito:
+	-UNIBA ITPS
+	-segnalazione
+	-tesi in corso
+	-task finito e in fase
+	-file upload
+	-ricevimenti
+
+marco:
+	-UNINA CHIMICA
+	-tesi finita
+	-task finite
+	-file upload
+	-ricevimenti
+
+roberto:
+	-UNICA ITPS
+	-segnalazione
+
+RELATORI
+michele:
+	-UNICA ITPS
+	-tesi ITPS non disponibile
+
+giuseppe:
+	-UNIBA ITPS/Chimica
+	-Tesi Itps
+	-Tesi chimica
+	-vito come tesista
+	-corelatore
+federico:
+	-UNINA Chimica/Matematica
+	-marco come tesista
+	
+CORELATORE
+mario:
+	-segnalazione giuseppe
+	-Richiesta pending di collaborazione
